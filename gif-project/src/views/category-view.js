@@ -1,4 +1,4 @@
-import { loadCategories } from "../requests/request-service.js";
+import { loadCategories } from '../requests/request-service.js';
 
 export const toCategoriesView = (categories) => `
 <div id="categories">

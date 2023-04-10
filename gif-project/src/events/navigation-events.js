@@ -14,21 +14,21 @@ export const loadPage = (page = '') => {
 
   switch (page) {
 
-    case HOME:
-      setActiveNav(HOME);
-      return renderHome();
-    case CATEGORIES:
-      setActiveNav(CATEGORIES);
-      return renderCategories();
-    case FAVORITES:
-      setActiveNav(FAVORITES);
-      return renderFavorites();
-    case ABOUT:
-      setActiveNav(ABOUT);
-      return renderAbout();
-      
+  case HOME:
+    setActiveNav(HOME);
+    return renderHome();
+  case CATEGORIES:
+    setActiveNav(CATEGORIES);
+    return renderCategories();
+  case FAVORITES:
+    setActiveNav(FAVORITES);
+    return renderFavorites();
+  case ABOUT:
+    setActiveNav(ABOUT);
+    return renderAbout();
+
     /* if the app supports error logging, use default to log mapping errors */
-    default: return null;
+  default: return null;
   }
 
 };

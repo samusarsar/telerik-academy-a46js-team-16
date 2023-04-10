@@ -2,15 +2,15 @@ import { movies, categories } from './movies-data.js';
 
 const findCategory = (categoryId) => {
   return categories.find(c => c.id === categoryId) || { id: -1, name: '' };
-}
+};
 
 // public API
 
 export const getMoviesGeneralInfo = (categoryId = null) => {
 
-  const moviesFilter = categoryId
-    ? m => m.genre === findCategory(categoryId).name
-    : () => true;
+  const moviesFilter = categoryId ?
+    m => m.genre === findCategory(categoryId).name :
+    () => true;
 
   return movies
     .filter(moviesFilter)
@@ -34,13 +34,13 @@ export const getMoviesFullInfo = (categoryId = null) => {
 
 export const getMovieById = (movieId = 0) => movies.find(m => m.id === movieId);
 
-export const searchMovies = (title = '') => title
-  ? movies.filter(m => m.title.toLowerCase().includes(title.toLowerCase()))
-  : movies;
+export const searchMovies = (title = '') => title ?
+  movies.filter(m => m.title.toLowerCase().includes(title.toLowerCase())) :
+  movies;
 
 export const getCategory = (categoryId = null) => {
   return categories.find(c => c.id === categoryId) || null;
-}
+};
 
 export const getCategories = () => categories
   .map(category => ({
