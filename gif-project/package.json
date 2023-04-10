@@ -1,0 +1,18 @@
+{
+  "name": "gif-project",
+  "version": "1.0.0",
+  "description": "This is our GIF-platform project",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint ."
+  },
+  "keywords": [],
+  "author": "Team 16",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^8.38.0",
+    "eslint-config-google": "^0.14.0"
+  }
+}
