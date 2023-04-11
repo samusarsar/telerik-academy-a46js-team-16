@@ -1,6 +1,7 @@
-import { ABOUT, CONTAINER_SELECTOR, HOME, TRENDING } from '../common/constants.js';
+import { ABOUT, CONTAINER_SELECTOR, HOME, PROFILE, TRENDING } from '../common/constants.js';
 import { toAboutView } from '../views/about-view.js';
 import { toHomeView } from '../views/home-view.js';
+import { toUploadView } from '../views/profile-view.js';
 import { toTrendingView } from '../views/trending-view.js';
 import { setActiveNav } from './helpers.js';
 
@@ -14,6 +15,9 @@ export const loadPage = (page = '') => {
   case TRENDING:
     setActiveNav(TRENDING);
     return renderTrending();
+  case PROFILE:
+    setActiveNav(PROFILE);
+    return renderProfile();
   case ABOUT:
     setActiveNav(ABOUT);
     return renderAbout();
@@ -30,6 +34,10 @@ export const renderHome = () => {
 
 export const renderTrending = async () => {
   document.querySelector(CONTAINER_SELECTOR).innerHTML = await toTrendingView();
+};
+
+export const renderProfile = async () => {
+  document.querySelector(CONTAINER_SELECTOR).innerHTML = await toUploadView();
 };
 
 export const renderAbout = async () => {

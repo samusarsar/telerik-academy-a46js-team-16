@@ -1,6 +1,7 @@
 import { HOME } from './common/constants.js';
 import { loadPage } from './events/navigation-events.js';
 import { renderSearchItems } from './events/search-events.js';
+import { renderUploadItems } from './events/upload-events.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   // add global listener
@@ -11,13 +12,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
       loadPage(event.target.getAttribute('data-page'));
     }
+
+    if (event.target.classList.contains('submit')) {
+
+      event.preventDefault();
+      const fileInput = document.getElementById('file');
+      const file = fileInput.files[0];
+      renderUploadItems(file);
+    }
   });
 
   document.querySelector('input#search').addEventListener('input', event => {
-    renderSearchItems(event.target.value)
-  })
+    renderSearchItems(event.target.value);
+  });
 
 
   loadPage(HOME);
-
 });
