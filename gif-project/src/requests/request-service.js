@@ -10,4 +10,4 @@ export const loadTrendingGifs = async () => {
 
 export const uploadGif = async () => {
   const url = `https://upload.giphy.com/v1/gifs${apiUrl}`;
-}
+};
