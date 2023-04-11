@@ -11,3 +11,11 @@ export const loadTrendingGifs = async () => {
 export const uploadGif = async () => {
   const url = `https://upload.giphy.com/v1/gifs?api_key=${API_KEY}`;
 }
+
+export const searchGifs = async (searchTerm) => {
+  const url = `https://api.giphy.com/v1/gifs/search?api_key=${API_KEY}&q=${searchTerm}`;
+  const data = await fetch(url);
+  const dataJson = await data.json();
+
+  return dataJson.data;
+}
