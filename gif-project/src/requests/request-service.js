@@ -5,8 +5,9 @@ export const loadTrendingGifs = async () => {
   const data = await fetch(url);
   const dataJson = await data.json();
   const res = dataJson.data;
-  // console.log(res);
   return res;
 };
 
-// console.log(await loadTrendingGifs());
+export const uploadGif = async () => {
+  const url = `https://upload.giphy.com/v1/gifs${apiUrl}`;
+}
