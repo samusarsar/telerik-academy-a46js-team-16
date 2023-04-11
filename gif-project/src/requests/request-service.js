@@ -1,30 +1,12 @@
-import { getCategories, getMoviesGeneralInfo, getMovieById, getCategory, searchMovies } from '../data/movies.js';
+import { apiUrl } from '../common/constants.js';
 
-export const loadCategories = () => {
-  const categories = getCategories();
-  return categories;
+export const loadTrendingGifs = async () => {
+  const url = `https://api.giphy.com/v1/gifs/trending${apiUrl}&limit=25&bundle=messaging_non_clips`;
+  const data = await fetch(url);
+  const dataJson = await data.json();
+  const res = dataJson.data;
+  // console.log(res);
+  return res;
 };
 
-export const loadCategory = (id = null) => {
-  const category = getCategory(id);
-
-  return category;
-};
-
-export const loadMovies = (categoryId = null) => {
-  const movies = getMoviesGeneralInfo(categoryId);
-
-  return movies;
-};
-
-export const loadSingleMovie = (id) => {
-  const movie = getMovieById(id);
-
-  return movie;
-};
-
-export const loadSearchMovies = (searchTerm = '') => {
-  const movies = searchMovies(searchTerm);
-
-  return movies;
-};
+// console.log(await loadTrendingGifs());
