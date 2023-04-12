@@ -28,3 +28,17 @@ export const searchGifs = async (searchTerm) => {
 
   return dataJson.data;
 };
+
+export const loadUploadedGifs = async () => {
+  const uploadCache = window.localStorage.getItem('uploads');
+  if (uploadCache) {
+    const ids = JSON.parse(uploadCache).join('%2C');
+    const url = `https://api.giphy.com/v1/gifs?api_key=${API_KEY}&ids=${ids}`;
+    const data = await fetch(url);
+    const dataJson = await data.json();
+
+    return dataJson.data;
+  } else {
+    return [];
+  }
+};
