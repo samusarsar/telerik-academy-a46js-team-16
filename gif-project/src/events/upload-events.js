@@ -1,6 +1,6 @@
 import { CONTAINER_SELECTOR } from '../common/constants.js';
 import { uploadGif } from '../requests/request-service.js';
-import { toProfileView, toUploadViewError, toUploadViewSuccess } from '../views/profile-view.js';
+import { toProfileView } from '../views/profile-view.js';
 
 export const renderUploadItems = async (file) => {
   const response = await uploadGif(file);

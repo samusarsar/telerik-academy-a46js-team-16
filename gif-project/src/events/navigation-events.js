@@ -1,7 +1,7 @@
 import { ABOUT, CONTAINER_SELECTOR, HOME, PROFILE, TRENDING } from '../common/constants.js';
 import { toAboutView } from '../views/about-view.js';
 import { toHomeView } from '../views/home-view.js';
-import { toProfileView, toUploadView } from '../views/profile-view.js';
+import { toProfileView } from '../views/profile-view.js';
 import { toTrendingView } from '../views/trending-view.js';
 import { setActiveNav } from './helpers.js';
 

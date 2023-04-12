@@ -33,57 +33,36 @@ export const toUploadViewError = (error) => `
             </label>
             <input type="submit" value="Upload" class="submit"/>
         </form>
-        <p>There was a problem uploading the GIF: ${error}</p>
+        <p>Uh-oh! That didn\'t work out...</p>
+        <p>"${error}"</p>
     </div>
 `;
 
 export const toProfileView = async (variant, error = null) => {
-  let profileVariant;
+  let uploadViewVariant;
   switch (variant) {
 
   case 1:
-    profileVariant = `
-            <div id="profile-box">
-                <h1>Welcome to your GIFlamingo nest, ${window.localStorage.getItem('username')}!</h1>
-                ${toUploadView()}
-                <div id="uploaded">
-                    <h2>Check out what's already in your nest:</h2>
-                    <div class="content">
-                    ${(await loadUploadedGifs()).map(toMiniGifView).join('') || '<p>You haven\'t uploaded any GIFs yet.</p><p>Click above to upload your first!</p>'}
-                    </div>
-                </div>
-            </div>
-        `;
+    uploadViewVariant = toUploadView();
     break;
   case 2:
-    profileVariant = `
-            <div id="profile-box">
-                <h1>Welcome to your GIFlamingo nest, ${window.localStorage.getItem('username')}!</h1>
-                ${toUploadViewSuccess()}
-                <div id="uploaded">
-                    <h2>Check out what's already in your nest:</h2>
-                    <div class="content">
-                    ${(await loadUploadedGifs()).map(toMiniGifView).join('') || '<p>You haven\'t uploaded any GIFs yet.</p><p>Click above to upload your first!</p>'}
-                    </div>
-                </div>
-            </div>
-        `;
+    uploadViewVariant = toUploadViewSuccess();
     break;
   case 3:
-    profileVariant = `
-            <div id="profile-box">
-                <h1>Welcome to your GIFlamingo nest, ${window.localStorage.getItem('username')}!</h1>
-                ${toUploadViewError(error)}
-                <div id="uploaded">
-                    <h2>Check out what's already in your nest:</h2>
-                    <div class="content">
-                    ${(await loadUploadedGifs()).map(toMiniGifView).join('') || '<p>You haven\'t uploaded any GIFs yet.</p><p>Click above to upload your first!</p>'}
-                    </div>
-                </div>
-            </div>
-        `;
+    uploadViewVariant = toUploadViewError(error);
     break;
   }
 
-  return profileVariant;
+  return `
+    <div id="profile-box">
+        <h1>Welcome to your GIFlamingo nest!</h1>
+        ${uploadViewVariant}
+        <div id="uploaded">
+            <h2>Check out what's already in your nest:</h2>
+            <div class="content">
+            ${(await loadUploadedGifs()).map(toMiniGifView).join('') || '<p>You haven\'t uploaded any GIFs yet.</p><p>Click above to upload your first!</p>'}
+            </div>
+        </div>
+    </div>
+    `;
 };
