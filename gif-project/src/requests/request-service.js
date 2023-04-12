@@ -42,3 +42,11 @@ export const loadUploadedGifs = async () => {
     return [];
   }
 };
+
+export const getGif = async (gifId) => {
+  const url = `https://api.giphy.com/v1/gifs/${gifId}?api_key=${API_KEY}`;
+  const data = await fetch(url);
+  const dataJson = await data.json();
+
+  return dataJson.data;
+}
