@@ -1,6 +1,6 @@
 import { CONTAINER_SELECTOR } from '../common/constants.js';
 import { uploadGif } from '../requests/request-service.js';
-import { toUploadViewError, toUploadViewSuccess } from '../views/profile-view.js';
+import { toProfileView, toUploadViewError, toUploadViewSuccess } from '../views/profile-view.js';
 
 export const renderUploadItems = async (file) => {
   const response = await uploadGif(file);
@@ -14,8 +14,8 @@ export const renderUploadItems = async (file) => {
     } else {
       window.localStorage.setItem('uploads', JSON.stringify([resText.data.id]));
     }
-    document.querySelector(CONTAINER_SELECTOR).innerHTML = await toUploadViewSuccess();
+    document.querySelector(CONTAINER_SELECTOR).innerHTML = await toProfileView(2);
   } else {
-    document.querySelector(CONTAINER_SELECTOR).innerHTML = await toUploadViewError(resText.meta.description);
+    document.querySelector(CONTAINER_SELECTOR).innerHTML = await toProfileView(3, resText.meta.description);
   }
 };

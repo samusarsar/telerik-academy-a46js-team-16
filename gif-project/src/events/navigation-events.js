@@ -37,12 +37,9 @@ export const renderTrending = async () => {
 };
 
 export const renderProfile = async () => {
-  document.querySelector(CONTAINER_SELECTOR).innerHTML = await toProfileView();
+  document.querySelector(CONTAINER_SELECTOR).innerHTML = await toProfileView(1);
 };
 
 export const renderAbout = async () => {
   document.querySelector(CONTAINER_SELECTOR).innerHTML = await toAboutView();
 };
-
-
-// renderTrending();
