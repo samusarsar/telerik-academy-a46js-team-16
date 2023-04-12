@@ -1,6 +1,8 @@
 import { ABOUT, CONTAINER_SELECTOR, HOME, PROFILE, TRENDING, FAVORITE } from '../common/constants.js';
+import { getFavorite } from '../data/favorites.js';
 import { getGif } from '../requests/request-service.js';
 import { toAboutView } from '../views/about-view.js';
+import { toFavoriteView, toRandomGifView } from '../views/favorites-view.js';
 import { toDetailedGifView } from '../views/gif-views.js';
 import { toHomeView } from '../views/home-view.js';
 import { toProfileView } from '../views/profile-view.js';
@@ -41,9 +43,11 @@ export const renderTrending = async () => {
   document.querySelector(CONTAINER_SELECTOR).innerHTML = await toTrendingView();
 };
 
-// export const renderFavorite = async () => {
-//   document.querySelector(CONTAINER_SELECTOR).innerHTML = await toFavoriteView();
-// };
+export const renderFavorite = async () => {
+  getFavorite() ?
+    document.querySelector(CONTAINER_SELECTOR).innerHTML = await toFavoriteView() :
+    document.querySelector(CONTAINER_SELECTOR).innerHTML = await toRandomGifView();
+};
 
 export const renderProfile = async () => {
   document.querySelector(CONTAINER_SELECTOR).innerHTML = await toProfileView(1);

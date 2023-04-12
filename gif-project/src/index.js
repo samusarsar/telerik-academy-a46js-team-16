@@ -1,6 +1,6 @@
 import { HOME } from './common/constants.js';
 import { toggleFavoriteStatus } from './events/favorites-events.js';
-import { loadPage, renderGifDetails } from './events/navigation-events.js';
+import { loadPage, renderFavorite, renderGifDetails } from './events/navigation-events.js';
 import { clearUploadedItems } from './events/profile-events.js';
 import { renderSearchItems } from './events/search-events.js';
 import { renderUploadItems } from './events/upload-events.js';
@@ -11,6 +11,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // nav events
     if (event.target.classList.contains('nav-link')) {
+
+      loadPage(event.target.getAttribute('data-page'));
+    }
+
+    if (event.target.classList.contains('favorite-bubble')) {
 
       loadPage(event.target.getAttribute('data-page'));
     }
@@ -33,6 +38,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (event.target.classList.contains('favorite-status')) {
       toggleFavoriteStatus(event.target.getAttribute('data-gif-id'));
+      if (document.querySelector('#container>#favorite')) {
+        renderFavorite();
+      }
     }
   });
 

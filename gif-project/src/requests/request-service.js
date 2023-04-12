@@ -49,4 +49,12 @@ export const getGif = async (gifId) => {
   const dataJson = await data.json();
 
   return dataJson.data;
-}
+};
+
+export const getRandomGif = async () => {
+  const url = `https://api.giphy.com/v1/gifs/random?api_key=${API_KEY}`;
+  const data = await fetch(url);
+  const dataJson = await data.json();
+
+  return dataJson.data;
+};
