@@ -1,5 +1,8 @@
 body {
     font-size: 18px;
+    background-color: #120723;
+    color: whitesmoke;
+    font-family: sans-serif;
 }
 
 h1 {
@@ -17,21 +20,66 @@ p {
 #main-nav {
     display: flex;
     justify-content: space-evenly;
-    padding: 10px 30%
+    padding: 10px 30%;
+    background-color: #4e2b69;
 }
 
 #main-nav .nav-link {
     text-decoration: none;
-    color: rgb(60, 3, 42);
+    color: #e1d3dd;
+
 }
 
 #main-nav .active {
     text-decoration: none;
-    color: rgb(225, 11, 157);
     font-weight: 600;
+    color: #00b5a1;
 }
 
 #search-nav {
     display: flex;
     justify-content: center;
+}
+
+.gif-box img{
+    cursor: pointer;
+}
+
+.favorite-bubble {
+    background-color: whitesmoke;
+    position: fixed;
+    width: 130px;
+    height: 130px;
+    bottom: 10px;
+    right: 10px;
+    border: 5px solid #101518;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.favorite-bubble img {
+    max-width: 100px;
+    max-height: 100px;
+    position: absolute;
+    padding-top: 7px;
+    filter: invert(44%) sepia(87%) saturate(2476%) hue-rotate(145deg) brightness(102%) contrast(101%);
+}
+
+.favorite-bubble p {
+    margin: 0px;
+    /* position: absolute; */
+    top: 50%;
+    bottom: 50%;
+    left: 50%;
+    right: 50%;
+    z-index: 10;
+    font-weight: bold;
+    color: white;
+}
+
+.favorite-status{
+    filter: invert(44%) sepia(87%) saturate(2476%) hue-rotate(145deg) brightness(102%) contrast(101%);
 }

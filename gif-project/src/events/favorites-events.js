@@ -22,12 +22,4 @@ export const renderFavoriteStatusForGif = (id) => {
   }
 };
 
-export const renderFavoriteStatusForUser = () => {
-  const favorite = getFavorite();
 
-  if (favorite) {
-    return `<img src="../../images/heart-full.png">`;
-  } else {
-    return `<img src="../../images/heart-empty.png">`;
-  }
-};
