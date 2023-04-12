@@ -2,7 +2,7 @@ export const HOME = 'home';
 
 export const TRENDING = 'trending';
 
-export const FAVORITES = 'favorites';
+export const FAVORITE = 'favorite';
 
 export const ABOUT = 'about';
 

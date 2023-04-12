@@ -1,5 +1,7 @@
 import { HOME } from './common/constants.js';
+import { toggleFavoriteStatus } from './events/favorites-events.js';
 import { loadPage, renderGifDetails } from './events/navigation-events.js';
+import { clearUploadedItems } from './events/profile-events.js';
 import { renderSearchItems } from './events/search-events.js';
 import { renderUploadItems } from './events/upload-events.js';
 
@@ -21,8 +23,16 @@ document.addEventListener('DOMContentLoaded', () => {
       renderUploadItems(file);
     }
 
-    if(event.target.classList.contains('mini-gif-img')) {
+    if (event.target.classList.contains('empty-nest')) {
+      clearUploadedItems();
+    }
+
+    if (event.target.classList.contains('mini-gif-img')) {
       renderGifDetails(event.target.getAttribute('data-gif-id'));
+    }
+
+    if (event.target.classList.contains('favorite-status')) {
+      toggleFavoriteStatus(event.target.getAttribute('data-gif-id'));
     }
   });
 

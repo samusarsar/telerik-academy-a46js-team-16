@@ -1,4 +1,4 @@
-import { ABOUT, CONTAINER_SELECTOR, HOME, PROFILE, TRENDING } from '../common/constants.js';
+import { ABOUT, CONTAINER_SELECTOR, HOME, PROFILE, TRENDING, FAVORITE } from '../common/constants.js';
 import { getGif } from '../requests/request-service.js';
 import { toAboutView } from '../views/about-view.js';
 import { toDetailedGifView } from '../views/gif-views.js';
@@ -17,6 +17,9 @@ export const loadPage = (page = '') => {
   case TRENDING:
     setActiveNav(TRENDING);
     return renderTrending();
+  case FAVORITE:
+    setActiveNav(FAVORITE);
+    return renderFavorite();
   case PROFILE:
     setActiveNav(PROFILE);
     return renderProfile();
@@ -38,6 +41,10 @@ export const renderTrending = async () => {
   document.querySelector(CONTAINER_SELECTOR).innerHTML = await toTrendingView();
 };
 
+// export const renderFavorite = async () => {
+//   document.querySelector(CONTAINER_SELECTOR).innerHTML = await toFavoriteView();
+// };
+
 export const renderProfile = async () => {
   document.querySelector(CONTAINER_SELECTOR).innerHTML = await toProfileView(1);
 };
@@ -50,7 +57,4 @@ export const renderGifDetails = async (gifId) => {
   const gif = await getGif(gifId);
 
   document.querySelector(CONTAINER_SELECTOR).innerHTML = toDetailedGifView(gif);
-}
-
-
-// renderTrending();
+};

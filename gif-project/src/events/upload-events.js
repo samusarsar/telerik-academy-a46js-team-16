@@ -4,7 +4,6 @@ import { toProfileView } from '../views/profile-view.js';
 
 export const renderUploadItems = async (file) => {
   const response = await uploadGif(file);
-  console.log(response);
   const resText = JSON.parse(await response.text());
   if (response.ok) {
     if (window.localStorage.getItem('uploads')) {

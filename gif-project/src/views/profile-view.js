@@ -62,6 +62,7 @@ export const toProfileView = async (variant, error = null) => {
             <div class="content">
             ${(await loadUploadedGifs()).map(toMiniGifView).join('') || '<p>You haven\'t uploaded any GIFs yet.</p><p>Click above to upload your first!</p>'}
             </div>
+            <a class="empty-nest">Empty my nest</a>
         </div>
     </div>
     `;
