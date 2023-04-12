@@ -1,7 +1,5 @@
 import { ABOUT, CONTAINER_SELECTOR, HOME, PROFILE, TRENDING } from '../common/constants.js';
-import { getGif } from '../requests/request-service.js';
 import { toAboutView } from '../views/about-view.js';
-import { toDetailedGifView } from '../views/gif-views.js';
 import { toHomeView } from '../views/home-view.js';
 import { toProfileView } from '../views/profile-view.js';
 import { toTrendingView } from '../views/trending-view.js';
