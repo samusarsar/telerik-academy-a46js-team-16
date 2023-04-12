@@ -10,7 +10,6 @@ export const toDetailedGifView = (gif) => {
   console.log(gif)
   return `<h3>${gif.title}</h3>
   <img src="${gif.images.original.url}">
-  <p>Uploaded by: ${gif.user?.display_name || gif.username || 'anonymous user'}</p>`
+  <p>Uploaded by: <span><img src="${gif?.user?.avatar_url || '../images/anonymous-user-icon-2.jpg'}" ></span> ${gif.user?.display_name || gif.username || 'anonymous user'}</p>
+  <p>Uploaded on: ${new Date(gif.import_datetime).toLocaleDateString()}</p>`
 }
-
-{/* <p>Uploaded by: ${gif.user.display_name}, username: ${gif.username}</p> */}

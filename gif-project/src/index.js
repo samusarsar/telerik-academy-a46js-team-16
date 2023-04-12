@@ -1,5 +1,5 @@
 import { HOME } from './common/constants.js';
-import { loadPage } from './events/navigation-events.js';
+import { loadPage, renderGifDetails } from './events/navigation-events.js';
 import { renderSearchItems } from './events/search-events.js';
 import { renderUploadItems } from './events/upload-events.js';
 
@@ -19,6 +19,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const fileInput = document.getElementById('file');
       const file = fileInput.files[0];
       renderUploadItems(file);
+    }
+
+    if(event.target.classList.contains('mini-gif-img')) {
+      renderGifDetails(event.target.getAttribute('data-gif-id'));
     }
   });
 
