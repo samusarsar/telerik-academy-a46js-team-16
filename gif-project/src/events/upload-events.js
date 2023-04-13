@@ -9,11 +9,6 @@ export const renderUploadItems = async (file) => {
   try {
     const response = await uploadGif(file);
 
-    if (!response.ok) {
-      document.querySelector("#upload-result").innerHTML = toUploadViewError(await response.text());
-      return;
-    }
-
     const resText = JSON.parse(await response.text());
     if (window.localStorage.getItem('uploads')) {
       const uploads = JSON.parse(window.localStorage.getItem('uploads'));
@@ -27,7 +22,6 @@ export const renderUploadItems = async (file) => {
     document.querySelector("#uploaded .content").innerHTML = await renderUploads();
 
   } catch (error) {
-    console.log(error)  //TODO
+    document.querySelector("#upload-result").innerHTML = toUploadViewError(error.message);
   }
-
 };

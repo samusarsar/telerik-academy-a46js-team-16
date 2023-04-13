@@ -9,16 +9,18 @@ export const toMiniGifView = (gif) => `
 
 export const toDetailedGifView = (gif) => {
   return `
-  <div class="info-container">
-    <p>Uploaded by: <span><img src="${gif?.user?.avatar_url || '../images/anonymous-user-icon-2.jpg'}" ></span> ${gif.user?.display_name || gif.username || 'anonymous user'}</p>
-    <p>Uploaded on: ${new Date(gif.import_datetime).toLocaleDateString()}</p>
-  </div>
-  <div class="gif-container">
-    <h3>${gif.title}</h3>
-    <img src="${gif.images.original.url}">
-  </div>
-  <div class="favorite-status-container">
-    ${renderFavoriteStatusForGif(gif.id)}
+  <div class="detailed-gif">
+    <div class="info-container">
+      <p>Uploaded by: <span><img class="user-avatar" src="${gif?.user?.avatar_url || '../images/anonymous-user-icon-2.jpg'}" ></span> ${gif.user?.display_name || gif.username || 'anonymous user'}</p>
+      <p>Uploaded on: ${new Date(gif.import_datetime).toLocaleDateString()}</p>
+    </div>
+    <div class="gif-container">
+      <h3>${gif.title}</h3>
+      <img src="${gif.images.original.url}">
+    </div>
+    <div class="favorite-status-container">
+      ${renderFavoriteStatusForGif(gif.id)}
+    </div>
   </div>
   `;
 };

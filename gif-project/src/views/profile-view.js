@@ -31,7 +31,7 @@ export const toUploadViewSuccess = async () => {
     return  `<p>GIF successfully uploaded!</p>`
 };
 
-export const toUploadViewError = (error) => `<p>Uh-oh! That didn\'t work out...   ${JSON.parse(error).meta.msg}</p>`;
+export const toUploadViewError = (error) => `<p>Uh-oh! That didn\'t work out...   ${error}</p>`;
 
 
 
