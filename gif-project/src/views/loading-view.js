@@ -1,1 +1,0 @@
-export const loader = () => `<p id="loader">LOADING .....</p>`;

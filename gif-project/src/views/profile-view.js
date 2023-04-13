@@ -23,17 +23,24 @@ const toMyUploadsView = async () => `
 `;
 
 export const toProfileView = async () => {
-    return toUploadView() + '<br>' + await toMyUploadsView();
+  return toUploadView() + '<br>' + await toMyUploadsView();
 };
 
-
 export const toUploadViewSuccess = async () => {
-    return  `<p>GIF successfully uploaded!</p>`
+  return `<p>GIF successfully uploaded!</p>`;
 };
 
 export const toUploadViewError = (error) => `<p>Uh-oh! That didn\'t work out...   ${error}</p>`;
 
-
-
-
-export const renderUploads = async () => (await loadUploadedGifs()).map(toMiniGifView).join(''); //TODO
+export const renderUploads = async () => {
+  try {
+    return (await loadUploadedGifs()).map(toMiniGifView).join('');
+  } catch (error) {
+    return `
+            <p>Oh-No! There was an error loading the trending GIFs!</p>
+            <p>Please try again a bit later!</p>
+            <p>In the meantime, we hope this flamingo will make you feel better...</p>
+            <img src="../../images/error-flamingo.png">
+      `;
+  };
+};

@@ -3,20 +3,20 @@ import { getGif, getRandomGif } from '../requests/request-service.js';
 import { toDetailedGifView } from './gif-views.js';
 
 export const toFavoriteView = async () => {
-    let result;
-    try {
-        result = toDetailedGifView(await getGif(getFavorite()))
-    } catch (error) {
-        result = error.message;
-    }
+  let result;
+  try {
+    result = toDetailedGifView(await getGif(getFavorite()));
+  } catch (error) {
+    result = error.message;
+  }
 
-    return `
+  return `
     <div id="favorite">
         <h1>Your favorite GIF:</h1>
         ${result}
     </div>
 `;
-} 
+};
 
 export const toRandomGifView = async () => `
     <div id="favorite">

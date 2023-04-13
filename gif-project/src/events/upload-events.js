@@ -1,10 +1,10 @@
 import { uploadGif } from '../requests/request-service.js';
-import { loader } from '../views/loading-view.js';
+import { toLoadView } from '../views/interface-views.js';
 import { renderUploads, toUploadViewError, toUploadViewSuccess } from '../views/profile-view.js';
 
 export const renderUploadItems = async (file) => {
 
-  document.querySelector("#upload-result").innerHTML = loader();
+  document.querySelector('#upload-result').innerHTML = toLoadView();
 
   try {
     const response = await uploadGif(file);
@@ -19,9 +19,9 @@ export const renderUploadItems = async (file) => {
     }
 
     document.querySelector('#upload-result').innerHTML = await toUploadViewSuccess();
-    document.querySelector("#uploaded .content").innerHTML = await renderUploads();
+    document.querySelector('#uploaded .content').innerHTML = await renderUploads();
 
   } catch (error) {
-    document.querySelector("#upload-result").innerHTML = toUploadViewError(error.message);
+    document.querySelector('#upload-result').innerHTML = toUploadViewError(error.message);
   }
 };

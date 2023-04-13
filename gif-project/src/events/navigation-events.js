@@ -1,10 +1,11 @@
 import { ABOUT, CONTAINER_SELECTOR, HOME, PROFILE, TRENDING, FAVORITE } from '../common/constants.js';
 import { getFavorite } from '../data/favorites.js';
-import { getGif } from '../requests/request-service.js';
+import { getGif, loadTrendingGifs } from '../requests/request-service.js';
 import { toAboutView } from '../views/about-view.js';
 import { toFavoriteView, toRandomGifView } from '../views/favorites-view.js';
 import { toDetailedGifView, toMoreTrendingGifsView } from '../views/gif-views.js';
 import { toHomeView } from '../views/home-view.js';
+import { toErrorView } from '../views/interface-views.js';
 import { toProfileView } from '../views/profile-view.js';
 import { toTrendingView } from '../views/trending-view.js';
 import { setActiveNav } from './helpers.js';
@@ -13,24 +14,24 @@ export const loadPage = (page = '') => {
 
   switch (page) {
 
-    case HOME:
-      setActiveNav(HOME);
-      return renderHome();
-    case TRENDING:
-      setActiveNav(TRENDING);
-      return renderTrending();
-    case FAVORITE:
-      setActiveNav(FAVORITE);
-      return renderFavorite();
-    case PROFILE:
-      setActiveNav(PROFILE);
-      return renderProfile();
-    case ABOUT:
-      setActiveNav(ABOUT);
-      return renderAbout();
+  case HOME:
+    setActiveNav(HOME);
+    return renderHome();
+  case TRENDING:
+    setActiveNav(TRENDING);
+    return renderTrending();
+  case FAVORITE:
+    setActiveNav(FAVORITE);
+    return renderFavorite();
+  case PROFILE:
+    setActiveNav(PROFILE);
+    return renderProfile();
+  case ABOUT:
+    setActiveNav(ABOUT);
+    return renderAbout();
 
     /* if the app supports error logging, use default to log mapping errors */
-    default: return null;
+  default: return null;
   }
 
 };
@@ -40,7 +41,12 @@ export const renderHome = () => {
 };
 
 export const renderTrending = async () => {
-  document.querySelector(CONTAINER_SELECTOR).innerHTML = await toTrendingView();
+  try {
+    const data = await loadTrendingGifs();
+    document.querySelector(CONTAINER_SELECTOR).innerHTML = await toTrendingView(data);
+  } catch (error) {
+    document.querySelector(CONTAINER_SELECTOR).innerHTML = toErrorView();
+  }
 };
 
 export const renderFavorite = async () => {
@@ -58,15 +64,12 @@ export const renderAbout = async () => {
 };
 
 export const renderGifDetails = async (gifId) => {
-
   try {
     const gif = await getGif(gifId);
-
     document.querySelector(CONTAINER_SELECTOR).innerHTML = toDetailedGifView(gif);
   } catch (error) {
-    document.querySelector(CONTAINER_SELECTOR).innerHTML = `<p>Can not load page, error: ${error.message}</p>`; //TODO
+    document.querySelector(CONTAINER_SELECTOR).innerHTML = `<p>Can not load page, error: ${error.message}</p>`; // TODO
   }
-
 };
 
 export const renderMoreGifs = async (counter) => {
