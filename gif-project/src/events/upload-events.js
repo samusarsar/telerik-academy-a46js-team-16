@@ -1,9 +1,10 @@
 import { uploadGif } from '../requests/request-service.js';
+import { loader } from '../views/loading-view.js';
 import { renderUploads, toUploadViewError, toUploadViewSuccess } from '../views/profile-view.js';
 
 export const renderUploadItems = async (file) => {
 
-  //TODO Loading
+  document.querySelector("#upload-result").innerHTML = loader();
 
   try {
     const response = await uploadGif(file);
