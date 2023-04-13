@@ -13,24 +13,24 @@ export const loadPage = (page = '') => {
 
   switch (page) {
 
-  case HOME:
-    setActiveNav(HOME);
-    return renderHome();
-  case TRENDING:
-    setActiveNav(TRENDING);
-    return renderTrending();
-  case FAVORITE:
-    setActiveNav(FAVORITE);
-    return renderFavorite();
-  case PROFILE:
-    setActiveNav(PROFILE);
-    return renderProfile();
-  case ABOUT:
-    setActiveNav(ABOUT);
-    return renderAbout();
+    case HOME:
+      setActiveNav(HOME);
+      return renderHome();
+    case TRENDING:
+      setActiveNav(TRENDING);
+      return renderTrending();
+    case FAVORITE:
+      setActiveNav(FAVORITE);
+      return renderFavorite();
+    case PROFILE:
+      setActiveNav(PROFILE);
+      return renderProfile();
+    case ABOUT:
+      setActiveNav(ABOUT);
+      return renderAbout();
 
     /* if the app supports error logging, use default to log mapping errors */
-  default: return null;
+    default: return null;
   }
 
 };
@@ -58,9 +58,15 @@ export const renderAbout = async () => {
 };
 
 export const renderGifDetails = async (gifId) => {
-  const gif = await getGif(gifId);
 
-  document.querySelector(CONTAINER_SELECTOR).innerHTML = toDetailedGifView(gif);
+  try {
+    const gif = await getGif(gifId);
+
+    document.querySelector(CONTAINER_SELECTOR).innerHTML = toDetailedGifView(gif);
+  } catch (error) {
+    document.querySelector(CONTAINER_SELECTOR).innerHTML = `<p>Can not load page, error: ${error.message}</p>`; //TODO
+  }
+
 };
 
 export const renderMoreGifs = async (counter) => {

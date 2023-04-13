@@ -10,7 +10,6 @@ export const loadTrendingGifs = async (counter = 0) => {
 
 export const uploadGif = async (file) => {
 
-
     const url = `https://upload.giphy.com/v1/gifs?api_key=${API_KEY}`;
     const formData = new FormData();
     formData.append('file', file);
@@ -56,6 +55,11 @@ export const getGif = async (gifId) => {
   const url = `https://api.giphy.com/v1/gifs/${gifId}?api_key=${API_KEY}`;
   const data = await fetch(url);
   const dataJson = await data.json();
+
+  if (!data.ok) {
+    console.log(dataJson.meta.msg)
+    throw new Error(dataJson.meta.msg);
+  }
 
   return dataJson.data;
 };
