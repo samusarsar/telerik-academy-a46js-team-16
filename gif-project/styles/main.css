@@ -4,7 +4,10 @@ body {
     font-size: 18px;
     background-color: #120723;
     color: whitesmoke;
-    font-family: sans-serif;
+    font-family: 'Ubuntu', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 h1 {
@@ -24,21 +27,41 @@ footer {
     justify-content: center;
     padding: 10px 0;
     font-size: 0.8em;
+    margin-top: auto;
 }
 
 /* navigation styles */
 
 #main-nav {
+    font-size: 0.8em;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     padding: 10px 30%;
     background-color: #4e2b69;
+    text-transform: uppercase;
 }
 
 #main-nav .nav-link {
     text-decoration: none;
     color: #e1d3dd;
+}
+
+#main-nav .nav-link:hover {
+    color: #e3bd3f;
+}
+
+#main-nav .nav-link::before {
+    content: '';
+    display: block;
+    height: 5px;
+    width: 0%;
+    background-color: #101518;
+    transition: all 250ms ease-in-out ;
+}
+
+#main-nav .nav-link:hover::before {
+    width: 100%;
 }
 
 #main-nav .active {
@@ -49,6 +72,7 @@ footer {
 
 #main-nav img {
     max-height: 50px;
+    cursor: pointer;
 }
 
 #search-nav {
@@ -107,10 +131,15 @@ footer {
     padding: 10px 40px;
 }
 
-#trending .content, #gifs .content {
+#trending .content, #gifs .content, #uploaded .content {
     padding: 10px 20px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
     row-gap: 5px;
+}
+
+#uploaded .content {
+    justify-content: flex-start;
+    column-gap: 10px;
 }

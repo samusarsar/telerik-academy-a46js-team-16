@@ -1,4 +1,5 @@
 import { renderFavoriteStatusForGif } from '../events/favorites-events.js';
+import { loadTrendingGifs } from '../requests/request-service.js';
 
 export const toMiniGifView = (gif) => `
   <div class="gif-box">
@@ -21,3 +22,9 @@ export const toDetailedGifView = (gif) => {
   </div>
   `;
 };
+
+export const toMoreTrendingGifsView = async (counter) => `
+  <div>
+  ${(await loadTrendingGifs(counter)).map(toMiniGifView).join('')}
+  </div>
+`;

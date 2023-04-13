@@ -1,7 +1,7 @@
 import { API_KEY } from '../common/constants.js';
 
-export const loadTrendingGifs = async () => {
-  const url = `https://api.giphy.com/v1/gifs/trending?api_key=${API_KEY}&limit=25&bundle=messaging_non_clips`;
+export const loadTrendingGifs = async (counter = 0) => {
+  const url = `https://api.giphy.com/v1/gifs/trending?api_key=${API_KEY}&limit=25&bundle=messaging_non_clips&offset=${counter}`;
   const data = await fetch(url);
   const dataJson = await data.json();
   const res = dataJson.data;
@@ -11,20 +11,20 @@ export const loadTrendingGifs = async () => {
 export const uploadGif = async (file) => {
 
   try {
-      const url = `https://upload.giphy.com/v1/gifs?api_key=${API_KEY}`;
-  const formData = new FormData();
-  formData.append('file', file);
-  formData.append('api_key', API_KEY);
+    const url = `https://upload.giphy.com/v1/gifs?api_key=${API_KEY}`;
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('api_key', API_KEY);
 
-  const request = await fetch(url, {
-    method: 'post',
-    body: formData,
-  });
+    const request = await fetch(url, {
+      method: 'post',
+      body: formData,
+    });
 
-  return request;
+    return request;
 
   } catch (error) {
-    console.log(error)  //TODO
+    console.log(error); // TODO
   }
 
 };

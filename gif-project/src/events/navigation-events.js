@@ -3,7 +3,7 @@ import { getFavorite } from '../data/favorites.js';
 import { getGif } from '../requests/request-service.js';
 import { toAboutView } from '../views/about-view.js';
 import { toFavoriteView, toRandomGifView } from '../views/favorites-view.js';
-import { toDetailedGifView } from '../views/gif-views.js';
+import { toDetailedGifView, toMoreTrendingGifsView } from '../views/gif-views.js';
 import { toHomeView } from '../views/home-view.js';
 import { toProfileView } from '../views/profile-view.js';
 import { toTrendingView } from '../views/trending-view.js';
@@ -61,4 +61,12 @@ export const renderGifDetails = async (gifId) => {
   const gif = await getGif(gifId);
 
   document.querySelector(CONTAINER_SELECTOR).innerHTML = toDetailedGifView(gif);
+};
+
+export const renderMoreGifs = async (counter) => {
+  const moreGifs = await toMoreTrendingGifsView(counter);
+  const newDiv = document.createElement('div');
+  newDiv.setAttribute('id', `${counter}`);
+  document.querySelector('.content').appendChild(newDiv);
+  document.querySelector(`#${counter}`).innerHTML = moreGifs;
 };
