@@ -12,6 +12,7 @@ export const uploadGif = async (file) => {
   const url = `https://upload.giphy.com/v1/gifs?api_key=${API_KEY}`;
   const formData = new FormData();
   formData.append('file', file);
+  formData.append('api_key', API_KEY);
 
   const request = await fetch(url, {
     method: 'post',
