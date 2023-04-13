@@ -139,6 +139,22 @@ footer {
     row-gap: 5px;
 }
 
+.detailed-gif{
+    display: flex;
+    justify-content: center;
+    padding-left: 50px;
+}
+
+img.user-avatar {
+    height: 30px;
+    border-radius: 50%;
+    margin: auto 5px;
+}
+
+img.favorite-status {
+    height: 30px;
+}
+
 #uploaded .content {
     justify-content: flex-start;
     column-gap: 10px;
