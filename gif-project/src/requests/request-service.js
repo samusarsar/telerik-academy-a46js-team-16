@@ -9,7 +9,9 @@ export const loadTrendingGifs = async () => {
 };
 
 export const uploadGif = async (file) => {
-  const url = `https://upload.giphy.com/v1/gifs?api_key=${API_KEY}`;
+
+  try {
+      const url = `https://upload.giphy.com/v1/gifs?api_key=${API_KEY}`;
   const formData = new FormData();
   formData.append('file', file);
   formData.append('api_key', API_KEY);
@@ -20,6 +22,11 @@ export const uploadGif = async (file) => {
   });
 
   return request;
+
+  } catch (error) {
+    console.log(error)  //TODO
+  }
+
 };
 
 export const searchGifs = async (searchTerm) => {

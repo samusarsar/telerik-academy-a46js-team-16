@@ -50,7 +50,7 @@ export const renderFavorite = async () => {
 };
 
 export const renderProfile = async () => {
-  document.querySelector(CONTAINER_SELECTOR).innerHTML = await toProfileView(1);
+  document.querySelector(CONTAINER_SELECTOR).innerHTML = await toProfileView();
 };
 
 export const renderAbout = async () => {

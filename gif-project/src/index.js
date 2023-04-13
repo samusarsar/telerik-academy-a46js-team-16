@@ -1,4 +1,4 @@
-import { HOME } from './common/constants.js';
+import { CONTAINER_SELECTOR, HOME } from './common/constants.js';
 import { toggleFavoriteStatus } from './events/favorites-events.js';
 import { loadPage, renderFavorite, renderGifDetails } from './events/navigation-events.js';
 import { clearUploadedItems } from './events/profile-events.js';
@@ -38,9 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (event.target.classList.contains('favorite-status')) {
       toggleFavoriteStatus(event.target.getAttribute('data-gif-id'));
-      if (document.querySelector('#container>#favorite')) {
-        renderFavorite();
-      }
     }
   });
 

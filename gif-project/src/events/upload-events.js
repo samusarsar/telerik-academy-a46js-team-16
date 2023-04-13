@@ -1,11 +1,19 @@
-import { CONTAINER_SELECTOR } from '../common/constants.js';
 import { uploadGif } from '../requests/request-service.js';
-import { toProfileView } from '../views/profile-view.js';
+import { renderUploads, toUploadViewError, toUploadViewSuccess } from '../views/profile-view.js';
 
 export const renderUploadItems = async (file) => {
-  const response = await uploadGif(file);
-  const resText = JSON.parse(await response.text());
-  if (response.ok) {
+
+  //TODO Loading
+
+  try {
+    const response = await uploadGif(file);
+
+    if (!response.ok) {
+      document.querySelector("#upload-result").innerHTML = toUploadViewError(await response.text());
+      return;
+    }
+
+    const resText = JSON.parse(await response.text());
     if (window.localStorage.getItem('uploads')) {
       const uploads = JSON.parse(window.localStorage.getItem('uploads'));
       uploads.push(resText.data.id);
@@ -13,8 +21,12 @@ export const renderUploadItems = async (file) => {
     } else {
       window.localStorage.setItem('uploads', JSON.stringify([resText.data.id]));
     }
-    document.querySelector(CONTAINER_SELECTOR).innerHTML = await toProfileView(2);
-  } else {
-    document.querySelector(CONTAINER_SELECTOR).innerHTML = await toProfileView(3, resText.meta.description);
+
+    document.querySelector('#upload-result').innerHTML = await toUploadViewSuccess();
+    document.querySelector("#uploaded .content").innerHTML = await renderUploads();
+
+  } catch (error) {
+    console.log(error)  //TODO
   }
+
 };
