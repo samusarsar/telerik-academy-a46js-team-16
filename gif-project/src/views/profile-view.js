@@ -1,13 +1,12 @@
 import { loadUploadedGifs } from '../requests/request-service.js';
 import { toMiniGifView } from './gif-views.js';
+import { toErrorView } from './interface-views.js';
 
 const toUploadView = () => `
     <div id="upload-box">
     <h2>Add new GIFs to your collection:</h2>
-        <form name="upload-form" method="post">
-            <input id="file" type="file" name="file" required />
-            <input type="submit" value="Upload" class="submit"/>
-        </form>
+        <input id="file" type="file" name="file" required />
+        <input type="submit" value="Upload" class="submit"/>
         <div id="upload-result"></div>
     </div>
 `;
@@ -22,9 +21,13 @@ const toMyUploadsView = async () => `
     </div>
 `;
 
-export const toProfileView = async () => {
-  return toUploadView() + '<br>' + await toMyUploadsView();
-};
+export const toProfileView = async () => `
+  <div id="profile">
+    <h1>Welcome to your GIFlamingo nest!</h1>
+    ${toUploadView()}
+    ${await toMyUploadsView()}
+  </div>
+`;
 
 export const toUploadViewSuccess = async () => {
   return `<p>GIF successfully uploaded!</p>`;
@@ -36,11 +39,6 @@ export const renderUploads = async () => {
   try {
     return (await loadUploadedGifs()).map(toMiniGifView).join('');
   } catch (error) {
-    return `
-            <p>Oh-No! There was an error loading the trending GIFs!</p>
-            <p>Please try again a bit later!</p>
-            <p>In the meantime, we hope this flamingo will make you feel better...</p>
-            <img src="../../images/error-flamingo.png">
-      `;
+    return toErrorView();
   };
 };

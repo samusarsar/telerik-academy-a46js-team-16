@@ -146,7 +146,31 @@ footer {
 .detailed-gif{
     display: flex;
     justify-content: center;
-    padding-left: 50px;
+    align-items: flex-start;
+    gap: 30px;
+}
+
+.detailed-gif .info-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+    margin-top: 65px;
+    border: 4px solid #00b5a1;
+    border-radius: 15%;
+    height: fit-content;
+    width: 20%;
+}
+
+.detailed-gif .info-container p {
+    display: flex;
+    align-items: center;
+}
+
+.detailed-gif .gif-container #gif-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
 
 img.user-avatar {
@@ -160,7 +184,7 @@ img.favorite-status {
 }
 
 #uploaded .content {
-    justify-content: flex-start;
+    justify-content: space-evenly;
     column-gap: 10px;
 }
 
@@ -168,4 +192,25 @@ img.favorite-status {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+#about {
+    text-align: center;
+}
+
+#profile, #favorite {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#profile #upload-box {
+    padding: 5%;
+    border: 4px solid #00b5a1;
+    border-radius: 15px;
+}
+
+#profile #uploaded {
+    text-align: center;
+    margin: 2% 0%;
 }
