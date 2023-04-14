@@ -88,15 +88,45 @@ footer {
 
 #search-nav {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
+    align-items: center;
     padding: 10px 30%;
-    /* background-color: #4e2b69; */
+    padding-bottom: 15px;
     background: linear-gradient(90deg,
     rgba(35,14,51,1) 0%,
     rgba(78,43,105,1) 25%,
     rgba(53,9,121,1) 50%,
     rgba(6,25,103,1) 75%,
-    rgba(4,4,92,1) 100%);  
+    rgba(4,4,92,1) 100%);
+}
+
+#search-nav #search {
+    height: 20px;
+    font-size: 0.8em;
+    color: rgb(93, 93, 93);
+    background-color: whitesmoke;
+    border: 2px solid rgb(93, 93, 93);
+    width: 16%;
+    padding: 10px;
+    border-radius: 10px;
+    transition: width 0.4s ease-in-out;
+}
+
+#search-nav #search::placeholder {
+    color: gray;
+}
+
+#search-nav #search:focus {
+    color: whitesmoke;
+    outline: none;
+    background-color: rgba(35,14,51,1);
+    border: 2px solid #00b5a1;
+    width: 300px;
+    border-radius: 10px;
+}
+
+#search-nav #search:focus::placeholder {
+    color: rgba(255, 255, 255, 0);
 }
 
 .favorite-bubble {
@@ -124,7 +154,6 @@ footer {
 
 .favorite-bubble p {
     margin: 0px;
-    /* position: absolute; */
     top: 50%;
     bottom: 50%;
     left: 50%;

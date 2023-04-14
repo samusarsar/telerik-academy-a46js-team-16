@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  document.querySelector('input#search').addEventListener('input', event => {
+  document.querySelector('#search-nav>#search').addEventListener('input', event => {
     renderSearchItems(event.target.value);
   });
 
