@@ -1,4 +1,4 @@
-export const toLoadView = () => `<p id="loader">LOADING .....</p>`;
+export const toLoadView = () => `<p id="loader">UPLOADING GIF .....</p>`;
 
 export const toErrorView = () => `
     <div id="error">
