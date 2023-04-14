@@ -1,4 +1,4 @@
-import { ABOUT, CONTAINER_SELECTOR, HOME, PROFILE, TRENDING, FAVORITE } from '../common/constants.js';
+import { ABOUT, CONTAINER_SELECTOR, HOME, PROFILE, TRENDING, FAVORITE, API_KEY } from '../common/constants.js';
 import { getFavorite } from '../data/favorites.js';
 import { getGif, getRandomGif, loadTrendingGifs } from '../requests/request-service.js';
 import { toAboutView } from '../views/about-view.js';
@@ -45,38 +45,49 @@ export const renderTrending = async () => {
 
   try {
     const data = await loadTrendingGifs(counter++);
-    document.querySelector(CONTAINER_SELECTOR).innerHTML = await toTrendingView(data);
+    document.querySelector(CONTAINER_SELECTOR).innerHTML = toTrendingView(data);
+
     const msnryContainer = document.querySelector('.trending>.content');
+    const msnry = new Masonry(msnryContainer, {
+      itemSelector: '.gif-box',
+      columnWidth: 200,
+      gutter: 10,
+      fitWidth: true,
+    });
+
     imagesLoaded(msnryContainer, () => {
-      const msnry = new Masonry(msnryContainer, {
-        itemSelector: '.gif-box',
-        columnWidth: 200,
-        gutter: 10,
-        fitWidth: true,
+      msnry.layout();
+    });
+
+    let infScroll = new InfiniteScroll(msnryContainer, {
+      // options
+      path: function() {
+        return `https://api.giphy.com/v1/gifs/trending?api_key=${API_KEY}&limit=25&bundle=messaging_non_clips&offset=${counter+=25}`;
+      },
+      // append: '.post',
+      responseBody: 'json',
+      outlayer: msnry,
+      status: '.page-load-status',
+      // prefill: true,
+      scrollThreshold: 0,
+    });
+
+    const proxyElem = document.createElement('div');
+
+    infScroll.on('load', function( body ) {
+      const itemsHTML = body.data.map( toMiniGifView ).join('');
+      proxyElem.innerHTML = itemsHTML;
+      let items = proxyElem.querySelectorAll('.gif-box');
+      imagesLoaded( items, function() {
+        infScroll.appendItems( items );
+        msnry.appended( items );
       });
     });
 
-    // infinite scroll
-    const trending = document.querySelector('.trending');
-    document.addEventListener('scroll', async () => {
-      const { scrollHeight, scrollTop, clientHeight } = document.documentElement;
+    infScroll.loadNextPage();
 
-      if ((scrollTop + clientHeight) > (scrollHeight)) {
-        const div = document.createElement('div');
-        div.className = 'content';
-        div.innerHTML = (await loadTrendingGifs(counter++)).map(toMiniGifView).join('');
-        trending.appendChild(div);
-        imagesLoaded(div, () => {
-          const msnry = new Masonry(div, {
-            itemSelector: '.gif-box',
-            columnWidth: 200,
-            gutter: 10,
-            fitWidth: true,
-          });
-        });
-      }
-    });
   } catch (error) {
+    console.log(error);
     document.querySelector(CONTAINER_SELECTOR).innerHTML = toErrorView();
   }
 };
@@ -97,15 +108,6 @@ export const renderFavorite = async () => {
 
 export const renderProfile = async () => {
   document.querySelector(CONTAINER_SELECTOR).innerHTML = await toProfileView();
-  // const msnryContainer = document.querySelector('#uploaded>.content');
-  // imagesLoaded(msnryContainer, () => {
-  //   const msnry = new Masonry(msnryContainer, {
-  //     itemSelector: '.gif-box',
-  //     columnWidth: 200,
-  //     gutter: 10,
-  //     fitWidth: true,
-  //   });
-  // })
 };
 
 export const renderAbout = async () => {
@@ -119,12 +121,4 @@ export const renderGifDetails = async (gifId) => {
   } catch (error) {
     document.querySelector(CONTAINER_SELECTOR).innerHTML = toErrorView();
   }
-};
-
-export const renderMoreGifs = async (counter) => {
-  const moreGifs = await toMoreTrendingGifsView(counter);
-  const newDiv = document.createElement('div');
-  newDiv.setAttribute('id', `${counter}`);
-  document.querySelector('.content').appendChild(newDiv);
-  document.querySelector(`#${counter}`).innerHTML = moreGifs;
 };

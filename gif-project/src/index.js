@@ -1,6 +1,6 @@
-import { CONTAINER_SELECTOR, HOME } from './common/constants.js';
+import { HOME } from './common/constants.js';
 import { toggleFavoriteStatus } from './events/favorites-events.js';
-import { loadPage, renderFavorite, renderGifDetails, renderMoreGifs } from './events/navigation-events.js';
+import { loadPage, renderFavorite, renderGifDetails } from './events/navigation-events.js';
 import { clearUploadedItems } from './events/profile-events.js';
 import { renderSearchItems } from './events/search-events.js';
 import { renderUploadItems } from './events/upload-events.js';
@@ -48,13 +48,6 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelector('input#search').addEventListener('input', event => {
     renderSearchItems(event.target.value);
   });
-
-  // window.addEventListener('scroll', async () => {
-  //   let counter = 0;
-  //   if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight) {
-  //     await renderMoreGifs(counter += 25);
-  //   }
-  // });
 
   loadPage(HOME);
 });

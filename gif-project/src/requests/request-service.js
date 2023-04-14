@@ -32,7 +32,7 @@ export const uploadGif = async (file) => {
 };
 
 export const searchGifs = async (searchTerm) => {
-  const url = `https://api.giphy.com/v1/gifs/search?api_key=${API_KEY}&q=${searchTerm}`;
+  const url = `https://api.giphy.com/v1/gifs/search?api_key=${API_KEY}&q=${searchTerm}&limit=20`;
   const data = await fetch(url);
 
   if (!data.ok) {
@@ -62,6 +62,7 @@ export const loadUploadedGifs = async () => {
     return [];
   }
 };
+
 /**
  * @param {string} gifId GIF ID
  * @return
