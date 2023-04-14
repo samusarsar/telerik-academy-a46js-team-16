@@ -6,7 +6,6 @@ export const removeFavorite = () => {
   window.localStorage.removeItem('favorite');
 };
 /**
- * 
- * @returns {string}  GIF ID
+ * @return {string}  GIF ID
  */
 export const getFavorite = () => window.localStorage.favorite;

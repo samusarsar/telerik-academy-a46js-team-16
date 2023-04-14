@@ -148,7 +148,7 @@ footer {
     padding: 10px 40px;
 }
 
-#trending .content, #gifs .content, #uploaded .content {
+.trending .content, #gifs .content, #uploaded .content {
     padding: 10px 20px;
     display: flex;
     flex-wrap: wrap;

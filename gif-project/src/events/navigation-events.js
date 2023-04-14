@@ -3,7 +3,7 @@ import { getFavorite } from '../data/favorites.js';
 import { getGif, getRandomGif, loadTrendingGifs } from '../requests/request-service.js';
 import { toAboutView } from '../views/about-view.js';
 import { toFavoriteView, toRandomGifView } from '../views/favorites-view.js';
-import { toDetailedGifView, toMoreTrendingGifsView } from '../views/gif-views.js';
+import { toDetailedGifView, toMiniGifView, toMoreTrendingGifsView } from '../views/gif-views.js';
 import { toHomeView } from '../views/home-view.js';
 import { toErrorView } from '../views/interface-views.js';
 import { toProfileView } from '../views/profile-view.js';
@@ -41,12 +41,27 @@ export const renderHome = () => {
 };
 
 export const renderTrending = async () => {
+  let counter = 0;
+
   try {
-    const data = await loadTrendingGifs();
+    const data = await loadTrendingGifs(counter++);
     document.querySelector(CONTAINER_SELECTOR).innerHTML = await toTrendingView(data);
   } catch (error) {
     document.querySelector(CONTAINER_SELECTOR).innerHTML = toErrorView();
   }
+  
+  //infinite scroll
+  let trending = document.querySelector('.trending');
+  document.addEventListener('scroll', async() => {
+    const {scrollHeight,scrollTop,clientHeight} = document.documentElement;
+
+    if((scrollTop + clientHeight) > (scrollHeight)) {
+      const div = document.createElement('div');
+      div.className = 'content'
+      div.innerHTML = (await loadTrendingGifs(counter++)).map(toMiniGifView).join('') ;
+      trending.appendChild(div);
+    }
+  })
 };
 
 export const renderFavorite = async () => {

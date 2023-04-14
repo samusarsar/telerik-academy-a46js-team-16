@@ -1,7 +1,7 @@
 import { API_KEY } from '../common/constants.js';
 
-export const loadTrendingGifs = async (counter = 0) => {
-  const url = `https://api.giphy.com/v1/gifs/trending?api_key=${API_KEY}&limit=25&bundle=messaging_non_clips&offset=${counter}`;
+export const loadTrendingGifs = async (counter) => {
+  const url = `https://api.giphy.com/v1/gifs/trending?api_key=${API_KEY}&limit=25&bundle=messaging_non_clips&offset=${counter*25}`;
   const data = await fetch(url);
 
   if (!data.ok) {
@@ -63,9 +63,8 @@ export const loadUploadedGifs = async () => {
   }
 };
 /**
- * 
  * @param {string} gifId GIF ID
- * @returns 
+ * @return
  */
 export const getGif = async (gifId) => {
   const url = `https://api.giphy.com/v1/gifs/${gifId}?api_key=${API_KEY}`;
