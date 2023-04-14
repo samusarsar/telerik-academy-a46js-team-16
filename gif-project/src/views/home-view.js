@@ -11,5 +11,6 @@ export const toHomeView = () => `
       <li>Show off your GIFlamingo Profile with all of your uploads</li>
     </ul>
   </div>
+  <img src="../../images/home-flamingo.gif" alt="Welcome flamingo">
 </div>
 `;
