@@ -26,7 +26,7 @@ export const renderSearchItems = async (searchTerm) => {
       msnry.layout();
     });
 
-    let infScroll = new InfiniteScroll(msnryContainer, {
+    const infScroll = new InfiniteScroll(msnryContainer, {
       // options
       path: function() {
         return `https://api.giphy.com/v1/gifs/search?api_key=${API_KEY}&q=${searchTerm}&limit=20&offset=${counter+=20}`;
@@ -43,7 +43,7 @@ export const renderSearchItems = async (searchTerm) => {
     infScroll.on('load', function( body ) {
       const itemsHTML = body.data.map( toMiniGifView ).join('');
       proxyElem.innerHTML = itemsHTML;
-      let items = proxyElem.querySelectorAll('.gif-box');
+      const items = proxyElem.querySelectorAll('.gif-box');
       imagesLoaded( items, function() {
         infScroll.appendItems( items );
         msnry.appended( items );

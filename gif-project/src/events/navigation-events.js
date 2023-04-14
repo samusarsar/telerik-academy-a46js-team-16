@@ -3,7 +3,7 @@ import { getFavorite } from '../data/favorites.js';
 import { getGif, getRandomGif, loadTrendingGifs } from '../requests/request-service.js';
 import { toAboutView } from '../views/about-view.js';
 import { toFavoriteView, toRandomGifView } from '../views/favorites-view.js';
-import { toDetailedGifView, toMiniGifView, toMoreTrendingGifsView } from '../views/gif-views.js';
+import { toDetailedGifView, toMiniGifView } from '../views/gif-views.js';
 import { toHomeView } from '../views/home-view.js';
 import { toErrorView } from '../views/interface-views.js';
 import { toProfileView } from '../views/profile-view.js';
@@ -30,7 +30,6 @@ export const loadPage = (page = '') => {
     setActiveNav(ABOUT);
     return renderAbout();
 
-    /* if the app supports error logging, use default to log mapping errors */
   default: return null;
   }
 
@@ -59,7 +58,7 @@ export const renderTrending = async () => {
       msnry.layout();
     });
 
-    let infScroll = new InfiniteScroll(msnryContainer, {
+    const infScroll = new InfiniteScroll(msnryContainer, {
       // options
       path: function() {
         return `https://api.giphy.com/v1/gifs/trending?api_key=${API_KEY}&limit=25&bundle=messaging_non_clips&offset=${counter+=25}`;
@@ -77,7 +76,7 @@ export const renderTrending = async () => {
     infScroll.on('load', function( body ) {
       const itemsHTML = body.data.map( toMiniGifView ).join('');
       proxyElem.innerHTML = itemsHTML;
-      let items = proxyElem.querySelectorAll('.gif-box');
+      const items = proxyElem.querySelectorAll('.gif-box');
       imagesLoaded( items, function() {
         infScroll.appendItems( items );
         msnry.appended( items );

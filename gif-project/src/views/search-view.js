@@ -12,4 +12,3 @@ export const toSearchView = (gifs, searchTerm) => `
 const toSuccessfulSearchView = (gifs) => gifs.map(toMiniGifView).join('\n') || `<p>No GIFs found</p>`;
 
 const toNotSuccessfulSearchView = () => `<p>Enter words to search GIFs</p>`;
-

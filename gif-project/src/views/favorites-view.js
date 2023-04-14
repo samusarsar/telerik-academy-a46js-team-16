@@ -7,7 +7,6 @@ export const toFavoriteView = (favoriteGif) => `
     ${toDetailedGifView(favoriteGif)}
 `;
 
-
 export const toRandomGifView = (randomGif) => `
   <div id="favorite">
       <h1>No 'fave' yet?</h1>
@@ -16,4 +15,3 @@ export const toRandomGifView = (randomGif) => `
   </div>
   ${toDetailedGifView(randomGif)}
 `;
-

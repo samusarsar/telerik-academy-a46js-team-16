@@ -32,4 +32,3 @@ export const toUploadViewSuccess = async () => {
 };
 
 export const toUploadViewError = (error) => `<p>Uh-oh! That didn\'t work out...   ${error}</p>`;
-
