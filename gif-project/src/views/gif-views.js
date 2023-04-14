@@ -15,10 +15,10 @@ export const toDetailedGifView = (gif, relatedGifs) => {
   <div class="detailed-gif">
     <div class="info-container">
       <p>Uploaded by:</p>
-      <p><span><img class="user-avatar" src="${gif?.user?.avatar_url ||
+      <p class="details"><span><img class="user-avatar" src="${gif?.user?.avatar_url ||
         '../images/anonymous-user-icon-2.jpg'}" ></span> ${gif.user?.display_name || gif.username || 'anonymous user'}</p>
       <p>Uploaded on:</p>
-      <p>${new Date(gif.import_datetime).toLocaleDateString()}</p>
+      <p class="details">${new Date(gif.import_datetime).toLocaleDateString()}</p>
     </div>
     <div class="gif-container">
       <div id="gif-header">
