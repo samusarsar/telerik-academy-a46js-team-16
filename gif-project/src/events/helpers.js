@@ -1,4 +1,4 @@
-export const setActiveNav = (page) => {
+export const setActiveNav = (page = null) => {
   const navs = document.querySelectorAll('a.nav-link');
 
   Array
