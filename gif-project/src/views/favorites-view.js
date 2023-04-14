@@ -18,11 +18,20 @@ export const toFavoriteView = async () => {
 `;
 };
 
-export const toRandomGifView = async () => `
-    <div id="favorite">
-        <h1>No 'fave' yet?</h1>
-        <p>Browse GIFlamingo and click the heart icon next to your favorite GIF to make it yours!</p>
-        <p>In the meantime, here's a random one you might like:</p>
-    </div>
-    ${toDetailedGifView(await getRandomGif())}
-`;
+export const toRandomGifView = async () => {
+  let result;
+  try {
+    result = toDetailedGifView(await getRandomGif());
+  } catch (error) {
+    result = error.message;
+  }
+
+  return `
+  <div id="favorite">
+      <h1>No 'fave' yet?</h1>
+      <p>Browse GIFlamingo and click the heart icon next to your favorite GIF to make it yours!</p>
+      <p>In the meantime, here's a random one you might like:</p>
+  </div>
+  ${result}
+`
+} ;

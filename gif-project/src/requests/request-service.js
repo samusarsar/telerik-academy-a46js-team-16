@@ -80,5 +80,9 @@ export const getRandomGif = async () => {
   const data = await fetch(url);
   const dataJson = await data.json();
 
+  if (!data.ok) {
+    throw new Error(dataJson.meta.msg);
+  }
+
   return dataJson.data;
 };
