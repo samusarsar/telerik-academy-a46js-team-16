@@ -27,7 +27,6 @@ export const renderSearchItems = async (searchTerm) => {
     });
 
     const infScroll = new InfiniteScroll(msnryContainer, {
-      // options
       path: function() {
         return `https://api.giphy.com/v1/gifs/search?api_key=${API_KEY}&q=${searchTerm}&limit=20&offset=${counter+=20}`;
       },
@@ -35,7 +34,7 @@ export const renderSearchItems = async (searchTerm) => {
       outlayer: msnry,
       status: '.page-load-status',
       history: false,
-      scrollThreshold: 0,
+      scrollThreshold: 150,
     });
 
     const proxyElem = document.createElement('div');

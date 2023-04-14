@@ -25,6 +25,8 @@ export const DATA_GIF_ID = 'data-gif-id';
 
 export const FAV_STATUS = 'favorite-status';
 
-export const CONTAINER_FAVORITE = '#container>#favorite';
+export const CONTAINER_FAVORITE = '#container>.favorite';
+
+export const CONTAINER_RANDOM = '#container>.random';
 
 export const SEARCH_BAR = '#search-nav>#search';

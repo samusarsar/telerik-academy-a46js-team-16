@@ -1,4 +1,4 @@
-import { CONTAINER_FAVORITE, DATA_GIF_ID, DATA_PAGE, EMPTY_NEST, FAV_BUBBLE, FAV_STATUS, FILE, HOME, MINI_GIF_IMG, NAV_LINK, SEARCH_BAR, SUBMIT } from './common/constants.js';
+import { CONTAINER_FAVORITE, CONTAINER_RANDOM, DATA_GIF_ID, DATA_PAGE, EMPTY_NEST, FAV_BUBBLE, FAV_STATUS, FILE, HOME, MINI_GIF_IMG, NAV_LINK, SEARCH_BAR, SUBMIT } from './common/constants.js';
 import { toggleFavoriteStatus } from './events/favorites-events.js';
 import { loadPage, renderFavorite, renderGifDetails } from './events/navigation-events.js';
 import { clearUploadedItems } from './events/profile-events.js';
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (event.target.classList.contains(FAV_STATUS)) {
       toggleFavoriteStatus(event.target.getAttribute(DATA_GIF_ID));
 
-      if (document.querySelector(CONTAINER_FAVORITE)) {
+      if (document.querySelector(CONTAINER_FAVORITE) || document.querySelector(CONTAINER_RANDOM)) {
         renderFavorite();
       }
     }

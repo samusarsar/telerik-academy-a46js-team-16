@@ -1,5 +1,4 @@
 import { renderFavoriteStatusForGif } from '../events/favorites-events.js';
-import { loadTrendingGifs } from '../requests/request-service.js';
 
 export const toMiniGifView = (gif) => `
   <div class="gif-box">
@@ -11,7 +10,7 @@ export const toMoreMiniGifView = (gif) => `
   <img class="mini-gif-img" data-gif-id="${gif.id}" src="${gif.images.fixed_height_downsampled.url}" alt="${gif.title}">
 `;
 
-export const toDetailedGifView = (gif) => {
+export const toDetailedGifView = (gif, relatedGifs) => {
   return `
   <div class="detailed-gif">
     <div class="info-container">
@@ -31,11 +30,15 @@ export const toDetailedGifView = (gif) => {
       <img src="${gif.images.original.url}">
     </div>
   </div>
-  `;
+  ${toRelatedGifsView(relatedGifs)}
+`;
 };
 
-export const toMoreTrendingGifsView = async (counter) => `
-  <div>
-  ${(await loadTrendingGifs(counter)).map(toMiniGifView).join('')}
+export const toRelatedGifsView = (gifs) => `
+  <div class="related-gifs">
+  <h2>Check out more GIFs like this:</h2>
+    <div class="content">
+      ${gifs.length ? gifs.map(toMiniGifView) : 'Hmmm... Looks like there isn\'t any!'}
+    </div>
   </div>
 `;

@@ -1,6 +1,6 @@
 import { ABOUT, CONTAINER_SELECTOR, HOME, PROFILE, TRENDING, FAVORITE, API_KEY } from '../common/constants.js';
 import { getFavorite } from '../data/favorites.js';
-import { getGif, getRandomGif, loadTrendingGifs } from '../requests/request-service.js';
+import { getGif, getRandomGif, loadTrendingGifs, searchGifs } from '../requests/request-service.js';
 import { toAboutView } from '../views/about-view.js';
 import { toFavoriteView, toRandomGifView } from '../views/favorites-view.js';
 import { toDetailedGifView, toMiniGifView } from '../views/gif-views.js';
@@ -59,16 +59,13 @@ export const renderTrending = async () => {
     });
 
     const infScroll = new InfiniteScroll(msnryContainer, {
-      // options
       path: function() {
         return `https://api.giphy.com/v1/gifs/trending?api_key=${API_KEY}&limit=25&bundle=messaging_non_clips&offset=${counter+=25}`;
       },
-      // append: '.post',
       responseBody: 'json',
       outlayer: msnry,
       status: '.page-load-status',
-      // prefill: true,
-      scrollThreshold: 0,
+      scrollThreshold: 150,
     });
 
     const proxyElem = document.createElement('div');
@@ -92,13 +89,90 @@ export const renderTrending = async () => {
 };
 
 export const renderFavorite = async () => {
+  let counter = 0;
   try {
     if (getFavorite()) {
       const favoriteGif = await getGif(getFavorite());
-      document.querySelector(CONTAINER_SELECTOR).innerHTML = toFavoriteView(favoriteGif);
+      const term = favoriteGif.slug.split('-');
+      const relatedGifs = await searchGifs(...term);
+      document.querySelector(CONTAINER_SELECTOR).innerHTML = toFavoriteView(favoriteGif, relatedGifs);
+
+      const msnryContainer = document.querySelector('.content');
+      const msnry = new Masonry(msnryContainer, {
+        itemSelector: '.gif-box',
+        columnWidth: 200,
+        gutter: 10,
+        fitWidth: true,
+      });
+
+      imagesLoaded(msnryContainer, () => {
+        msnry.layout();
+      });
+
+      const infScroll = new InfiniteScroll(msnryContainer, {
+        path: function() {
+          return `https://api.giphy.com/v1/gifs/search?api_key=${API_KEY}&q=${term}&limit=20&offset=${counter+=20}`;
+        },
+        responseBody: 'json',
+        outlayer: msnry,
+        status: '.page-load-status',
+        scrollThreshold: 150,
+      });
+
+      const proxyElem = document.createElement('div');
+
+      infScroll.on('load', function( body ) {
+        const itemsHTML = body.data.map( toMiniGifView ).join('');
+        proxyElem.innerHTML = itemsHTML;
+        const items = proxyElem.querySelectorAll('.gif-box');
+        imagesLoaded( items, function() {
+          infScroll.appendItems( items );
+          msnry.appended( items );
+        });
+      });
+
+      infScroll.loadNextPage();
     } else {
       const randomGif = await getRandomGif();
-      document.querySelector(CONTAINER_SELECTOR).innerHTML = toRandomGifView(randomGif);
+      const term = randomGif.slug.split('-');
+      const relatedGifs = await searchGifs(...term);
+      document.querySelector(CONTAINER_SELECTOR).innerHTML = toRandomGifView(randomGif, relatedGifs);
+
+      const msnryContainer = document.querySelector('.content');
+      const msnry = new Masonry(msnryContainer, {
+        itemSelector: '.gif-box',
+        columnWidth: 200,
+        gutter: 10,
+        fitWidth: true,
+      });
+
+      imagesLoaded(msnryContainer, () => {
+        msnry.layout();
+      });
+
+      const infScroll = new InfiniteScroll(msnryContainer, {
+        path: function() {
+          return `https://api.giphy.com/v1/gifs/search?api_key=${API_KEY}&q=${term}&limit=20&offset=${counter+=20}`;
+        },
+        responseBody: 'json',
+        outlayer: msnry,
+        status: '.page-load-status',
+        scrollThreshold: 150,
+      });
+
+      const proxyElem = document.createElement('div');
+
+      infScroll.on('load', function( body ) {
+        const itemsHTML = body.data.map( toMiniGifView ).join('');
+        proxyElem.innerHTML = itemsHTML;
+        const items = proxyElem.querySelectorAll('.gif-box');
+        imagesLoaded( items, function() {
+          infScroll.appendItems( items );
+          msnry.appended( items );
+        });
+      });
+
+      infScroll.loadNextPage();
     }
   } catch (error) {
     document.querySelector(CONTAINER_SELECTOR).innerHTML = toErrorView();
@@ -114,9 +188,48 @@ export const renderAbout = async () => {
 };
 
 export const renderGifDetails = async (gifId) => {
+  let counter = 0;
   try {
     const gif = await getGif(gifId);
-    document.querySelector(CONTAINER_SELECTOR).innerHTML = toDetailedGifView(gif);
+    const term = gif.slug.split('-');
+    const relatedGifs = await searchGifs(...term);
+    document.querySelector(CONTAINER_SELECTOR).innerHTML = toDetailedGifView(gif, relatedGifs);
+
+    const msnryContainer = document.querySelector('.content');
+    const msnry = new Masonry(msnryContainer, {
+      itemSelector: '.gif-box',
+      columnWidth: 200,
+      gutter: 10,
+      fitWidth: true,
+    });
+
+    imagesLoaded(msnryContainer, () => {
+      msnry.layout();
+    });
+
+    const infScroll = new InfiniteScroll(msnryContainer, {
+      path: function() {
+        return `https://api.giphy.com/v1/gifs/search?api_key=${API_KEY}&q=${term}&limit=20&offset=${counter+=20}`;
+      },
+      responseBody: 'json',
+      outlayer: msnry,
+      status: '.page-load-status',
+      scrollThreshold: 150,
+    });
+
+    const proxyElem = document.createElement('div');
+
+    infScroll.on('load', function( body ) {
+      const itemsHTML = body.data.map( toMiniGifView ).join('');
+      proxyElem.innerHTML = itemsHTML;
+      const items = proxyElem.querySelectorAll('.gif-box');
+      imagesLoaded( items, function() {
+        infScroll.appendItems( items );
+        msnry.appended( items );
+      });
+    });
+
+    infScroll.loadNextPage();
   } catch (error) {
     document.querySelector(CONTAINER_SELECTOR).innerHTML = toErrorView();
   }

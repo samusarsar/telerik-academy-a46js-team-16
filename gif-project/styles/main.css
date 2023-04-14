@@ -13,6 +13,7 @@ body {
 
 h1 {
     font-size: 1.8em;
+    padding-left: 20px;
 }
 
 h2 {
@@ -226,6 +227,20 @@ footer {
     display: flex;
     align-items: center;
     gap: 15px;
+}
+
+.related-gifs {
+    margin: 20px 0;
+}
+
+.related-gifs h2 {
+    padding-left: 7%;
+    padding-top: 20px;
+}
+
+.related-gifs .content {
+    padding: 10px 20px;
+    margin: 0 auto;
 }
 
 img.user-avatar {
