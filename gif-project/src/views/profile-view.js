@@ -1,6 +1,4 @@
-import { loadUploadedGifs } from '../requests/request-service.js';
-import { toMiniGifView } from './gif-views.js';
-import { toErrorView } from './interface-views.js';
+import { renderUploads } from '../events/upload-events.js';
 
 const toUploadView = () => `
     <div id="upload-box">
@@ -35,10 +33,3 @@ export const toUploadViewSuccess = async () => {
 
 export const toUploadViewError = (error) => `<p>Uh-oh! That didn\'t work out...   ${error}</p>`;
 
-export const renderUploads = async () => {
-  try {
-    return (await loadUploadedGifs()).map(toMiniGifView).join('');
-  } catch (error) {
-    return toErrorView();
-  };
-};

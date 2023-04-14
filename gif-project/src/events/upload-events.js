@@ -1,6 +1,7 @@
-import { uploadGif } from '../requests/request-service.js';
-import { toLoadView } from '../views/interface-views.js';
-import { renderUploads, toUploadViewError, toUploadViewSuccess } from '../views/profile-view.js';
+import { loadUploadedGifs, uploadGif } from '../requests/request-service.js';
+import { toMiniGifView } from '../views/gif-views.js';
+import { toErrorView, toLoadView } from '../views/interface-views.js';
+import { toUploadViewError, toUploadViewSuccess } from '../views/profile-view.js';
 
 export const renderUploadItems = async (file) => {
 
@@ -24,4 +25,12 @@ export const renderUploadItems = async (file) => {
   } catch (error) {
     document.querySelector('#upload-result').innerHTML = toUploadViewError(error.message);
   }
+};
+
+export const renderUploads = async () => {
+  try {
+    return (await loadUploadedGifs()).map(toMiniGifView).join('');
+  } catch (error) {
+    return toErrorView();
+  };
 };
