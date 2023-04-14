@@ -21,5 +21,3 @@ export const renderFavoriteStatusForGif = (id) => {
     return `<img src="../../images/heart-empty.png" class="favorite-status" data-gif-id="${id}">`;
   }
 };
-
-

@@ -68,7 +68,7 @@ export const renderGifDetails = async (gifId) => {
     const gif = await getGif(gifId);
     document.querySelector(CONTAINER_SELECTOR).innerHTML = toDetailedGifView(gif);
   } catch (error) {
-    document.querySelector(CONTAINER_SELECTOR).innerHTML = `<p>Can not load page, error: ${error.message}</p>`; // TODO
+    document.querySelector(CONTAINER_SELECTOR).innerHTML = toErrorView();
   }
 };
 
