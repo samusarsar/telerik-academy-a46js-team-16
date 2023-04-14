@@ -1,6 +1,6 @@
 import { ABOUT, CONTAINER_SELECTOR, HOME, PROFILE, TRENDING, FAVORITE } from '../common/constants.js';
 import { getFavorite } from '../data/favorites.js';
-import { getGif, loadTrendingGifs } from '../requests/request-service.js';
+import { getGif, getRandomGif, loadTrendingGifs } from '../requests/request-service.js';
 import { toAboutView } from '../views/about-view.js';
 import { toFavoriteView, toRandomGifView } from '../views/favorites-view.js';
 import { toDetailedGifView, toMoreTrendingGifsView } from '../views/gif-views.js';
@@ -14,24 +14,24 @@ export const loadPage = (page = '') => {
 
   switch (page) {
 
-  case HOME:
-    setActiveNav(HOME);
-    return renderHome();
-  case TRENDING:
-    setActiveNav(TRENDING);
-    return renderTrending();
-  case FAVORITE:
-    setActiveNav(FAVORITE);
-    return renderFavorite();
-  case PROFILE:
-    setActiveNav(PROFILE);
-    return renderProfile();
-  case ABOUT:
-    setActiveNav(ABOUT);
-    return renderAbout();
+    case HOME:
+      setActiveNav(HOME);
+      return renderHome();
+    case TRENDING:
+      setActiveNav(TRENDING);
+      return renderTrending();
+    case FAVORITE:
+      setActiveNav(FAVORITE);
+      return renderFavorite();
+    case PROFILE:
+      setActiveNav(PROFILE);
+      return renderProfile();
+    case ABOUT:
+      setActiveNav(ABOUT);
+      return renderAbout();
 
     /* if the app supports error logging, use default to log mapping errors */
-  default: return null;
+    default: return null;
   }
 
 };
@@ -50,9 +50,19 @@ export const renderTrending = async () => {
 };
 
 export const renderFavorite = async () => {
-  getFavorite() ?
-    document.querySelector(CONTAINER_SELECTOR).innerHTML = await toFavoriteView() :
-    document.querySelector(CONTAINER_SELECTOR).innerHTML = await toRandomGifView();
+  try {
+    if (getFavorite()) {
+      const favoriteGif = await getGif(getFavorite());
+      document.querySelector(CONTAINER_SELECTOR).innerHTML = toFavoriteView(favoriteGif);
+    } else {
+      const randomGif = await getRandomGif();
+      document.querySelector(CONTAINER_SELECTOR).innerHTML = toRandomGifView(randomGif);
+    }
+  } catch (error) {
+    document.querySelector(CONTAINER_SELECTOR).innerHTML = toErrorView();
+  }
+
+
 };
 
 export const renderProfile = async () => {

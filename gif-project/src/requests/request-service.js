@@ -62,7 +62,11 @@ export const loadUploadedGifs = async () => {
     return [];
   }
 };
-
+/**
+ * 
+ * @param {string} gifId GIF ID
+ * @returns 
+ */
 export const getGif = async (gifId) => {
   const url = `https://api.giphy.com/v1/gifs/${gifId}?api_key=${API_KEY}`;
   const data = await fetch(url);
