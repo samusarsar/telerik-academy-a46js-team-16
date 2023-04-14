@@ -34,6 +34,7 @@ footer {
     padding: 30px 0;
     font-size: 0.8em;
     margin-top: auto;
+    color: rgba(245, 245, 245, 0.537);
 }
 
 /* navigation styles */
@@ -229,18 +230,23 @@ footer {
     gap: 15px;
 }
 
-.related-gifs {
+#related-gifs {
     margin: 20px 0;
 }
 
-.related-gifs h2 {
+#related-gifs h2 {
     padding-left: 7%;
     padding-top: 20px;
 }
 
-.related-gifs .content {
+#related-gifs .content {
     padding: 10px 20px;
     margin: 0 auto;
+}
+
+#related-gifs #not-found {
+    padding-top: 10px;
+    text-align: center;
 }
 
 img.user-avatar {
@@ -263,10 +269,18 @@ img.favorite-status {
     text-align: center;
 }
 
-#profile, #favorite {
+#about h1 {
+    padding: unset;
+}
+
+#profile {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.random p {
+    text-align: center;
 }
 
 #profile #upload-box {

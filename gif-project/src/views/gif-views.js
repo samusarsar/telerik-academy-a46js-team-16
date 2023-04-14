@@ -34,11 +34,23 @@ export const toDetailedGifView = (gif, relatedGifs) => {
 `;
 };
 
-export const toRelatedGifsView = (gifs) => `
-  <div class="related-gifs">
-  <h2>Check out more GIFs like this:</h2>
+export const toRelatedGifsView = (gifs) => {
+  const relatedGifsGrid = gifs.length ? `
     <div class="content">
-      ${gifs.length ? gifs.map(toMiniGifView) : 'Hmmm... Looks like there isn\'t any!'}
+      ${gifs.map(toMiniGifView)}
     </div>
-  </div>
-`;
+    ` : `
+    <div id="not-found">
+      <p>Hmmm... Looks like there isn\'t any!</p>
+    </div>
+    `;
+
+  const full = `
+    <div id="related-gifs">
+      <h2>Check out more GIFs like this:</h2>
+      ${relatedGifsGrid}
+    </div>
+    `;
+
+  return full;
+};
