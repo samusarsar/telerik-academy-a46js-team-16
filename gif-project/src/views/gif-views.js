@@ -7,6 +7,10 @@ export const toMiniGifView = (gif) => `
   </div>
 `;
 
+export const toMoreMiniGifView = (gif) => `
+  <img class="mini-gif-img" data-gif-id="${gif.id}" src="${gif.images.fixed_height_downsampled.url}" alt="${gif.title}">
+`;
+
 export const toDetailedGifView = (gif) => {
   return `
   <div class="detailed-gif">

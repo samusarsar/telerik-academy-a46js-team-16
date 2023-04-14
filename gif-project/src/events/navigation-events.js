@@ -14,24 +14,24 @@ export const loadPage = (page = '') => {
 
   switch (page) {
 
-    case HOME:
-      setActiveNav(HOME);
-      return renderHome();
-    case TRENDING:
-      setActiveNav(TRENDING);
-      return renderTrending();
-    case FAVORITE:
-      setActiveNav(FAVORITE);
-      return renderFavorite();
-    case PROFILE:
-      setActiveNav(PROFILE);
-      return renderProfile();
-    case ABOUT:
-      setActiveNav(ABOUT);
-      return renderAbout();
+  case HOME:
+    setActiveNav(HOME);
+    return renderHome();
+  case TRENDING:
+    setActiveNav(TRENDING);
+    return renderTrending();
+  case FAVORITE:
+    setActiveNav(FAVORITE);
+    return renderFavorite();
+  case PROFILE:
+    setActiveNav(PROFILE);
+    return renderProfile();
+  case ABOUT:
+    setActiveNav(ABOUT);
+    return renderAbout();
 
     /* if the app supports error logging, use default to log mapping errors */
-    default: return null;
+  default: return null;
   }
 
 };
@@ -46,22 +46,39 @@ export const renderTrending = async () => {
   try {
     const data = await loadTrendingGifs(counter++);
     document.querySelector(CONTAINER_SELECTOR).innerHTML = await toTrendingView(data);
+    const msnryContainer = document.querySelector('.trending>.content');
+    imagesLoaded(msnryContainer, () => {
+      const msnry = new Masonry(msnryContainer, {
+        itemSelector: '.gif-box',
+        columnWidth: 200,
+        gutter: 10,
+        fitWidth: true,
+      });
+    });
+
+    // infinite scroll
+    const trending = document.querySelector('.trending');
+    document.addEventListener('scroll', async () => {
+      const { scrollHeight, scrollTop, clientHeight } = document.documentElement;
+
+      if ((scrollTop + clientHeight) > (scrollHeight)) {
+        const div = document.createElement('div');
+        div.className = 'content';
+        div.innerHTML = (await loadTrendingGifs(counter++)).map(toMiniGifView).join('');
+        trending.appendChild(div);
+        imagesLoaded(div, () => {
+          const msnry = new Masonry(div, {
+            itemSelector: '.gif-box',
+            columnWidth: 200,
+            gutter: 10,
+            fitWidth: true,
+          });
+        });
+      }
+    });
   } catch (error) {
     document.querySelector(CONTAINER_SELECTOR).innerHTML = toErrorView();
   }
-  
-  //infinite scroll
-  let trending = document.querySelector('.trending');
-  document.addEventListener('scroll', async() => {
-    const {scrollHeight,scrollTop,clientHeight} = document.documentElement;
-
-    if((scrollTop + clientHeight) > (scrollHeight)) {
-      const div = document.createElement('div');
-      div.className = 'content'
-      div.innerHTML = (await loadTrendingGifs(counter++)).map(toMiniGifView).join('') ;
-      trending.appendChild(div);
-    }
-  })
 };
 
 export const renderFavorite = async () => {
@@ -76,12 +93,19 @@ export const renderFavorite = async () => {
   } catch (error) {
     document.querySelector(CONTAINER_SELECTOR).innerHTML = toErrorView();
   }
-
-
 };
 
 export const renderProfile = async () => {
   document.querySelector(CONTAINER_SELECTOR).innerHTML = await toProfileView();
+  // const msnryContainer = document.querySelector('#uploaded>.content');
+  // imagesLoaded(msnryContainer, () => {
+  //   const msnry = new Masonry(msnryContainer, {
+  //     itemSelector: '.gif-box',
+  //     columnWidth: 200,
+  //     gutter: 10,
+  //     fitWidth: true,
+  //   });
+  // })
 };
 
 export const renderAbout = async () => {

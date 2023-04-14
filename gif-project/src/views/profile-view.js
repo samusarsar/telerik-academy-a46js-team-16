@@ -15,7 +15,7 @@ const toMyUploadsView = async () => `
         <div class="content">
         ${await renderUploads() || '<p>You haven\'t uploaded any GIFs yet.</p><p>Click above to upload your first!</p>'}
         </div>
-        <a href=# class="empty-nest">Empty my nest</a>
+        <div><a href=# class="empty-nest">Empty my nest</a></div>
     </div>
 `;
 

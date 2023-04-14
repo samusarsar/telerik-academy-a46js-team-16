@@ -46,11 +46,11 @@ footer {
     text-transform: uppercase;
     background: rgb(35,14,51);
     background: linear-gradient(90deg,
-     rgba(35,14,51,1) 0%,
-     rgba(78,43,105,1) 25%,
-     rgba(53,9,121,1) 50%,
-     rgba(6,25,103,1) 75%,
-     rgba(4,4,92,1) 100%);    
+    rgba(35,14,51,1) 0%,
+    rgba(78,43,105,1) 25%,
+    rgba(53,9,121,1) 50%,
+    rgba(6,25,103,1) 75%,
+    rgba(4,4,92,1) 100%);    
 }
 
 #main-nav .nav-link {
@@ -97,10 +97,6 @@ footer {
     rgba(53,9,121,1) 50%,
     rgba(6,25,103,1) 75%,
     rgba(4,4,92,1) 100%);  
-}
-
-.gif-box img{
-    cursor: pointer;
 }
 
 .favorite-bubble {
@@ -150,10 +146,26 @@ footer {
 
 .trending .content, #gifs .content, #uploaded .content {
     padding: 10px 20px;
+    margin: 0 auto;
+}
+
+#uploaded .content {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
+    column-gap: 10px;
     row-gap: 5px;
+    margin-bottom: 20px;
+}
+
+.gif-box {
+    width: 200px;
+    margin-bottom: 10px;
+}
+
+.gif-box img{
+    cursor: pointer;
+    width: 100%;
 }
 
 .detailed-gif{
@@ -194,11 +206,6 @@ img.user-avatar {
 
 img.favorite-status {
     height: 30px;
-}
-
-#uploaded .content {
-    justify-content: space-evenly;
-    column-gap: 10px;
 }
 
 #home, #about {
