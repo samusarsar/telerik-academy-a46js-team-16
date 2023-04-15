@@ -22,7 +22,7 @@ export const toDetailedGifView = (gif, relatedGifs) => {
     </div>
     <div class="gif-container">
       <div id="gif-header">
-        <h3>${gif.title}</h3>
+        <h3>${gif.title || '[untitled_GIF]'}</h3>
         <div class="favorite-status-container">
           ${renderFavoriteStatusForGif(gif.id)}
         </div>

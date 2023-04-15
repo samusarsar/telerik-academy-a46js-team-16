@@ -2,7 +2,7 @@ export const toHomeView = () => `
 <div id="home">
   <h1>GIFlamingo</h1>
   <div class="content">
-    <p>Your one-stop-shop for the best GIFs out there!</p>
+    <h2>Your one-stop-shop for the best GIFs out there!</h2>
     <ul>
       <li>Check out the newest, trending GIFs</li>
       <li>Search any specific GIF title that comes to mind</li>
