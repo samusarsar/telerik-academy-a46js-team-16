@@ -135,6 +135,9 @@ footer {
     color: rgba(255, 255, 255, 0);
 }
 
+
+/* favorites styles */
+
 .favorite-bubble {
     background-color: whitesmoke;
     position: fixed;
@@ -148,6 +151,11 @@ footer {
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    opacity: 85%;
+}
+
+.favorite-bubble:hover {
+    opacity: 100%;
 }
 
 .favorite-bubble img {
@@ -155,7 +163,7 @@ footer {
     max-height: 100px;
     position: absolute;
     padding-top: 7px;
-    filter: invert(44%) sepia(87%) saturate(2476%) hue-rotate(145deg) brightness(102%) contrast(101%);
+    filter: invert(37%) sepia(37%) saturate(3429%) hue-rotate(323deg) brightness(104%) contrast(104%);
 }
 
 .favorite-bubble p {
@@ -370,13 +378,13 @@ img.favorite-status {
     border-radius: 5px;
     border: 2px solid whitesmoke;
     color: whitesmoke;
-    background-color: rgb(112, 3, 132);
+    background-color: #024f46;
     text-decoration: none;
 }
 
 .empty-nest:hover {
     cursor: pointer;
-    background-color: rgb(66, 12, 87);
+    background-color:  rgb(118, 118, 118);
 }
 
 .empty-nest:active {
