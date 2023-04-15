@@ -40,7 +40,11 @@ footer {
 
 /* navigation styles */
 
-#main-nav {
+#container {
+    margin-top: 130px;
+}
+
+/* #main-nav {
     font-size: 0.8em;
     display: flex;
     justify-content: space-evenly;
@@ -54,6 +58,30 @@ footer {
     rgba(53,9,121,1) 50%,
     rgba(6,25,103,1) 75%,
     rgba(4,4,92,1) 100%);  
+    gap: 20px;  
+} */
+
+#main-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    padding: 15px 25%;
+    font-size: 0.8em;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    text-transform: uppercase;
+    background: rgb(35,14,51);
+    background: linear-gradient(
+        90deg,
+        rgba(35,14,51,1) 0%,
+        rgba(78,43,105,1) 25%,
+        rgba(53,9,121,1) 50%,
+        rgba(6,25,103,1) 75%,
+        rgba(4,4,92,1) 100%
+    );  
     gap: 20px;  
 }
 
@@ -91,7 +119,7 @@ footer {
     cursor: pointer;
 }
 
-#search-nav {
+/* #search-nav {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -104,6 +132,27 @@ footer {
     rgba(6,25,103,1) 75%,
     rgba(4,4,92,1) 100%);
     box-shadow: 0 5px 2px -2px rgb(27, 15, 37);
+} */
+
+#search-nav {
+    position: fixed;
+    top: 75px;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    padding: 10px 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(
+        90deg,
+        rgba(35,14,51,1) 0%,
+        rgba(78,43,105,1) 25%,
+        rgba(53,9,121,1) 50%,
+        rgba(6,25,103,1) 75%,
+        rgba(4,4,92,1) 100%
+    );
+    box-shadow: 0 8px 6px -2px rgb(27, 15, 51);
 }
 
 #search-nav #search {
@@ -151,7 +200,7 @@ footer {
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    opacity: 85%;
+    opacity: 60%;
 }
 
 .favorite-bubble:hover {
@@ -269,6 +318,17 @@ footer {
 #related-gifs #not-found {
     padding-top: 10px;
     text-align: center;
+}
+
+.detailed-gif .info-container p span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 15px;
 }
 
 img.user-avatar {
