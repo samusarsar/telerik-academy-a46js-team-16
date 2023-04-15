@@ -282,7 +282,7 @@ img.favorite-status {
     padding-left: 20%;
 }
 
-#home img {
+#home img, #error img{
     height: 20%;
 }
 
