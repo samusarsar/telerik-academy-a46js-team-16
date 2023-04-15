@@ -45,41 +45,9 @@ export const renderTrending = async () => {
     const data = await loadTrendingGifs();
     document.querySelector(CONTAINER_SELECTOR).innerHTML = toTrendingView(data);
 
-    const content = document.querySelector(CONTENT_SELECTOR);
-    const msnry = new Masonry(content, {
-      itemSelector: '.gif-box',
-      columnWidth: 200,
-      gutter: 10,
-      fitWidth: true,
-    });
+    const msnry = appplyMasonry();
 
-    imagesLoaded(content, () => {
-      msnry.layout();
-    });
-
-    const infScroll = new InfiniteScroll(content, {
-      path: function() {
-        return generateTrendingGifsUrl(this.loadCount+1);
-      },
-      responseBody: 'json',
-      outlayer: msnry,
-      status: '.page-load-status',
-      scrollThreshold: 250,
-    });
-
-    const proxyElem = document.createElement('div');
-
-    infScroll.on('load', function( body ) {
-      const itemsHTML = body.data.map( toMiniGifView ).join('');
-      proxyElem.innerHTML = itemsHTML;
-      const items = proxyElem.querySelectorAll('.gif-box');
-      imagesLoaded( items, function() {
-        infScroll.appendItems( items );
-        msnry.appended( items );
-      });
-    });
-
-    infScroll.loadNextPage();
+    applyInfiniteScroll(msnry, generateTrendingGifsUrl);
 
   } catch (error) {
     console.log(error);
@@ -91,86 +59,25 @@ export const renderFavorite = async () => {
   try {
     if (getFavorite()) {
       const favoriteGif = await getGif(getFavorite());
-      const searchTerm = favoriteGif.slug.split('-');
+      const searchTerm = favoriteGif.slug.split('-').slice(0, -1);
       const relatedGifs = await searchGifs(...searchTerm);
       document.querySelector(CONTAINER_SELECTOR).innerHTML = toFavoriteView(favoriteGif, relatedGifs);
 
-      const msnryContainer = document.querySelector('.content');
-      const msnry = new Masonry(msnryContainer, {
-        itemSelector: '.gif-box',
-        columnWidth: 200,
-        gutter: 10,
-        fitWidth: true,
-      });
+      const msnry = appplyMasonry();
 
-      imagesLoaded(msnryContainer, () => {
-        msnry.layout();
-      });
+      applyInfiniteScroll(msnry, generateSearchGifsUrl, searchTerm);
 
-      const infScroll = new InfiniteScroll(msnryContainer, {
-        path: function() {
-          return generateSearchGifsUrl(searchTerm, this.loadCount+1);
-        },
-        responseBody: 'json',
-        outlayer: msnry,
-        status: '.page-load-status',
-        scrollThreshold: 250,
-      });
-
-      const proxyElem = document.createElement('div');
-
-      infScroll.on('load', function( body ) {
-        const itemsHTML = body.data.map( toMiniGifView ).join('');
-        proxyElem.innerHTML = itemsHTML;
-        const items = proxyElem.querySelectorAll('.gif-box');
-        imagesLoaded( items, function() {
-          infScroll.appendItems( items );
-          msnry.appended( items );
-        });
-      });
-
-      infScroll.loadNextPage();
     } else {
+
       const randomGif = await getRandomGif();
-      const searchTerm = randomGif.slug.split('-');
+      const searchTerm = randomGif.slug.split('-').slice(0, -1);
+      console.log(searchTerm);
       const relatedGifs = await searchGifs(...searchTerm);
       document.querySelector(CONTAINER_SELECTOR).innerHTML = toRandomGifView(randomGif, relatedGifs);
 
-      const msnryContainer = document.querySelector('.content');
-      const msnry = new Masonry(msnryContainer, {
-        itemSelector: '.gif-box',
-        columnWidth: 200,
-        gutter: 10,
-        fitWidth: true,
-      });
+      const msnry = appplyMasonry();
 
-      imagesLoaded(msnryContainer, () => {
-        msnry.layout();
-      });
-
-      const infScroll = new InfiniteScroll(msnryContainer, {
-        path: function() {
-          return generateSearchGifsUrl(searchTerm, this.loadCount+1);
-        },
-        responseBody: 'json',
-        outlayer: msnry,
-        status: '.page-load-status',
-        scrollThreshold: 250,
-      });
-
-      const proxyElem = document.createElement('div');
-
-      infScroll.on('load', function( body ) {
-        const itemsHTML = body.data.map( toMiniGifView ).join('');
-        proxyElem.innerHTML = itemsHTML;
-        const items = proxyElem.querySelectorAll('.gif-box');
-        imagesLoaded( items, function() {
-          infScroll.appendItems( items );
-          msnry.appended( items );
-        });
-      });
-
-      infScroll.loadNextPage();
+      applyInfiniteScroll(msnry, generateSearchGifsUrl, searchTerm);
     }
   } catch (error) {
     document.querySelector(CONTAINER_SELECTOR).innerHTML = toErrorView();
@@ -188,46 +95,63 @@ export const renderAbout = async () => {
 export const renderGifDetails = async (gifId) => {
   try {
     const gif = await getGif(gifId);
-    const searchTerm = gif.slug.split('-');
+    const searchTerm = gif.slug.split('-').slice(0, -1);
     const relatedGifs = await searchGifs(...searchTerm);
     document.querySelector(CONTAINER_SELECTOR).innerHTML = toDetailedGifView(gif, relatedGifs);
 
-    const msnryContainer = document.querySelector('.content');
-    const msnry = new Masonry(msnryContainer, {
-      itemSelector: '.gif-box',
-      columnWidth: 200,
-      gutter: 10,
-      fitWidth: true,
-    });
+    const msnry = appplyMasonry();
 
-    imagesLoaded(msnryContainer, () => {
-      msnry.layout();
-    });
+    applyInfiniteScroll(msnry, generateSearchGifsUrl, searchTerm);
 
-    const infScroll = new InfiniteScroll(msnryContainer, {
-      path: function() {
-        return generateSearchGifsUrl(searchTerm, this.loadCount+1);
-      },
-      responseBody: 'json',
-      outlayer: msnry,
-      status: '.page-load-status',
-      scrollThreshold: 250,
-    });
-
-    const proxyElem = document.createElement('div');
-
-    infScroll.on('load', function( body ) {
-      const itemsHTML = body.data.map( toMiniGifView ).join('');
-      proxyElem.innerHTML = itemsHTML;
-      const items = proxyElem.querySelectorAll('.gif-box');
-      imagesLoaded( items, function() {
-        infScroll.appendItems( items );
-        msnry.appended( items );
-      });
-    });
-
-    infScroll.loadNextPage();
   } catch (error) {
     document.querySelector(CONTAINER_SELECTOR).innerHTML = toErrorView();
   }
+};
+
+
+const appplyMasonry = () => {
+
+  const content = document.querySelector(CONTENT_SELECTOR);
+  const msnry = new Masonry(content, {
+    itemSelector: '.gif-box',
+    columnWidth: 200,
+    gutter: 10,
+    fitWidth: true,
+  });
+
+  imagesLoaded(content, () => {
+    msnry.layout();
+  });
+
+  return msnry;
+};
+
+
+const applyInfiniteScroll = (msnry, urlGeneratorFunction, searchTerm) => {
+
+  const content = document.querySelector(CONTENT_SELECTOR);
+
+  const infScroll = new InfiniteScroll(content, {
+    path: function() {
+      return urlGeneratorFunction(this.pageIndex, searchTerm);
+    },
+    responseBody: 'json',
+    outlayer: msnry,
+    status: '.page-load-status',
+    scrollThreshold: 250,
+  });
+
+  const proxyElem = document.createElement('div');
+
+  infScroll.on('load', function( body ) {
+    const itemsHTML = body.data.map( toMiniGifView ).join('');
+    proxyElem.innerHTML = itemsHTML;
+    const items = proxyElem.querySelectorAll('.gif-box');
+    imagesLoaded( items, function() {
+      infScroll.appendItems( items );
+      msnry.appended( items );
+    });
+  });
+
+  infScroll.loadNextPage();
 };

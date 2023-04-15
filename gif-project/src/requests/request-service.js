@@ -33,7 +33,7 @@ export const uploadGif = async (file) => {
 };
 
 export const searchGifs = async (searchTerm) => {
-  const url = generateSearchGifsUrl(searchTerm);
+  const url = generateSearchGifsUrl(0, searchTerm);
   const data = await fetch(url);
 
   if (!data.ok) {
