@@ -2,12 +2,13 @@ import { renderUploads } from '../events/upload-events.js';
 
 const toUploadView = () => `
     <div id="upload-box">
-    <h2>Add new GIFs to your nest:</h2>
+      <h2>Add new GIFs to your nest:</h2>
       <label for="file" class="custom-file-upload">
         Choose file
       </label>
       <input id="file" type="file" name="file" required />
-      <input type="submit" value="Upload" class="submit"/>
+      <input type="submit" value="Upload" class="submit"/></br>
+      <span id="file-name"></span>
       <div id="upload-result"></div>
     </div>
 `;

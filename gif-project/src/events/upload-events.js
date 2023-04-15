@@ -1,3 +1,4 @@
+import { CLEAR_BUTTON, FILE_ID, FILE_NAME_ID, UPLOADED_CONTENT, UPLOAD_BOX, UPLOAD_RESULT } from '../common/constants.js';
 import { loadUploadedGifs, uploadGif } from '../requests/request-service.js';
 import { toMiniGifView } from '../views/gif-views.js';
 import { toErrorView, loaderEllipse } from '../views/interface-views.js';
@@ -5,7 +6,7 @@ import { toUploadViewError, toUploadViewSuccess } from '../views/profile-view.js
 
 export const renderUploadItems = async (file) => {
 
-  document.querySelector('#upload-result').innerHTML = loaderEllipse();
+  document.querySelector(UPLOAD_RESULT).innerHTML = loaderEllipse();
 
   try {
     const response = await uploadGif(file);
@@ -19,11 +20,11 @@ export const renderUploadItems = async (file) => {
       window.localStorage.setItem('uploads', JSON.stringify([resText.data.id]));
     }
 
-    document.querySelector('#upload-result').innerHTML = await toUploadViewSuccess();
-    document.querySelector('#uploaded .content').innerHTML = await renderUploads();
-
+    document.querySelector(UPLOAD_RESULT).innerHTML = await toUploadViewSuccess();
+    document.querySelector(UPLOADED_CONTENT).innerHTML = await renderUploads();
+    clearFileInput();
   } catch (error) {
-    document.querySelector('#upload-result').innerHTML = toUploadViewError(error.message);
+    document.querySelector(UPLOAD_RESULT).innerHTML = toUploadViewError(error.message);
   }
 };
 
@@ -33,4 +34,43 @@ export const renderUploads = async () => {
   } catch (error) {
     return toErrorView();
   };
+};
+
+export const showFileName = () => {
+  const fileInput = document.getElementById(FILE_ID);
+  const filenameSpan = document.getElementById(FILE_NAME_ID);
+
+  if (filenameSpan.textContent.length) {
+    clearFileInput();
+  }
+
+  if (fileInput.files.length > 0) {
+    const filename = fileInput.files[0].name;
+    filenameSpan.textContent = filename;
+
+    const clearButton = document.createElement('span');
+    clearButton.classList.add('clear-button');
+    clearButton.textContent = 'x';
+
+    clearButton.addEventListener('click', () => {
+      clearFileInput();
+    });
+
+    document.querySelector(UPLOAD_BOX)
+      .insertBefore(clearButton, document.querySelector(UPLOAD_RESULT));
+
+    clearButton.style.display = 'inline-block';
+    filenameSpan.style.display = 'inline-block';
+  } else {
+    filenameSpan.textContent = '';
+  }
+};
+
+const clearFileInput = () => {
+  const filenameSpan = document.getElementById(FILE_NAME_ID);
+  const clearButton = document.querySelector(CLEAR_BUTTON);
+
+  filenameSpan.textContent = '';
+  clearButton.remove();
+  filenameSpan.style.display = 'none';
 };

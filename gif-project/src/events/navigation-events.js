@@ -182,7 +182,7 @@ export const renderProfile = async () => {
 };
 
 export const renderAbout = async () => {
-  document.querySelector(CONTAINER_SELECTOR).innerHTML = await toAboutView();
+  document.querySelector(CONTAINER_SELECTOR).innerHTML = toAboutView();
 };
 
 export const renderGifDetails = async (gifId) => {
@@ -211,7 +211,7 @@ export const renderGifDetails = async (gifId) => {
       responseBody: 'json',
       outlayer: msnry,
       status: '.page-load-status',
-      scrollThreshold: 150,
+      scrollThreshold: 250,
     });
 
     const proxyElem = document.createElement('div');

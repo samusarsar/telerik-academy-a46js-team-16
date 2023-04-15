@@ -324,6 +324,21 @@ img.favorite-status {
     background-color: #00b5a1;
 }
 
+#profile #upload-box span {
+    margin-top: 10px;
+}
+
+#profile #upload-box .clear-button {
+    align-items: center;
+    padding: 2px 8px;
+    color: rgb(118, 118, 118);
+    cursor: pointer;
+}
+
+#profile #upload-box .clear-button:hover {
+    color: #ff416d;
+}
+
 #profile #uploaded {
     text-align: center;
     margin: 2% 0%;

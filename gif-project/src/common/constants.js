@@ -16,7 +16,7 @@ export const NAV_LINK = 'nav-link';
 export const DATA_PAGE = 'data-page';
 export const FAV_BUBBLE = 'favorite-bubble';
 export const SUBMIT = 'submit';
-export const FILE = 'file';
+export const FILE_ID = 'file';
 export const EMPTY_NEST = 'empty-nest';
 
 export const MINI_GIF_IMG = 'mini-gif-img';
@@ -32,3 +32,17 @@ export const CONTAINER_RANDOM = '#container>.random';
 export const SEARCH_BAR = '#search-nav>#search';
 
 export const CONTENT_SELECTOR = '.content';
+
+export const UPLOAD_LABEL = '#upload-box label';
+
+export const UPLOAD_INPUT = '#upload-box input[type="file"]';
+
+export const FILE_NAME_ID = 'file-name';
+
+export const UPLOAD_BOX = '#upload-box';
+
+export const UPLOAD_RESULT = '#upload-result';
+
+export const CLEAR_BUTTON = '.clear-button';
+
+export const UPLOADED_CONTENT = '#uploaded .content';
