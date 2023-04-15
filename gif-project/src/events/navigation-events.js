@@ -1,7 +1,7 @@
 import { ABOUT, CONTAINER_SELECTOR, HOME, PROFILE, TRENDING, FAVORITE, API_KEY, CONTENT_SELECTOR } from '../common/constants.js';
 import { getFavorite } from '../data/favorites.js';
 import { getGif, getRandomGif, loadTrendingGifs, searchGifs } from '../requests/request-service.js';
-import { generateTrendingGifsUrl } from '../requests/url-generators.js';
+import { generateSearchGifsUrl, generateTrendingGifsUrl } from '../requests/url-generators.js';
 import { toAboutView } from '../views/about-view.js';
 import { toFavoriteView, toRandomGifView } from '../views/favorites-view.js';
 import { toDetailedGifView, toMiniGifView } from '../views/gif-views.js';
@@ -88,12 +88,11 @@ export const renderTrending = async () => {
 };
 
 export const renderFavorite = async () => {
-  let counter = 0;
   try {
     if (getFavorite()) {
       const favoriteGif = await getGif(getFavorite());
-      const term = favoriteGif.slug.split('-');
-      const relatedGifs = await searchGifs(...term);
+      const searchTerm = favoriteGif.slug.split('-');
+      const relatedGifs = await searchGifs(...searchTerm);
       document.querySelector(CONTAINER_SELECTOR).innerHTML = toFavoriteView(favoriteGif, relatedGifs);
 
       const msnryContainer = document.querySelector('.content');
@@ -110,7 +109,7 @@ export const renderFavorite = async () => {
 
       const infScroll = new InfiniteScroll(msnryContainer, {
         path: function() {
-          return `https://api.giphy.com/v1/gifs/search?api_key=${API_KEY}&q=${term}&limit=20&offset=${counter+=20}`;
+          return generateSearchGifsUrl(searchTerm, this.loadCount+1);
         },
         responseBody: 'json',
         outlayer: msnry,
@@ -133,8 +132,8 @@ export const renderFavorite = async () => {
       infScroll.loadNextPage();
     } else {
       const randomGif = await getRandomGif();
-      const term = randomGif.slug.split('-');
-      const relatedGifs = await searchGifs(...term);
+      const searchTerm = randomGif.slug.split('-');
+      const relatedGifs = await searchGifs(...searchTerm);
       document.querySelector(CONTAINER_SELECTOR).innerHTML = toRandomGifView(randomGif, relatedGifs);
 
       const msnryContainer = document.querySelector('.content');
@@ -151,7 +150,7 @@ export const renderFavorite = async () => {
 
       const infScroll = new InfiniteScroll(msnryContainer, {
         path: function() {
-          return `https://api.giphy.com/v1/gifs/search?api_key=${API_KEY}&q=${term}&limit=20&offset=${counter+=20}`;
+          return generateSearchGifsUrl(searchTerm, this.loadCount+1);
         },
         responseBody: 'json',
         outlayer: msnry,
@@ -187,11 +186,10 @@ export const renderAbout = async () => {
 };
 
 export const renderGifDetails = async (gifId) => {
-  let counter = 0;
   try {
     const gif = await getGif(gifId);
-    const term = gif.slug.split('-');
-    const relatedGifs = await searchGifs(...term);
+    const searchTerm = gif.slug.split('-');
+    const relatedGifs = await searchGifs(...searchTerm);
     document.querySelector(CONTAINER_SELECTOR).innerHTML = toDetailedGifView(gif, relatedGifs);
 
     const msnryContainer = document.querySelector('.content');
@@ -208,7 +206,7 @@ export const renderGifDetails = async (gifId) => {
 
     const infScroll = new InfiniteScroll(msnryContainer, {
       path: function() {
-        return `https://api.giphy.com/v1/gifs/search?api_key=${API_KEY}&q=${term}&limit=20&offset=${counter+=20}`;
+        return generateSearchGifsUrl(searchTerm, this.loadCount+1);
       },
       responseBody: 'json',
       outlayer: msnry,

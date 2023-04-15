@@ -1,7 +1,7 @@
 import { API_KEY } from '../common/constants.js';
 import { generateGetGifUrl, generateGetRandomGifUrl, generateLoadUploadedGifsUrl, generateSearchGifsUrl, generateTrendingGifsUrl, generateUploadGifUrl } from './url-generators.js';
 
-export const loadTrendingGifs = async (offset = 0) => {
+export const loadTrendingGifs = async (offset) => {
   const url = generateTrendingGifsUrl(offset);
   const data = await fetch(url);
 
