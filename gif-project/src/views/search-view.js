@@ -3,12 +3,12 @@ import { loaderEllipse } from './interface-views.js';
 
 export const toSearchView = (gifs, searchTerm) => `
     <div id="gifs">
-        <h1>Gifs found for"${searchTerm}"</h1>
+        <h1>Gifs found for "${searchTerm}"</h1>
+        ${loaderEllipse()}
         <div class="content">
             ${(searchTerm || searchTerm.trim()) ? toSuccessfulSearchView(gifs) : toNotSuccessfulSearchView()}
         </div>
     </div>
-    ${loaderEllipse()}
 `;
 
 const toSuccessfulSearchView = (gifs) => gifs.map(toMiniGifView).join('\n') || `<p>No GIFs found</p>`;
