@@ -41,7 +41,10 @@ export const showFileName = () => {
   const filenameSpan = document.getElementById(FILE_NAME_ID);
 
   if (filenameSpan.textContent.length) {
-    clearFileInput();
+    const clearButton = document.querySelector(CLEAR_BUTTON);
+    filenameSpan.textContent = '';
+    clearButton.remove();
+    filenameSpan.style.display = 'none';
   }
 
   if (fileInput.files.length > 0) {
@@ -67,9 +70,11 @@ export const showFileName = () => {
 };
 
 const clearFileInput = () => {
+  const fileInput = document.getElementById(FILE_ID);
   const filenameSpan = document.getElementById(FILE_NAME_ID);
   const clearButton = document.querySelector(CLEAR_BUTTON);
 
+  fileInput.value= '';
   filenameSpan.textContent = '';
   clearButton.remove();
   filenameSpan.style.display = 'none';
