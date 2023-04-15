@@ -30,3 +30,5 @@ export const CONTAINER_FAVORITE = '#container>.favorite';
 export const CONTAINER_RANDOM = '#container>.random';
 
 export const SEARCH_BAR = '#search-nav>#search';
+
+export const CONTENT_SELECTOR = '.content';

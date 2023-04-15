@@ -1,7 +1,8 @@
 import { API_KEY } from '../common/constants.js';
+import { generateGetGifUrl, generateGetRandomGifUrl, generateLoadUploadedGifsUrl, generateSearchGifsUrl, generateTrendingGifsUrl, generateUploadGifUrl } from './url-generators.js';
 
-export const loadTrendingGifs = async (counter) => {
-  const url = `https://api.giphy.com/v1/gifs/trending?api_key=${API_KEY}&limit=25&bundle=messaging_non_clips&offset=${counter*25}`;
+export const loadTrendingGifs = async (offset = 0) => {
+  const url = generateTrendingGifsUrl(offset);
   const data = await fetch(url);
 
   if (!data.ok) {
@@ -14,7 +15,7 @@ export const loadTrendingGifs = async (counter) => {
 };
 
 export const uploadGif = async (file) => {
-  const url = `https://upload.giphy.com/v1/gifs?api_key=${API_KEY}`;
+  const url = generateUploadGifUrl();
   const formData = new FormData();
   formData.append('file', file);
   formData.append('api_key', API_KEY);
@@ -32,7 +33,7 @@ export const uploadGif = async (file) => {
 };
 
 export const searchGifs = async (searchTerm) => {
-  const url = `https://api.giphy.com/v1/gifs/search?api_key=${API_KEY}&q=${searchTerm}&limit=20`;
+  const url = generateSearchGifsUrl(searchTerm);
   const data = await fetch(url);
 
   if (!data.ok) {
@@ -48,7 +49,7 @@ export const loadUploadedGifs = async () => {
   const uploadCache = window.localStorage.getItem('uploads');
   if (uploadCache) {
     const ids = JSON.parse(uploadCache).join('%2C');
-    const url = `https://api.giphy.com/v1/gifs?api_key=${API_KEY}&ids=${ids}`;
+    const url = generateLoadUploadedGifsUrl(ids);
     const data = await fetch(url);
 
     if (!data.ok) {
@@ -68,7 +69,7 @@ export const loadUploadedGifs = async () => {
  * @return
  */
 export const getGif = async (gifId) => {
-  const url = `https://api.giphy.com/v1/gifs/${gifId}?api_key=${API_KEY}`;
+  const url = generateGetGifUrl(gifId);
   const data = await fetch(url);
   const dataJson = await data.json();
 
@@ -80,7 +81,7 @@ export const getGif = async (gifId) => {
 };
 
 export const getRandomGif = async () => {
-  const url = `https://api.giphy.com/v1/gifs/random?api_key=${API_KEY}`;
+  const url = generateGetRandomGifUrl();
   const data = await fetch(url);
   const dataJson = await data.json();
 
@@ -90,3 +91,4 @@ export const getRandomGif = async () => {
 
   return dataJson.data;
 };
+

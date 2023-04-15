@@ -1,6 +1,7 @@
-import { ABOUT, CONTAINER_SELECTOR, HOME, PROFILE, TRENDING, FAVORITE, API_KEY } from '../common/constants.js';
+import { ABOUT, CONTAINER_SELECTOR, HOME, PROFILE, TRENDING, FAVORITE, API_KEY, CONTENT_SELECTOR } from '../common/constants.js';
 import { getFavorite } from '../data/favorites.js';
 import { getGif, getRandomGif, loadTrendingGifs, searchGifs } from '../requests/request-service.js';
+import { generateTrendingGifsUrl } from '../requests/url-generators.js';
 import { toAboutView } from '../views/about-view.js';
 import { toFavoriteView, toRandomGifView } from '../views/favorites-view.js';
 import { toDetailedGifView, toMiniGifView } from '../views/gif-views.js';
@@ -40,27 +41,25 @@ export const renderHome = () => {
 };
 
 export const renderTrending = async () => {
-  let counter = 0;
-
   try {
-    const data = await loadTrendingGifs(counter++);
+    const data = await loadTrendingGifs();
     document.querySelector(CONTAINER_SELECTOR).innerHTML = toTrendingView(data);
 
-    const msnryContainer = document.querySelector('.trending>.content');
-    const msnry = new Masonry(msnryContainer, {
+    const content = document.querySelector(CONTENT_SELECTOR);
+    const msnry = new Masonry(content, {
       itemSelector: '.gif-box',
       columnWidth: 200,
       gutter: 10,
       fitWidth: true,
     });
 
-    imagesLoaded(msnryContainer, () => {
+    imagesLoaded(content, () => {
       msnry.layout();
     });
 
-    const infScroll = new InfiniteScroll(msnryContainer, {
+    const infScroll = new InfiniteScroll(content, {
       path: function() {
-        return `https://api.giphy.com/v1/gifs/trending?api_key=${API_KEY}&limit=25&bundle=messaging_non_clips&offset=${counter+=25}`;
+        return generateTrendingGifsUrl(this.loadCount+1);
       },
       responseBody: 'json',
       outlayer: msnry,
