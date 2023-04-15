@@ -34,7 +34,7 @@ export const renderSearchItems = async (searchTerm) => {
       outlayer: msnry,
       status: '.page-load-status',
       history: false,
-      scrollThreshold: 150,
+      scrollThreshold: 250,
     });
 
     const proxyElem = document.createElement('div');

@@ -65,7 +65,7 @@ export const renderTrending = async () => {
       responseBody: 'json',
       outlayer: msnry,
       status: '.page-load-status',
-      scrollThreshold: 150,
+      scrollThreshold: 250,
     });
 
     const proxyElem = document.createElement('div');
@@ -116,7 +116,7 @@ export const renderFavorite = async () => {
         responseBody: 'json',
         outlayer: msnry,
         status: '.page-load-status',
-        scrollThreshold: 150,
+        scrollThreshold: 250,
       });
 
       const proxyElem = document.createElement('div');
@@ -157,7 +157,7 @@ export const renderFavorite = async () => {
         responseBody: 'json',
         outlayer: msnry,
         status: '.page-load-status',
-        scrollThreshold: 150,
+        scrollThreshold: 250,
       });
 
       const proxyElem = document.createElement('div');
