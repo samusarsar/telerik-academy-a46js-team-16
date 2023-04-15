@@ -1,4 +1,13 @@
-export const toLoadView = () => `<p id="loader">UPLOADING GIF .....</p>`;
+export const loaderEllipse = () => `
+    <div class="page-load-status">
+        <div class="loader-ellipse infinite-scroll-request">
+            <span class="loader-ellipse__dot"></span>
+            <span class="loader-ellipse__dot"></span>
+            <span class="loader-ellipse__dot"></span>
+            <span class="loader-ellipse__dot"></span>
+        </div>
+    </div>
+`;
 
 export const toErrorView = () => `
     <div id="error">

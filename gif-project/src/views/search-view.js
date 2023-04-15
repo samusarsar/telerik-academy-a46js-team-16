@@ -1,4 +1,5 @@
 import { toMiniGifView } from './gif-views.js';
+import { loaderEllipse } from './interface-views.js';
 
 export const toSearchView = (gifs, searchTerm) => `
     <div id="gifs">
@@ -7,6 +8,7 @@ export const toSearchView = (gifs, searchTerm) => `
             ${(searchTerm || searchTerm.trim()) ? toSuccessfulSearchView(gifs) : toNotSuccessfulSearchView()}
         </div>
     </div>
+    ${loaderEllipse()}
 `;
 
 const toSuccessfulSearchView = (gifs) => gifs.map(toMiniGifView).join('\n') || `<p>No GIFs found</p>`;

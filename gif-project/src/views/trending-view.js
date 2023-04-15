@@ -1,4 +1,5 @@
 import { toMiniGifView } from './gif-views.js';
+import { loaderEllipse } from './interface-views.js';
 
 export const toTrendingView = (data) => `
   <div class="trending">
@@ -7,4 +8,5 @@ export const toTrendingView = (data) => `
       ${data.map(toMiniGifView).join('')}
     </div>
   </div>
+  ${loaderEllipse()}
 `;

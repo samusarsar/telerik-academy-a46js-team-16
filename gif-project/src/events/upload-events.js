@@ -1,11 +1,11 @@
 import { loadUploadedGifs, uploadGif } from '../requests/request-service.js';
 import { toMiniGifView } from '../views/gif-views.js';
-import { toErrorView, toLoadView } from '../views/interface-views.js';
+import { toErrorView, loaderEllipse } from '../views/interface-views.js';
 import { toUploadViewError, toUploadViewSuccess } from '../views/profile-view.js';
 
 export const renderUploadItems = async (file) => {
 
-  document.querySelector('#upload-result').innerHTML = toLoadView();
+  document.querySelector('#upload-result').innerHTML = loaderEllipse();
 
   try {
     const response = await uploadGif(file);
