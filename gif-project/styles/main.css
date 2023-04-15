@@ -218,7 +218,7 @@ footer {
 .detailed-gif {
     display: flex;
     justify-content: center;
-    align-items: flex-start;
+    align-items: flex-end;
     flex-wrap: wrap-reverse;
     gap: 30px;
 }
@@ -258,6 +258,7 @@ footer {
 #related-gifs h2 {
     padding-left: 7%;
     padding-top: 20px;
+    text-align: left;
 }
 
 #related-gifs .content {
