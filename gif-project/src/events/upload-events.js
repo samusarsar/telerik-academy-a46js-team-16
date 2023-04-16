@@ -21,12 +21,21 @@ export const renderUploadItems = async (file) => {
     }
 
     const uploads = await loadUploadedGifs();
-    document.querySelector(UPLOAD_RESULT).innerHTML = await toUploadViewSuccess();
-    document.querySelector(UPLOADED_CONTENT).innerHTML = await toMyUploadsView(uploads);
+    const uploadResultMsg = document.querySelector(UPLOAD_RESULT);
+    uploadResultMsg.innerHTML = await toUploadViewSuccess();
+    setTimeout(() => {
+      uploadResultMsg.innerHTML = '';
+    }, 3500);
+
+    document.querySelector(UPLOADED_CONTENT).innerHTML = toMyUploadsView(uploads);
     if (uploads.length > 0) applyMasonry(UPLOADED_CONTENT);
     clearFileInput();
   } catch (error) {
-    document.querySelector(UPLOAD_RESULT).innerHTML = toUploadViewError(error.message);
+    const uploadResultMsg = document.querySelector(UPLOAD_RESULT);
+    uploadResultMsg.innerHTML = toUploadViewError(error.message);
+    setTimeout(() => {
+      uploadResultMsg.innerHTML = '';
+    }, 3500);
   }
 };
 
