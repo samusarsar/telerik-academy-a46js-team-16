@@ -14,13 +14,6 @@ export const toMoreMiniGifView = (gif) => `
 export const toDetailedGifView = (gif, relatedGifs) => {
   return `
   <div class="detailed-gif">
-    <div class="info-container">
-      <p>Uploaded by:</p>
-      <p class="details"><span><img class="user-avatar" src="${gif?.user?.avatar_url ||
-        '../images/anonymous-user-icon-2.jpg'}" ></span> ${gif.user?.display_name || gif.username || 'anonymous user'}</p>
-      <p>Uploaded on:</p>
-      <p class="details">${new Date(gif.import_datetime).toLocaleDateString()}</p>
-    </div>
     <div class="gif-container">
       <div id="gif-header">
         <h3>${gif.title || '[untitled_GIF]'}</h3>
@@ -30,6 +23,13 @@ export const toDetailedGifView = (gif, relatedGifs) => {
       </div>
       <img src="${gif.images.original.url}">
     </div>
+    <div class="info-container">
+    <p>Uploaded by:</p>
+    <p class="details"><span><img class="user-avatar" src="${gif?.user?.avatar_url ||
+      '../images/anonymous-user-icon-2.jpg'}" ></span> ${gif.user?.display_name || gif.username || 'anonymous user'}</p>
+    <p>Uploaded on:</p>
+    <p class="details">${new Date(gif.import_datetime).toLocaleDateString()}</p>
+  </div>
   </div>
   ${toRelatedGifsView(relatedGifs)}
 `;
