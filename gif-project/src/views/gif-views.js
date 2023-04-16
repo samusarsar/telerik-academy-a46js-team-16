@@ -1,4 +1,4 @@
-import { renderFavoriteStatusForGif } from '../events/favorites-events.js';
+import { renderFavoriteStatus } from '../events/favorites-events.js';
 
 export const toMiniGifView = (gif) => `
   <div class="gif-box">
@@ -24,7 +24,7 @@ export const toDetailedGifView = (gif, relatedGifs) => {
       <div id="gif-header">
         <h3>${gif.title || '[untitled_GIF]'}</h3>
         <div class="favorite-status-container">
-          ${renderFavoriteStatusForGif(gif.id)}
+          ${renderFavoriteStatus(gif.id)}
         </div>
       </div>
       <img src="${gif.images.original.url}">

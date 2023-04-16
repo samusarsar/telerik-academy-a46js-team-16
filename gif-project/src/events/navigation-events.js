@@ -1,15 +1,15 @@
-import { ABOUT, CONTAINER_SELECTOR, HOME, PROFILE, TRENDING, FAVORITE, API_KEY, CONTENT_SELECTOR } from '../common/constants.js';
+import { ABOUT, CONTAINER_SELECTOR, HOME, PROFILE, TRENDING, FAVORITE, CONTENT_SELECTOR } from '../common/constants.js';
 import { getFavorite } from '../data/favorites.js';
 import { getGif, getRandomGif, loadTrendingGifs, searchGifs } from '../requests/request-service.js';
 import { generateSearchGifsUrl, generateTrendingGifsUrl } from '../requests/url-generators.js';
 import { toAboutView } from '../views/about-view.js';
 import { toFavoriteView, toRandomGifView } from '../views/favorites-view.js';
-import { toDetailedGifView, toMiniGifView } from '../views/gif-views.js';
+import { toDetailedGifView } from '../views/gif-views.js';
 import { toHomeView } from '../views/home-view.js';
 import { toErrorView } from '../views/interface-views.js';
 import { toProfileView } from '../views/profile-view.js';
 import { toTrendingView } from '../views/trending-view.js';
-import { setActiveNav } from './helpers.js';
+import { applyInfiniteScroll, applyMasonry, setActiveNav } from './helpers.js';
 
 export const loadPage = (page = '') => {
 
@@ -45,9 +45,9 @@ export const renderTrending = async () => {
     const data = await loadTrendingGifs();
     document.querySelector(CONTAINER_SELECTOR).innerHTML = toTrendingView(data);
 
-    const msnry = appplyMasonry();
+    const msnry = applyMasonry(CONTENT_SELECTOR);
 
-    applyInfiniteScroll(msnry, generateTrendingGifsUrl);
+    applyInfiniteScroll(CONTENT_SELECTOR, msnry, generateTrendingGifsUrl);
 
   } catch (error) {
     console.log(error);
@@ -63,9 +63,9 @@ export const renderFavorite = async () => {
       const relatedGifs = await searchGifs(...searchTerm);
       document.querySelector(CONTAINER_SELECTOR).innerHTML = toFavoriteView(favoriteGif, relatedGifs);
 
-      const msnry = appplyMasonry();
+      const msnry = applyMasonry(CONTENT_SELECTOR);
 
-      applyInfiniteScroll(msnry, generateSearchGifsUrl, searchTerm);
+      applyInfiniteScroll(CONTENT_SELECTOR, msnry, generateSearchGifsUrl, searchTerm);
 
     } else {
 
@@ -75,9 +75,9 @@ export const renderFavorite = async () => {
       const relatedGifs = await searchGifs(...searchTerm);
       document.querySelector(CONTAINER_SELECTOR).innerHTML = toRandomGifView(randomGif, relatedGifs);
 
-      const msnry = appplyMasonry();
+      const msnry = applyMasonry(CONTENT_SELECTOR);
 
-      applyInfiniteScroll(msnry, generateSearchGifsUrl, searchTerm);
+      applyInfiniteScroll(CONTENT_SELECTOR, msnry, generateSearchGifsUrl, searchTerm);
     }
   } catch (error) {
     document.querySelector(CONTAINER_SELECTOR).innerHTML = toErrorView();
@@ -99,59 +99,11 @@ export const renderGifDetails = async (gifId) => {
     const relatedGifs = await searchGifs(...searchTerm);
     document.querySelector(CONTAINER_SELECTOR).innerHTML = toDetailedGifView(gif, relatedGifs);
 
-    const msnry = appplyMasonry();
+    const msnry = applyMasonry(CONTENT_SELECTOR);
 
-    applyInfiniteScroll(msnry, generateSearchGifsUrl, searchTerm);
+    applyInfiniteScroll(CONTENT_SELECTOR, msnry, generateSearchGifsUrl, searchTerm);
 
   } catch (error) {
     document.querySelector(CONTAINER_SELECTOR).innerHTML = toErrorView();
   }
-};
-
-
-const appplyMasonry = () => {
-
-  const content = document.querySelector(CONTENT_SELECTOR);
-  const msnry = new Masonry(content, {
-    itemSelector: '.gif-box',
-    columnWidth: 200,
-    gutter: 10,
-    fitWidth: true,
-  });
-
-  imagesLoaded(content, () => {
-    msnry.layout();
-  });
-
-  return msnry;
-};
-
-
-const applyInfiniteScroll = (msnry, urlGeneratorFunction, searchTerm) => {
-
-  const content = document.querySelector(CONTENT_SELECTOR);
-
-  const infScroll = new InfiniteScroll(content, {
-    path: function() {
-      return urlGeneratorFunction(this.pageIndex, searchTerm);
-    },
-    responseBody: 'json',
-    outlayer: msnry,
-    status: '.page-load-status',
-    scrollThreshold: 250,
-  });
-
-  const proxyElem = document.createElement('div');
-
-  infScroll.on('load', function( body ) {
-    const itemsHTML = body.data.map( toMiniGifView ).join('');
-    proxyElem.innerHTML = itemsHTML;
-    const items = proxyElem.querySelectorAll('.gif-box');
-    imagesLoaded( items, function() {
-      infScroll.appendItems( items );
-      msnry.appended( items );
-    });
-  });
-
-  infScroll.loadNextPage();
 };
