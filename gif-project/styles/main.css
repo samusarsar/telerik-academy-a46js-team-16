@@ -19,7 +19,6 @@ body {
 
 h1 {
     font-family:'Arima', cursive;
-    font-weight: 300;
     font-size: 3em;
     padding-left: 20px;
     color: #ff416d;
@@ -448,6 +447,10 @@ img.favorite-status {
 
 #home h1, #about h1 {
     padding: unset;
+}
+
+#about h2 + h2 + h2 {
+    color: #00b5a1;
 }
 
 #profile {
