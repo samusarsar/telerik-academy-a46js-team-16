@@ -1,3 +1,8 @@
+@font-face {
+    font-family: "ChocolateBarRegular";
+    src: url("fonts/ChocolateBarDemo.otf") 
+    }
+
 /* general styles */
 
 body {
@@ -11,14 +16,29 @@ body {
     margin: 0;
 }
 
+
 h1 {
-    font-size: 1.8em;
+    font-family:'Arima', cursive;
+    font-weight: 300;
+    font-size: 3em;
     padding-left: 20px;
     color: #ff416d;
 }
 
+h1#logo span{
+    font-family: 'ChocolateBarRegular', 'Ubuntu', sans-serif;
+    font-size: 90px;
+
+}
+
+div#upload-box h2 {
+    color: white;
+}
+
 h2 {
+    font-family: 'Arima', cursive;
     font-size: 1.4em;
+    color: #ff416d;
 }
 
 p {

@@ -1,6 +1,6 @@
 export const toHomeView = () => `
 <div id="home">
-  <h1>GIFlamingo</h1>
+  <h1 id="logo"><span>GIF</span>lamingo</h1>
   <div class="content">
     <h2>Your one-stop-shop for the best GIFs out there!</h2>
     <ul>
