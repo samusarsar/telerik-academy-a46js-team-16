@@ -1,3 +1,4 @@
+import { FAVORITE_STATUS_CONTAINER } from '../common/constants.js';
 import { getFavorite, removeFavorite, setFavorite } from '../data/favorites.js';
 /**
  * Toggles favorite status for a given GIF
@@ -12,7 +13,7 @@ export const toggleFavoriteStatus = (id) => {
     setFavorite(id);
   }
 
-  document.querySelector(`.favorite-status-container`).innerHTML = renderFavoriteStatus(id);
+  document.querySelector(FAVORITE_STATUS_CONTAINER).innerHTML = renderFavoriteStatus(id);
 };
 
 /**

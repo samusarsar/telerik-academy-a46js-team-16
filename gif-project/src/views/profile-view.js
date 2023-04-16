@@ -1,4 +1,4 @@
-import { renderUploads } from '../events/upload-events.js';
+import { toMiniGifView } from './gif-views.js';
 
 const toUploadView = () => `
     <div id="upload-box">
@@ -13,21 +13,21 @@ const toUploadView = () => `
     </div>
 `;
 
-const toMyUploadsView = async () => `
-    <div id="uploaded">
-        <h2>Check out what's already in your nest:</h2>
-        <div class="content">
-        ${await renderUploads() || '<p>You haven\'t uploaded any GIFs yet.</p><p>Click above to upload your first!</p>'}
-        </div>
-        <div><a href=# class="empty-nest">Empty my nest</a></div>
-    </div>
+export const toMyUploadsView = (uploads) => `
+        ${uploads.map(toMiniGifView).join('') || '<p>You haven\'t uploaded any GIFs yet.</p><p>Click above to upload your first!</p>'}
 `;
 
-export const toProfileView = async () => `
+export const toProfileView = (uploads) => `
   <div id="profile">
     <h1>Welcome to your GIFlamingo nest!</h1>
       ${toUploadView()}
-      ${await toMyUploadsView()}
+      <div id="uploaded">
+        <h2>Check out what's already in your nest:</h2>
+        <div class="content">
+        ${toMyUploadsView(uploads)}
+        </div>
+        <div><a href=# class="empty-nest">Empty my nest</a></div>
+    </div>
   </div>
 `;
 

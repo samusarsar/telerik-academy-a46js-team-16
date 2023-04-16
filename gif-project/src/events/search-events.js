@@ -1,4 +1,4 @@
-import { API_KEY, CONTAINER_SELECTOR } from '../common/constants.js';
+import { API_KEY, CONTAINER_SELECTOR, GIF_BOX, SEARCH_CONTENT } from '../common/constants.js';
 import { searchGifs } from '../requests/request-service.js';
 import { toMiniGifView } from '../views/gif-views.js';
 import { toErrorView } from '../views/interface-views.js';
@@ -13,10 +13,10 @@ export const renderSearchItems = async (searchTerm) => {
     const gifs = await searchGifs(searchTerm);
     document.querySelector(CONTAINER_SELECTOR).innerHTML = toSearchView(gifs, searchTerm);
 
-    const msnryContainer = document.querySelector('#gifs>.content');
+    const msnryContainer = document.querySelector(SEARCH_CONTENT);
 
     const msnry = new Masonry(msnryContainer, {
-      itemSelector: '.gif-box',
+      itemSelector: GIF_BOX,
       columnWidth: 200,
       gutter: 10,
       fitWidth: true,
@@ -42,7 +42,7 @@ export const renderSearchItems = async (searchTerm) => {
     infScroll.on('load', function( body ) {
       const itemsHTML = body.data.map( toMiniGifView ).join('');
       proxyElem.innerHTML = itemsHTML;
-      const items = proxyElem.querySelectorAll('.gif-box');
+      const items = proxyElem.querySelectorAll(GIF_BOX);
       imagesLoaded( items, function() {
         infScroll.appendItems( items );
         msnry.appended( items );

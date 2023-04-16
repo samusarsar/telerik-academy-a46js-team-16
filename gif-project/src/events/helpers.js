@@ -1,4 +1,5 @@
-import { CONTENT_SELECTOR } from '../common/constants.js';
+/* eslint-disable no-undef */
+import { GIF_BOX } from '../common/constants.js';
 import { toMiniGifView } from '../views/gif-views.js';
 
 /**
@@ -26,7 +27,7 @@ export const applyMasonry = (container) => {
 
   const content = document.querySelector(container);
   const msnry = new Masonry(content, {
-    itemSelector: '.gif-box',
+    itemSelector: GIF_BOX,
     columnWidth: 200,
     gutter: 10,
     fitWidth: true,
@@ -65,7 +66,7 @@ export const applyInfiniteScroll = (container, msnry, urlGeneratorFunction, sear
   infScroll.on('load', function( body ) {
     const itemsHTML = body.data.map( toMiniGifView ).join('');
     proxyElem.innerHTML = itemsHTML;
-    const items = proxyElem.querySelectorAll('.gif-box');
+    const items = proxyElem.querySelectorAll(GIF_BOX);
     imagesLoaded( items, function() {
       infScroll.appendItems( items );
       msnry.appended( items );
@@ -73,4 +74,18 @@ export const applyInfiniteScroll = (container, msnry, urlGeneratorFunction, sear
   });
 
   infScroll.loadNextPage();
+};
+
+export const applyFlickity = (selector) => {
+  const content = document.querySelector(selector);
+
+  imagesLoaded(content, () => {
+    const flkty = new Flickity( content, {
+      contain: true,
+      pageDots: false,
+      setGallerySize: false,
+    });
+
+    return flkty;
+  });
 };

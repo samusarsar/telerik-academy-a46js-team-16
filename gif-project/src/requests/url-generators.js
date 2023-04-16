@@ -11,3 +11,5 @@ export const generateLoadUploadedGifsUrl = (ids) => `https://api.giphy.com/v1/gi
 export const generateGetGifUrl = (gifId) => `https://api.giphy.com/v1/gifs/${gifId}?api_key=${API_KEY}`;
 
 export const generateGetRandomGifUrl = () => `https://api.giphy.com/v1/gifs/random?api_key=${API_KEY}`;
+
+export const generateTrendingSearchesUrl = () => `https://api.giphy.com/v1/trending/searches?api_key=${API_KEY}`;

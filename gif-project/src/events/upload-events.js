@@ -1,8 +1,7 @@
 import { CLEAR_BUTTON, FILE_ID, FILE_NAME_ID, UPLOADED_CONTENT, UPLOAD_BOX, UPLOAD_RESULT } from '../common/constants.js';
 import { loadUploadedGifs, uploadGif } from '../requests/request-service.js';
-import { toMiniGifView } from '../views/gif-views.js';
-import { toErrorView, loaderEllipse } from '../views/interface-views.js';
-import { toUploadViewError, toUploadViewSuccess } from '../views/profile-view.js';
+import { loaderEllipse } from '../views/interface-views.js';
+import { toMyUploadsView, toUploadViewError, toUploadViewSuccess } from '../views/profile-view.js';
 
 export const renderUploadItems = async (file) => {
 
@@ -20,20 +19,13 @@ export const renderUploadItems = async (file) => {
       window.localStorage.setItem('uploads', JSON.stringify([resText.data.id]));
     }
 
+    const uploads = await loadUploadedGifs();
     document.querySelector(UPLOAD_RESULT).innerHTML = await toUploadViewSuccess();
-    document.querySelector(UPLOADED_CONTENT).innerHTML = await renderUploads();
+    document.querySelector(UPLOADED_CONTENT).innerHTML = await toMyUploadsView(uploads);
     clearFileInput();
   } catch (error) {
     document.querySelector(UPLOAD_RESULT).innerHTML = toUploadViewError(error.message);
   }
-};
-
-export const renderUploads = async () => {
-  try {
-    return (await loadUploadedGifs()).map(toMiniGifView).join('');
-  } catch (error) {
-    return toErrorView();
-  };
 };
 
 export const showFileName = () => {

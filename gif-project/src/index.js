@@ -1,7 +1,7 @@
 // eslint-disable-next-line max-len
-import { CONTAINER_FAVORITE, CONTAINER_RANDOM, DATA_GIF_ID, DATA_PAGE, EMPTY_NEST, FAV_BUBBLE, FAV_STATUS, FILE_ID, HOME, MINI_GIF_IMG, NAV_LINK, SEARCH_BAR, SUBMIT, UPLOAD_INPUT, UPLOAD_LABEL } from './common/constants.js';
+import { CONTAINER_FAVORITE, CONTAINER_RANDOM, DATA_GIF_ID, DATA_PAGE, EMPTY_NEST, FAV_BUBBLE, FAV_STATUS, FILE_ID, HOME, LUCKY, MINI_GIF_IMG, NAV_LINK, SEARCH_BAR, SEARCH_TERM, SEARCH_TERM_TEXT, SUBMIT, UPLOAD_INPUT, UPLOAD_LABEL, VIEW_TRENDING } from './common/constants.js';
 import { toggleFavoriteStatus } from './events/favorites-events.js';
-import { loadPage, renderFavorite, renderGifDetails } from './events/navigation-events.js';
+import { loadPage, renderFavorite, renderGifDetails, renderLuckyGif } from './events/navigation-events.js';
 import { clearUploadedItems } from './events/profile-events.js';
 import { renderSearchItems } from './events/search-events.js';
 import { renderUploadItems, showFileName } from './events/upload-events.js';
@@ -14,12 +14,28 @@ document.addEventListener('DOMContentLoaded', () => {
       loadPage(event.target.getAttribute(DATA_PAGE));
     }
 
+    if (event.target.classList.contains(VIEW_TRENDING)) {
+
+      loadPage(event.target.getAttribute(DATA_PAGE));
+    }
+
+    if (event.target.classList.contains(SEARCH_TERM)) {
+      const term = event.target.textContent.trim();
+
+      document.querySelector(SEARCH_BAR).value = term;
+      renderSearchItems(term);
+    }
+
+    if (event.target.classList.contains(LUCKY)) {
+      renderLuckyGif();
+    }
+
     if (event.target.classList.contains(FAV_BUBBLE)) {
 
       loadPage(event.target.getAttribute(DATA_PAGE));
     }
 
-    if (event.target === document.querySelector(UPLOAD_LABEL)) {
+    if (event.target.classList.contains(UPLOAD_LABEL)) {
       const fileInput = document.querySelector(UPLOAD_INPUT);
       fileInput.addEventListener('change', showFileName);
     }

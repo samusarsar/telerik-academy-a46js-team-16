@@ -1,5 +1,6 @@
 import { API_KEY } from '../common/constants.js';
-import { generateGetGifUrl, generateGetRandomGifUrl, generateLoadUploadedGifsUrl, generateSearchGifsUrl, generateTrendingGifsUrl, generateUploadGifUrl } from './url-generators.js';
+// eslint-disable-next-line max-len
+import { generateGetGifUrl, generateGetRandomGifUrl, generateLoadUploadedGifsUrl, generateSearchGifsUrl, generateTrendingGifsUrl, generateTrendingSearchesUrl, generateUploadGifUrl } from './url-generators.js';
 
 export const loadTrendingGifs = async (offset) => {
   const url = generateTrendingGifsUrl(offset);
@@ -92,3 +93,14 @@ export const getRandomGif = async () => {
   return dataJson.data;
 };
 
+export const getTrendingSearches = async () => {
+  const url = generateTrendingSearchesUrl();
+  const data = await fetch(url);
+  const dataJson = await data.json();
+
+  if (!data.ok) {
+    throw new Error(dataJson.meta.msg);
+  }
+
+  return dataJson.data.slice(0, 15);
+};

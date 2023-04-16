@@ -1,6 +1,6 @@
-import { ABOUT, CONTAINER_SELECTOR, HOME, PROFILE, TRENDING, FAVORITE, CONTENT_SELECTOR } from '../common/constants.js';
+import { ABOUT, CONTAINER_SELECTOR, HOME, PROFILE, TRENDING, FAVORITE, CONTENT_SELECTOR, TRENDING_HOME, TERMS_HOME } from '../common/constants.js';
 import { getFavorite } from '../data/favorites.js';
-import { getGif, getRandomGif, loadTrendingGifs, searchGifs } from '../requests/request-service.js';
+import { getGif, getRandomGif, getTrendingSearches, loadTrendingGifs, loadUploadedGifs, searchGifs } from '../requests/request-service.js';
 import { generateSearchGifsUrl, generateTrendingGifsUrl } from '../requests/url-generators.js';
 import { toAboutView } from '../views/about-view.js';
 import { toFavoriteView, toRandomGifView } from '../views/favorites-view.js';
@@ -9,7 +9,7 @@ import { toHomeView } from '../views/home-view.js';
 import { toErrorView } from '../views/interface-views.js';
 import { toProfileView } from '../views/profile-view.js';
 import { toTrendingView } from '../views/trending-view.js';
-import { applyInfiniteScroll, applyMasonry, setActiveNav } from './helpers.js';
+import { applyFlickity, applyInfiniteScroll, applyMasonry, setActiveNav } from './helpers.js';
 
 export const loadPage = (page = '') => {
 
@@ -36,8 +36,17 @@ export const loadPage = (page = '') => {
 
 };
 
-export const renderHome = () => {
-  document.querySelector(CONTAINER_SELECTOR).innerHTML = toHomeView();
+export const renderHome = async () => {
+  try {
+    const data = await loadTrendingGifs();
+    const terms = await getTrendingSearches();
+    document.querySelector(CONTAINER_SELECTOR).innerHTML = toHomeView(data, terms);
+
+    applyFlickity(TRENDING_HOME);
+    applyFlickity(TERMS_HOME);
+  } catch (error) {
+    document.querySelector(CONTAINER_SELECTOR).innerHTML = toErrorView();
+  }
 };
 
 export const renderTrending = async () => {
@@ -50,7 +59,6 @@ export const renderTrending = async () => {
     applyInfiniteScroll(CONTENT_SELECTOR, msnry, generateTrendingGifsUrl);
 
   } catch (error) {
-    console.log(error);
     document.querySelector(CONTAINER_SELECTOR).innerHTML = toErrorView();
   }
 };
@@ -85,10 +93,15 @@ export const renderFavorite = async () => {
 };
 
 export const renderProfile = async () => {
-  document.querySelector(CONTAINER_SELECTOR).innerHTML = await toProfileView();
+  try {
+    const uploads = await loadUploadedGifs();
+    document.querySelector(CONTAINER_SELECTOR).innerHTML = toProfileView(uploads);
+  } catch (error) {
+    document.querySelector(CONTAINER_SELECTOR).innerHTML = toErrorView();
+  }
 };
 
-export const renderAbout = async () => {
+export const renderAbout = () => {
   document.querySelector(CONTAINER_SELECTOR).innerHTML = toAboutView();
 };
 
@@ -103,6 +116,21 @@ export const renderGifDetails = async (gifId) => {
 
     applyInfiniteScroll(CONTENT_SELECTOR, msnry, generateSearchGifsUrl, searchTerm);
 
+  } catch (error) {
+    document.querySelector(CONTAINER_SELECTOR).innerHTML = toErrorView();
+  }
+};
+
+export const renderLuckyGif = async () => {
+  try {
+    const luckyGif = await getRandomGif();
+    const searchTerm = luckyGif.slug.split('-').slice(0, -1);
+    const relatedGifs = await searchGifs(...searchTerm);
+    document.querySelector(CONTAINER_SELECTOR).innerHTML = toDetailedGifView(luckyGif, relatedGifs);
+
+    const msnry = applyMasonry(CONTENT_SELECTOR);
+
+    applyInfiniteScroll(CONTENT_SELECTOR, msnry, generateSearchGifsUrl, searchTerm);
   } catch (error) {
     document.querySelector(CONTAINER_SELECTOR).innerHTML = toErrorView();
   }

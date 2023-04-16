@@ -33,7 +33,7 @@ export const SEARCH_BAR = '#search-nav>#search';
 
 export const CONTENT_SELECTOR = '.content';
 
-export const UPLOAD_LABEL = '#upload-box label';
+export const UPLOAD_LABEL = 'custom-file-upload';
 
 export const UPLOAD_INPUT = '#upload-box input[type="file"]';
 
@@ -46,3 +46,21 @@ export const UPLOAD_RESULT = '#upload-result';
 export const CLEAR_BUTTON = '.clear-button';
 
 export const UPLOADED_CONTENT = '#uploaded .content';
+
+export const VIEW_TRENDING = 'view-trending';
+
+export const TRENDING_HOME = '#trending-home';
+
+export const TERMS_HOME = '#terms-home';
+
+export const SEARCH_TERM = 'search-term';
+
+export const SEARCH_TERM_TEXT = '.search-term p';
+
+export const LUCKY = 'lucky';
+
+export const SEARCH_CONTENT = '#gifs>.content';
+
+export const FAVORITE_STATUS_CONTAINER = `.favorite-status-container`;
+
+export const GIF_BOX = `.gif-box`;
