@@ -1,4 +1,5 @@
 import { renderFavoriteStatus } from '../events/favorites-events.js';
+import { loaderEllipse } from './interface-views.js';
 
 export const toMiniGifView = (gif) => `
   <div class="gif-box">
@@ -50,6 +51,7 @@ export const toRelatedGifsView = (gifs) => {
       <h2>Check out more GIFs like this:</h2>
       ${relatedGifsGrid}
     </div>
+    ${loaderEllipse()}
     `;
 
   return full;
