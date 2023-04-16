@@ -1,4 +1,4 @@
-import { ABOUT, CONTAINER_SELECTOR, HOME, PROFILE, TRENDING, FAVORITE, CONTENT_SELECTOR, TRENDING_HOME, TERMS_HOME } from '../common/constants.js';
+import { ABOUT, CONTAINER_SELECTOR, HOME, PROFILE, TRENDING, FAVORITE, CONTENT_SELECTOR, TRENDING_HOME, TERMS_HOME, UPLOADED_CONTENT } from '../common/constants.js';
 import { getFavorite } from '../data/favorites.js';
 import { getGif, getRandomGif, getTrendingSearches, loadTrendingGifs, loadUploadedGifs, searchGifs } from '../requests/request-service.js';
 import { generateSearchGifsUrl, generateTrendingGifsUrl } from '../requests/url-generators.js';
@@ -96,6 +96,7 @@ export const renderProfile = async () => {
   try {
     const uploads = await loadUploadedGifs();
     document.querySelector(CONTAINER_SELECTOR).innerHTML = toProfileView(uploads);
+    if (uploads.length) applyMasonry(UPLOADED_CONTENT);
   } catch (error) {
     document.querySelector(CONTAINER_SELECTOR).innerHTML = toErrorView();
   }

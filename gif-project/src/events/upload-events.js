@@ -2,6 +2,7 @@ import { CLEAR_BUTTON, FILE_ID, FILE_NAME_ID, UPLOADED_CONTENT, UPLOAD_BOX, UPLO
 import { loadUploadedGifs, uploadGif } from '../requests/request-service.js';
 import { loaderEllipse } from '../views/interface-views.js';
 import { toMyUploadsView, toUploadViewError, toUploadViewSuccess } from '../views/profile-view.js';
+import { applyMasonry } from './helpers.js';
 
 export const renderUploadItems = async (file) => {
 
@@ -22,6 +23,7 @@ export const renderUploadItems = async (file) => {
     const uploads = await loadUploadedGifs();
     document.querySelector(UPLOAD_RESULT).innerHTML = await toUploadViewSuccess();
     document.querySelector(UPLOADED_CONTENT).innerHTML = await toMyUploadsView(uploads);
+    if (uploads.length > 0) applyMasonry(UPLOADED_CONTENT);
     clearFileInput();
   } catch (error) {
     document.querySelector(UPLOAD_RESULT).innerHTML = toUploadViewError(error.message);

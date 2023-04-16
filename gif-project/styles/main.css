@@ -74,7 +74,6 @@ footer {
     justify-content: space-evenly;
     align-items: center;
     text-transform: uppercase;
-    background: rgb(35,14,51);
     background: linear-gradient(
         90deg,
         rgba(35,14,51,1) 0%,
@@ -83,7 +82,7 @@ footer {
         rgba(6,25,103,1) 75%,
         rgba(4,4,92,1) 100%
     );  
-    gap: 20px;  
+    gap: 20px;
 }
 
 #main-nav .nav-link {
@@ -228,11 +227,11 @@ footer {
 }
 
 #uploaded .content {
-    display: flex;
+    /* display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
     column-gap: 10px;
-    row-gap: 5px;
+    row-gap: 5px; */
     margin-bottom: 20px;
 }
 
