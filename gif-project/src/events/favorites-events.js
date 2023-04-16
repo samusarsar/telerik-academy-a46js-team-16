@@ -1,5 +1,8 @@
 import { getFavorite, removeFavorite, setFavorite } from '../data/favorites.js';
-
+/**
+ * Toggles favorite status for a given GIF
+ * @param {*} id GIF's ID
+ */
 export const toggleFavoriteStatus = (id) => {
   const favorite = getFavorite();
 
@@ -9,10 +12,15 @@ export const toggleFavoriteStatus = (id) => {
     setFavorite(id);
   }
 
-  document.querySelector(`.favorite-status-container`).innerHTML = renderFavoriteStatusForGif(id);
+  document.querySelector(`.favorite-status-container`).innerHTML = renderFavoriteStatus(id);
 };
 
-export const renderFavoriteStatusForGif = (id) => {
+/**
+ * Renders favorite status image for a given GIF
+ * @param {string} id GIF's ID
+ * @return {string} HTML img element
+ */
+export const renderFavoriteStatus = (id) => {
   const favorite = getFavorite();
 
   if (favorite === id) {
