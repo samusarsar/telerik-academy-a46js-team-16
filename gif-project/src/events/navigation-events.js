@@ -67,7 +67,7 @@ export const renderFavorite = async () => {
   try {
     if (getFavorite()) {
       const favoriteGif = await getGif(getFavorite());
-      const searchTerm = favoriteGif.slug.split('-').slice(0, -1);
+      const searchTerm = favoriteGif.slug.split('-');
       const relatedGifs = await searchGifs(...searchTerm);
       document.querySelector(CONTAINER_SELECTOR).innerHTML = toFavoriteView(favoriteGif, relatedGifs);
 
@@ -78,7 +78,7 @@ export const renderFavorite = async () => {
     } else {
 
       const randomGif = await getRandomGif();
-      const searchTerm = randomGif.slug.split('-').slice(0, -1);
+      const searchTerm = randomGif.slug.split('-');
       console.log(searchTerm);
       const relatedGifs = await searchGifs(...searchTerm);
       document.querySelector(CONTAINER_SELECTOR).innerHTML = toRandomGifView(randomGif, relatedGifs);
