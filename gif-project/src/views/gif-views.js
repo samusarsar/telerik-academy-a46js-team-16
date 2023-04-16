@@ -40,6 +40,7 @@ export const toRelatedGifsView = (gifs) => {
     <div class="content">
       ${gifs.map(toMiniGifView)}
     </div>
+    ${loaderEllipse()}
     ` : `
     <div id="not-found">
       <p>Hmmm... Looks like there isn\'t any!</p>
@@ -51,7 +52,6 @@ export const toRelatedGifsView = (gifs) => {
       <h2>Check out more GIFs like this:</h2>
       ${relatedGifsGrid}
     </div>
-    ${loaderEllipse()}
     `;
 
   return full;
