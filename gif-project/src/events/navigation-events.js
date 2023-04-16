@@ -109,7 +109,7 @@ export const renderAbout = () => {
 export const renderGifDetails = async (gifId) => {
   try {
     const gif = await getGif(gifId);
-    const searchTerm = gif.slug.split('-').slice(0, -1);
+    const searchTerm = gif.slug.split('-');
     const relatedGifs = await searchGifs(...searchTerm);
     document.querySelector(CONTAINER_SELECTOR).innerHTML = toDetailedGifView(gif, relatedGifs);
 
