@@ -16,13 +16,12 @@ body {
     margin: 0;
 }
 
-
 h1 {
     font-family:'Arima', cursive;
     font-size: 3em;
     padding-left: 20px;
     color: #ff416d;
-    margin-bottom: 0;
+    margin: 15px 0 0;
 }
 
 h1#logo span{
@@ -169,7 +168,6 @@ footer {
     color: rgba(255, 255, 255, 0);
 }
 
-
 /* favorites styles */
 
 .favorite-bubble {
@@ -227,11 +225,6 @@ footer {
 }
 
 #uploaded .content {
-    /* display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    column-gap: 10px;
-    row-gap: 5px; */
     margin-bottom: 20px;
 }
 
@@ -437,7 +430,7 @@ img.favorite-status {
 }
 
 #error img{
-    height: 20%;
+    height: 10%;
 }
 
 #about {
@@ -508,10 +501,12 @@ img.favorite-status {
     border-right: 0;
     color: #00b5a1;
 }
+
 #upload-box .custom-file-upload:hover {
     background-color: rgb(118, 118, 118);
     color: whitesmoke;
 }
+
 #upload-box .custom-file-upload:active {
     background-color: rgb(0, 0, 0);
     color: whitesmoke;
@@ -560,18 +555,17 @@ img.favorite-status {
     background-color: #000000;
 }
 
-
-
 /* loader ellipse */
+
 .loader-ellipse {
     font-size: 20px;
     position: relative;
     width: 4em;
     height: 1em;
     margin: 10px auto;
-  }
-  
-  .loader-ellipse__dot {
+}
+
+.loader-ellipse__dot {
     display: block;
     width: 1em;
     height: 1em;
@@ -581,34 +575,40 @@ img.favorite-status {
     animation-duration: 0.5s;
     animation-timing-function: ease;
     animation-iteration-count: infinite;
-  }
-  
-  .loader-ellipse__dot:nth-child(1),
-  .loader-ellipse__dot:nth-child(2) {
+}
+
+.loader-ellipse__dot:nth-child(1),
+.loader-ellipse__dot:nth-child(2) {
     left: 0;
-  }
-  .loader-ellipse__dot:nth-child(3) { left: 1.5em; }
-  .loader-ellipse__dot:nth-child(4) { left: 3em; }
-  
-  @keyframes reveal {
+}
+
+.loader-ellipse__dot:nth-child(3) {
+    left: 1.5em;
+}
+
+.loader-ellipse__dot:nth-child(4) {
+    left: 3em;
+}
+
+@keyframes reveal {
     from { transform: scale(0.001); }
     to { transform: scale(1); }
-  }
-  
-  @keyframes slide {
+}
+
+@keyframes slide {
     to { transform: translateX(1.5em) }
-  }
-  
-  .loader-ellipse__dot:nth-child(1) {
+}
+
+.loader-ellipse__dot:nth-child(1) {
     animation-name: reveal;
-  }
-  
-  .loader-ellipse__dot:nth-child(2),
-  .loader-ellipse__dot:nth-child(3) {
+}
+
+.loader-ellipse__dot:nth-child(2),
+.loader-ellipse__dot:nth-child(3) {
     animation-name: slide;
-  }
-  
-  .loader-ellipse__dot:nth-child(4) {
+}
+
+.loader-ellipse__dot:nth-child(4) {
     animation-name: reveal;
     animation-direction: reverse;
-  }
+}
