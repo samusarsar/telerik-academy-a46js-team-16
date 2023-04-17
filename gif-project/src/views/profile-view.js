@@ -1,5 +1,9 @@
 import { toMiniGifView } from './gif-views.js';
 
+/**
+ * Generated HTML for Upload view box
+ * @return {string} HTML
+ */
 const toUploadView = () => `
     <div id="upload-box">
       <h2>Add new GIFs to your nest:</h2>
@@ -13,10 +17,20 @@ const toUploadView = () => `
     </div>
 `;
 
+/**
+ * Generates HTML for My uploads box
+ * @param {GIF[]} uploads array of uploaded GIFs
+ * @return {string} HTML
+ */
 export const toMyUploadsView = (uploads) => `
         ${uploads.map(toMiniGifView).join('') || '<p>You haven\'t uploaded any GIFs yet.</p><p>Click above to upload your first!</p>'}
 `;
 
+/**
+ * Genetares HTML for Profile page
+ * @param {GIF[]} uploads array of uploaded GIFs
+ * @return {string} HTML
+ */
 export const toProfileView = (uploads) => `
   <div id="profile">
     <h1>Welcome to your GIFlamingo nest!</h1>
@@ -31,8 +45,17 @@ export const toProfileView = (uploads) => `
   </div>
 `;
 
+/**
+ * Generates HTML for Successful upload message
+ * @return {string} HTML
+ */
 export const toUploadViewSuccess = async () => {
   return `<p>GIF successfully uploaded!</p>`;
 };
 
+/**
+ * Generates HTML for Unsuccessful upload message
+ * @param {*} error error message
+ * @return {string} HTML
+ */
 export const toUploadViewError = (error) => `<p>Uh-oh! That didn\'t work out...   ${error}</p>`;

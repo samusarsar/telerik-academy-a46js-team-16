@@ -1,3 +1,7 @@
+/**
+ * Generates HTML for Loader Ellipse
+ * @return {string} HTML
+ */
 export const loaderEllipse = () => `
     <div class="page-load-status">
         <div class="loader-ellipse infinite-scroll-request">
@@ -9,6 +13,10 @@ export const loaderEllipse = () => `
     </div>
 `;
 
+/**
+ * Generates HTML for Error view
+ * @return {string} HTML
+ */
 export const toErrorView = () => `
     <div id="error">
         <h1>Oh-No! There was an error loading these GIFs!</h1>

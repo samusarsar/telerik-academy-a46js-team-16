@@ -1,3 +1,6 @@
+/** Generates HTML for About page
+ * @return {string} HTML for About page
+ */
 export const toAboutView = () => `
 <div id="about">
   <div class="content">

@@ -1,5 +1,11 @@
 import { toMiniGifView } from './gif-views.js';
 
+/**
+ * Generates HTML for Home page
+ * @param {GIF[]} data array of trending GIFs
+ * @param {string[]} terms search terms
+ * @return {string} HTML
+ */
 export const toHomeView = (data, terms) => `
 <div id="home">
   <h1 id="logo"><span>GIF</span>lamingo</h1>
@@ -40,6 +46,11 @@ export const toHomeView = (data, terms) => `
 </div>
 `;
 
+/**
+ * Generates HTML for Popular Searches carousel
+ * @param {string[]} term search terms
+ * @return {string} HTML
+ */
 const toPopularSearchesView = (term) => `
   <div class="search-term">
     <p>${term}</p>

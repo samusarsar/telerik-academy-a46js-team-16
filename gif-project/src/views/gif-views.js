@@ -1,16 +1,23 @@
 import { renderFavoriteStatus } from '../events/favorites-events.js';
 import { loaderEllipse } from './interface-views.js';
 
+/**
+ * Generates HTML for mini GIF view
+ * @param {GIF} gif GIF object
+ * @return {string} HTML
+ */
 export const toMiniGifView = (gif) => `
   <div class="gif-box">
     <img class="mini-gif-img" data-gif-id="${gif.id}" src="${gif.images.fixed_height_downsampled.url}" alt="${gif.title}">
   </div>
 `;
 
-export const toMoreMiniGifView = (gif) => `
-  <img class="mini-gif-img" data-gif-id="${gif.id}" src="${gif.images.fixed_height_downsampled.url}" alt="${gif.title}">
-`;
-
+/**
+ * Generates HTML for detailed GIF view
+ * @param {GIF} gif GIF object
+ * @param {GIF[]} relatedGifs array of related GIFs
+ * @return {string} HTML
+ */
 export const toDetailedGifView = (gif, relatedGifs) => {
   return `
   <div class="detailed-gif">
@@ -35,6 +42,11 @@ export const toDetailedGifView = (gif, relatedGifs) => {
 `;
 };
 
+/**
+ * Generates HTML for related GIFs view
+ * @param {GIF[]} gifs array of GIFs
+ * @return {string} HTML
+ */
 export const toRelatedGifsView = (gifs) => {
   const relatedGifsGrid = gifs.length ? `
     <div class="content">
