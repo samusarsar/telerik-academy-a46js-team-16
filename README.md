@@ -46,11 +46,11 @@
 
 ## <img src="/images/community.png"  width="30" height="30"> Community and Contributions
 
-The `GIFlamingo` platform is developed by the infamous Team 16 (Simona Ilcheva and Samuil Sarandev).
+The `GIFlamingo` platform is developed by the infamous **Team 16** (Simona Ilcheva and Samuil Sarandev).
 
 The creators vow to engage in open, two-sided communication with the platform's community to seek ongoing improvements to the platform and betterment of the overall user experience on `GIFlamingo`.
 
-Our team works very hard, day and night, to provide oyu with the best possible experience of the GIF realm. *Forever-free-of-charge.* Therefore, please consider supporting our efforts by donating to keep our operation going:
+Our team works very hard, day and night, to provide you with the best possible experience of the GIF realm. *Forever-free-of-charge.* Therefore, please consider supporting our efforts by donating to keep our operation going:
 
 - **Revolut** handle: `@samusar`
 
