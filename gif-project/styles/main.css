@@ -94,16 +94,17 @@ footer {
     color: #e3bd3f;
 }
 
-#main-nav .nav-link::before {
+#main-nav .nav-link::after {
     content: '';
     display: block;
-    height: 4px;
+    height: 2px;
     width: 0%;
     background-color: #00b5a1;
+    border-radius: 0 0 50% 50%;
     transition: all 250ms ease-in-out ;
 }
 
-#main-nav .nav-link:hover::before {
+#main-nav .nav-link:hover::after {
     width: 100%;
 }
 
