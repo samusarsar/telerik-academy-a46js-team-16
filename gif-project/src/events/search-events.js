@@ -16,6 +16,7 @@ export const renderSearchItems = async (searchTerm) => {
     const msnryContainer = document.querySelector(SEARCH_CONTENT);
 
     const msnry = new Masonry(msnryContainer, {
+      initLayout: false,
       itemSelector: GIF_BOX,
       columnWidth: 200,
       gutter: 10,

@@ -27,6 +27,7 @@ export const applyMasonry = (container) => {
 
   const content = document.querySelector(container);
   const msnry = new Masonry(content, {
+    initLayout: false,
     itemSelector: GIF_BOX,
     columnWidth: 200,
     gutter: 10,
