@@ -5,6 +5,10 @@ import { toErrorView } from '../views/interface-views.js';
 import { toSearchView } from '../views/search-view.js';
 import { applyInfiniteScroll, applyMasonry, setActiveNav } from './helpers.js';
 
+/**
+ * @param {string} searchTerm Search term
+ * Loads searched GIFs and renders Search page asynchronously.
+ */
 export const renderSearchItems = async (searchTerm) => {
   try {
     setActiveNav();

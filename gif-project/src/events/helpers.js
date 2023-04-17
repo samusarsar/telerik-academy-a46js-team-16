@@ -19,7 +19,7 @@ export const setActiveNav = (page = null) => {
 };
 
 /**
- * Applies grid layout to the selected container using Masonry library
+ * Applies grid layout to the selected container using Masonry library.
  * @param {string} container Container selector
  * @return {Masonry} Instance of Masonry class
  */
@@ -42,7 +42,7 @@ export const applyMasonry = (container) => {
 };
 
 /**
- * Adds infinite scroll feature to the selected container using Infinite Scroll library
+ * Adds infinite scroll feature to the selected container using Infinite Scroll library.
  * @param {string} container Container selector
  * @param {Masonry} msnry Instance of Masonry class
  * @param {function} urlGeneratorFunction Function, that generates URL for the next page
@@ -77,6 +77,10 @@ export const applyInfiniteScroll = (container, msnry, urlGeneratorFunction, sear
   infScroll.loadNextPage();
 };
 
+/**
+ * Applies carousel slider to the selected container using Flickity library.
+ * @param {string} selector Container selector
+ */
 export const applyFlickity = (selector) => {
   const content = document.querySelector(selector);
 

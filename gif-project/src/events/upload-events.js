@@ -4,6 +4,10 @@ import { loaderEllipse } from '../views/interface-views.js';
 import { toMyUploadsView, toUploadViewError, toUploadViewSuccess } from '../views/profile-view.js';
 import { applyMasonry } from './helpers.js';
 
+/**
+ * Adds GIF ID to the uploads property of the Local Storage. Renders successful or error view.
+ * @param {File} file Local file
+ */
 export const renderUploadItems = async (file) => {
 
   document.querySelector(UPLOAD_RESULT).innerHTML = loaderEllipse();
@@ -39,6 +43,9 @@ export const renderUploadItems = async (file) => {
   }
 };
 
+/**
+ * Renders file name and clear button.
+ */
 export const showFileName = () => {
   const fileInput = document.getElementById(FILE_ID);
   const filenameSpan = document.getElementById(FILE_NAME_ID);
@@ -72,6 +79,9 @@ export const showFileName = () => {
   }
 };
 
+/**
+ * Removes file name, file input value and clear button.
+ */
 const clearFileInput = () => {
   const fileInput = document.getElementById(FILE_ID);
   const filenameSpan = document.getElementById(FILE_NAME_ID);

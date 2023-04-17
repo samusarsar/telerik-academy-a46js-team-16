@@ -11,6 +11,11 @@ import { toProfileView } from '../views/profile-view.js';
 import { toTrendingView } from '../views/trending-view.js';
 import { applyFlickity, applyInfiniteScroll, applyMasonry, setActiveNav } from './helpers.js';
 
+/**
+ * Loads selected page.
+ * @param {string} page data-page attribute
+ * @return {null} null if, such data-page attribute doesn't exist
+ */
 export const loadPage = (page = '') => {
 
   switch (page) {
@@ -36,6 +41,9 @@ export const loadPage = (page = '') => {
 
 };
 
+/**
+ * Loads trending GIFs and trending searches and renders Home page asynchronously.
+ */
 export const renderHome = async () => {
   try {
     const data = await loadTrendingGifs();
@@ -49,6 +57,9 @@ export const renderHome = async () => {
   }
 };
 
+/**
+ * Loads trending GIFs and renders Trending page asynchronously.
+ */
 export const renderTrending = async () => {
   try {
     const data = await loadTrendingGifs();
@@ -63,6 +74,9 @@ export const renderTrending = async () => {
   }
 };
 
+/**
+ * Loads favorite or random GIF and related GIFs. Renders Favorite page asynchronously.
+ */
 export const renderFavorite = async () => {
   try {
     if (getFavorite()) {
@@ -91,6 +105,9 @@ export const renderFavorite = async () => {
   }
 };
 
+/**
+ * Loads uploaded GIFs and renders Profile page asynchronously.
+ */
 export const renderProfile = async () => {
   try {
     const uploads = await loadUploadedGifs();
@@ -101,10 +118,15 @@ export const renderProfile = async () => {
   }
 };
 
+/** Renders About page */
 export const renderAbout = () => {
   document.querySelector(CONTAINER_SELECTOR).innerHTML = toAboutView();
 };
 
+/**
+ * Loads GIF details and related GIFs. Renders detailed GIF view page asynchronously.
+ * @param {string} gifId GIF's ID
+ */
 export const renderGifDetails = async (gifId) => {
   try {
     const gif = await getGif(gifId);
@@ -121,6 +143,9 @@ export const renderGifDetails = async (gifId) => {
   }
 };
 
+/**
+ * Loads random GIF and related GIFs. Renders LuckyGif page asynchronously.
+ */
 export const renderLuckyGif = async () => {
   try {
     const luckyGif = await getRandomGif();
