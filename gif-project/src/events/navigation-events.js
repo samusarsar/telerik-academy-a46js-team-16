@@ -79,7 +79,6 @@ export const renderFavorite = async () => {
 
       const randomGif = await getRandomGif();
       const searchTerm = randomGif.slug.split('-');
-      console.log(searchTerm);
       const relatedGifs = await searchGifs(...searchTerm);
       document.querySelector(CONTAINER_SELECTOR).innerHTML = toRandomGifView(randomGif, relatedGifs);
 
@@ -125,7 +124,7 @@ export const renderGifDetails = async (gifId) => {
 export const renderLuckyGif = async () => {
   try {
     const luckyGif = await getRandomGif();
-    const searchTerm = luckyGif.slug.split('-').slice(0, -1);
+    const searchTerm = luckyGif.slug.split('-');
     const relatedGifs = await searchGifs(...searchTerm);
     document.querySelector(CONTAINER_SELECTOR).innerHTML = toDetailedGifView(luckyGif, relatedGifs);
 
