@@ -10,10 +10,10 @@
 
 - Clean user-interface geared towards maximum GIF-enjoyment;
 - Quick navigation and access to content;
-- No-registration needed for using profile functionality (favorite GIF and uploading your own GIFs);
+- No-registration needed for using profile functionality (favorite GIFs and uploading your own GIFs);
 - Simple, rapid, user-friendly.
 
-![Site usage](/images/site-use-gif.gif)
+![Site usage](/images/giflamingo_demo.gif)
 
 ## <img src="./images/features.png"  width="30" height="30"> Features
 
@@ -25,7 +25,8 @@
 - Easily **search** for any GIFs that you may want to see by simply typing in keywords in the `search-bar`;
 - Check up on your **profile** from the `My Profile` tab to upload your own GIFs for the world to see and also browse the GIFs you already have in your GIFlamingo nest:
   - if you feel bored of your nest, you can always empty it out with the `Empty my nest` button and start anew!
-- Crown any GIF you come across as your personal **favorite** from the heart icon next to its title and quick-access it anytime from the `Favorite` floating bubble!
+- Add any GIFs you come across to your personal **favorites** by clicking the heart icon next to its title and quick-access it anytime from the `Favorites` floating bubble!
+  - If you don't have any GIFs added to your `Favorites` tab yet - you will see a random GIF you might like instead.
 - **Have fun!** ;)
 
 ## <img src="./images/setup.png"  width="30" height="30"> Getting Started
@@ -40,8 +41,8 @@
 
 - **Where is the search button? How do I search GIFs?**
   - `GIFlamingo` offers a dynamic search functionality where all you need to do to search is to type in your desired keywords. The search mechanism will dynamically update search results based on your keyword input as you type it in. Easy as pie, right?
-- **Why does the favorite bubble opens up a random GIF?**
-  - If you haven't yet selected a GIF as your personal favorite, clicking the `Favorite` bubble will present you with a random GIF you might like in the hopes of you finding your favorite as soon as possible.
+- **Why does the favorite bubble open up a random GIF?**
+  - If you haven't yet selected any GIFs as favorites, clicking the `Favorites` bubble will present you with a random GIF you might like in the hopes of you finding your favorite as soon as possible.
 - **Different favorite GIF and uploaded GIFs only show up on my different browsers - why is that?**
   - `GIFlamingo` stores information regarding your favorite GIF and your profile's uploaded GIFs in the `localStorage()` of your browser. Therefore, a GIF you have chosen as your favorite when opening the website on Google Chrome, will not be recorded as favorite when opening it on Safari, for example.
 
