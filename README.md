@@ -32,8 +32,9 @@
 
 1. Open terminal in `gif-project` directory;
 2. Run `npm install` command to install project dependencies;
-3. Run `live-server` within `gif-project` directory;
-4. Enjoy an endless world of GIF content from your browser!
+3. Run `npm run docs` command to generate JSDoc html in `gif-project/out/` directory.
+4. Run `live-server` within `gif-project` directory;
+5. Enjoy an endless world of GIF content from your browser!
 
 ## <img src="./images/faq.png"  width="30" height="30"> Frequently Asked Questions
 
