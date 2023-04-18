@@ -69,3 +69,13 @@ export const SEARCH_CONTENT = '#gifs>.content';
 export const FAVORITE_STATUS_CONTAINER = `.favorite-status-container`;
 
 export const GIF_BOX = `.gif-box`;
+
+export const GIF_DETAILS = 'gif-details';
+
+export const BACK = 'back';
+
+export const SEARCH = 'search';
+
+export const GIFS = 'gifs';
+
+export const DETAILED_GIF_CONTAINER = 'detailed-gif';

@@ -7,7 +7,7 @@ import { loaderEllipse } from './interface-views.js';
  * @return {string} HTML
  */
 export const toTrendingView = (data) => `
-  <div class="trending">
+  <div id="trending">
     <h1>Trending GIFs</h1>
     <div class="content">
       ${data.map(toMiniGifView).join('')}

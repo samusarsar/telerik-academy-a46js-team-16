@@ -20,7 +20,8 @@ export const toMiniGifView = (gif) => `
  */
 export const toDetailedGifView = (gif, relatedGifs) => {
   return `
-  <div class="detailed-gif">
+  <div id="detailed-gif" data-gif-id="${gif.id}">
+  <a href=# class="back">Go Back</a>
     <div class="gif-container">
       <div id="gif-header">
         <h3>${gif.title || '[untitled_GIF]'}</h3>

@@ -1,5 +1,6 @@
 // eslint-disable-next-line max-len
-import { CONTAINER_FAVORITE, CONTAINER_RANDOM, DATA_GIF_ID, DATA_PAGE, EMPTY_NEST, FAV_BUBBLE, FAV_STATUS, FILE_ID, HOME, LUCKY, MINI_GIF_IMG, NAV_LINK, SEARCH_BAR, SEARCH_TERM, SEARCH_TERM_TEXT, SUBMIT, UPLOAD_INPUT, UPLOAD_LABEL, VIEW_TRENDING } from './common/constants.js';
+import { BACK, CONTAINER_FAVORITE, CONTAINER_RANDOM, CONTAINER_SELECTOR, DATA_GIF_ID, DATA_PAGE, EMPTY_NEST, FAV_BUBBLE, FAV_STATUS, FILE_ID, GIFS, HOME, LUCKY, MINI_GIF_IMG, NAV_LINK, PROFILE, SEARCH_BAR, SEARCH_TERM, SUBMIT, TRENDING, UPLOAD_INPUT, UPLOAD_LABEL, VIEW_TRENDING } from './common/constants.js';
+import { getOriginPage, setOriginPage } from './data/navigation.js';
 import { toggleFavoriteStatus } from './events/favorites-events.js';
 import { loadPage, renderFavorite, renderGifDetails, renderLuckyGif } from './events/navigation-events.js';
 import { clearUploadedItems } from './events/profile-events.js';
@@ -33,10 +34,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (event.target.classList.contains(LUCKY)) {
+      setOriginPage(HOME);
+
       renderLuckyGif();
     }
 
     if (event.target.classList.contains(FAV_BUBBLE)) {
+      const origin = document.querySelector(CONTAINER_SELECTOR).firstElementChild.getAttribute('id');
+
+      if (origin === GIFS) {
+        const term = document.querySelector(CONTAINER_SELECTOR).firstElementChild.firstElementChild.textContent.split(`"`)[1];
+        setOriginPage(origin, term);
+      } else if (origin === HOME || origin === TRENDING || origin === PROFILE) {
+        setOriginPage(origin);
+      }
 
       loadPage(event.target.getAttribute(DATA_PAGE));
     }
@@ -59,6 +70,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (event.target.classList.contains(MINI_GIF_IMG)) {
+      const origin = document.querySelector(CONTAINER_SELECTOR).firstElementChild.getAttribute('id');
+
+      if (origin === GIFS) {
+        const term = document.querySelector(CONTAINER_SELECTOR).firstElementChild.firstElementChild.textContent.split(`"`)[1];
+        setOriginPage(origin, term);
+      } else if (origin === HOME || origin === TRENDING || origin === PROFILE) {
+        setOriginPage(origin);
+      }
+
       renderGifDetails(event.target.getAttribute(DATA_GIF_ID));
     }
 
@@ -67,6 +87,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (document.querySelector(CONTAINER_FAVORITE) || document.querySelector(CONTAINER_RANDOM)) {
         renderFavorite();
+      }
+    }
+
+    if (event.target.classList.contains(BACK)) {
+      const originPage = JSON.parse(getOriginPage());
+      console.log(originPage);
+      if (originPage.length === 1) {
+        loadPage(originPage[0]);
+      } else {
+        renderSearchItems(originPage[1]);
       }
     }
 
