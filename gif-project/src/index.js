@@ -63,6 +63,13 @@ document.addEventListener('DOMContentLoaded', () => {
         renderFavorite();
       }
     }
+
+    if (!(event.target === document.querySelector(SEARCH_BAR))) {
+      if (document.querySelector(SEARCH_BAR).value) {
+        document.querySelector(SEARCH_BAR).value = '';
+      }
+    }
+
   });
 
   document.querySelector(SEARCH_BAR).addEventListener('input', event => {
