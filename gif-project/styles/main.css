@@ -258,8 +258,8 @@ footer {
 .detailed-gif {
     display: flex;
     justify-content: center;
-    align-items: flex-end;
-    flex-wrap: wrap-reverse;
+    align-items: flex-start;
+    flex-wrap: wrap;
     gap: 30px;
 }
 
