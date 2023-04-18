@@ -19,6 +19,12 @@ document.addEventListener('DOMContentLoaded', () => {
       loadPage(event.target.getAttribute(DATA_PAGE));
     }
 
+    if (!(event.target === document.querySelector(SEARCH_BAR))) {
+      if (document.querySelector(SEARCH_BAR).value) {
+        document.querySelector(SEARCH_BAR).value = '';
+      }
+    }
+
     if (event.target.classList.contains(SEARCH_TERM)) {
       const term = event.target.textContent.trim();
 
@@ -61,12 +67,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (document.querySelector(CONTAINER_FAVORITE) || document.querySelector(CONTAINER_RANDOM)) {
         renderFavorite();
-      }
-    }
-
-    if (!(event.target === document.querySelector(SEARCH_BAR))) {
-      if (document.querySelector(SEARCH_BAR).value) {
-        document.querySelector(SEARCH_BAR).value = '';
       }
     }
 
