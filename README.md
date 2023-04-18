@@ -1,4 +1,4 @@
-<div style="display: flex; justify-content:center; margin-bottom:20px"><img src="/images/logo_readme.png" width="600"></div>
+<div style="display: flex; justify-content:center; margin-bottom:20px"><img src="./images/logo_readme.png" width="600"></div>
 
 `GIFlamingo` is your one-stop-shop for all the best GIFs out there!
 
