@@ -13,7 +13,7 @@
 - No-registration needed for using profile functionality (favorite GIFs and uploading your own GIFs);
 - Simple, rapid, user-friendly.
 
-<iframe src="https://giphy.com/embed/D4XiLu2HvWqtu8JCZF" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/D4XiLu2HvWqtu8JCZF">via GIPHY</a></p>
+<img src="https://media1.giphy.com/media/D4XiLu2HvWqtu8JCZF/giphy.gif?cid=2f61050f57f35f2df990d77a1d83b34ff72f07c37daf9aa2&rid=giphy.gif&ct=g">
 
 ## <img src="./images/features.png"  width="30" height="30"> Features
 
