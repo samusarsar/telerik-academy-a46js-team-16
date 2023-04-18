@@ -27,7 +27,7 @@ export const toMyUploadsView = (uploads) => `
 `;
 
 /**
- * Genetares HTML for Profile page
+ * Generates HTML for Profile page
  * @param {GIF[]} uploads array of uploaded GIFs
  * @return {string} HTML
  */
