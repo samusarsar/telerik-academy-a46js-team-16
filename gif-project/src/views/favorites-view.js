@@ -1,16 +1,18 @@
-import { toDetailedGifView } from './gif-views.js';
+import { toDetailedGifView, toMiniGifView } from './gif-views.js';
 
 /**
- * Generates HTML for favorite GIF view
- * @param {GIF} favoriteGif favorite GIF
- * @param {GIF[]} relatedGifs array of related GIFs
- * @return {string} HTML for favorite GIF view
+ * Generates HTML for favorite GIFs grid view
+ * @param {array} favoriteGifs array of favorite GIFs
+ * @return {string} HTML for favorite GIFs grid view
  */
-export const toFavoriteView = (favoriteGif, relatedGifs) => `
-    <div class="favorite">
-        <h1>Your favorite GIF:</h1>
+export const toFavoriteView = (favoriteGifs) => `
+    <div id="favorites">
+        <h1>Your favorite GIFs:</h1>
+        <div class="content">
+        ${favoriteGifs.map(toMiniGifView).join('')}
+        </div>
     </div>
-    ${toDetailedGifView(favoriteGif, relatedGifs)}
+    <div><a href=# class="clear-favorites">Clear Favorites</a></div>
 `;
 
 /**
@@ -22,8 +24,7 @@ export const toFavoriteView = (favoriteGif, relatedGifs) => `
 export const toRandomGifView = (randomGif, relatedGifs) => `
   <div class="random">
       <h1>No 'fave' yet?</h1>
-      <p>Browse GIFlamingo and click the heart icon next to your favorite GIF to make it yours!</p>
-      <p>In the meantime, here's a random one you might like:</p>
+      <p>You don't have any favorite GIFs yet... Here's a random one you might like!</p>
   </div>
   ${toDetailedGifView(randomGif, relatedGifs)}
 `;

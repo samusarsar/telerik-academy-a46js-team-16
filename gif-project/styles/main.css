@@ -231,9 +231,9 @@ footer {
     padding: 10px 40px;
 }
 
-#trending .content, #gifs .content, #uploaded .content {
+#trending .content, #gifs .content, #uploaded .content, #favorites .content {
     padding: 10px 20px;
-    margin: 0 auto;
+    margin: 20px auto 0;
 }
 
 #uploaded .content {
@@ -551,7 +551,7 @@ img.favorite-status {
     background-color: #000000;
 }
 
-.empty-nest, .back {
+.empty-nest, .back, .clear-favorites {
     padding: 10px 20px;
     font-size: 1em;
     font-weight: 500;
@@ -562,16 +562,21 @@ img.favorite-status {
     text-decoration: none;
 }
 
-.back {
+#favorites + div {
+    display: flex;
+    justify-content: center;
+}
+
+.back, .clear-favorites {
     margin-top: 20px;
 }
 
-.empty-nest:hover, .back:hover {
+.empty-nest:hover, .back:hover, .clear-favorites:hover {
     cursor: pointer;
     background-color:  rgb(118, 118, 118);
 }
 
-.empty-nest:active, .back:active {
+.empty-nest:active, .back:active, .clear-favorites:active {
     background-color: #000000;
 }
 

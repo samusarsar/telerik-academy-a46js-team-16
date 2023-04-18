@@ -1,5 +1,5 @@
-import { CLEAR_BUTTON, CONTAINER_SELECTOR, FILE_ID, FILE_NAME_ID, UPLOADED_CONTENT, UPLOAD_BOX, UPLOAD_RESULT } from '../common/constants.js';
-import { loadUploadedGifs, uploadGif } from '../requests/request-service.js';
+import { CLEAR_BUTTON, CONTAINER_SELECTOR, FILE_ID, FILE_NAME_ID, UPLOADED_CONTENT, UPLOADS, UPLOAD_BOX, UPLOAD_RESULT } from '../common/constants.js';
+import { getCachedGifs, uploadGif } from '../requests/request-service.js';
 import { loaderEllipse, toErrorView } from '../views/interface-views.js';
 import { toMyUploadsView, toUploadViewError, toUploadViewSuccess } from '../views/profile-view.js';
 import { applyMasonry } from './helpers.js';
@@ -34,15 +34,15 @@ export const renderUploadItems = async (file) => {
     const response = await uploadGif(file);
 
     const resText = JSON.parse(await response.text());
-    if (window.localStorage.getItem('uploads')) {
-      const uploads = JSON.parse(window.localStorage.getItem('uploads'));
+    if (window.localStorage.getItem(UPLOADS)) {
+      const uploads = JSON.parse(window.localStorage.getItem(UPLOADS));
       uploads.push(resText.data.id);
-      window.localStorage.setItem('uploads', JSON.stringify(uploads));
+      window.localStorage.setItem(UPLOADS, JSON.stringify(uploads));
     } else {
-      window.localStorage.setItem('uploads', JSON.stringify([resText.data.id]));
+      window.localStorage.setItem(UPLOADS, JSON.stringify([resText.data.id]));
     }
 
-    const uploads = await loadUploadedGifs();
+    const uploads = await getCachedGifs(UPLOADS);
     uploadResultMsg.innerHTML = toUploadViewSuccess();
     setTimeout(() => {
       uploadResultMsg.innerHTML = '';

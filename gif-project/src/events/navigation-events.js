@@ -1,6 +1,7 @@
-import { ABOUT, CONTAINER_SELECTOR, HOME, PROFILE, TRENDING, FAVORITE, CONTENT_SELECTOR, TRENDING_HOME, TERMS_HOME, UPLOADED_CONTENT } from '../common/constants.js';
-import { getFavorite } from '../data/favorites.js';
-import { getGif, getRandomGif, getTrendingSearches, loadTrendingGifs, loadUploadedGifs, searchGifs } from '../requests/request-service.js';
+// eslint-disable-next-line max-len
+import { ABOUT, CONTAINER_SELECTOR, HOME, PROFILE, TRENDING, CONTENT_SELECTOR, TRENDING_HOME, TERMS_HOME, UPLOADED_CONTENT, FAVORITES, UPLOADS } from '../common/constants.js';
+import { getFavorites } from '../data/favorites.js';
+import { getGif, getRandomGif, getTrendingSearches, getTrendingGifs, getCachedGifs, searchGifs } from '../requests/request-service.js';
 import { generateSearchGifsUrl, generateTrendingGifsUrl } from '../requests/url-generators.js';
 import { toAboutView } from '../views/about-view.js';
 import { toFavoriteView, toRandomGifView } from '../views/favorites-view.js';
@@ -26,9 +27,9 @@ export const loadPage = (page = '') => {
   case TRENDING:
     setActiveNav(TRENDING);
     return renderTrending();
-  case FAVORITE:
-    setActiveNav(FAVORITE);
-    return renderFavorite();
+  case FAVORITES:
+    setActiveNav(FAVORITES);
+    return renderFavorites();
   case PROFILE:
     setActiveNav(PROFILE);
     return renderProfile();
@@ -46,7 +47,7 @@ export const loadPage = (page = '') => {
  */
 export const renderHome = async () => {
   try {
-    const data = await loadTrendingGifs();
+    const data = await getTrendingGifs();
     const terms = await getTrendingSearches();
     document.querySelector(CONTAINER_SELECTOR).innerHTML = toHomeView(data, terms);
 
@@ -62,7 +63,7 @@ export const renderHome = async () => {
  */
 export const renderTrending = async () => {
   try {
-    const data = await loadTrendingGifs();
+    const data = await getTrendingGifs();
     document.querySelector(CONTAINER_SELECTOR).innerHTML = toTrendingView(data);
 
     const msnry = applyMasonry(CONTENT_SELECTOR);
@@ -75,19 +76,18 @@ export const renderTrending = async () => {
 };
 
 /**
- * Loads favorite or random GIF and related GIFs. Renders Favorite page asynchronously.
+ * Loads favorite GIFs grid or random GIF detailed view, if no favorites are chosen. Renders Favorites/Random pages asynchronously
  */
-export const renderFavorite = async () => {
+export const renderFavorites = async () => {
   try {
-    if (getFavorite()) {
-      const favoriteGif = await getGif(getFavorite());
-      const searchTerm = favoriteGif.slug.split('-');
-      const relatedGifs = await searchGifs(...searchTerm);
-      document.querySelector(CONTAINER_SELECTOR).innerHTML = toFavoriteView(favoriteGif, relatedGifs);
+    const favoritesIds = getFavorites();
 
-      const msnry = applyMasonry(CONTENT_SELECTOR);
+    if (favoritesIds.length) {
+      const favorites = await getCachedGifs(FAVORITES);
 
-      applyInfiniteScroll(CONTENT_SELECTOR, msnry, generateSearchGifsUrl, searchTerm);
+      document.querySelector(CONTAINER_SELECTOR).innerHTML = toFavoriteView(favorites);
+
+      applyMasonry(CONTENT_SELECTOR);
 
     } else {
 
@@ -110,7 +110,7 @@ export const renderFavorite = async () => {
  */
 export const renderProfile = async () => {
   try {
-    const uploads = await loadUploadedGifs();
+    const uploads = await getCachedGifs(UPLOADS);
     document.querySelector(CONTAINER_SELECTOR).innerHTML = toProfileView(uploads);
     if (uploads.length) applyMasonry(UPLOADED_CONTENT);
   } catch (error) {

@@ -25,7 +25,7 @@ export const generateSearchGifsUrl = (offset = 0, searchTerm) => `https://api.gi
  * @param {string} ids
  * @return {string} URL
  */
-export const generateLoadUploadedGifsUrl = (ids) => `https://api.giphy.com/v1/gifs?api_key=${API_KEY}&ids=${ids}`;
+export const generateCachedGifsUrl = (ids) => `https://api.giphy.com/v1/gifs?api_key=${API_KEY}&ids=${ids}`;
 
 /**
  * Generates URL for Get GIF by ID Endpoint

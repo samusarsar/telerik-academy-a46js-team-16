@@ -1,19 +1,43 @@
+import { FAVORITES } from '../common/constants.js';
+
 /**
- * Adds GIF ID as a favorite property to the Local Storage.
+ * Adds GIF ID to array of favorite GIFs' IDs to the Local Storage.
  * @param {string} id - GIF's ID
  */
 export const setFavorite = (id) => {
-  window.localStorage.setItem('favorite', id);
+  if (!window.localStorage.favorites || !JSON.parse(window.localStorage.favorites).length) {
+    window.localStorage.favorites = JSON.stringify([id]);
+  } else {
+    const favorites = JSON.parse(window.localStorage.getItem(FAVORITES));
+    favorites.push(id);
+    window.localStorage.setItem(FAVORITES, JSON.stringify(favorites));
+  };
 };
 
 /**
- * Clears favorite property of the Locale Storage.
+ * Deletes a GIF ID from favorites property of the Locale Storage.
+ * @param {string} id - GIF's ID
  */
-export const removeFavorite = () => {
-  window.localStorage.removeItem('favorite');
+export const removeFavorite = (id) => {
+  const favorites = JSON.parse(window.localStorage.favorites);
+  favorites.splice(favorites.indexOf(id), 1);
+  window.localStorage.setItem(FAVORITES, JSON.stringify(favorites));
 };
 
 /**
- * @return {string}  Favorite GIF's ID.
+ * Deletes all GIF IDs from favorites property of the Locale Storage.
  */
-export const getFavorite = () => window.localStorage.favorite;
+export const removeAllFavorites = () => {
+  window.localStorage.setItem(FAVORITES, JSON.stringify([]));
+};
+
+/**
+ * @return {array} An array with all favorite GIFs' IDs.
+ */
+export const getFavorites = () => {
+  if (window.localStorage.favorites) {
+    return JSON.parse(window.localStorage.favorites);
+  } else {
+    return [];
+  }
+};

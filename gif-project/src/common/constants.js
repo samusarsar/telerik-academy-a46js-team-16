@@ -79,3 +79,9 @@ export const SEARCH = 'search';
 export const GIFS = 'gifs';
 
 export const DETAILED_GIF_CONTAINER = 'detailed-gif';
+
+export const UPLOADS = 'uploads';
+
+export const FAVORITES = 'favorites';
+
+export const CLEAR_FAVORITES = 'clear-favorites';

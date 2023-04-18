@@ -1,8 +1,9 @@
 // eslint-disable-next-line max-len
-import { BACK, CONTAINER_FAVORITE, CONTAINER_RANDOM, CONTAINER_SELECTOR, DATA_GIF_ID, DATA_PAGE, EMPTY_NEST, FAV_BUBBLE, FAV_STATUS, FILE_ID, GIFS, HOME, LUCKY, MINI_GIF_IMG, NAV_LINK, PROFILE, SEARCH_BAR, SEARCH_TERM, SUBMIT, TRENDING, UPLOAD_INPUT, UPLOAD_LABEL, VIEW_TRENDING } from './common/constants.js';
+import { BACK, CLEAR_FAVORITES, CONTAINER_RANDOM, CONTAINER_SELECTOR, DATA_GIF_ID, DATA_PAGE, EMPTY_NEST, FAVORITES, FAV_BUBBLE, FAV_STATUS, FILE_ID, GIFS, HOME, LUCKY, MINI_GIF_IMG, NAV_LINK, PROFILE, SEARCH_BAR, SEARCH_TERM, SUBMIT, TRENDING, UPLOAD_INPUT, UPLOAD_LABEL, VIEW_TRENDING } from './common/constants.js';
+import { removeAllFavorites } from './data/favorites.js';
 import { getOriginPage, setOriginPage } from './data/navigation.js';
 import { toggleFavoriteStatus } from './events/favorites-events.js';
-import { loadPage, renderFavorite, renderGifDetails, renderLuckyGif } from './events/navigation-events.js';
+import { loadPage, renderFavorites, renderGifDetails, renderLuckyGif } from './events/navigation-events.js';
 import { clearUploadedItems } from './events/profile-events.js';
 import { renderSearchItems } from './events/search-events.js';
 import { renderUploadItems, showFileName } from './events/upload-events.js';
@@ -75,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (origin === GIFS) {
         const term = document.querySelector(CONTAINER_SELECTOR).firstElementChild.firstElementChild.textContent.split(`"`)[1];
         setOriginPage(origin, term);
-      } else if (origin === HOME || origin === TRENDING || origin === PROFILE) {
+      } else if (origin === HOME || origin === TRENDING || origin === PROFILE || origin === FAVORITES) {
         setOriginPage(origin);
       }
 
@@ -85,9 +86,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (event.target.classList.contains(FAV_STATUS)) {
       toggleFavoriteStatus(event.target.getAttribute(DATA_GIF_ID));
 
-      if (document.querySelector(CONTAINER_FAVORITE) || document.querySelector(CONTAINER_RANDOM)) {
-        renderFavorite();
+      if (document.querySelector(CONTAINER_RANDOM)) {
+        renderGifDetails(event.target.getAttribute(DATA_GIF_ID));
       }
+    }
+
+    if (event.target.classList.contains(CLEAR_FAVORITES)) {
+      removeAllFavorites();
+      renderFavorites();
     }
 
     if (event.target.classList.contains(BACK)) {

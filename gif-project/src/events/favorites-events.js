@@ -1,14 +1,14 @@
 import { FAVORITE_STATUS_CONTAINER } from '../common/constants.js';
-import { getFavorite, removeFavorite, setFavorite } from '../data/favorites.js';
+import { getFavorites, removeFavorite, setFavorite } from '../data/favorites.js';
 /**
  * Toggles favorite status for a given GIF
  * @param {*} id GIF's ID
  */
 export const toggleFavoriteStatus = (id) => {
-  const favorite = getFavorite();
+  const favorite = getFavorites();
 
-  if (favorite === id) {
-    removeFavorite();
+  if (favorite.includes(id)) {
+    removeFavorite(id);
   } else {
     setFavorite(id);
   }
@@ -22,9 +22,9 @@ export const toggleFavoriteStatus = (id) => {
  * @return {string} HTML img element
  */
 export const renderFavoriteStatus = (id) => {
-  const favorite = getFavorite();
+  const favorite = getFavorites();
 
-  if (favorite === id) {
+  if (favorite.includes(id)) {
     return `<img src="../../images/heart-full.png" class="favorite-status" data-gif-id="${id}">`;
   } else {
     return `<img src="../../images/heart-empty.png" class="favorite-status" data-gif-id="${id}">`;

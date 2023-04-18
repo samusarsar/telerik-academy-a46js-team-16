@@ -1,13 +1,13 @@
 import { API_KEY } from '../common/constants.js';
 // eslint-disable-next-line max-len
-import { generateGetGifUrl, generateGetRandomGifUrl, generateLoadUploadedGifsUrl, generateSearchGifsUrl, generateTrendingGifsUrl, generateTrendingSearchesUrl, generateUploadGifUrl } from './url-generators.js';
+import { generateGetGifUrl, generateGetRandomGifUrl, generateCachedGifsUrl, generateSearchGifsUrl, generateTrendingGifsUrl, generateTrendingSearchesUrl, generateUploadGifUrl } from './url-generators.js';
 
 /**
  * Makes GET request for trending GIFs from GIPHY API.
  * @param {number} offset starting position of the results
  * @return {GIF[]} for GIF object, see https://developers.giphy.com/docs/api/schema/#gif-object
  */
-export const loadTrendingGifs = async (offset) => {
+export const getTrendingGifs = async (offset) => {
   const url = generateTrendingGifsUrl(offset);
   const data = await fetch(url);
 
@@ -62,14 +62,15 @@ export const searchGifs = async (searchTerm) => {
 };
 
 /**
- * Makes GET request for uploaded GIFs to GIPHY API.
+ * Makes GET request for uploaded of favorite GIFs to GIPHY API.
+ * @param {string} type cached items type ('uploaded' or 'favorites')
  * @return {GIF[]} for GIF object, see https://developers.giphy.com/docs/api/schema/#gif-object
  */
-export const loadUploadedGifs = async () => {
-  const uploadCache = window.localStorage.getItem('uploads');
-  if (uploadCache) {
-    const ids = JSON.parse(uploadCache).join('%2C');
-    const url = generateLoadUploadedGifsUrl(ids);
+export const getCachedGifs = async (type) => {
+  const cache = window.localStorage.getItem(type);
+  if (cache) {
+    const ids = JSON.parse(cache).join('%2C');
+    const url = generateCachedGifsUrl(ids);
     const data = await fetch(url);
 
     if (!data.ok) {
