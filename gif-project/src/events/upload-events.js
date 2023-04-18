@@ -1,6 +1,6 @@
-import { CLEAR_BUTTON, FILE_ID, FILE_NAME_ID, UPLOADED_CONTENT, UPLOAD_BOX, UPLOAD_RESULT } from '../common/constants.js';
+import { CLEAR_BUTTON, CONTAINER_SELECTOR, FILE_ID, FILE_NAME_ID, UPLOADED_CONTENT, UPLOAD_BOX, UPLOAD_RESULT } from '../common/constants.js';
 import { loadUploadedGifs, uploadGif } from '../requests/request-service.js';
-import { loaderEllipse } from '../views/interface-views.js';
+import { loaderEllipse, toErrorView } from '../views/interface-views.js';
 import { toMyUploadsView, toUploadViewError, toUploadViewSuccess } from '../views/profile-view.js';
 import { applyMasonry } from './helpers.js';
 
@@ -9,6 +9,24 @@ import { applyMasonry } from './helpers.js';
  * @param {File} file Local file
  */
 export const renderUploadItems = async (file) => {
+
+  const uploadResultMsg = document.querySelector(UPLOAD_RESULT);
+  if (!file) {
+    uploadResultMsg.innerHTML = toUploadViewError('Please choose a file to upload');
+    setTimeout(() => {
+      uploadResultMsg.innerHTML = '';
+    }, 3500);
+    return;
+  }
+
+  const fileNameArray = file.name.split('.');
+  if (fileNameArray[fileNameArray.length - 1] !== 'gif') {
+    uploadResultMsg.innerHTML = toUploadViewError('File must be .gif animated image');
+    setTimeout(() => {
+      uploadResultMsg.innerHTML = '';
+    }, 3500);
+    return;
+  }
 
   document.querySelector(UPLOAD_RESULT).innerHTML = loaderEllipse();
 
@@ -25,8 +43,7 @@ export const renderUploadItems = async (file) => {
     }
 
     const uploads = await loadUploadedGifs();
-    const uploadResultMsg = document.querySelector(UPLOAD_RESULT);
-    uploadResultMsg.innerHTML = await toUploadViewSuccess();
+    uploadResultMsg.innerHTML = toUploadViewSuccess();
     setTimeout(() => {
       uploadResultMsg.innerHTML = '';
     }, 3500);
@@ -35,11 +52,7 @@ export const renderUploadItems = async (file) => {
     if (uploads.length > 0) applyMasonry(UPLOADED_CONTENT);
     clearFileInput();
   } catch (error) {
-    const uploadResultMsg = document.querySelector(UPLOAD_RESULT);
-    uploadResultMsg.innerHTML = toUploadViewError(error.message);
-    setTimeout(() => {
-      uploadResultMsg.innerHTML = '';
-    }, 3500);
+    document.querySelector(CONTAINER_SELECTOR).innerHTML = toErrorView();
   }
 };
 

@@ -49,7 +49,7 @@ export const toProfileView = (uploads) => `
  * Generates HTML for Successful upload message
  * @return {string} HTML
  */
-export const toUploadViewSuccess = async () => {
+export const toUploadViewSuccess = () => {
   return `<p>GIF successfully uploaded!</p>`;
 };
 
