@@ -1,4 +1,4 @@
-const posts = [
+export const posts = [
     {
         id: 1,
         title: 'hello',
@@ -51,7 +51,7 @@ const posts = [
     },
 ];
 
-const users = [{
+export const users = [{
     id: 1,
     firstName: 'Ivan',
     lastName: 'Ivanov',
