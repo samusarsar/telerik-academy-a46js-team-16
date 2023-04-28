@@ -1,12 +1,12 @@
-const data = [
+const posts = [
     {
         id: 1,
         title: 'hello',
         body: 'fsdjkhfjklshafdlkhsakdjlfhkljsdafh',
         images: [
-            url1,
-            url2,
-            url3,
+            'url1',
+            'url2',
+            'url3',
         ],
         publishedOn: '01/02/2022',
         author: {
@@ -49,4 +49,38 @@ const data = [
         likes: 20,
         saves: 30,
     },
+];
+
+const users = [{
+    id: 1,
+    firstName: 'Ivan',
+    lastName: 'Ivanov',
+    email: 'odisfn@abv.bg',
+    userName: 'IvanIvan',
+    posts: [],
+    comments: [],
+},
+{
+    id: 2,
+    firstName: 'Petkan',
+    lastName: 'Petkanov',
+    email: 'pefj@abv.bg',
+    userName: 'PetkanPetkan',
+    posts: [],
+    comments: [],
+}];
+
+export const categories = [
+    'Bathrooms',
+    'Building a Home',
+    'Landscape Design',
+    'Flooring',
+    'Furniture',
+    'Home Decorating',
+    'Kitchens',
+    'Living Room',
+    'Paint',
+    'DYI',
+    'Windows',
+    'Other',
 ];
