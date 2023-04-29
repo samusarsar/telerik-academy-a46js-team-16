@@ -3,7 +3,6 @@ import { Box, Collapse, useDisclosure, InputGroup, Input, InputRightAddon } from
 import CreatePostView from './CreatePostView';
 import { useState } from 'react';
 
-
 const CreatePostHeader = () => {
 
     const { isOpen, onToggle } = useDisclosure();

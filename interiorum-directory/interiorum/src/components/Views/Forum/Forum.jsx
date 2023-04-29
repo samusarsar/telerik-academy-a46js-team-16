@@ -8,7 +8,8 @@ const Forum = () => {
         <Box className="forum-view">
             <h1>Forum view</h1>
             <CreatePostHeader />
-            {/* <CategoriesList /> */}
+            <CategoriesList />
+            <CategoriesList />
         </Box>
     );
 };
