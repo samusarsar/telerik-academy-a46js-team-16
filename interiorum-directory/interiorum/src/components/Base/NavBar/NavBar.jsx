@@ -6,7 +6,7 @@ import './NavBar.css';
 
 const NavBar = () => {
     return (
-        <Flex as='nav' className="navbar" bg='#DBCCBD' justify="space-around" wrap='wrap' gap='1'>
+        <Flex as='nav' className="navbar" bg='white' justify="space-around" wrap='wrap' gap='1'>
             {/* <img src="" alt="" /> */}
             <Heading as='h2'>INTERIORUM</Heading>
             <Spacer />
