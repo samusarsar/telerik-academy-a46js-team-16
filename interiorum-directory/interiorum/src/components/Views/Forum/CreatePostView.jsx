@@ -7,13 +7,13 @@ const CreatePostView = () => {
 
     return (
         <Stack>
-            <Textarea size='lg' placeholder='Tell us the specific details here' />
+            <Textarea bg="white" focusBorderColor='brand.400' size='lg' placeholder='Tell us the specific details here' />
             <Button onClick={onToggle}>Select category</Button>
             <Collapse in={isOpen} animateOpacity>
-                <Stack>
-                    {categories.map(c => <Checkbox key={c}>{c}</Checkbox>)}
+                <Stack borderRadius='10px' padding='10px' marginBottom='10px' bg='white'>
+                    {categories.map(c => <Checkbox iconColor='brand.400' colorScheme='black' key={c}>{c}</Checkbox>)}
                 </Stack>
-                <Button>Create</Button>
+                <Button width='100%'>Create</Button>
 
             </Collapse>
         </Stack>
