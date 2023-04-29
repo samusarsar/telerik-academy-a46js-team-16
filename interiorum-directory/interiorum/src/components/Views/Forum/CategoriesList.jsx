@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 
 const CategoriesList = () => {
     return (
-        <Box borderWidth='1px' borderRadius='lg'>
+        <Box bg={'white'} borderRadius={'10px'} p={'20px'} m={'20px'} boxShadow={'md'}>
             <Heading>
                 Categories List
             </Heading>
