@@ -5,24 +5,35 @@ import Home from './components/Views/Home/Home.jsx';
 import About from './components/Views/About/About.jsx';
 import Forum from './components/Views/Forum/Forum.jsx';
 import Profile from './components/Views/Profile/Profile.jsx';
+import { AuthContext } from './AuthContext/AuthContext.js';
+import { useState } from 'react';
+import ProtectedRoute from './components/Base/ProtectedRoute/ProtectedRoute.jsx';
 
 import './App.css';
-
+import LogIn from './components/Views/LogIn-SignUp/LogIn.jsx';
+import SignUp from './components/Views/LogIn-SignUp/SignUp.jsx';
 
 const App = () => {
+    const [isLoggedIn, toggleLogin] = useState(false);
 
-    return (<>
-        <Routes>
-            <Route path='/' element={<RootLayout />}>
-                <Route index element={<Home />} />
-                <Route path='home' element={<Home />} />
-                <Route path='about' element={<About />} />
-                <Route path='forum' element={<Forum />} />
-                <Route path='profile' element={<Profile />} />
-            </Route>
-        </Routes>
-
-    </>);
+    return (
+        <>
+            <AuthContext.Provider value={{ setLoginState: toggleLogin, isLoggedIn }}>
+                <Routes>
+                    <Route path='/' element={<RootLayout />}>
+                        <Route index element={<Home />} />
+                        <Route path='home' element={<Home />} />
+                        <Route path='about' element={<About />} />
+                        <Route element={<ProtectedRoute isLoggedIn={isLoggedIn} />} >
+                            <Route path='forum' element={<Forum />} />
+                            <Route path='profile' element={<Profile />} />
+                        </ Route>
+                        <Route path='log-in' element={<LogIn />} />
+                        <Route path='sign-up' element={<SignUp />} />
+                    </Route>
+                </Routes>
+            </AuthContext.Provider>
+        </>);
 };
 
 export default App;
