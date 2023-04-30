@@ -1,26 +1,26 @@
-import { Container, Divider, Flex, Heading } from '@chakra-ui/react';
-import { BsFillPeopleFill, BsFillChatTextFill } from 'react-icons/bs';
+import { Box, Container, Divider, Flex, Heading, Stat, StatLabel, Text, VStack, Spacer, Image, HStack, Grid, GridItem, Popover, PopoverTrigger, Button, PopoverContent, PopoverArrow, PopoverCloseButton, PopoverHeader, PopoverBody, Link, Icon } from '@chakra-ui/react';
 import MostRecent from './MostRecent';
 import MostCommented from './MostCommented';
-import StatBox from './StatBox';
+import FeaturesPopovers from './FeaturesPopovers';
+import HomeHeader from './HomeHeader';
+import CallToAction from './CallToAction';
 
 const Home = () => {
     return (
-        <Container className='main-view' id='home-view' bg='brand.600' maxW='container' centerContent>
-            <Heading as='h1' m='20px'>interiorum</Heading>
+        <>
+            <HomeHeader/>
+            <Container className='main-view' id='home-view' bg='brand.600' maxW='container' centerContent>
+                <FeaturesPopovers/>
+                <CallToAction/>
 
-            <Flex w='container.lg' h={'250px'} p={4} flexDirection={'row'}>
-                <StatBox heading='Total Users' text='321' icon={BsFillPeopleFill} />
-                <StatBox heading='Total Posts' text='123234' icon={BsFillChatTextFill} />
-            </Flex>
+                <Divider borderColor={'white'} w={'80%'} borderColor='brand.300'/>
 
-            <Divider borderColor={'white'} w={'80%'}/>
-
-            <Flex w='container.lg' p={4} justify={'center'}>
-                <MostRecent />
-                <MostCommented />
-            </Flex>
-        </Container>
+                <Flex w='container.lg' p={4} justify={'center'}>
+                    <MostRecent />
+                    <MostCommented />
+                </Flex>
+            </Container>
+        </>
     );
 };
 
