@@ -1,58 +1,110 @@
-import { Container, FormControl, FormLabel, Input, FormHelperText, FormErrorMessage, Box, Heading, Text, Button, HStack, Divider, ButtonGroup, VStack, Spacer } from '@chakra-ui/react';
+import { FormControl, FormLabel, Input, FormErrorMessage, Box, Heading, Text, Button, HStack, VStack, Flex, InputGroup, InputRightElement } from '@chakra-ui/react';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../../AuthContext/AuthContext';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { UserContext } from '../../../UserContext/UserContext';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const LogIn = () => {
-    const user = useContext(AuthContext);
+    const status = useContext(AuthContext);
+    const user = useContext(UserContext);
+
+    const [username, setUsername] = useState('');
+    const [usernameError, setUsernameError] = useState(false);
+    const [password, setPassword] = useState('');
+    const [passwordError, setPasswordError] = useState(false);
+
     const navigate = useNavigate();
     const location = useLocation();
 
     const from = location.state?.from || '/';
 
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-
     const handleUsernameChange = (e) => setUsername(e.target.value);
     const handlePasswordChange = (e) => setPassword(e.target.value);
 
+    const handleLogin = () => {
+        if (user.username !== username) {
+            setUsernameError(true);
+        }
+        if (user.password !== password) {
+            setPasswordError(true);
+        }
+        if (user.username === username) setUsernameError(false);
+        if (user.password === password) setPasswordError(false);
+        if (user.username === username && user.password === password) {
+            status.setLoginState(true);
+            navigate(from, { replace: true });
+        }
+    };
+
+    const [show, setShow] = useState(false);
+
     return (
-        <Container
+        <Flex
             className='main-view'
             id='log-in-view'
             maxW='container'
             minH='90vh'
             sx={{
-                'background': 'linear-gradient(90deg, rgba(68,74,83,0.8) 0%, rgba(68,74,83,0.3) 50%, rgba(68,74,83,0.8) 100%), url(\'src/assets/images/login-couch.jpeg\')',
-                'background-size': 'cover',
-                'background-position': 'center',
+                bg: 'linear-gradient(90deg, rgba(68,74,83,0.8) 0%, rgba(68,74,83,0.3) 50%, rgba(68,74,83,0.8) 100%), url(\'src/assets/images/login-couch.jpeg\')',
+                bgSize: 'cover',
+                bgPosition: 'center',
             }}
-            centerContent>
-            <Box bg='brand.400' border='2px solid' borderColor='brand.500' rounded='md' boxShadow='2xl' color='brand.600' my={10} align='center'>
+            align='center'
+            justify='center'>
+            <Box
+                h='fit-content'
+                sx={{ bg: 'rgba(2, 24, 37, 0.8)' }}
+                border='2px solid'
+                borderColor='brand.500'
+                rounded='md' boxShadow='2xl'
+                color='brand.600'
+                my={10}
+                align='center'>
                 <Box align='center' p={10} bg='brand.500'>
                     <Heading as='h1' size='lg'>Welcome to INTERIORUM</Heading>
                     <Text as='cite'>...where home becomes art...</Text>
                 </Box>
-                <HStack p={10}>
-                    <FormControl isRequired='true' pr={4}>
+                <VStack p={10}>
+                    <FormControl isInvalid={usernameError} isRequired='true' pr={4}>
                         <FormLabel>Username</FormLabel>
                         <Input type='text' value={username} onChange={handleUsernameChange} bg='brand.600' color='brand.500' />
-                        <FormLabel>Password</FormLabel>
-                        <Input type='text' value={password.split('').map(() => '•').join('')} onChange={handlePasswordChange} bg='brand.600' color='brand.500' />
+                        {usernameError && (
+                            <FormErrorMessage>Username is incorrect.</FormErrorMessage>
+                        )}
                     </FormControl>
-                </HStack>
+                    <FormControl isInvalid={passwordError} isRequired='true' pr={4}>
+                        <FormLabel>Password</FormLabel>
+                        <InputGroup size='md'>
+                            <Input
+                                type={show ? 'text' : 'password'}
+                                placeholder='Enter password'
+                                bg='brand.600'
+                                color='brand.500'
+                                onChange={handlePasswordChange}
+                            />
+                            <InputRightElement width='4.5rem'>
+                                <Button colorScheme='blackAlpha' size='sm' onClick={() => setShow(!show)}>
+                                    {show ? 'Hide' : 'Show'}
+                                </Button>
+                            </InputRightElement>
+                        </InputGroup>
+                        {passwordError && (
+                            <FormErrorMessage>Password is incorrect.</FormErrorMessage>
+                        )}
+                    </FormControl>
+                </VStack>
                 <VStack mb={8}>
-                    <Button colorScheme='telegram' onClick={() => {
-                        user.setLoginState(true);
-                        navigate(from, { replace: true });
-                    }}>Log In</Button>
-                    <Text fontSize='sm' as='caption'>Not yet a member? Join us now!
+                    <HStack>
+                        <Button colorScheme='telegram' onClick={handleLogin}>Log In</Button>
+                        <Button colorScheme='whiteAlpha' onClick={() => navigate('/')}>Cancel</Button>
+                    </HStack>
+                    <Text fontSize='sm'>Not yet a member? Join us now!
                         <Button colorScheme='orange' variant='link' ml={2} onClick={() => navigate('../sign-up')}>Sign Up</Button>
                     </Text>
 
                 </VStack>
             </Box>
-        </Container>
+        </Flex>
     );
 };
 
