@@ -12,3 +12,4 @@ export const BRAND_COLOR_2 = '#D49A6F';
 export const BRAND_COLOR_3 = '#B14C31';
 export const BRAND_COLOR_4 = '#444A53';
 export const BRAND_COLOR_5 = '#021825';
+export const BRAND_COLOR_6 = '#f5f5f5';

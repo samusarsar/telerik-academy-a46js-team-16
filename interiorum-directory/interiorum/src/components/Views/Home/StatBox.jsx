@@ -1,5 +1,6 @@
 import { Card, CardBody, Heading, Text, Icon, Box, HStack, VStack } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
+import { BRAND_COLOR_5, BRAND_COLOR_6 } from '../../../common/constants';
 
 const StatBox = ({ heading, text, icon }) => {
     const [users, setUsers] = useState();
@@ -22,13 +23,11 @@ const StatBox = ({ heading, text, icon }) => {
             w='fit-content'
             py={4}
             px={12}
-            border='4px solid'
-            borderColor='brand.500'
-            borderRadius={10}
+            rounded='md'
             bg='brand.500'
             color='brand.600'
             sx={{ transition: 'ease-in-out 0.2s' }}
-            _hover={{ transform: 'scale(1.05)' }}
+            _hover={{ transform: 'scale(1.15)', background: `${BRAND_COLOR_6}`, color: `${BRAND_COLOR_5}` }}
         >
             <HStack justify='center'>
                 <Heading size='md'> {heading} </Heading>

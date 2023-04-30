@@ -8,11 +8,11 @@ const CallToAction = () => {
 
     return (
         <HStack
-            minW={{ base: '90%', md: '80%', lg: '60%' }}
+            minW={{ base: '90%', md: '80%', lg: '70%' }}
             minH='400px' bg='brand.100'
             justify='left'
             m={8}
-            sx={{ background: 'linear-gradient(90deg, rgba(212,155,111,0.2) 0%, rgba(212,154,111,0.95) 70%, rgba(212,154,111,1) 100%), url(\'src/assets/images/home-interior.jpeg\')' }}
+            sx={{ background: 'linear-gradient(90deg, rgba(68,74,83,0.2) 0%, rgba(68,74,83,0.95) 60%, rgba(68,74,83,1) 100%), url(\'src/assets/images/home-interior.jpeg\')' }}
             bgPosition='center'
             bgSize='100%'>
             <Spacer />
@@ -21,12 +21,15 @@ const CallToAction = () => {
                 <StatBox heading='Total Posts' text='123234' icon={BsFillChatTextFill} />
             </VStack>
             <Spacer/>
-            <Box pr={8} align='right'>
+            <Spacer />
+            <Box pr={8} align='right' color='brand.600' maxW='40%'>
                 <Heading as='h2' size='xl'>Join Interiorum <i>now</i>!</Heading>
-                <Text fontSize='lg'>Start your interior design journey and turn your home into an artwork</Text>
-                <Text fontSize='lg'>and yourself into a true artist!</Text>
-                <Button my={4} colorScheme='blackAlpha' alignSelf='end' onClick={() => navigate('../sign-up')}>Sign Up</Button>
+                <Text fontSize='lg'>Start your interior design journey and turn your home into an artwork and yourself into a true artist!</Text>
+                <Button my={4} bg='brand.200' color='brand.500' alignSelf='end' 
+                _hover={{ bg:'brand.600', color:'brand.500' }}
+                onClick={() => navigate('../sign-up')}>Sign Up</Button>
             </Box>
+            <Spacer />
         </HStack>
     );
 };
