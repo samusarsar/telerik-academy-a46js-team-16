@@ -1,7 +1,10 @@
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, FormControl, FormLabel, Input, ModalFooter, Button, useDisclosure, VStack, Text, Box, HStack } from '@chakra-ui/react';
+import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../../AuthContext/AuthContext';
 
 const LogInModal = () => {
+    const user = useContext(AuthContext);
     const { isOpen, onOpen, onClose } = useDisclosure();
     const navigate = useNavigate();
 
@@ -29,7 +32,10 @@ const LogInModal = () => {
                     </ModalBody>
 
                     <ModalFooter>
-                        <Button colorScheme='telegram' mr={3}>
+                        <Button colorScheme='telegram' mr={3} onClick={() => {
+                            user.setLoginState(true);
+                            onClose();
+                        }}>
                             Log In
                         </Button>
                         <Button onClick={onClose}>Cancel</Button>
