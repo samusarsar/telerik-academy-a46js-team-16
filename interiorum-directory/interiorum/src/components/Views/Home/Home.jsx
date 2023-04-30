@@ -6,7 +6,7 @@ import StatBox from './StatBox';
 
 const Home = () => {
     return (
-        <Container className='main-view' id='home-view' bg={'grey'} maxW='container' centerContent>
+        <Container className='main-view' id='home-view' bg='brand.600' maxW='container' centerContent>
             <Heading as='h1' m='20px'>interiorum</Heading>
 
             <Flex w='container.lg' h={'250px'} p={4} flexDirection={'row'}>
