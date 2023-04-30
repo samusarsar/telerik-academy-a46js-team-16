@@ -1,4 +1,4 @@
-import { Card, CardBody, Heading, Text, Icon } from '@chakra-ui/react';
+import { Card, CardBody, Heading, Text, Icon, Box, HStack, VStack } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 
 const StatBox = ({ heading, text, icon }) => {
@@ -17,23 +17,28 @@ const StatBox = ({ heading, text, icon }) => {
     // })
 
     return (
-        <Card
-            direction={{ base: 'column', sm: 'column' }}
-            margin='20px'
-            align='center'
-            size='lg'
-            w='50%'
-            h='180px'
+        <VStack
+            size='sm'
+            w='fit-content'
+            py={4}
+            px={12}
+            border='4px solid'
+            borderColor='brand.500'
+            borderRadius={10}
+            bg='brand.500'
+            color='brand.600'
+            sx={{ transition: 'ease-in-out 0.2s' }}
+            _hover={{ transform: 'scale(1.05)' }}
         >
-            <CardBody display='flex' flexDirection='column' align='center'>
+            <HStack justify='center'>
                 <Heading size='md'> {heading} </Heading>
+                <Icon as={icon} alignSelf='center' fontSize='x-large'/>
+            </HStack>
 
-                <Text py='2' fontSize='x-large' align='center'>
-                    {text}
-                </Text>
-                <Icon as={icon} alignSelf='center' fontSize='xx-large'></Icon>
-            </CardBody>
-        </Card>
+            <Text fontSize='lg' align='center'>
+                {text}
+            </Text>
+        </VStack>
     );
 };
 

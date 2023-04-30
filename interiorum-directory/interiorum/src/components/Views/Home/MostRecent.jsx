@@ -15,7 +15,7 @@ const MostRecent = () => {
     // });
 
     return (
-        <Container display={'flex'} flexDirection={'column'} align={'center'} bg={'white'} borderRadius={'10px'} p={'20px'} m={'20px'} boxShadow={'md'}>
+        <Container display={'flex'} flexDirection={'column'} align={'center'} bg={'white'} borderRadius={'10px'} p={'20px'} m={'20px'} boxShadow={'2xl'}>
             <Heading size='md'>Most Recent Posts:</Heading>
             <PostFeed posts={posts}></PostFeed>
             <Button rightIcon={AiOutlineArrowRight} colorScheme='teal' variant='outline'>
