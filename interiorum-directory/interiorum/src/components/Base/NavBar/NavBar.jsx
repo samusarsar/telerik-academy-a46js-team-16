@@ -1,6 +1,6 @@
 import { NavLink, useNavigate, useNavigation } from 'react-router-dom';
 
-import { Flex, Box, Heading, Spacer, HStack, Button, useDisclosure, FormControl, FormLabel, Input } from '@chakra-ui/react';
+import { Flex, Box, Heading, Spacer, HStack, Button, useDisclosure, FormControl, FormLabel, Input, Image } from '@chakra-ui/react';
 import {
     Modal,
     ModalOverlay,
@@ -24,7 +24,10 @@ const NavBar = () => {
         <>
             <HStack as='nav' className="navbar" bg='white' wrap='wrap' spacing={30} p={4}>
                 {/* <img src="" alt="" /> */}
-                <Heading as='h2'>INTERIORUM</Heading>
+                <HStack>
+                    <Image src='src/assets/images/logo.png' boxSize='80px'/>
+                    <Heading as='h2'>INTERIORUM</Heading>
+                </HStack>
                 <Spacer />
                 <NavLink to='home'>Home</NavLink>
                 <NavLink to='forum'>Forum</NavLink>
