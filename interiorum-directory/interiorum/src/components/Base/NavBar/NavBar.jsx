@@ -1,17 +1,7 @@
-import { NavLink, useNavigate, useNavigation } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
-import { Flex, Box, Heading, Spacer, HStack, Button, useDisclosure, FormControl, FormLabel, Input, Image } from '@chakra-ui/react';
-import {
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalFooter,
-    ModalBody,
-    ModalCloseButton,
-  } from '@chakra-ui/react';
+import { Heading, Spacer, HStack, Button, Image } from '@chakra-ui/react';
 
-import './NavBar.css';
 import { useContext } from 'react';
 import { AuthContext } from '../../../AuthContext/AuthContext';
 import LogInModal from '../../Views/LogIn-SignUp/LogInModal';
@@ -56,13 +46,13 @@ const NavBar = () => {
                         <FormLabel>First name</FormLabel>
                         <Input placeholder='First name' />
                     </FormControl>
-    
+
                     <FormControl mt={4}>
                         <FormLabel>Last name</FormLabel>
                         <Input placeholder='Last name' />
                     </FormControl>
                 </ModalBody>
-    
+
                 <ModalFooter>
                     <Button colorScheme='blue' mr={3}>
                         Save

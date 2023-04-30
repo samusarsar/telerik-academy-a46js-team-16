@@ -1,3 +1,4 @@
+// eslint-disable-next-line max-len
 import { Heading, Grid, GridItem, Popover, PopoverTrigger, Button, PopoverContent, PopoverArrow, PopoverCloseButton, PopoverHeader, PopoverBody, Link, Icon } from '@chakra-ui/react';
 import { MdOutlineForum, MdOutlineAdminPanelSettings } from 'react-icons/md';
 import { CgProfile } from 'react-icons/cg';
@@ -8,7 +9,7 @@ import { BRAND_COLOR_2 } from '../../../common/constants';
 const FeaturesPopovers = () => {
     return (
         <>
-            <Heading as='h2' size='lg' py={10}>Here's what you can do on Interiorum</Heading>
+            <Heading as='h2' size='lg' py={10}>Here&apos;s what you can do on Interiorum</Heading>
             <Grid templateColumns='repeat(4, 1fr)' gap={6}>
                 <GridItem>
                     <Popover>
@@ -62,7 +63,12 @@ const FeaturesPopovers = () => {
                 <GridItem>
                     <Popover>
                         <PopoverTrigger>
-                            <Button w='100%' bg='brand.100' _hover={{ background: `${BRAND_COLOR_2}` }}><Icon as={MdOutlineAdminPanelSettings} boxSize='25px' mr={3} />Become Admin</Button>
+                            <Button
+                                w='100%'
+                                bg='brand.100'
+                                _hover={{ background: `${BRAND_COLOR_2}` }}>
+                                <Icon as={MdOutlineAdminPanelSettings} boxSize='25px' mr={3} />Become Admin
+                            </Button>
                         </PopoverTrigger>
                         <PopoverContent>
                             <PopoverArrow />

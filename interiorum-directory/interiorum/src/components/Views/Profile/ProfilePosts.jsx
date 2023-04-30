@@ -1,5 +1,5 @@
-import { Container, Heading } from "@chakra-ui/react";
-import PostFeed from "../../Posts/PostFeed/PostFeed";
+import { Container, Heading } from '@chakra-ui/react';
+import PostFeed from '../../Posts/PostFeed/PostFeed';
 
 const ProfilePosts = ({ posts }) => {
     return (

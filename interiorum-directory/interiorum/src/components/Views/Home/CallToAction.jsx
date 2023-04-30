@@ -1,4 +1,4 @@
-import { Box, Button, Container, Flex, HStack, Heading, Spacer, Text, VStack } from '@chakra-ui/react';
+import { Box, Button, HStack, Heading, Spacer, Text, VStack } from '@chakra-ui/react';
 import { BsFillPeopleFill, BsFillChatTextFill } from 'react-icons/bs';
 import StatBox from './StatBox';
 import { useNavigate } from 'react-router-dom';
@@ -12,7 +12,7 @@ const CallToAction = () => {
             minH='400px' bg='brand.100'
             justify='left'
             m={8}
-            sx={{ background: 'linear-gradient(90deg, rgba(68,74,83,0.2) 0%, rgba(68,74,83,0.95) 60%, rgba(68,74,83,1) 100%), url(\'src/assets/images/home-interior.jpeg\')' }}
+            sx={{ background: 'linear-gradient(90deg, rgba(2, 24, 37, 0.2) 0%, rgba(2, 24, 37, 0.8) 50%, rgba(2, 24, 37, 1) 100%), url(\'src/assets/images/home-interior.jpeg\')' }}
             bgPosition='center'
             bgSize='100%'>
             <Spacer />
@@ -25,9 +25,9 @@ const CallToAction = () => {
             <Box pr={8} align='right' color='brand.600' maxW='40%'>
                 <Heading as='h2' size='xl'>Join Interiorum <i>now</i>!</Heading>
                 <Text fontSize='lg'>Start your interior design journey and turn your home into an artwork and yourself into a true artist!</Text>
-                <Button my={4} bg='brand.200' color='brand.500' alignSelf='end' 
-                _hover={{ bg:'brand.600', color:'brand.500' }}
-                onClick={() => navigate('../sign-up')}>Sign Up</Button>
+                <Button my={4} bg='brand.200' color='brand.500' alignSelf='end'
+                    _hover={{ bg: 'brand.600', color: 'brand.500' }}
+                    onClick={() => navigate('../sign-up')}>Sign Up</Button>
             </Box>
             <Spacer />
         </HStack>

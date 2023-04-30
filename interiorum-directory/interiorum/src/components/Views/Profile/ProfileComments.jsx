@@ -1,5 +1,5 @@
-import { Container, Heading } from "@chakra-ui/react";
-import ProfileCommentFeed from "../../Comments/ProfileCommentFeed/ProfileCommentFeed";
+import { Container, Heading } from '@chakra-ui/react';
+import ProfileCommentFeed from '../../Comments/ProfileCommentFeed/ProfileCommentFeed';
 
 const ProfileComments = ({ comments }) => {
     return (

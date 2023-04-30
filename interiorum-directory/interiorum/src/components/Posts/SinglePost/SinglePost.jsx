@@ -21,6 +21,8 @@ const SinglePost = ({ post }) => {
             </Box>
         );
     };
+
+    return null;
 };
 
 export default SinglePost;

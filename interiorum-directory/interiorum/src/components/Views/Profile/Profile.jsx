@@ -5,7 +5,7 @@ import ProfilePosts from './ProfilePosts';
 import ProfileComments from './ProfileComments';
 import { FiShare } from 'react-icons/fi';
 import { TbMessageCircle } from 'react-icons/tb';
-import { AuthContext } from '../../../AuthContext/AuthContext'
+import { AuthContext } from '../../../AuthContext/AuthContext';
 
 const Profile = () => {
     const userLogged = useContext(AuthContext);

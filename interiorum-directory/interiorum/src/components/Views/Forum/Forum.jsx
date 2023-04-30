@@ -1,4 +1,4 @@
-import { Box, Grid, GridItem } from '@chakra-ui/react'
+import { Box, Grid, GridItem } from '@chakra-ui/react';
 
 import CreatePostHeader from './CreatePostHeader';
 import CategoriesList from './CategoriesList';

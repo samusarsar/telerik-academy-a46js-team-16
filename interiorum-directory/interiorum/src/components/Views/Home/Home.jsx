@@ -1,4 +1,4 @@
-import { Box, Container, Divider, Flex, Heading, Stat, StatLabel, Text, VStack, Spacer, Image, HStack, Grid, GridItem, Popover, PopoverTrigger, Button, PopoverContent, PopoverArrow, PopoverCloseButton, PopoverHeader, PopoverBody, Link, Icon } from '@chakra-ui/react';
+import { Container, Divider, Flex } from '@chakra-ui/react';
 import MostRecent from './MostRecent';
 import MostCommented from './MostCommented';
 import FeaturesPopovers from './FeaturesPopovers';
@@ -13,7 +13,7 @@ const Home = () => {
                 <FeaturesPopovers/>
                 <CallToAction/>
 
-                <Divider borderColor={'white'} w={'80%'} borderColor='brand.300'/>
+                <Divider w={'80%'} borderColor='brand.300'/>
 
                 <Flex w='container.lg' p={4} justify={'center'}>
                     <MostRecent />

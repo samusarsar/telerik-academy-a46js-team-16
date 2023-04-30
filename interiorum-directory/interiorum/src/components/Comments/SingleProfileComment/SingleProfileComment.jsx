@@ -1,5 +1,4 @@
-import { Card, CardBody, CardFooter, Image, Text, Stack, Box, HStack, Spacer } from '@chakra-ui/react';
-import { useEffect } from 'react';
+import { Text, Box, HStack, Spacer } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 
 const SingleProfileCommentSmall = ({ comment }) => {
@@ -22,6 +21,8 @@ const SingleProfileCommentSmall = ({ comment }) => {
             </Box>
         );
     }
+
+    return null;
     // <Card
     //     direction={{ base: 'column', sm: 'row' }}
     //     overflow='hidden'
