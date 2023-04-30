@@ -22,9 +22,11 @@ const LogIn = () => {
             id='log-in-view'
             maxW='container'
             minH='90vh'
-            bgImage="url('src/assets/images/login-img.jpeg')"
-            bgSize="100%"
-            bgPosition='center'
+            sx={{
+                'background': 'linear-gradient(90deg, rgba(68,74,83,0.8) 0%, rgba(68,74,83,0.3) 50%, rgba(68,74,83,0.8) 100%), url(\'src/assets/images/login-couch.jpeg\')',
+                'background-size': 'cover',
+                'background-position': 'center',
+            }}
             centerContent>
             <Box bg='brand.400' border='2px solid' borderColor='brand.500' rounded='md' boxShadow='2xl' color='brand.600' my={10} align='center'>
                 <Box align='center' p={10} bg='brand.500'>
