@@ -1,9 +1,31 @@
+import { Tabs, TabList, Tab, TabPanel, TabPanels } from '@chakra-ui/react';
+import AboutHeader from './AboutHeader';
+import Team from './Team';
+import Careers from './Careers';
+
 const About = () => {
     return (
         <div>
-            <h1>About Page</h1>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Natus, repellendus ipsum architecto animi nesciunt aut illo corporis excepturi,
-                non dolorum modi, facilis illum ratione quae. Laboriosam cum dolores facere? Ad!</p>
+            <AboutHeader />
+            <Tabs align='center' bg='brand.600'>
+                <TabList>
+                    <Tab w='200px'>Team</Tab>
+                    <Tab w='200px'>Careers</Tab>
+                    <Tab w='200px'>FAQ</Tab>
+                </TabList>
+
+                <TabPanels bg='brand.100' w={{ sm: '100%', lg: '80%' }} py={5}>
+                    <TabPanel >
+                        <Team />
+                    </TabPanel>
+                    <TabPanel>
+                        <Careers />
+                    </TabPanel>
+                    <TabPanel>
+                        <p>three!</p>
+                    </TabPanel>
+                </TabPanels>
+            </Tabs>
         </div>
     );
 };
