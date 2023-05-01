@@ -1,6 +1,5 @@
 import { Box, Divider, Tabs, TabList, Tab, TabPanels, TabPanel, Icon } from '@chakra-ui/react';
 import SinglePost from '../SinglePost/SinglePost';
-import SinglePostLarge from '../SinglePostLarge/SinglePostLarge';
 import { MdOutlineDensitySmall, MdOutlineDensityLarge } from 'react-icons/md';
 
 const PostFeed = ({ posts }) => {

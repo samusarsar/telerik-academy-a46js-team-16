@@ -1,6 +1,5 @@
 import { Box, Divider, Tabs, TabList, Tab, TabPanels, TabPanel, Icon } from '@chakra-ui/react';
 import SingleProfileComment from '../SingleProfileComment/SingleProfileComment';
-import SingleProfileCommentLarge from '../SingleProfileCommentLarge/SingleProfileCommentLarge';
 import { MdOutlineDensitySmall, MdOutlineDensityLarge } from 'react-icons/md';
 
 const ProfileCommentFeed = ({ comments }) => {
