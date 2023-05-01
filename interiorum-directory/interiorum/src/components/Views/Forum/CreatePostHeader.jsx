@@ -11,7 +11,6 @@ const CreatePostHeader = () => {
     const [postTitleLength, setPostTitleLength] = useState(true);
 
     const postTitleLengthIsValid = (input) => {
-        console.log(input.value.length);
         if ((input.value.length < POST_TITLE_MIN_LENGTH || input.value.length > POST_TITLE_MAX_LENGTH) && input.value.length > 0) {
             setPostTitleLength(false);
         } else {
