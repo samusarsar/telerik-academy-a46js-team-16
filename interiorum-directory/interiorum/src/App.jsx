@@ -13,6 +13,8 @@ import ProtectedRoute from './components/Base/ProtectedRoute/ProtectedRoute.jsx'
 import './App.css';
 import LogIn from './components/Views/LogIn-SignUp/LogIn.jsx';
 import SignUp from './components/Views/LogIn-SignUp/SignUp.jsx';
+import AllPosts from './components/Views/Forum/AllPosts.jsx';
+import CategoryPosts from './components/Views/Forum/CategoryPosts.jsx';
 
 const App = () => {
     const [isLoggedIn, toggleLogin] = useState(true);
@@ -32,7 +34,10 @@ const App = () => {
                             <Route path='home' element={<Home />} />
                             <Route path='about' element={<About />} />
                             <Route element={<ProtectedRoute isLoggedIn={isLoggedIn} />} >
-                                <Route path='forum' element={<Forum />} />
+                                <Route path='forum' element={<Forum />}>
+                                    <Route index element={<AllPosts />} />
+                                    <Route path=':category' element={<CategoryPosts />} />
+                                </Route>
                                 <Route path='profile' element={<Profile />} />
                             </ Route>
                             <Route path='log-in' element={<LogIn />} />

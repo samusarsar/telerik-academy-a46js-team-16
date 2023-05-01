@@ -2,9 +2,8 @@ import { Box, Grid, GridItem } from '@chakra-ui/react';
 
 import CreatePostHeader from './CreatePostHeader';
 import CategoriesList from './CategoriesList';
-import PostFeed from '../../Posts/PostFeed/PostFeed';
-import MostRecent from '../Home/MostRecent';
 import TopCommentersList from './TopCommentersList';
+import { Outlet } from 'react-router-dom';
 
 const Forum = () => {
     return (
@@ -16,7 +15,7 @@ const Forum = () => {
                     <TopCommentersList />
                 </GridItem>
                 <GridItem>
-                    <MostRecent />
+                    <Outlet />
                 </GridItem>
 
             </Grid>
