@@ -1,7 +1,7 @@
-import { Text, Box, HStack, Spacer, Card, Image, Stack, CardBody, CardFooter, Heading } from '@chakra-ui/react';
+import { Text, Box, HStack, Spacer, Heading } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 
-const SingleProfileComment = ({ comment }) => {
+const SingleProfileCommentLarge = ({ comment }) => {
     // useEffect(() => console.log(comment.author), [])
     if (comment) {
         return (
@@ -14,9 +14,13 @@ const SingleProfileComment = ({ comment }) => {
                     </Text>
                 </HStack >
                 <Link >
-                    <Heading as='h5' size='sm' py={3}>
+                    {/* <Text py={3} color='brand.300'>
                         {comment.onPost}
-                    </Heading>
+                    </Text> */}
+                    <Heading as='h5' size='sm'>{comment.onPost}</Heading>
+                    <Text py={3} color='brand.400'>
+                        {comment.text}
+                    </Text>
                 </Link>
             </Box>
         );
@@ -61,4 +65,4 @@ const SingleProfileComment = ({ comment }) => {
 
 };
 
-export default SingleProfileComment;
+export default SingleProfileCommentLarge;

@@ -2,7 +2,7 @@ export const posts = [
     {
         id: 1,
         title: 'Adjusting Visual Comfort Goodman Pendants',
-        body: 'fsdjkhfjklshafdlkhsakdjlfhkljsdafh',
+        body: 'fsdjkhfjklshafdlkhsakdjlfhkljsdafhgfsdgdsfgdsfgsadf dasфсдгдсф г фсдгсд фадс фасф сдфсдф асдф сад фсафс',
         images: [
             'url1',
             'url2',
@@ -443,6 +443,7 @@ export const users = [{
     ],
     comments: [
         {
+            id: 300,
             text: 'gsfhdghdfgh',
             author: 'Ivan Ivanov',
             authorId: 4,
@@ -453,6 +454,7 @@ export const users = [{
             onPostId: 4,
         },
         {
+            id: 400,
             text: 'gsfhdghdfgh',
             author: 'Ivan Ivanov',
             authorId: 4,
@@ -463,6 +465,7 @@ export const users = [{
             onPostId: 2,
         },
         {
+            id: 500,
             text: 'gsfhdghdfgh',
             author: 'Ivan Ivanov',
             authorId: 4,
