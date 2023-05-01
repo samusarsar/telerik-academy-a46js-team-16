@@ -15,7 +15,7 @@ import LogIn from './components/Views/LogIn-SignUp/LogIn.jsx';
 import SignUp from './components/Views/LogIn-SignUp/SignUp.jsx';
 
 const App = () => {
-    const [isLoggedIn, toggleLogin] = useState(false);
+    const [isLoggedIn, toggleLogin] = useState(true);
     const [username, setUsername] = useState('test');
     const [firstName, setFirstName] = useState(null);
     const [lastName, setLastName] = useState(null);
