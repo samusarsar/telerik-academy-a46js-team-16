@@ -1,7 +1,9 @@
 import { Text, Box, HStack, Spacer, Card, Image, Stack, CardBody, CardFooter, Heading } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 
-const SingleProfileComment = ({ comment }) => {
+const SingleProfileComment = ({ comment, large=false }) => {
+    const body = comment.text.length > 100 ? comment.text.slice(0,99) + '...' : comment.text;
+
     // useEffect(() => console.log(comment.author), [])
     if (comment) {
         return (
@@ -17,6 +19,9 @@ const SingleProfileComment = ({ comment }) => {
                     <Heading as='h5' size='sm' py={3}>
                         {comment.onPost}
                     </Heading>
+                    {large && <Text py={3} color='brand.400'>
+                        {body}
+                    </Text>}
                 </Link>
             </Box>
         );

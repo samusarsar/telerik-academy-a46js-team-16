@@ -25,7 +25,7 @@ const ProfileCommentFeed = ({ comments }) => {
                         <TabPanel>
                             {comments.map(comment =>
                                 <>
-                                    <SingleProfileCommentLarge key={comment.id} comment={comment} />
+                                    <SingleProfileComment key={comment.id} comment={comment} large={true}/>
                                     <Divider borderColor='gray.400' w='95%'/>
                                 </>,
                             )}

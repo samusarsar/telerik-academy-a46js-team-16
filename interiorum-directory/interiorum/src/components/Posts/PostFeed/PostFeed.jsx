@@ -25,7 +25,7 @@ const PostFeed = ({ posts }) => {
                         <TabPanel>
                             {posts.map(post =>
                                 <>
-                                    <SinglePostLarge key={post.id} post={post} />
+                                    <SinglePost key={post.id} post={post} large={true} />
                                     <Divider borderColor='gray.400' w='95%'/>
                                 </>,
                             )}

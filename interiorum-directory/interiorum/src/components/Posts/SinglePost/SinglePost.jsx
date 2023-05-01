@@ -1,11 +1,13 @@
 import { Box, HStack, Heading, Text, AvatarGroup, Avatar, Spacer } from '@chakra-ui/react';
 
-const SinglePost = ({ post }) => {
+const SinglePost = ({ post, large=false }) => {
+    const body = post.body.length > 100 ? post.body.slice(0,99) + '...' : post.body;
 
     if (post) {
         return (
             <Box textAlign='left' p={2} >
                 <Heading as='h5' size='sm'>{post.title}</Heading>
+                {large && <Text fontSize='sm' my={3}>{body}</Text>}
                 <HStack justify='left' py={2}>
                     <Text fontSize='0.8em'>Posted by {post.author.name}</Text>
                     <Text fontSize='0.8em' color='gray.500'>On {post.publishedOn}</Text>
