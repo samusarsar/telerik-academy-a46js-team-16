@@ -55,11 +55,9 @@ const SignUp = () => {
             id='log-in-view'
             maxW='container'
             minH='90vh'
-            sx={{
-                bg: 'linear-gradient(90deg, rgba(68,74,83,0.8) 0%, rgba(68,74,83,0.3) 50%, rgba(68,74,83,0.8) 100%), url(\'src/assets/images/login-couch.jpeg\')',
-                bgSize: 'cover',
-                bgPosition: 'center',
-            }}
+            bg="linear-gradient(90deg, rgba(68,74,83,0.8) 0%, rgba(68,74,83,0.3) 50%, rgba(68,74,83,0.8) 100%), url('src/assets/images/login-couch.jpeg')"
+            bgSize='cover'
+            bgPosition='center'
             align='center'
             justify='center'>
             <Box

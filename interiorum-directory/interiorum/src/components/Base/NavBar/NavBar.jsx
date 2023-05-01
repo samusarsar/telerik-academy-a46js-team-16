@@ -26,7 +26,7 @@ const NavBar = () => {
                 {status.isLoggedIn ? (
                     <>
                         <Menu autoSelect={false} isLazy={true} unmount>
-                            <MenuButton colorScheme='telegram' minW='fit-content' px={3}>
+                            <MenuButton minW='fit-content' px={3}>
                                 <HStack>
                                     <Image src={user.avatar} fallbackSrc='src/assets/images/anon-user.jpg' rounded='full' boxSize='40px'></Image>
                                     <Text>{user.username}</Text>

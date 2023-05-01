@@ -16,8 +16,10 @@ const FeaturesPopovers = () => {
                         <PopoverTrigger>
                             <Button
                                 w='100%'
+                                h='60px'
                                 bg='brand.100'
-                                _hover={{ background: `${BRAND_COLOR_2}` }}><Icon as={MdOutlineForum} boxSize='25px' mr={3} />Explore Design Community</Button>
+                                transition='0.2s ease-in-out;'
+                                _hover={{ background: `${BRAND_COLOR_2}`, mt: '-2' }}><Icon as={MdOutlineForum} boxSize='25px' mr={3} />Explore Design Community</Button>
                         </PopoverTrigger>
                         <PopoverContent>
                             <PopoverArrow />
@@ -32,7 +34,12 @@ const FeaturesPopovers = () => {
                 <GridItem>
                     <Popover>
                         <PopoverTrigger>
-                            <Button w='100%' bg='brand.100' _hover={{ background: `${BRAND_COLOR_2}` }}><Icon as={CgProfile} boxSize='25px' mr={3} />Create Your Profile</Button>
+                            <Button
+                                w='100%'
+                                h='60px'
+                                bg='brand.100'
+                                transition='0.2s ease-in-out;'
+                                _hover={{ background: `${BRAND_COLOR_2}`, mt: '-2' }}><Icon as={CgProfile} boxSize='25px' mr={3} />Create Your Profile</Button>
                         </PopoverTrigger>
                         <PopoverContent>
                             <PopoverArrow />
@@ -48,7 +55,12 @@ const FeaturesPopovers = () => {
                 <GridItem>
                     <Popover>
                         <PopoverTrigger>
-                            <Button w='100%' bg='brand.100' _hover={{ background: `${BRAND_COLOR_2}` }}><Icon as={FaHandsHelping} boxSize='25px' mr={3} />Help Newbies</Button>
+                            <Button
+                                w='100%'
+                                h='60px'
+                                bg='brand.100'
+                                transition='0.2s ease-in-out;'
+                                _hover={{ background: `${BRAND_COLOR_2}`, mt: '-2' }}><Icon as={FaHandsHelping} boxSize='25px' mr={3} />Help Newbies</Button>
                         </PopoverTrigger>
                         <PopoverContent>
                             <PopoverArrow />
@@ -65,9 +77,10 @@ const FeaturesPopovers = () => {
                         <PopoverTrigger>
                             <Button
                                 w='100%'
+                                h='60px'
                                 bg='brand.100'
-                                _hover={{ background: `${BRAND_COLOR_2}` }}>
-                                <Icon as={MdOutlineAdminPanelSettings} boxSize='25px' mr={3} />Become Admin
+                                transition='0.2s ease-in-out;'
+                                _hover={{ background: `${BRAND_COLOR_2}`, mt: '-2' }}><Icon as={MdOutlineAdminPanelSettings} boxSize='25px' mr={3} />Become Admin
                             </Button>
                         </PopoverTrigger>
                         <PopoverContent>
