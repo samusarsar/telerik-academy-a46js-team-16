@@ -18,19 +18,10 @@ const LogIn = () => {
 
     const from = location.state?.from || '/';
 
-    const handleUsernameChange = (e) => setUsername(e.target.value);
-    const handlePasswordChange = (e) => setPassword(e.target.value);
-
     const handleLogin = () => {
-        if (user.username !== username) {
-            setUsernameError(true);
-        }
-        if (user.password !== password) {
-            setPasswordError(true);
-        }
-        if (user.username === username) setUsernameError(false);
-        if (user.password === password) setPasswordError(false);
-        if (user.username === username && user.password === password) {
+        setUsernameError(username !== user.username);
+        setPasswordError(password !== user.password);
+        if (username === user.username && password === user.password) {
             status.setLoginState(true);
             navigate(from, { replace: true });
         }
@@ -67,7 +58,7 @@ const LogIn = () => {
                 <VStack p={10}>
                     <FormControl isInvalid={usernameError} isRequired='true' pr={4}>
                         <FormLabel>Username</FormLabel>
-                        <Input type='text' value={username} onChange={handleUsernameChange} bg='brand.600' color='brand.500' />
+                        <Input type='text' placeholder='Enter username' onChange={(e) => setUsername(e.target.value)} bg='brand.600' color='brand.500' />
                         {usernameError && (
                             <FormErrorMessage>Username is incorrect.</FormErrorMessage>
                         )}
@@ -80,7 +71,7 @@ const LogIn = () => {
                                 placeholder='Enter password'
                                 bg='brand.600'
                                 color='brand.500'
-                                onChange={handlePasswordChange}
+                                onChange={(e) => setPassword(e.target.value)}
                             />
                             <InputRightElement width='4.5rem'>
                                 <Button colorScheme='blackAlpha' size='sm' onClick={() => setShow(!show)}>
