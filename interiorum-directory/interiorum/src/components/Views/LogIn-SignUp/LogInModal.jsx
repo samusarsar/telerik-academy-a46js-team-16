@@ -1,5 +1,5 @@
 // eslint-disable-next-line max-len
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, FormControl, FormLabel, Input, ModalFooter, Button, useDisclosure, Text, HStack, FormErrorMessage, InputGroup, InputRightElement } from '@chakra-ui/react';
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, FormControl, FormLabel, Input, ModalFooter, Button, useDisclosure, Text, HStack, FormErrorMessage, InputGroup, InputRightElement, useToast } from '@chakra-ui/react';
 import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../AuthContext/AuthContext';
@@ -17,12 +17,23 @@ const LogInModal = () => {
     const [password, setPassword] = useState('');
     const [passwordError, setPasswordError] = useState(false);
 
+    const toast = useToast();
+
     const handleLogin = () => {
         setUsernameError(username !== user.username);
         setPasswordError(password !== user.password);
         if (username === user.username && password === user.password) {
             status.setLoginState(true);
             onClose();
+            toast({
+                title: 'Welcome back!',
+                description: 'You have successfully logged in.',
+                status: 'success',
+                duration: 3000,
+                isClosable: true,
+                position: 'top',
+                variant: 'subtle',
+            });
         }
     };
 

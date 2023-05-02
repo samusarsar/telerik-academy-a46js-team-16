@@ -1,4 +1,4 @@
-import { FormControl, FormLabel, Input, FormErrorMessage, Box, Heading, Text, Button, HStack, VStack, Flex, InputGroup, InputRightElement } from '@chakra-ui/react';
+import { FormControl, FormLabel, Input, FormErrorMessage, Box, Heading, Text, Button, HStack, VStack, Flex, InputGroup, InputRightElement, useToast } from '@chakra-ui/react';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../../AuthContext/AuthContext';
 import { UserContext } from '../../../UserContext/UserContext';
@@ -18,12 +18,23 @@ const LogIn = () => {
 
     const from = location.state?.from || '/';
 
+    const toast = useToast();
+
     const handleLogin = () => {
         setUsernameError(username !== user.username);
         setPasswordError(password !== user.password);
         if (username === user.username && password === user.password) {
             status.setLoginState(true);
             navigate(from, { replace: true });
+            toast({
+                title: 'Welcome back!',
+                description: 'You have successfully logged in.',
+                status: 'success',
+                duration: 3000,
+                isClosable: true,
+                position: 'top',
+                variant: 'subtle',
+            });
         }
     };
 

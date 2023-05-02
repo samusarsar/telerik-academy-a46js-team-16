@@ -1,4 +1,4 @@
-import { Box, Container, Text, Image, Spacer, HStack, ButtonGroup, Button, Tabs, TabList, Tab, TabPanels, TabPanel, Flex, IconButton, Icon } from '@chakra-ui/react';
+import { Box, Container, Text, Image, Spacer, HStack, ButtonGroup, Button, Tabs, TabList, Tab, TabPanels, TabPanel, Flex, IconButton, Icon, useToast } from '@chakra-ui/react';
 import { useContext, useEffect, useState } from 'react';
 import { users } from '../../../../data';
 import ProfilePosts from './ProfilePosts';
@@ -14,6 +14,8 @@ const Profile = () => {
     const [posts, setPosts] = useState(users[0].posts);
     const [comments, setComments] = useState(users[0].comments);
 
+    const toast = useToast();
+
     // useEffect(() => {
     //     fetch()
     //     .then(response => response.json())
@@ -21,6 +23,19 @@ const Profile = () => {
     //         setPosts(data.posts);
     //         setComments(data.comments));
     // })
+
+    const handleLogOut = () => {
+        userLogged.setLoginState(false);
+        toast({
+            title: 'See you soon!',
+            description: 'You have successfully logged out.',
+            status: 'info',
+            duration: 3000,
+            isClosable: true,
+            position: 'top',
+            variant: 'subtle',
+        });
+    };
 
     return (
         <Container className='main-view' id='profile-view' maxW='container' minH='90vh' p={0}>
@@ -40,7 +55,7 @@ const Profile = () => {
                     <ButtonGroup variant='solid' spacing='4' size='md'>
                         <Button colorScheme='teal'><Icon as={FiShare} mr={2}/>Share</Button>
                         <Button colorScheme='facebook' ><Icon as={TbMessageCircle} mr={2}/>Message</Button>
-                        {userLogged.isLoggedIn && <Button colorScheme='red' variant='outline' onClick={() => userLogged.setLoginState(false)}>Log Out</Button>}
+                        {userLogged.isLoggedIn && <Button colorScheme='red' variant='outline' onClick={handleLogOut}>Log Out</Button>}
                     </ButtonGroup>
                 </HStack>
             </Container>

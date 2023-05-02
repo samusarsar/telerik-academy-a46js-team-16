@@ -1,4 +1,4 @@
-import { FormControl, FormLabel, Input, FormErrorMessage, Box, Heading, Text, Button, HStack, Divider, VStack, Flex } from '@chakra-ui/react';
+import { FormControl, FormLabel, Input, FormErrorMessage, Box, Heading, Text, Button, HStack, Divider, VStack, Flex, useToast } from '@chakra-ui/react';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../../AuthContext/AuthContext';
 import { UserContext } from '../../../UserContext/UserContext';
@@ -23,6 +23,8 @@ const SignUp = () => {
     const [rePassword, setRePassword] = useState('');
     const [rePasswordError, setRePasswordError] = useState(false);
 
+    const toast = useToast();
+
     const handleSignUp = () => {
         // setUsernameError(snapshot.exists());
         setPasswordError(password.length < 6);
@@ -46,6 +48,15 @@ const SignUp = () => {
             user.setEmail(email);
             console.log(user);
             navigate('../profile');
+            toast({
+                title: 'Welcome to your profile!',
+                description: 'You have successfully signed up.',
+                status: 'success',
+                duration: 3000,
+                isClosable: true,
+                position: 'top',
+                variant: 'subtle',
+            });
         }
     };
 
