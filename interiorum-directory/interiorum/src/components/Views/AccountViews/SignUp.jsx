@@ -48,10 +48,10 @@ const SignUp = () => {
             user.setLastName(lastName);
             user.setEmail(email);
             console.log(user);
-            navigate('../profile');
+            navigate('/home');
             toast({
-                title: 'Welcome to your profile!',
-                description: 'You have successfully signed up.',
+                title: 'Welcome to your Interiorum!',
+                description: 'You have successfully signed up. Have fun!',
                 status: 'success',
                 duration: 3000,
                 isClosable: true,
