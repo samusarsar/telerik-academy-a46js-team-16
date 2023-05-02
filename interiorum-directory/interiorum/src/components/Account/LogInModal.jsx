@@ -1,7 +1,7 @@
 // eslint-disable-next-line max-len
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, FormControl, FormLabel, Input, ModalFooter, Button, useDisclosure, Text, HStack, FormErrorMessage, InputGroup, InputRightElement } from '@chakra-ui/react';
-import useLogIn from '../../../hooks/useLogIn';
-import useLogInStates from '../../../hooks/useLogInStates';
+import useLogIn from '../../hooks/useLogIn';
+import useLogInStates from '../../hooks/useLogInStates';
 
 const LogInModal = () => {
     const states = useLogInStates();
