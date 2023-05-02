@@ -1,13 +1,13 @@
 import { FormControl, FormLabel, Input, FormErrorMessage, Box, Heading, Text, Button, HStack, Divider, VStack, Flex, useToast } from '@chakra-ui/react';
 import { useContext, useState } from 'react';
-import { AuthContext } from '../../../AuthContext/AuthContext';
-import { UserContext } from '../../../UserContext/UserContext';
+import { AuthContext } from '../../../context/AuthContext/AuthContext';
+import { UserContext } from '../../../context/UserContext/UserContext';
 import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
     const status = useContext(AuthContext);
     const user = useContext(UserContext);
-    console.log(user);
+
     const navigate = useNavigate();
 
     const [firstName, setFirstName] = useState('');
@@ -89,7 +89,7 @@ const SignUp = () => {
                     <VStack>
                         <FormControl isInvalid={usernameError} isRequired='true' pr={4}>
                             <FormLabel>Username</FormLabel>
-                            <Input type='text' placeholder='johndoe123' onChange={(e) => setUsername(e.target.value)} bg='brand.600' color='brand.500' />
+                            <Input type='text' placeholder='johnjordan123' onChange={(e) => setUsername(e.target.value)} bg='brand.600' color='brand.500' />
                             <FormErrorMessage>Username is taken.</FormErrorMessage>
                         </FormControl>
                         <FormControl isInvalid={passwordError} isRequired='true' pr={4}>
@@ -112,12 +112,12 @@ const SignUp = () => {
                         </FormControl>
                         <FormControl isInvalid={lastNameError} isRequired='true'>
                             <FormLabel>Last Name</FormLabel>
-                            <Input type='text' placeholder='Doe' onChange={(e) => setLastName(e.target.value)} bg='brand.600' color='brand.500' />
+                            <Input type='text' placeholder='Jordan' onChange={(e) => setLastName(e.target.value)} bg='brand.600' color='brand.500' />
                             <FormErrorMessage>Last name should be between 4 and 32 characters.</FormErrorMessage>
                         </FormControl>
                         <FormControl isInvalid={emailError} isRequired='true' >
                             <FormLabel>Email</FormLabel>
-                            <Input type='email' placeholder='johndoe@interiorum.bg' onChange={(e) => setEmail(e.target.value)} bg='brand.600' color='brand.500'/>
+                            <Input type='email' placeholder='johnjordan@interiorum.bg' onChange={(e) => setEmail(e.target.value)} bg='brand.600' color='brand.500'/>
                             <FormErrorMessage>Email should be valid and unique.</FormErrorMessage>
                         </FormControl>
                     </VStack>

@@ -5,10 +5,11 @@ import ProfilePosts from './ProfilePosts';
 import ProfileComments from './ProfileComments';
 import { FiShare } from 'react-icons/fi';
 import { TbMessageCircle } from 'react-icons/tb';
-import { AuthContext } from '../../../AuthContext/AuthContext';
+import { AuthContext } from '../../../context/AuthContext/AuthContext';
+import useLogOut from '../../../hooks/useLogOut';
 
 const Profile = () => {
-    const userLogged = useContext(AuthContext);
+    const status = useContext(AuthContext);
 
     const [user, setUser] = useState(users[0]);
     const [posts, setPosts] = useState(users[0].posts);
@@ -23,19 +24,6 @@ const Profile = () => {
     //         setPosts(data.posts);
     //         setComments(data.comments));
     // })
-
-    const handleLogOut = () => {
-        userLogged.setLoginState(false);
-        toast({
-            title: 'See you soon!',
-            description: 'You have successfully logged out.',
-            status: 'info',
-            duration: 3000,
-            isClosable: true,
-            position: 'top',
-            variant: 'subtle',
-        });
-    };
 
     return (
         <Container className='main-view' id='profile-view' maxW='container' minH='90vh' p={0}>
@@ -55,7 +43,7 @@ const Profile = () => {
                     <ButtonGroup variant='solid' spacing='4' size='md'>
                         <Button colorScheme='teal'><Icon as={FiShare} mr={2}/>Share</Button>
                         <Button colorScheme='facebook' ><Icon as={TbMessageCircle} mr={2}/>Message</Button>
-                        {userLogged.isLoggedIn && <Button colorScheme='red' variant='outline' onClick={handleLogOut}>Log Out</Button>}
+                        {status.isLoggedIn && <Button colorScheme='red' variant='outline' onClick={() => useLogOut({ status, toast })}>Log Out</Button>}
                     </ButtonGroup>
                 </HStack>
             </Container>

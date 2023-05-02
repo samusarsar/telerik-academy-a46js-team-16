@@ -1,43 +1,12 @@
 // eslint-disable-next-line max-len
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, FormControl, FormLabel, Input, ModalFooter, Button, useDisclosure, Text, HStack, FormErrorMessage, InputGroup, InputRightElement, useToast } from '@chakra-ui/react';
-import { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../../AuthContext/AuthContext';
-import { UserContext } from '../../../UserContext/UserContext';
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, FormControl, FormLabel, Input, ModalFooter, Button, useDisclosure, Text, HStack, FormErrorMessage, InputGroup, InputRightElement } from '@chakra-ui/react';
+import useLogIn from '../../../hooks/useLogIn';
+import useLogInStates from '../../../hooks/useLogInStates';
 
 const LogInModal = () => {
-    const status = useContext(AuthContext);
-    const user = useContext(UserContext);
+    const states = useLogInStates();
 
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const navigate = useNavigate();
-
-    const [username, setUsername] = useState('');
-    const [usernameError, setUsernameError] = useState(false);
-    const [password, setPassword] = useState('');
-    const [passwordError, setPasswordError] = useState(false);
-
-    const toast = useToast();
-
-    const handleLogin = () => {
-        setUsernameError(username !== user.username);
-        setPasswordError(password !== user.password);
-        if (username === user.username && password === user.password) {
-            status.setLoginState(true);
-            onClose();
-            toast({
-                title: 'Welcome back!',
-                description: 'You have successfully logged in.',
-                status: 'success',
-                duration: 3000,
-                isClosable: true,
-                position: 'top',
-                variant: 'subtle',
-            });
-        }
-    };
-
-    const [show, setShow] = useState(false);
 
     return (
         <>
@@ -45,10 +14,10 @@ const LogInModal = () => {
             <Modal
                 isOpen={isOpen}
                 onClose={() => {
-                    setUsername('');
-                    setUsernameError(false);
-                    setPassword('');
-                    setPasswordError(false);
+                    states.setUsername('');
+                    states.setUsernameError(false);
+                    states.setPassword('');
+                    states.setPasswordError(false);
                     onClose();
                 }}
                 isCentered
@@ -58,32 +27,32 @@ const LogInModal = () => {
                     <ModalHeader>Log into your <i>INTERIORUM</i> account</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody pb={6}>
-                        <FormControl isInvalid={usernameError}>
+                        <FormControl isInvalid={states.usernameError}>
                             <FormLabel>Username</FormLabel>
-                            <Input bg='brand.600' color='brand.500' placeholder='Enter username' onChange={(e) => setUsername(e.target.value)}/>
-                            {usernameError && (
+                            <Input bg='brand.600' color='brand.500' placeholder='Enter username' onChange={(e) => states.setUsername(e.target.value)}/>
+                            {states.usernameError && (
                                 <FormErrorMessage>Username is incorrect.</FormErrorMessage>
                             )}
                         </FormControl>
 
-                        <FormControl isInvalid={passwordError} mt={4}>
+                        <FormControl isInvalid={states.passwordError} mt={4}>
                             <FormLabel>Password</FormLabel>
                             {/* <Input value={password.split('').map(() => '•').join('')} placeholder='Password' onChange={handlePasswordChange}/> */}
                             <InputGroup size='md'>
                                 <Input
-                                    type={show ? 'text' : 'password'}
+                                    type={states.show ? 'text' : 'password'}
                                     placeholder='Enter password'
                                     bg='brand.600'
                                     color='brand.500'
-                                    onChange={(e) => setPassword(e.target.value)}
+                                    onChange={(e) => states.setPassword(e.target.value)}
                                 />
                                 <InputRightElement width='4.5rem'>
-                                    <Button colorScheme='blackAlpha' size='sm' onClick={() => setShow(!show)}>
-                                        {show ? 'Hide' : 'Show'}
+                                    <Button colorScheme='blackAlpha' size='sm' onClick={() => states.setShow(!states.show)}>
+                                        {states.show ? 'Hide' : 'Show'}
                                     </Button>
                                 </InputRightElement>
                             </InputGroup>
-                            {passwordError && (
+                            {states.passwordError && (
                                 <FormErrorMessage>Password is incorrect.</FormErrorMessage>
                             )}
                         </FormControl>
@@ -91,7 +60,7 @@ const LogInModal = () => {
 
                     <ModalFooter>
                         <Button colorScheme='telegram' mr={3} onClick={() => {
-                            handleLogin();
+                            useLogIn({ states, onClose });
                         }}>
                             Log In
                         </Button>
@@ -100,7 +69,7 @@ const LogInModal = () => {
                     <HStack justify='right' mb={4} mr={6}>
                         <Text fontSize='sm'>Not yet a member? Join us now!
                             <Button colorScheme='orange' variant='link' ml={2} onClick={() => {
-                                navigate('sign-up');
+                                states.navigate('sign-up');
                                 onClose();
                             }}>Sign Up</Button>
                         </Text>

@@ -3,32 +3,19 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { Heading, Spacer, HStack, Button, Image, Menu, MenuButton, MenuList, MenuItem, MenuDivider, Text, Flex, useDisclosure, Box, useToast } from '@chakra-ui/react';
 
 import { useContext } from 'react';
-import { AuthContext } from '../../../AuthContext/AuthContext';
-import { UserContext } from '../../../UserContext/UserContext';
+import { AuthContext } from '../../../context/AuthContext/AuthContext';
+import { UserContext } from '../../../context/UserContext/UserContext';
 import LogInModal from '../../Views/LogIn-SignUp/LogInModal';
+import useLogOut from '../../../hooks/useLogOut';
 
 const NavBar = () => {
     const status = useContext(AuthContext);
     const user = useContext(UserContext);
     const navigate = useNavigate();
 
-    const { isOpen, onOpen, onClose } = useDisclosure();
-
     const toast = useToast();
 
-    const handleLogOut = () => {
-        status.setLoginState(false);
-        onClose();
-        toast({
-            title: 'See you soon!',
-            description: 'You have successfully logged out.',
-            status: 'info',
-            duration: 3000,
-            isClosable: true,
-            position: 'top',
-            variant: 'subtle',
-        });
-    };
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
     return (
         <>
@@ -53,7 +40,7 @@ const NavBar = () => {
                             <MenuList>
                                 <MenuItem onClick={() => navigate('profile')}>My Profile</MenuItem>
                                 <MenuDivider />
-                                <MenuItem color='brand.300' _hover={{ bg: 'brand.300', color: 'brand.600'}} onClick={handleLogOut}>Log Out</MenuItem>
+                                <MenuItem color='brand.300' _hover={{ bg: 'brand.300', color: 'brand.600' }} onClick={() => useLogOut({ status, onClose, toast })}>Log Out</MenuItem>
                             </MenuList>
                         </Menu>
                     </Box>) : (

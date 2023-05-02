@@ -5,8 +5,8 @@ import Home from './components/Views/Home/Home.jsx';
 import About from './components/Views/About/About.jsx';
 import Forum from './components/Views/Forum/Forum.jsx';
 import Profile from './components/Views/Profile/Profile.jsx';
-import { AuthContext } from './AuthContext/AuthContext.js';
-import { UserContext } from './UserContext/UserContext.js';
+import { AuthContext } from './context/AuthContext/AuthContext.js';
+import { UserContext } from './context/UserContext/UserContext.js';
 import { useState } from 'react';
 import ProtectedRoute from './components/Base/ProtectedRoute/ProtectedRoute.jsx';
 
