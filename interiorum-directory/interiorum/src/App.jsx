@@ -13,7 +13,6 @@ import ProtectedRoute from './components/Base/ProtectedRoute/ProtectedRoute.jsx'
 import './App.css';
 import LogIn from './components/Views/AccountViews/LogIn.jsx';
 import SignUp from './components/Views/AccountViews/SignUp.jsx';
-import AllPosts from './components/Views/Forum/AllPosts.jsx';
 import CategoryPosts from './components/Views/Forum/CategoryPosts.jsx';
 
 const App = () => {
