@@ -7,6 +7,7 @@ import { FiShare } from 'react-icons/fi';
 import { TbMessageCircle } from 'react-icons/tb';
 import { AuthContext } from '../../../context/AuthContext/AuthContext';
 import useLogOut from '../../../hooks/useLogOut';
+import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
     const status = useContext(AuthContext);
@@ -15,6 +16,7 @@ const Profile = () => {
     const [posts, setPosts] = useState(users[0].posts);
     const [comments, setComments] = useState(users[0].comments);
 
+    const navigate = useNavigate();
     const toast = useToast();
 
     // useEffect(() => {
@@ -43,7 +45,7 @@ const Profile = () => {
                     <ButtonGroup variant='solid' spacing='4' size='md'>
                         <Button colorScheme='teal'><Icon as={FiShare} mr={2}/>Share</Button>
                         <Button colorScheme='facebook' ><Icon as={TbMessageCircle} mr={2}/>Message</Button>
-                        {status.isLoggedIn && <Button colorScheme='red' variant='outline' onClick={() => useLogOut({ status, toast })}>Log Out</Button>}
+                        {status.isLoggedIn && <Button colorScheme='red' variant='outline' onClick={() => useLogOut({ status, navigate, toast })}>Log Out</Button>}
                     </ButtonGroup>
                 </HStack>
             </Container>

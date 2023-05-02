@@ -1,6 +1,7 @@
-const useLogOut = ({ status, onClose, toast }) => {
+const useLogOut = ({ status, onClose, navigate, toast }) => {
     status.setLoginState(false);
     if (onClose) onClose();
+    navigate('../home');
     toast({
         title: 'See you soon!',
         description: 'You have successfully logged out.',

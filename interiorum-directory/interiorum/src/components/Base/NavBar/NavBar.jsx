@@ -61,16 +61,18 @@ const NavBar = () => {
                             </MenuButton>
                             <MenuList>
                                 <MenuItem color='gray.700' transition='.1s ease-in-out'
-                                    _hover={{ bg: 'blackAlpha.100' }}onClick={() => navigate('profile')}>My Profile</MenuItem>
+                                    _hover={{ bg: 'blackAlpha.100' }}
+                                    onClick={() => navigate('profile')}>My Profile</MenuItem>
                                 <MenuDivider />
                                 <MenuItem color='brand.300' transition='.1s ease-in-out'
-                                    _hover={{ bg: 'brand.300', color: 'brand.600' }} onClick={() => useLogOut({ status, onClose, toast })}>
+                                    _hover={{ bg: 'brand.300', color: 'brand.600' }} onClick={() => useLogOut({ status, onClose, navigate, toast })}>
                                     Log Out
                                 </MenuItem>
                             </MenuList>
                         </Menu>
                     </Box>) : (
                     <>
+                        {inProfile && setInProfile(false)}
                         <LogInModal />
                         <Button colorScheme='orange' onClick={() => navigate('sign-up')}>Sign up</ Button>
                     </>
