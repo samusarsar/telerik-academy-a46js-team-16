@@ -13,7 +13,7 @@ const ForumTabs = ({ posts }) => {
     return (
         <Tabs colorScheme='brand.400'>
             <TabList>
-                <Tab>Resent</Tab>
+                <Tab>Recent</Tab>
                 <Tab>Popular</Tab>
                 <Tab>Unanswered</Tab>
             </TabList>
