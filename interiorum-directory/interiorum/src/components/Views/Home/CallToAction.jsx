@@ -2,9 +2,24 @@ import { Box, Button, HStack, Heading, Spacer, Text, VStack } from '@chakra-ui/r
 import { BsFillPeopleFill, BsFillChatTextFill } from 'react-icons/bs';
 import StatBox from './StatBox';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 const CallToAction = () => {
+    const [users, setUsers] = useState();
+    const [posts, setPosts] = useState();
+
     const navigate = useNavigate();
+
+    // useEffect(() => {
+    //     fetch()
+    //     .then(response => response.json())
+    //     .then(data => setUsers(data.length))
+
+
+    //     .fetch()
+    //     .then(response => response.json())
+    //     .then(data => setPosts(data.length));
+    // })
 
     return (
         <HStack
