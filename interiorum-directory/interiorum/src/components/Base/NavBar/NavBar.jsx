@@ -1,6 +1,6 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 
-import { Heading, Spacer, HStack, Button, Image, Menu, MenuButton, MenuList, MenuItem, MenuDivider, Text, Flex } from '@chakra-ui/react';
+import { Heading, Spacer, HStack, Button, Image, Menu, MenuButton, MenuList, MenuItem, MenuDivider, Text, Flex, useDisclosure, Box, useToast } from '@chakra-ui/react';
 
 import { useContext } from 'react';
 import { AuthContext } from '../../../AuthContext/AuthContext';
@@ -11,6 +11,24 @@ const NavBar = () => {
     const status = useContext(AuthContext);
     const user = useContext(UserContext);
     const navigate = useNavigate();
+
+    const { isOpen, onOpen, onClose } = useDisclosure();
+
+    const toast = useToast();
+
+    const handleLogOut = () => {
+        status.setLoginState(false);
+        onClose();
+        toast({
+            title: 'See you soon!',
+            description: 'You have successfully logged out.',
+            status: 'info',
+            duration: 3000,
+            isClosable: true,
+            position: 'top',
+            variant: 'subtle',
+        });
+    };
 
     return (
         <>
@@ -24,9 +42,9 @@ const NavBar = () => {
                 <NavLink to='forum'>Forum</NavLink>
                 <NavLink to='about'>About</NavLink>
                 {status.isLoggedIn ? (
-                    <>
-                        <Menu autoSelect={false} isLazy={true} unmount>
-                            <MenuButton minW='fit-content' px={3}>
+                    <Box onMouseLeave={onClose} py={4}>
+                        <Menu autoSelect={false} isLazy={true} isOpen={isOpen} unmount>
+                            <MenuButton minW='fit-content' px={3} onMouseEnter={onOpen} >
                                 <HStack>
                                     <Image src={user.avatar} fallbackSrc='src/assets/images/anon-user.jpg' rounded='full' boxSize='40px'></Image>
                                     <Text>{user.username}</Text>
@@ -35,44 +53,16 @@ const NavBar = () => {
                             <MenuList>
                                 <MenuItem onClick={() => navigate('profile')}>My Profile</MenuItem>
                                 <MenuDivider />
-                                <MenuItem color='brand.300' _hover={{ bg: 'brand.300', color: 'brand.600'}} onClick={() => status.setLoginState(false)}>Log Out</MenuItem>
+                                <MenuItem color='brand.300' _hover={{ bg: 'brand.300', color: 'brand.600'}} onClick={handleLogOut}>Log Out</MenuItem>
                             </MenuList>
                         </Menu>
-                    </>) : (
+                    </Box>) : (
                     <>
                         <LogInModal />
                         <Button colorScheme='orange' onClick={() => navigate('sign-up')}>Sign up</ Button>
                     </>
                 )}
             </HStack>
-            {/*     <Modal
-            isOpen={isOpen}
-            onClose={onClose}
-        >
-            <ModalOverlay />
-            <ModalContent>
-                <ModalHeader>Create your account</ModalHeader>
-                <ModalCloseButton />
-                <ModalBody pb={6}>
-                    <FormControl>
-                        <FormLabel>First name</FormLabel>
-                        <Input placeholder='First name' />
-                    </FormControl>
-
-                    <FormControl mt={4}>
-                        <FormLabel>Last name</FormLabel>
-                        <Input placeholder='Last name' />
-                    </FormControl>
-                </ModalBody>
-
-                <ModalFooter>
-                    <Button colorScheme='blue' mr={3}>
-                        Save
-                    </Button>
-                    <Button onClick={onClose}>Cancel</Button>
-                </ModalFooter>
-            </ModalContent>
-        </Modal>; */}
         </>
     );
 };
