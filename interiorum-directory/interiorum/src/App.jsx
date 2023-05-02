@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 
 import RootLayout from './components/Views/RootLayout/RootLayout.jsx';
 import Home from './components/Views/Home/Home.jsx';
@@ -35,7 +35,7 @@ const App = () => {
                             <Route path='about' element={<About />} />
                             <Route element={<ProtectedRoute isLoggedIn={isLoggedIn} />} >
                                 <Route path='forum' element={<Forum />}>
-                                    <Route index element={<AllPosts />} />
+                                    <Route index element={<Navigate replace to='All%20Categories' />} />
                                     <Route path=':category' element={<CategoryPosts />} />
                                 </Route>
                                 <Route path='profile' element={<Profile />} />

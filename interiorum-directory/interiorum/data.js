@@ -1461,6 +1461,7 @@ export const users = [{
 }];
 
 export const categories = [
+    'All Categories',
     'Bathrooms',
     'Building a Home',
     'Landscape Design',

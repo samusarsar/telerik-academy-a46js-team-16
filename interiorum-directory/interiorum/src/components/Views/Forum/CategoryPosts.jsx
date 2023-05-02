@@ -11,10 +11,15 @@ const CategoryPosts = () => {
 
     const { category } = useParams();
 
-    const [searchTerm, setSerchTerm] = useState('');
+    const [searchTerm, setSearchTerm] = useState('');
     const [searchParams, setSearchParams] = useSearchParams();
 
-    const categoryPosts = posts.filter(post => post.category === category); // fetch posts by category
+    const categoryPosts = category === 'All Categories' ? posts : posts.filter(post => post.category === category);
+
+    const handleClick = () => {
+        setSearchParams({ search: searchTerm.toLowerCase() });
+        setSearchTerm('');
+    };
 
     return (
         <Box bg={'white'} borderRadius={'10px'} p={'20px'} m={'20px'} boxShadow={'md'}>
@@ -23,20 +28,24 @@ const CategoryPosts = () => {
 
             <HStack>
                 <Input
-                    onChange={(e) => setSerchTerm(e.target.value)}
+                    onChange={(e) => setSearchTerm(e.target.value)}
                     value={searchTerm}
                     m='0px 0px 10px'
                     bg='white'
                     focusBorderColor='brand.400'
                     placeholder={`Search posts in category ${category}`} />
-                <Button onClick={() => {
-                    setSearchParams({ search: searchTerm.toLocaleLowerCase() });
-                    setSerchTerm('');
-                }}>Search</Button>
+                <Button onClick={handleClick}>Search</Button>
             </HStack>
-            <>{searchParams.get('search') ? (<Text p='15px' fontStyle='italic'>Search results for "{searchParams.get('search')}"</Text>) : null}</>
 
-            <ForumTabs posts={searchParams.get('search') ? categoryPosts.filter(post => post.title.toLocaleLowerCase().includes(searchParams.get('search'))) : categoryPosts} />
+            {searchParams.get('search') ? (
+                <>
+                    <Text p='15px' fontStyle='italic'>Search results for `{searchParams.get('search')}` in category {category}</Text>
+                    <ForumTabs posts={categoryPosts.filter(post => post.title.toLowerCase().includes(searchParams.get('search')))} />
+                </>
+            ) : (
+                <ForumTabs posts={categoryPosts} />
+            )}
+
         </Box>
     );
 
