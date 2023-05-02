@@ -10,9 +10,14 @@ const Team = () => {
                 <Card maxW='sm'>
                     <CardBody>
                         <Image
-                            src='src/assets/images/anon-user.jpg'
+                            src='https://cdn.discordapp.com/attachments/1095331992821846110/1102598998830887024/P1388641.jpg'
                             alt='Simona Ilcheva'
                             borderRadius='lg'
+                            h='350px'
+                            fit='cover'
+                            transition='0.4s ease-in-out'
+                            filter='grayscale(100%)'
+                            _hover={{ filter: 'none' }}
                         />
                         <Stack mt='6' spacing='3'>
                             <Heading size='md'>Simona Ilcheva</Heading>
@@ -40,9 +45,14 @@ const Team = () => {
                 <Card maxW='sm'>
                     <CardBody>
                         <Image
-                            src='src/assets/images/anon-user.jpg'
+                            src='https://media.licdn.com/dms/image/C4D03AQF-Ex2F6ps6IQ/profile-displayphoto-shrink_800_800/0/1606661380234?e=1688601600&v=beta&t=Cpuz_66ZcC-5RnTBuciQF3b2Glzuloo6YPAxgu2p508'
                             alt='Samuil Sarandev'
                             borderRadius='lg'
+                            h='350px'
+                            fit='cover'
+                            transition='0.4s ease-in-out'
+                            filter='grayscale(100%)'
+                            _hover={{ filter: 'none' }}
                         />
                         <Stack mt='6' spacing='3'>
                             <Heading size='md'>Samuil Sarandev</Heading>

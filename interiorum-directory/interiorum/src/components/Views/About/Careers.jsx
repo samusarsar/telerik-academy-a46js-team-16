@@ -114,13 +114,14 @@ const Careers = () => {
                 <Heading as='h3' size='lg'>Ready to jump in?</Heading>
                 <Text>We're always hiring! Leave your email below and we'll get back to you ASAP!</Text>
                 <InputGroup w='400px' py={4}>
-                        <InputLeftElement
-                            pointerEvents='none'
-                            children={<Icon as={AiOutlineMail} color='brand.200' boxSize='20px'/>}
-                            mt={4}
-                        />
-                        <FormControl isInvalid={emailError}>
-                            <Input pl={12} bg='brand.600' color='brand.500' type='email' placeholder='Email' value={email} onChange={(e) => setEmail(e.target.value)}/>
+                    <InputLeftElement
+                        pointerEvents='none'
+                        children={<Icon as={AiOutlineMail} color='brand.200' boxSize='20px'/>}
+                        mt={4}
+                    />
+                    <FormControl isInvalid={emailError}>
+                        <Input pl={12} bg='brand.600' color='brand.500' type='email' placeholder='Email' focusBorderColor='brand.400'
+                            value={email} onChange={(e) => setEmail(e.target.value)}/>
                         <FormErrorMessage>Email address is not valid.</FormErrorMessage>
                     </FormControl>
                 </InputGroup>

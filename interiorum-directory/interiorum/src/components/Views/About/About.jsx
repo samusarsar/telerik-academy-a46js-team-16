@@ -2,6 +2,7 @@ import { Tabs, TabList, Tab, TabPanel, TabPanels } from '@chakra-ui/react';
 import AboutHeader from './AboutHeader';
 import Team from './Team';
 import Careers from './Careers';
+import FAQ from './FAQ';
 
 const About = () => {
     return (
@@ -22,7 +23,7 @@ const About = () => {
                         <Careers />
                     </TabPanel>
                     <TabPanel>
-                        <p>three!</p>
+                        <FAQ />
                     </TabPanel>
                 </TabPanels>
             </Tabs>
