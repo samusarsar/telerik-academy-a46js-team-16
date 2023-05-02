@@ -1,9 +1,7 @@
-import { Container, Heading, Button } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
-import { AiOutlineArrowRight } from 'react-icons/ai';
+import { useState } from 'react';
 import { posts as postsData } from '../../../../data.js';
 
-import PostFeed from '../../Posts/PostFeed/PostFeed.jsx';
+import PostsBox from '../../Posts/PostsBox/PostsBox.jsx';
 
 const MostCommented = () => {
     const [posts, setPosts] = useState(postsData);
@@ -16,13 +14,7 @@ const MostCommented = () => {
     // });
 
     return (
-        <Container display={'flex'} flexDirection={'column'} align={'center'} bg={'white'} borderRadius={'10px'} p={'20px'} m={'20px'} boxShadow={'2xl'}>
-            <Heading size='md'>Most Commented Posts:</Heading>
-            <PostFeed posts={posts}></PostFeed>
-            <Button rightIcon={AiOutlineArrowRight} colorScheme='telegram' variant='outline'>
-                View all
-            </Button>
-        </Container>
+        <PostsBox heading='Most Commented Posts:' posts={posts} />
     );
 };
 
