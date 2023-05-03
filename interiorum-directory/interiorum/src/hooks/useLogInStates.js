@@ -1,11 +1,11 @@
 import { useContext, useState } from 'react';
-import { AuthContext } from '../context/AuthContext/AuthContext';
+import { AppContext } from '../context/AppContext/AppContext';
 import { UserContext } from '../context/UserContext/UserContext';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@chakra-ui/react';
 
 const useLogInStates = () => {
-    const status = useContext(AuthContext);
+    const status = useContext(AppContext);
     const user = useContext(UserContext);
 
     const [username, setUsername] = useState('');

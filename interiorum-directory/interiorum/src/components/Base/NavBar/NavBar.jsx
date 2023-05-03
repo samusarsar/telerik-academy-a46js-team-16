@@ -3,13 +3,13 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { Heading, Spacer, HStack, Button, Image, Menu, MenuButton, MenuList, MenuItem, MenuDivider, useDisclosure, Box, useToast, Link } from '@chakra-ui/react';
 
 import { useContext, useState } from 'react';
-import { AuthContext } from '../../../context/AuthContext/AuthContext';
+import { AppContext } from '../../../context/AppContext/AppContext';
 import { UserContext } from '../../../context/UserContext/UserContext';
 import LogInModal from '../../Account/LogInModal';
 import useLogOut from '../../../hooks/useLogOut';
 
 const NavBar = () => {
-    const status = useContext(AuthContext);
+    const status = useContext(AppContext);
     const user = useContext(UserContext);
     const navigate = useNavigate();
 

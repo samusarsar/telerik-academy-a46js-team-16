@@ -5,7 +5,7 @@ import Home from './components/Views/Home/Home.jsx';
 import About from './components/Views/About/About.jsx';
 import Forum from './components/Views/Forum/Forum.jsx';
 import Profile from './components/Views/Profile/Profile.jsx';
-import { AuthContext } from './context/AuthContext/AuthContext.js';
+import { AppContext } from './context/AppContext/AppContext.js';
 import { UserContext } from './context/UserContext/UserContext.js';
 import { useState } from 'react';
 import ProtectedRoute from './components/Base/ProtectedRoute/ProtectedRoute.jsx';
@@ -25,7 +25,7 @@ const App = () => {
 
     return (
         <>
-            <AuthContext.Provider value={{ setLoginState: toggleLogin, isLoggedIn }}>
+            <AppContext.Provider value={{ setLoginState: toggleLogin, isLoggedIn }}>
                 <UserContext.Provider value={{ username, firstName, lastName, email, password, setUsername, setFirstName, setLastName, setEmail, setPassword }}>
                     <Routes>
                         <Route path='/' element={<RootLayout />}>
@@ -44,7 +44,7 @@ const App = () => {
                         </Route>
                     </Routes>
                 </UserContext.Provider>
-            </AuthContext.Provider>
+            </AppContext.Provider>
         </>);
 };
 

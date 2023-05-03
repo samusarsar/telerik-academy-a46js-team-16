@@ -1,12 +1,12 @@
 import { FormControl, FormLabel, Input, FormErrorMessage, Box, Heading, Text, Button, HStack, Divider, VStack, Flex, useToast } from '@chakra-ui/react';
 import { useContext, useState } from 'react';
-import { AuthContext } from '../../../context/AuthContext/AuthContext';
+import { AppContext } from '../../../context/AppContext/AppContext';
 import { UserContext } from '../../../context/UserContext/UserContext';
 import { useNavigate } from 'react-router-dom';
 import AccountBase from '../../Account/AccountBase';
 
 const SignUp = () => {
-    const status = useContext(AuthContext);
+    const status = useContext(AppContext);
     const user = useContext(UserContext);
 
     const navigate = useNavigate();

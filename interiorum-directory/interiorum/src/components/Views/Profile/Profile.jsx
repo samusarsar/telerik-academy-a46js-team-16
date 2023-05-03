@@ -5,12 +5,12 @@ import ProfilePosts from './ProfilePosts';
 import ProfileComments from './ProfileComments';
 import { FiShare } from 'react-icons/fi';
 import { TbMessageCircle } from 'react-icons/tb';
-import { AuthContext } from '../../../context/AuthContext/AuthContext';
+import { AppContext } from '../../../context/AppContext/AppContext';
 import useLogOut from '../../../hooks/useLogOut';
 import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
-    const status = useContext(AuthContext);
+    const status = useContext(AppContext);
 
     const [user, setUser] = useState(users[0]);
     const [posts, setPosts] = useState(users[0].posts);
