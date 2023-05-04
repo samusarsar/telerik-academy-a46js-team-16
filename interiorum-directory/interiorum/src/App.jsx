@@ -13,7 +13,7 @@ import { getUserData } from './services/users.service';
 import LogIn from './components/Views/AccountViews/LogIn.jsx';
 import SignUp from './components/Views/AccountViews/SignUp.jsx';
 import CategoryPosts from './components/Views/Forum/CategoryPosts.jsx';
-import { auth } from './config/firebase-config.js';
+import { auth, db } from './config/firebase-config.js';
 
 import './App.css';
 
@@ -23,11 +23,14 @@ const App = () => {
         user,
         userData: null,
     });
+    const [loading, setLoading] = useState(false);
 
     if (appState.user !== user) {
         setAppState({ user });
     }
+
     useEffect(() => {
+        setLoading(true);
         if (user === null) return;
 
         getUserData(user.uid)
@@ -41,9 +44,9 @@ const App = () => {
                     userData: snapshot.val()[Object.keys(snapshot.val())[0]],
                 });
             })
-            .catch(e => alert(e.message));
+            .catch(e => alert(e.message))
+            .finally(() => setLoading(false));
     }, [user]);
-
 
     return (
         <>
