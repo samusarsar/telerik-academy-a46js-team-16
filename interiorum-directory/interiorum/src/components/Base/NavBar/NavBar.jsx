@@ -4,13 +4,11 @@ import { Heading, Spacer, HStack, Button, Image, Menu, MenuButton, MenuList, Men
 
 import { useContext, useState } from 'react';
 import { AppContext } from '../../../context/AppContext/AppContext';
-import { UserContext } from '../../../context/UserContext/UserContext';
 import LogInModal from '../../Account/LogInModal';
-import useLogOut from '../../../hooks/useLogOut';
+import handleLogOut from '../../../common/helpers/handleLogOut';
 
 const NavBar = () => {
-    const status = useContext(AppContext);
-    const user = useContext(UserContext);
+    const { user, userData, setContext } = useContext(AppContext);
     const navigate = useNavigate();
 
     const toast = useToast();
@@ -39,7 +37,7 @@ const NavBar = () => {
                 <Link as={NavLink} rounded='lg' px={2} py={2} to='about' _activeLink={{ fontWeight: 'bold', color: 'brand.300' }}
                     _hover={{ textDecoration: 'none', bg: 'blackAlpha.200' }}
                     onClick={() => inProfile && setInProfile(false)}>About</Link>
-                {status.isLoggedIn ? (
+                {user ? (
                     <Box
                         borderRadius='xl'
                         onMouseLeave={onClose}
@@ -56,7 +54,7 @@ const NavBar = () => {
                             }}>
                                 <HStack gap={2}>
                                     <Image src={user.avatar} fallbackSrc='src/assets/images/anon-user.jpg' rounded='full' boxSize='40px'></Image>
-                                    <Link as={NavLink} to='profile' _activeLink={{ fontWeight: 'bold', color: 'brand.100' }}>{user.username}</Link>
+                                    <Link as={NavLink} to='profile' _activeLink={{ fontWeight: 'bold', color: 'brand.100' }}>{userData && userData.handle}</Link>
                                 </HStack>
                             </MenuButton>
                             <MenuList>
@@ -68,7 +66,7 @@ const NavBar = () => {
                                     }}>My Profile</MenuItem>
                                 <MenuDivider />
                                 <MenuItem color='brand.300' transition='.1s ease-in-out'
-                                    _hover={{ bg: 'brand.300', color: 'brand.600' }} onClick={() => useLogOut({ status, onClose, navigate, toast })}>
+                                    _hover={{ bg: 'brand.300', color: 'brand.600' }} onClick={() => handleLogOut({ setContext, onClose, navigate, toast })}>
                                     Log Out
                                 </MenuItem>
                             </MenuList>

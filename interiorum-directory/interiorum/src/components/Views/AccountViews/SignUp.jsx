@@ -1,13 +1,13 @@
-import { FormControl, FormLabel, Input, FormErrorMessage, Box, Heading, Text, Button, HStack, Divider, VStack, Flex, useToast } from '@chakra-ui/react';
+import { FormControl, FormLabel, Input, FormErrorMessage, Text, Button, HStack, Divider, VStack, useToast, FormHelperText } from '@chakra-ui/react';
 import { useContext, useState } from 'react';
 import { AppContext } from '../../../context/AppContext/AppContext';
-import { UserContext } from '../../../context/UserContext/UserContext';
 import { useNavigate } from 'react-router-dom';
 import AccountBase from '../../Account/AccountBase';
+import { createUser, getUserByHandle } from '../../../services/users.service';
+import { registerUser } from '../../../services/auth.service';
 
 const SignUp = () => {
-    const status = useContext(AppContext);
-    const user = useContext(UserContext);
+    const { setContext } = useContext(AppContext);
 
     const navigate = useNavigate();
 
@@ -26,38 +26,58 @@ const SignUp = () => {
 
     const toast = useToast();
 
-    const handleSignUp = () => {
-        // setUsernameError(snapshot.exists());
+    const onSignUp = () => {
+        const restrictedChars = ['.', '#', '$', '[', ']'];
+        setUsernameError(restrictedChars.some(c => username.includes(c)) &&
+            'Username can\'t contain special chararacters.');
         setPasswordError(password.length < 6);
         setRePasswordError(rePassword !== password);
         setFirstNameError(firstName.length < 4 || firstName.length > 32);
         setLastNameError(lastName.length < 4 || lastName.length > 32);
-        // setEmailError(!email.includes('@') || snapshot.exists());
-        if (// (!snapshot.exists()) &&
+        setEmailError(!email.includes('@') && 'Email is not valid.');
+        if (!restrictedChars.some(c => username.includes(c)) &&
             (password.length >= 6) &&
             (rePassword === password) &&
             (firstName.length > 4 || firstName.length < 32) &&
             (lastName.length > 4 || lastName.length < 32) &&
-            (email.includes('@')
-            // || !snapshot.exists()
-            )) {
-            status.setLoginState(true);
-            user.setUsername(username);
-            user.setPassword(password);
-            user.setFirstName(firstName);
-            user.setLastName(lastName);
-            user.setEmail(email);
-            console.log(user);
-            navigate('/home');
-            toast({
-                title: 'Welcome to your Interiorum!',
-                description: 'You have successfully signed up. Have fun!',
-                status: 'success',
-                duration: 3000,
-                isClosable: true,
-                position: 'top',
-                variant: 'subtle',
-            });
+            (email.includes('@'))) {
+            getUserByHandle(username)
+                .then(snapshot => {
+                    if (snapshot.exists()) {
+                        throw new Error(`Username ${username} has already been taken!`);
+                    }
+
+                    return registerUser(email, password);
+                })
+                .then(credential => {
+                    return createUser(username, credential.user.uid, credential.user.email, firstName, lastName)
+                        .then(() =>
+                            setContext({
+                                user: credential.user,
+                            }));
+                })
+                .then(() => {
+                    navigate('/home');
+                    toast({
+                        title: 'Welcome to your Interiorum!',
+                        description: 'You have successfully signed up. Have fun!',
+                        status: 'success',
+                        duration: 3000,
+                        isClosable: true,
+                        position: 'top',
+                        variant: 'subtle',
+                    });
+                })
+                .catch(e => {
+                    switch (e.message) {
+                    case 'Firebase: Error (auth/email-already-in-use).':
+                        setEmailError('Email is already in use.');
+                        break;
+                    case `Username ${username} has already been taken!`:
+                        setUsernameError(`Username ${username} has already been taken!`);
+                        break;
+                    };
+                });
         }
     };
 
@@ -68,7 +88,8 @@ const SignUp = () => {
                     <FormControl isInvalid={usernameError} isRequired='true' pr={4}>
                         <FormLabel>Username</FormLabel>
                         <Input type='text' placeholder='johnjordan123' onChange={(e) => setUsername(e.target.value)} bg='brand.600' color='brand.500' />
-                        <FormErrorMessage>Username is taken.</FormErrorMessage>
+                        <FormHelperText maxW='200px'>Username can't contain special characters.</FormHelperText>
+                        <FormErrorMessage>{usernameError}</FormErrorMessage>
                     </FormControl>
                     <FormControl isInvalid={passwordError} isRequired='true' pr={4}>
                         <FormLabel>Password</FormLabel>
@@ -96,13 +117,13 @@ const SignUp = () => {
                     <FormControl isInvalid={emailError} isRequired='true' >
                         <FormLabel>Email</FormLabel>
                         <Input type='email' placeholder='johnjordan@interiorum.bg' onChange={(e) => setEmail(e.target.value)} bg='brand.600' color='brand.500'/>
-                        <FormErrorMessage>Email should be valid and unique.</FormErrorMessage>
+                        <FormErrorMessage>{emailError}</FormErrorMessage>
                     </FormControl>
                 </VStack>
             </HStack>
             <VStack mb={8}>
                 <HStack>
-                    <Button colorScheme='orange' onClick={handleSignUp}>Sign Up</Button>
+                    <Button colorScheme='orange' onClick={onSignUp}>Sign Up</Button>
                     <Button colorScheme='whiteAlpha' onClick={() => navigate('/')}>Cancel</Button>
                 </HStack>
                 <Text fontSize='sm'>Already have an account?

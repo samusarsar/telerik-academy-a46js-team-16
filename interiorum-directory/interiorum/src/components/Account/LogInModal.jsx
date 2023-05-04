@@ -1,6 +1,6 @@
 // eslint-disable-next-line max-len
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, FormControl, FormLabel, Input, ModalFooter, Button, useDisclosure, Text, HStack, FormErrorMessage, InputGroup, InputRightElement } from '@chakra-ui/react';
-import useLogIn from '../../hooks/useLogIn';
+import handleLogIn from '../../common/helpers/handleLogIn';
 import useLogInStates from '../../hooks/useLogInStates';
 
 const LogInModal = () => {
@@ -27,11 +27,11 @@ const LogInModal = () => {
                     <ModalHeader>Log into your <i>INTERIORUM</i> account</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody pb={6}>
-                        <FormControl isInvalid={states.usernameError}>
-                            <FormLabel>Username</FormLabel>
-                            <Input bg='brand.600' color='brand.500' placeholder='Enter username' onChange={(e) => states.setUsername(e.target.value)}/>
-                            {states.usernameError && (
-                                <FormErrorMessage>Username is incorrect.</FormErrorMessage>
+                        <FormControl isInvalid={states.emailError}>
+                            <FormLabel>Email</FormLabel>
+                            <Input bg='brand.600' color='brand.500' placeholder='Enter email' onChange={(e) => states.setEmail(e.target.value)}/>
+                            {states.emailError && (
+                                <FormErrorMessage>{states.emailError}</FormErrorMessage>
                             )}
                         </FormControl>
 
@@ -60,7 +60,7 @@ const LogInModal = () => {
 
                     <ModalFooter>
                         <Button colorScheme='telegram' mr={3} onClick={() => {
-                            useLogIn({ states, onClose });
+                            handleLogIn({ states, onClose });
                         }}>
                             Log In
                         </Button>

@@ -1,6 +1,6 @@
 import { FormControl, FormLabel, Input, FormErrorMessage, Text, Button, HStack, VStack, InputGroup, InputRightElement } from '@chakra-ui/react';
 import { useLocation } from 'react-router-dom';
-import useLogIn from '../../../hooks/useLogIn';
+import handleLogIn from '../../../common/helpers/handleLogIn';
 import useLogInStates from '../../../hooks/useLogInStates';
 import AccountBase from '../../Account/AccountBase';
 
@@ -13,11 +13,11 @@ const LogIn = () => {
     return (
         <AccountBase>
             <VStack p={10}>
-                <FormControl isInvalid={states.usernameError} isRequired='true' pr={4}>
-                    <FormLabel>Username</FormLabel>
-                    <Input type='text' placeholder='Enter username' onChange={(e) => states.setUsername(e.target.value)} bg='brand.600' color='brand.500' />
-                    {states.usernameError && (
-                        <FormErrorMessage>Username is incorrect.</FormErrorMessage>
+                <FormControl isInvalid={states.emailError} isRequired='true' pr={4}>
+                    <FormLabel>Email</FormLabel>
+                    <Input type='text' placeholder='Enter email' onChange={(e) => states.setEmail(e.target.value)} bg='brand.600' color='brand.500' />
+                    {states.emailError && (
+                        <FormErrorMessage>{states.emailError}</FormErrorMessage>
                     )}
                 </FormControl>
                 <FormControl isInvalid={states.passwordError} isRequired='true' pr={4}>
@@ -44,7 +44,7 @@ const LogIn = () => {
             <VStack mb={8}>
                 <HStack>
                     <Button colorScheme='telegram' onClick={() => {
-                        useLogIn({ states, from });
+                        handleLogIn({ states, from });
                     }}>Log In</Button>
                     <Button colorScheme='whiteAlpha' onClick={() => states.navigate('/')}>Cancel</Button>
                 </HStack>

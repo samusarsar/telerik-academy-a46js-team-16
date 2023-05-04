@@ -1,15 +1,13 @@
 import { useContext, useState } from 'react';
 import { AppContext } from '../context/AppContext/AppContext';
-import { UserContext } from '../context/UserContext/UserContext';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@chakra-ui/react';
 
 const useLogInStates = () => {
-    const status = useContext(AppContext);
-    const user = useContext(UserContext);
+    const { setContext } = useContext(AppContext);
 
-    const [username, setUsername] = useState('');
-    const [usernameError, setUsernameError] = useState(false);
+    const [email, setEmail] = useState('');
+    const [emailError, setEmailError] = useState(false);
     const [password, setPassword] = useState('');
     const [passwordError, setPasswordError] = useState(false);
 
@@ -18,12 +16,11 @@ const useLogInStates = () => {
     const [show, setShow] = useState(false);
 
     return {
-        status,
-        user,
-        username,
-        setUsername,
-        usernameError,
-        setUsernameError,
+        setContext,
+        email,
+        setEmail,
+        emailError,
+        setEmailError,
         password,
         setPassword,
         passwordError,
