@@ -6,44 +6,64 @@ import About from './components/Views/About/About.jsx';
 import Forum from './components/Views/Forum/Forum.jsx';
 import Profile from './components/Views/Profile/Profile.jsx';
 import { AppContext } from './context/AppContext/AppContext.js';
-import { UserContext } from './context/UserContext/UserContext.js';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ProtectedRoute from './components/Base/ProtectedRoute/ProtectedRoute.jsx';
-
-import './App.css';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { getUserData } from './services/users.service';
 import LogIn from './components/Views/AccountViews/LogIn.jsx';
 import SignUp from './components/Views/AccountViews/SignUp.jsx';
 import CategoryPosts from './components/Views/Forum/CategoryPosts.jsx';
+import { auth } from './config/firebase-config.js';
+
+import './App.css';
 
 const App = () => {
-    const [isLoggedIn, toggleLogin] = useState(true);
-    const [username, setUsername] = useState('test');
-    const [firstName, setFirstName] = useState(null);
-    const [lastName, setLastName] = useState(null);
-    const [email, setEmail] = useState(null);
-    const [password, setPassword] = useState('12345');
+    const [user] = useAuthState(auth);
+    const [appState, setAppState] = useState({
+        user,
+        userData: null,
+    });
+
+    if (appState.user !== user) {
+        setAppState({ user });
+    }
+    useEffect(() => {
+        if (user === null) return;
+
+        getUserData(user.uid)
+            .then(snapshot => {
+                if (!snapshot.exists()) {
+                    throw new Error('Something went wrong!');
+                }
+
+                setAppState({
+                    ...appState,
+                    userData: snapshot.val()[Object.keys(snapshot.val())[0]],
+                });
+            })
+            .catch(e => alert(e.message));
+    }, [user]);
+
 
     return (
         <>
-            <AppContext.Provider value={{ setLoginState: toggleLogin, isLoggedIn }}>
-                <UserContext.Provider value={{ username, firstName, lastName, email, password, setUsername, setFirstName, setLastName, setEmail, setPassword }}>
-                    <Routes>
-                        <Route path='/' element={<RootLayout />}>
-                            <Route index element={<Home />} />
-                            <Route path='home' element={<Home />} />
-                            <Route path='about' element={<About />} />
-                            <Route element={<ProtectedRoute isLoggedIn={isLoggedIn} />} >
-                                <Route path='forum' element={<Forum />}>
-                                    <Route index element={<Navigate replace to='All%20Categories' />} />
-                                    <Route path=':category' element={<CategoryPosts />} />
-                                </Route>
-                                <Route path='profile' element={<Profile />} />
-                            </ Route>
-                            <Route path='log-in' element={<LogIn />} />
-                            <Route path='sign-up' element={<SignUp />} />
-                        </Route>
-                    </Routes>
-                </UserContext.Provider>
+            <AppContext.Provider value={{ ...appState, setContext: setAppState }}>
+                <Routes>
+                    <Route path='/' element={<RootLayout />}>
+                        <Route index element={<Home />} />
+                        <Route path='home' element={<Home />} />
+                        <Route path='about' element={<About />} />
+                        <Route element={<ProtectedRoute user={appState.user} />} >
+                            <Route path='forum' element={<Forum />}>
+                                <Route index element={<Navigate replace to='All%20Categories' />} />
+                                <Route path=':category' element={<CategoryPosts />} />
+                            </Route>
+                            <Route path='profile' element={<Profile />} />
+                        </ Route>
+                        <Route path='log-in' element={<LogIn />} />
+                        <Route path='sign-up' element={<SignUp />} />
+                    </Route>
+                </Routes>
             </AppContext.Provider>
         </>);
 };
