@@ -68,8 +68,8 @@ const CreatePostView = ({ postForm, setPostForm, updateForm, postTitleIsInvalid 
                         )}
 
                     </FormControl>
-                    {categories.map(category => {
-                        if (category !== 'All Categories') return <Checkbox onChange={handleCheckbox} value={category} iconColor='brand.400' colorScheme='black' key={category}>{category}</Checkbox>
+                    {Object.keys(categories).map(category => {
+                        if (category !== 'allCategories') return <Checkbox onChange={handleCheckbox} value={category} iconColor='brand.400' colorScheme='black' key={category}>{categories[category]}</Checkbox>
                     })}
                 </Stack>
 

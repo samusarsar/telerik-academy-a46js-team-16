@@ -2,7 +2,7 @@ import { Outlet, useParams, useSearchParams } from 'react-router-dom';
 
 import { Heading, Text, Box, HStack, Input, Button } from '@chakra-ui/react';
 
-import { posts } from '../../../../data';
+import { categories, posts } from '../../../../data';
 import ForumTabs from './ForumTabs';
 import { useState } from 'react';
 
@@ -24,7 +24,7 @@ const CategoryPosts = () => {
     return (
         <Box bg={'white'} borderRadius={'10px'} p={'20px'} m={'20px'} boxShadow={'md'}>
             <Text fontStyle='italic'>posts from category</Text>
-            <Heading size='xl' mb='15px'>{category}</Heading>
+            <Heading size='xl' mb='15px'>{categories[category]}</Heading>
             <Outlet />
             <HStack>
                 <Input

@@ -1460,18 +1460,18 @@ export const users = [{
     ],
 }];
 
-export const categories = [
-    'allCategories',
-    'Bathrooms',
-    'Building a Home',
-    'Landscape Design',
-    'Flooring',
-    'Furniture',
-    'Home Decorating',
-    'Kitchens',
-    'Living Room',
-    'Paint',
-    'DYI',
-    'Windows',
-    'Other',
-];
+export const categories = {
+    allCategories: 'All Categories',
+    bathrooms: 'Bathrooms',
+    buildingAHome: 'Building a Home',
+    landscapeDesign: 'Landscape Design',
+    flooring: 'Flooring',
+    furniture: 'Furniture',
+    homeDecorating: 'Home Decorating',
+    kitchens: 'Kitchens',
+    livingRoom: 'Living Room',
+    paint: 'Paint',
+    dyi: 'DYI',
+    windows: 'Windows',
+    other: 'Other',
+};
