@@ -16,6 +16,8 @@ import CategoryPosts from './components/Views/Forum/CategoryPosts.jsx';
 import { auth, db } from './config/firebase-config.js';
 
 import './App.css';
+import PostDetails from './components/Posts/PostDetails/PostDetails.jsx';
+import TestPost from './components/Posts/PostDetails/TestPost.jsx';
 
 const App = () => {
     const [user] = useAuthState(auth);
@@ -58,9 +60,11 @@ const App = () => {
                         <Route path='about' element={<About />} />
                         <Route element={<ProtectedRoute user={appState.user} />} >
                             <Route path='forum' element={<Forum />}>
-                                <Route index element={<Navigate replace to='All%20Categories' />} />
-                                <Route path=':category' element={<CategoryPosts />} />
+                                <Route index element={<Navigate replace to='allCategories' />} />
+                                <Route path=':category' element={<CategoryPosts />}>
+                                </Route>
                             </Route>
+                            <Route path='post/:postTitle' element={<PostDetails />} />
                             <Route path='profile' element={<Profile />} />
                         </ Route>
                         <Route path='log-in' element={<LogIn />} />

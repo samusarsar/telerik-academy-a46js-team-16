@@ -1,7 +1,7 @@
 export const posts = [
     {
         id: 1,
-        title: 'Adjusting Visual Comfort Goodman Pendants/ 3 comments',
+        title: 'Adjusting',
         body: 'fsdjkhfjklshafdlkhsakdjlfhkljsdafh',
         images: [
             'url1',
@@ -55,7 +55,7 @@ export const posts = [
     },
     {
         id: 2,
-        title: 'hello / 1comment',
+        title: 'hello 1comment',
         body: 'fsdjkhfjklshafdlkhsakdjlfhkljsdafh',
         images: [
             'url1',
@@ -1461,7 +1461,7 @@ export const users = [{
 }];
 
 export const categories = [
-    'All Categories',
+    'allCategories',
     'Bathrooms',
     'Building a Home',
     'Landscape Design',

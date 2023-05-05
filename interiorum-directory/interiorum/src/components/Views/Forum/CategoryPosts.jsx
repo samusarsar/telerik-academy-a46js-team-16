@@ -1,4 +1,4 @@
-import { useParams, useSearchParams } from 'react-router-dom';
+import { Outlet, useParams, useSearchParams } from 'react-router-dom';
 
 import { Heading, Text, Box, HStack, Input, Button } from '@chakra-ui/react';
 
@@ -14,7 +14,7 @@ const CategoryPosts = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchParams, setSearchParams] = useSearchParams();
 
-    const categoryPosts = category === 'All Categories' ? posts : posts.filter(post => post.category === category);
+    const categoryPosts = category === 'allCategories' ? posts : posts.filter(post => post.category === category);
 
     const handleClick = () => {
         setSearchParams({ search: searchTerm.toLowerCase() });
@@ -25,7 +25,7 @@ const CategoryPosts = () => {
         <Box bg={'white'} borderRadius={'10px'} p={'20px'} m={'20px'} boxShadow={'md'}>
             <Text fontStyle='italic'>posts from category</Text>
             <Heading size='xl' mb='15px'>{category}</Heading>
-
+            <Outlet />
             <HStack>
                 <Input
                     onChange={(e) => setSearchTerm(e.target.value)}
