@@ -17,7 +17,6 @@ import { auth, db } from './config/firebase-config.js';
 
 import './App.css';
 import PostDetails from './components/Posts/PostDetails/PostDetails.jsx';
-import TestPost from './components/Posts/PostDetails/TestPost.jsx';
 
 const App = () => {
     const [user] = useAuthState(auth);
