@@ -15,6 +15,8 @@ import { MdSignalCellularNull } from 'react-icons/md';
 import { changeUserRole, getUserByHandle } from '../../../services/users.service';
 import AdminPanel from '../../Admin/AdminPanel';
 import { ADMIN_ROLE, BASE_ROLE, BLOCKED_ROLE, WANT_ADMIN_ROLE } from '../../../common/constants';
+import handleBlock from '../../../common/helpers/handleBlock';
+import handleUnblock from '../../../common/helpers/handleUnblock';
 
 const ProfileLayout = () => {
     const { user, userData, setContext } = useContext(AppContext);
@@ -56,6 +58,10 @@ const ProfileLayout = () => {
         });
     };
 
+    const adminCheck = () => userData.role === ADMIN_ROLE;
+
+    const currUserCheck = () => userData.handle === handle;
+
     return (
         <>
             {(firstName && lastName) &&
@@ -75,16 +81,21 @@ const ProfileLayout = () => {
                             {role === BLOCKED_ROLE && <Badge colorScheme='red'>Blocked</Badge>}
                             <HStack>
                                 <Text fontSize='1.8em' fontWeight='700'>{`${firstName} ${lastName}`}</Text>
-                                {userData.handle === handle && <EditDrawer handle={handle} currFirstName={firstName} currLastName={lastName} avatarURL={avatarURL} />}
+                                {currUserCheck() && <EditDrawer handle={handle} currFirstName={firstName} currLastName={lastName} avatarURL={avatarURL} />}
                             </HStack>
                             <Text fontSize='0.9em' >{posts.length} posts | {comments.length} comments</Text>
-                            {role === 'base' && <Button fontSize='0.8em' h='20px' mt={2} onClick={handleApply}>Apply for Admin</Button>}
+                            {(role !== ADMIN_ROLE && role !== BLOCKED_ROLE && !currUserCheck() && adminCheck()) ?
+                                <Button colorScheme='red' variant='outline' fontSize='0.8em' h='20px' mt={2} onClick={() => handleBlock({ handle, toast })}>Block User</Button> :
+                                (role === BLOCKED_ROLE && !currUserCheck() && adminCheck()) &&
+                                <Button colorScheme='telegram' variant='outline' fontSize='0.8em' h='20px' mt={2} onClick={() => handleUnblock({ handle, toast })}>Unblock User</Button>}
+                            {(role !== ADMIN_ROLE && role !== BLOCKED_ROLE && currUserCheck()) &&
+                                <Button fontSize='0.8em' h='20px' mt={2} onClick={handleApply}>Apply for Admin</Button>}
                         </Box>
                         <Spacer />
                         <ButtonGroup variant='solid' spacing='4' size='md'>
                             <Button colorScheme='teal'><Icon as={FiShare} mr={2}/>Share</Button>
-                            <Button colorScheme='facebook' ><Icon as={TbMessageCircle} mr={2}/>Message</Button>
-                            {userData.handle === handle && <Button colorScheme='red' variant='outline' onClick={() => handleLogOut({ setContext, navigate, toast })}>Log Out</Button>}
+                            {!currUserCheck() && <Button colorScheme='facebook' ><Icon as={TbMessageCircle} mr={2}/>Message</Button>}
+                            {currUserCheck() && <Button colorScheme='red' variant='outline' onClick={() => handleLogOut({ setContext, navigate, toast })}>Log Out</Button>}
                         </ButtonGroup>
                     </HStack>
                 </Container>
@@ -93,7 +104,7 @@ const ProfileLayout = () => {
                         <Tab>Activity</Tab>
                         <Tab>Liked</Tab>
                         <Tab>Saved</Tab>
-                        {(role === ADMIN_ROLE && userData.handle === handle) && <Tab>Admin Panel</Tab>}
+                        {(role === ADMIN_ROLE && currUserCheck()) && <Tab color='purple'>Admin Panel</Tab>}
                     </TabList>
                     <TabPanels bg='brand.600'>
                         <TabPanel>
@@ -114,7 +125,7 @@ const ProfileLayout = () => {
                                 <ProfileComments comments={comments} />
                             </Flex>
                         </TabPanel>
-                        {(role === ADMIN_ROLE && userData.handle === handle) &&
+                        {(role === ADMIN_ROLE && currUserCheck()) &&
                         (<TabPanel>
                             <AdminPanel />
                         </TabPanel>)}

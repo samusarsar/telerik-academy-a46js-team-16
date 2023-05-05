@@ -2,6 +2,7 @@ import { Box, HStack, Heading, Text, AvatarGroup, Avatar, Spacer, Image, VStack,
 import { Link, useNavigate } from 'react-router-dom';
 import { ADMIN_ROLE, WANT_ADMIN_ROLE } from '../../common/constants';
 import { changeUserRole } from '../../services/users.service';
+import handleUnblock from '../../common/helpers/handleUnblock';
 
 const SingleUser = ({ user, roleType }) => {
     const toast = useToast();
@@ -28,7 +29,7 @@ const SingleUser = ({ user, roleType }) => {
             </VStack>
             {roleType === WANT_ADMIN_ROLE ?
                 <Button h='30px' fontSize='0.8em' onClick={handleApprove}>Approve</Button> :
-                <Button h='30px' fontSize='0.8em'>Unblock</Button>}
+                <Button h='30px' fontSize='0.8em' onClick={() => handleUnblock({ handle: user.handle, toast })}>Unblock</Button>}
         </HStack>
     );
 };
