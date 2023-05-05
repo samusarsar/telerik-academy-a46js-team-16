@@ -9,6 +9,11 @@ const PostDetails = ({ post }) => {
     return (
         <>
             <VStack p={8} bg='brand.100' rounded='md' w={{ sm: '100%', md: '80%' }} boxShadow='lg'>
+                <HStack w='80%' justify='start' py={3} fontWeight='500' color='brand.300'>
+                    <Link to='../forum'>Forum</Link>
+                    <Text> / </Text>
+                    <Link to={`../forum/${post.category}`}>{post.category}</Link>
+                </HStack>
                 <HStack w='100%' align='start' justify='left'>
                     <Image src='https://bit.ly/dan-abramov' w='70px' rounded='full'mx={2}/>
                     <VStack align='start' w='80%'>
