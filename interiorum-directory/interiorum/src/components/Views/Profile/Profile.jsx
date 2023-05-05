@@ -17,7 +17,6 @@ const Profile = () => {
     const { user, userData, setContext } = useContext(AppContext);
 
     const { handle } = useParams();
-    console.log(handle);
 
     const [firstName, setFirstName] = useState(userData.firstName);
     const [lastName, setLastName] = useState(userData.secondName);

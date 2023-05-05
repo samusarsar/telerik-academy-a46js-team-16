@@ -34,13 +34,13 @@ const ProfileLayout = () => {
             const data = snapshot.val();
             setFirstName(data.firstName);
             setLastName(data.lastName);
-            setAvatarURL(data.avatarURL);
+            setAvatarURL(data.avatarURL || null);
         });
     }, []);
 
     return (
         <>
-            {(firstName && lastName && avatarURL) &&
+            {(firstName && lastName) &&
             <Container className='main-view' id='profile-view' maxW='container' minH='90vh' p={0}>
                 <Container maxW='container' bg='brand.100'>
                     <HStack justify='left' p={8} >

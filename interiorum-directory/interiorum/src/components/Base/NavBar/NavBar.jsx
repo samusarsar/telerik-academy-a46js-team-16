@@ -37,7 +37,7 @@ const NavBar = () => {
                 <Link as={NavLink} rounded='lg' px={2} py={2} to='about' _activeLink={{ fontWeight: 'bold', color: 'brand.300' }}
                     _hover={{ textDecoration: 'none', bg: 'blackAlpha.200' }}
                     onClick={() => inProfile && setInProfile(false)}>About</Link>
-                {user ? (
+                {(user && userData) ? (
                     <Box
                         borderRadius='xl'
                         onMouseLeave={onClose}

@@ -27,7 +27,8 @@ const CallToAction = () => {
             minH='400px' bg='brand.100'
             justify='left'
             m={8}
-            sx={{ background: 'linear-gradient(90deg, rgba(2, 24, 37, 0.2) 0%, rgba(2, 24, 37, 0.8) 50%, rgba(2, 24, 37, 1) 100%), url(\'src/assets/images/home-interior.jpeg\')' }}
+            background="linear-gradient(90deg, rgba(2, 24, 37, 0.2) 0%, rgba(2, 24, 37, 0.8) 50%, rgba(2, 24, 37, 1) 100%),
+                url('https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1700&q=80')"
             bgPosition='center'
             bgSize='100%'>
             <Spacer />
