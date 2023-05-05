@@ -1,4 +1,4 @@
-import { Box, Container, Text, Image, Spacer, HStack, ButtonGroup, Button, Tabs, TabList, Tab, TabPanels, TabPanel, Flex, IconButton, Icon, useToast } from '@chakra-ui/react';
+import { Box, Container, Text, Image, Spacer, HStack, ButtonGroup, Button, Tabs, TabList, Tab, TabPanels, TabPanel, Flex, IconButton, Icon, useToast, Badge } from '@chakra-ui/react';
 import { useContext, useEffect, useState } from 'react';
 import { users } from '../../../../data';
 import ProfilePosts from './ProfilePosts';
@@ -12,7 +12,9 @@ import EditDrawer from './EditDrawer';
 import { onValue, ref } from 'firebase/database';
 import { db, storage } from '../../../config/firebase-config';
 import { MdSignalCellularNull } from 'react-icons/md';
-import { getUserByHandle } from '../../../services/users.service';
+import { changeUserRole, getUserByHandle } from '../../../services/users.service';
+import AdminPanel from '../../Admin/AdminPanel';
+import { ADMIN_ROLE, BASE_ROLE, BLOCKED_ROLE, WANT_ADMIN_ROLE } from '../../../common/constants';
 
 const ProfileLayout = () => {
     const { user, userData, setContext } = useContext(AppContext);
@@ -22,6 +24,7 @@ const ProfileLayout = () => {
     const [firstName, setFirstName] = useState(null);
     const [lastName, setLastName] = useState(null);
     const [avatarURL, setAvatarURL] = useState(null);
+    const [role, setRole] = useState(null);
 
     const [posts, setPosts] = useState(users[0].posts);
     const [comments, setComments] = useState(users[0].comments);
@@ -31,12 +34,27 @@ const ProfileLayout = () => {
 
     useEffect(() => {
         onValue(ref(db, `users/${handle}`), (snapshot) => {
+            console.log(handle);
             const data = snapshot.val();
             setFirstName(data.firstName);
             setLastName(data.lastName);
             setAvatarURL(data.avatarURL || null);
+            setRole(data.role || null);
         });
-    }, []);
+    }, [handle]);
+
+    const handleApply = () => {
+        changeUserRole({ handle, roleType: WANT_ADMIN_ROLE });
+        toast({
+            title: 'Application received',
+            description: 'We will review your application and get back to you ASAP!',
+            status: 'info',
+            duration: 3000,
+            isClosable: true,
+            position: 'top',
+            variant: 'subtle',
+        });
+    };
 
     return (
         <>
@@ -52,11 +70,15 @@ const ProfileLayout = () => {
                             alt='Dan Abramov'
                         />
                         <Box px={4}>
+                            {(role === BASE_ROLE || role === WANT_ADMIN_ROLE) && <Badge colorScheme='blue'>Newbie</Badge>}
+                            {role === ADMIN_ROLE && <Badge colorScheme='purple'>Admin</Badge>}
+                            {role === BLOCKED_ROLE && <Badge colorScheme='red'>Blocked</Badge>}
                             <HStack>
                                 <Text fontSize='1.8em' fontWeight='700'>{`${firstName} ${lastName}`}</Text>
                                 {userData.handle === handle && <EditDrawer handle={handle} currFirstName={firstName} currLastName={lastName} avatarURL={avatarURL} />}
                             </HStack>
                             <Text fontSize='0.9em' >{posts.length} posts | {comments.length} comments</Text>
+                            {role === 'base' && <Button fontSize='0.8em' h='20px' mt={2} onClick={handleApply}>Apply for Admin</Button>}
                         </Box>
                         <Spacer />
                         <ButtonGroup variant='solid' spacing='4' size='md'>
@@ -71,6 +93,7 @@ const ProfileLayout = () => {
                         <Tab>Activity</Tab>
                         <Tab>Liked</Tab>
                         <Tab>Saved</Tab>
+                        {(role === ADMIN_ROLE && userData.handle === handle) && <Tab>Admin Panel</Tab>}
                     </TabList>
                     <TabPanels bg='brand.600'>
                         <TabPanel>
@@ -91,6 +114,10 @@ const ProfileLayout = () => {
                                 <ProfileComments comments={comments} />
                             </Flex>
                         </TabPanel>
+                        {(role === ADMIN_ROLE && userData.handle === handle) &&
+                        (<TabPanel>
+                            <AdminPanel />
+                        </TabPanel>)}
                     </TabPanels>
                 </Tabs>
             </Container>}

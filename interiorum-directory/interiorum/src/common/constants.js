@@ -13,3 +13,11 @@ export const BRAND_COLOR_3 = '#B14C31';
 export const BRAND_COLOR_4 = '#444A53';
 export const BRAND_COLOR_5 = '#021825';
 export const BRAND_COLOR_6 = '#f5f5f5';
+
+export const ROLE_CHILD = 'role';
+
+export const BASE_ROLE = 'base';
+export const ADMIN_ROLE = 'admin';
+export const WANT_ADMIN_ROLE = 'wantAdmin';
+
+export const BLOCKED_ROLE = 'blocked';
