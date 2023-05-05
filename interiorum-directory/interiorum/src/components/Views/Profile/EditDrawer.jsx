@@ -34,26 +34,44 @@ const EditDrawer = ({ handle, currFirstName, currLastName }) => {
     const [lastNameError, setLastNameError] = useState(false);
     const [avatar, setAvatar] = useState(null);
     const [avatarError, setAvatarError] = useState(false);
+    const [newAvatarURL, setNewAvatarURL] = useState(null);
 
     const { isOpen, onOpen, onClose } = useDisclosure();
     const btnRef = useRef();
     const toast = useToast();
 
+    const handleUpload = () => {
+        const acceptedImageTypes = ['image/jpg', 'image/jpeg', 'image/png'];
+        setAvatarError(!acceptedImageTypes.includes(avatar.type));
+
+        if (acceptedImageTypes.includes(avatar.type)) {
+            setAvatarError(false);
+            uploadAvatar({ handle, avatar })
+                .then((imgURL) =>
+                    setNewAvatarURL(imgURL))
+                .then(() =>
+                    toast({
+                        title: 'Upload successful',
+                        status: 'success',
+                        duration: 3000,
+                        isClosable: true,
+                        position: 'top',
+                        variant: 'subtle',
+                    }),
+                );
+        }
+    };
+
     const handleEdit = () => {
         setFirstNameError(firstName.length < 4 || firstName.length > 32);
         setLastNameError(lastName.length < 4 || lastName.length > 32);
 
-        const acceptedImageTypes = ['image/jpg', 'image/jpeg', 'image/png'];
-        setAvatarError(!acceptedImageTypes.includes(avatar.type));
-
         if (firstName.length >= 4 && firstName.length <= 32 &&
-            lastName.length >= 4 && lastName.length <= 32 &&
-            acceptedImageTypes.includes(avatar.type)) {
+            lastName.length >= 4 && lastName.length <= 32) {
             setFirstNameError(false);
             setLastNameError(false);
-            uploadAvatar({ handle, avatar })
-                .then((imgURL) =>
-                    editUser({ handle, firstName, lastName, avatarURL: imgURL }))
+
+            editUser({ handle, firstName, lastName, avatarURL: newAvatarURL })
                 .then(() => {
                     onClose();
                     toast({
@@ -65,21 +83,21 @@ const EditDrawer = ({ handle, currFirstName, currLastName }) => {
                         position: 'top',
                         variant: 'subtle',
                     });
+                    setAvatar(null);
+                    setNewAvatarURL(null);
                 });
         }
     };
 
     return (
         <>
-            <Icon as={MdEdit} ref={btnRef} colorScheme='whiteAlpha' onClick={onOpen} _hover={{ cursor: 'pointer' }}>
+            <Icon as={MdEdit} onClick={onOpen} _hover={{ cursor: 'pointer' }}>
                 Open
             </Icon>
             <Drawer
                 isOpen={isOpen}
                 placement='right'
                 onClose={onClose}
-                finalFocusRef={btnRef}
-                colorScheme='whiteAlpha'
             >
                 <DrawerOverlay />
                 <DrawerContent>
@@ -100,7 +118,7 @@ const EditDrawer = ({ handle, currFirstName, currLastName }) => {
                         <FormControl isInvalid={avatarError}>
                             <FormLabel htmlFor=''>Avatar</FormLabel>
                             <VStack justify='center'>
-                                <Image mt={4} src={avatar && URL.createObjectURL(avatar)} fallbackSrc='https://bit.ly/dan-abramov' />
+                                <Image mt={4} src={avatar && URL.createObjectURL(avatar)} />
                                 <Text fontSize='0.8em'>{avatar ? avatar.name : 'No avatar uploaded.'}</Text>
                             </VStack>
                             <Menu>
@@ -121,6 +139,7 @@ const EditDrawer = ({ handle, currFirstName, currLastName }) => {
                                     <MenuItem><FormLabel>Choose File</FormLabel></MenuItem>
                                     <Input type='file' display='none' onChange={(e) => setAvatar(e.target.files[0])} />
                                     <MenuDivider />
+                                    <MenuItem onClick={handleUpload}>Upload File</MenuItem>
                                     <MenuItem onClick={() => setAvatar(null)}>Delete File</MenuItem>
                                 </MenuList>
                             </Menu>
@@ -132,7 +151,7 @@ const EditDrawer = ({ handle, currFirstName, currLastName }) => {
                         <Button variant='outline' mr={3} onClick={onClose}>
                             Cancel
                         </Button>
-                        <Button colorScheme='orange' onClick={handleEdit}>Save</Button>
+                        <Button isDisabled={avatar && !newAvatarURL} colorScheme='orange' onClick={handleEdit}>Save</Button>
                     </DrawerFooter>
                 </DrawerContent>
             </Drawer>

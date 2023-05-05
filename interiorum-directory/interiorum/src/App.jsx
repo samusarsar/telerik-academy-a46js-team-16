@@ -17,21 +17,22 @@ import { auth, db } from './config/firebase-config.js';
 
 import './App.css';
 import PostDetails from './components/Posts/PostDetails/PostDetails.jsx';
+import ProfileLayout from './components/Views/Profile/ProfileLayout.jsx';
 
 const App = () => {
-    const [user] = useAuthState(auth);
+    const [user, loading, error] = useAuthState(auth);
+    const [dataLoading, setDataLoading] = useState(false);
     const [appState, setAppState] = useState({
         user,
         userData: null,
     });
-    const [loading, setLoading] = useState(false);
 
     if (appState.user !== user) {
         setAppState({ user });
     }
 
     useEffect(() => {
-        setLoading(true);
+        setDataLoading(true);
         if (user === null) return;
 
         getUserData(user.uid)
@@ -46,32 +47,34 @@ const App = () => {
                 });
             })
             .catch(e => alert(e.message))
-            .finally(() => setLoading(false));
+            .finally(() => setDataLoading(false));
     }, [user]);
 
-    return (
-        <>
-            <AppContext.Provider value={{ ...appState, setContext: setAppState }}>
-                <Routes>
-                    <Route path='/' element={<RootLayout />}>
-                        <Route index element={<Home />} />
-                        <Route path='home' element={<Home />} />
-                        <Route path='about' element={<About />} />
-                        <Route element={<ProtectedRoute user={appState.user} />} >
-                            <Route path='forum' element={<Forum />}>
-                                <Route index element={<Navigate replace to='allCategories' />} />
-                                <Route path=':category' element={<CategoryPosts />}>
+    if (!loading && !dataLoading) {
+        return (
+            <>
+                <AppContext.Provider value={{ ...appState, setContext: setAppState }}>
+                    <Routes>
+                        <Route path='/' element={<RootLayout />}>
+                            <Route index element={<Home />} />
+                            <Route path='home' element={<Home />} />
+                            <Route path='about' element={<About />} />
+                            <Route element={<ProtectedRoute user={appState.user} />} >
+                                <Route path='forum' element={<Forum />}>
+                                    <Route index element={<Navigate replace to='allCategories' />} />
+                                    <Route path=':category' element={<CategoryPosts />}>
+                                    </Route>
                                 </Route>
-                            </Route>
-                            <Route path='post/:postTitle' element={<PostDetails />} />
-                            <Route path='profile' element={<Profile />} />
-                        </ Route>
-                        <Route path='log-in' element={<LogIn />} />
-                        <Route path='sign-up' element={<SignUp />} />
-                    </Route>
-                </Routes>
-            </AppContext.Provider>
-        </>);
+                                <Route path='post/:postTitle' element={<PostDetails />} />
+                                <Route path='profile/:handle' element={<ProfileLayout />} />
+                            </ Route>
+                            <Route path='log-in' element={<LogIn />} />
+                            <Route path='sign-up' element={<SignUp />} />
+                        </Route>
+                    </Routes>
+                </AppContext.Provider>
+            </>);
+    };
 };
 
 export default App;

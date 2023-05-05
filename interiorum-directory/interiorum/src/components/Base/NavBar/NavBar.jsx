@@ -49,19 +49,19 @@ const NavBar = () => {
                         _hover={{ textDecoration: 'none', bg: `${inProfile ? 'brand.400' : 'brand.100'}`, color: `${inProfile ? 'brand.600' : 'brand.500'}` }}>
                         <Menu autoSelect={false} isLazy={true} isOpen={isOpen} unmount>
                             <MenuButton minW='fit-content' px={3} onMouseEnter={onOpen} onClick={() => {
-                                navigate('profile');
+                                navigate(`profile/${userData.handle}`);
                                 setInProfile(true);
                             }}>
                                 <HStack gap={2}>
                                     <Image src={user.avatar} fallbackSrc='src/assets/images/anon-user.jpg' rounded='full' boxSize='40px'></Image>
-                                    <Link as={NavLink} to='profile' _activeLink={{ fontWeight: 'bold', color: 'brand.100' }}>{userData && userData.handle}</Link>
+                                    <Link as={NavLink} to={`profile/${userData.handle}`} _activeLink={{ fontWeight: 'bold', color: 'brand.100' }}>{userData && userData.handle}</Link>
                                 </HStack>
                             </MenuButton>
                             <MenuList>
                                 <MenuItem color='gray.700' transition='.1s ease-in-out'
                                     _hover={{ bg: 'blackAlpha.100' }}
                                     onClick={() => {
-                                        navigate('profile');
+                                        navigate(`profile/${userData.handle}`);
                                         !inProfile && setInProfile(true);
                                     }}>My Profile</MenuItem>
                                 <MenuDivider />

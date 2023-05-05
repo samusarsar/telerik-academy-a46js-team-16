@@ -23,7 +23,7 @@ export const getUserData = (uid) => {
 };
 
 export const editUser = ({ handle, avatarURL, firstName, lastName }) => {
-    return avatarURL ? 
+    return avatarURL ?
         update(ref(db, `users/${handle}`), {
             avatarURL,
             firstName,
@@ -40,3 +40,8 @@ export const uploadAvatar = ({ handle, avatar }) => {
     return uploadBytes(fileRef, avatar)
         .then(() => getDownloadURL(fileRef));
 };
+
+// export const addPost = ({ handle, postID }) => {
+//     return push(ref(db, `users/${handle}/posts`), {
+//         postID: true });
+// };
