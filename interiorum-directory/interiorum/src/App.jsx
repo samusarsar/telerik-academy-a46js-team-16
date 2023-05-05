@@ -33,7 +33,9 @@ const App = () => {
     }
 
     useEffect(() => {
-        if (user === null) return;
+        if (user === null) {
+            return;
+        }
 
         setDataLoading(true);
 
@@ -68,6 +70,7 @@ const App = () => {
                                     </Route>
                                 </Route>
                                 <Route path='post/:postTitle' element={<IndividualPost />} />
+                                {appState.userData && <Route path='my-profile' element={<Navigate replace to={`../profile/${appState.userData.handle}`} />} />}
                                 <Route path='profile/:handle' element={<ProfileLayout />} />
                             </ Route>
                             <Route path='log-in' element={<LogIn />} />
