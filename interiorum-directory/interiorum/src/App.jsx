@@ -18,6 +18,7 @@ import { auth, db } from './config/firebase-config.js';
 import './App.css';
 import PostDetails from './components/Posts/PostDetails/PostDetails.jsx';
 import ProfileLayout from './components/Views/Profile/ProfileLayout.jsx';
+import IndividualPost from './components/Views/IndividualPost/IndividualPost.jsx';
 
 const App = () => {
     const [user, loading, error] = useAuthState(auth);
@@ -66,7 +67,7 @@ const App = () => {
                                     <Route path=':category' element={<CategoryPosts />}>
                                     </Route>
                                 </Route>
-                                <Route path='post/:postTitle' element={<PostDetails />} />
+                                <Route path='post/:postTitle' element={<IndividualPost />} />
                                 <Route path='profile/:handle' element={<ProfileLayout />} />
                             </ Route>
                             <Route path='log-in' element={<LogIn />} />

@@ -232,7 +232,7 @@ export const users = [{
                 id: 1,
                 name: 'Ivan Ivanov',
             },
-            category: 'Bathroom',
+            category: 'Bathrooms',
             tags: [
                 'carpet',
                 'couch',

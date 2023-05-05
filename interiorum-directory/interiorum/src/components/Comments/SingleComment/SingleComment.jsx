@@ -1,14 +1,17 @@
-import { Box, HStack, Heading, Text } from '@chakra-ui/react';
+import { Box, Button, HStack, Heading, Icon, Image, Text, VStack } from '@chakra-ui/react';
+import { AiOutlineLike } from 'react-icons/ai';
 
-const SingleComment = () => {
+const SingleComment = ({ comment }) => {
     return (
-        <Box textAlign='left' p={2} >
-            <Heading as='h5' size='sm'>Adjusting Visual Comfort Goodman Pendants</Heading>
-            <HStack justify='left' py={2}>
-                <Text fontSize='0.8em'>Commented by Jen M</Text>
-                <Text fontSize='0.8em' color='gray.500'>14 hours ago</Text>
-            </HStack>
-        </Box>
+        <HStack align='start' p={4} >
+            <Image src='https://bit.ly/dan-abramov' w='30px' rounded='full'mx={2}/>
+            <VStack align='start'>
+                <Text fontSize='0.8em' fontWeight='700'>{comment.author}</Text>
+                <Text fontSize='0.8em' color='gray.500'>{comment.publishedOn}</Text>
+                <Text>{comment.text}</Text>
+                <Button h='30px' fontSize='0.8em'><Icon as={AiOutlineLike} mr={1} />Like</Button>
+            </VStack>
+        </HStack>
     );
 };
 
