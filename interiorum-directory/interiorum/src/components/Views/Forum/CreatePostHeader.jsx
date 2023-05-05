@@ -28,7 +28,13 @@ const CreatePostHeader = () => {
     const postTitleIsInvalid = ((postForm.title.length < POST_TITLE_MIN_LENGTH || postForm.title.length > POST_TITLE_MAX_LENGTH) && postForm.title.length > 0);
 
     return (
-        <Box p='80px 50px' w='100%' className='create-post-header' bgImage="url('src/assets/images/moderninteriordesign.jpg')" bgPosition="center" opacity='70%'>
+        <Box
+            p='80px 50px'
+            w='100%'
+            className='create-post-header'
+            bgImage="url('https://firebasestorage.googleapis.com/v0/b/interiorum-6c515.appspot.com/o/assets%2Fmoderninteriordesign.jpg?alt=media&token=4d3f5144-ca70-47b1-ab21-e52c6204a03e')"
+            bgPosition="center"
+            opacity='70%'>
             <Heading m='10px auto' textAlign='center'>What are you working on?</Heading>
             <Text m='10px auto' textAlign='center'>Get help for your projects, share your finds, and show off your Before & After.</Text>
             <InputGroup>

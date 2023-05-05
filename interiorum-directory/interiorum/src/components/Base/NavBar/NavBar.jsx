@@ -24,7 +24,9 @@ const NavBar = () => {
                     navigate('home');
                     inProfile && setInProfile(false);
                 }}>
-                    <Image src='src/assets/images/logo.png' boxSize='80px'/>
+                    <Image
+                        src='https://firebasestorage.googleapis.com/v0/b/interiorum-6c515.appspot.com/o/assets%2Flogo.png?alt=media&token=dfd1dd62-93fc-4de0-a77f-4e941c4e09a5'
+                        boxSize='80px'/>
                     <Heading as='h2'>INTERIORUM</Heading>
                 </HStack>
                 <Spacer />
@@ -53,7 +55,10 @@ const NavBar = () => {
                                 setInProfile(true);
                             }}>
                                 <HStack gap={2}>
-                                    <Image src={user.avatar} fallbackSrc='src/assets/images/anon-user.jpg' rounded='full' boxSize='40px'></Image>
+                                    <Image src={userData.avatarURL}
+                                        fallbackSrc='https://firebasestorage.googleapis.com/v0/b/interiorum-6c515.appspot.com/o/assets%2Fanon-user.jpg?alt=media&token=0007d79f-52fb-4866-9747-326d52395bd9'
+                                        rounded='full'
+                                        boxSize='40px' />
                                     <Link as={NavLink} to={'my-profile'} fontWeight={ `${inProfile ? 'bold' : ''}`} color={ `${inProfile ? 'brand.100' : ''}`}>{userData && userData.handle}</Link>
                                 </HStack>
                             </MenuButton>
