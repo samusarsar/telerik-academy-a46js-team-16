@@ -60,7 +60,7 @@ const App = () => {
                 <AppContext.Provider value={{ ...appState, setContext: setAppState }}>
                     <Routes>
                         <Route path='/' element={<RootLayout />}>
-                            <Route index element={<Home />} />
+                            <Route index element={<Navigate replace to='home' />} />
                             <Route path='home' element={<Home />} />
                             <Route path='about' element={<About />} />
                             <Route element={<ProtectedRoute user={appState.user} />} >

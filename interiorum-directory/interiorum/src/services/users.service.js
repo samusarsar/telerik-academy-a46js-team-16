@@ -59,6 +59,10 @@ export const approveAdmin = ({ handle }) => {
     });
 };
 
+export const getAllUsers = () => {
+    return get(ref(db, 'users'));
+};
+
 // export const addPost = ({ handle, postID }) => {
 //     return push(ref(db, `users/${handle}/posts`), {
 //         postID: true });

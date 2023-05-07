@@ -36,7 +36,6 @@ const ProfileLayout = () => {
 
     useEffect(() => {
         onValue(ref(db, `users/${handle}`), (snapshot) => {
-            console.log(handle);
             const data = snapshot.val();
             setFirstName(data.firstName);
             setLastName(data.lastName);
@@ -88,7 +87,7 @@ const ProfileLayout = () => {
                                 <Button colorScheme='red' variant='outline' fontSize='0.8em' h='20px' mt={2} onClick={() => handleBlock({ handle, toast })}>Block User</Button> :
                                 (role === BLOCKED_ROLE && !currUserCheck() && adminCheck()) &&
                                 <Button colorScheme='telegram' variant='outline' fontSize='0.8em' h='20px' mt={2} onClick={() => handleUnblock({ handle, toast })}>Unblock User</Button>}
-                            {(role !== ADMIN_ROLE && role !== BLOCKED_ROLE && currUserCheck()) &&
+                            {(role === BASE_ROLE && currUserCheck()) &&
                                 <Button fontSize='0.8em' h='20px' mt={2} onClick={handleApply}>Apply for Admin</Button>}
                         </Box>
                         <Spacer />

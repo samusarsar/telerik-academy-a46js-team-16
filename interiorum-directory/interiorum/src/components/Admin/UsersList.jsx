@@ -17,7 +17,7 @@ const UsersList = ({ roleType }) => {
 
     if (users) {
         return (
-            <VStack align='center' bg='white' borderRadius='10px' p='20px' m='20px' boxShadow='md'>
+            <VStack align='center' bg='white' borderRadius='10px' p='20px' boxShadow='md' w='50%'>
                 <Heading size='md'>{roleType === 'wantAdmin' ? 'Admin Applicants:' : 'Blocked Users'}</Heading>
                 <Box bg='brand.600' w='100%' rounded='md'>
                     {users.length ?
