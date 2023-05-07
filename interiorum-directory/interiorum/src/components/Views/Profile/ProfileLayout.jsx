@@ -64,18 +64,20 @@ const ProfileLayout = () => {
             {profile &&
             <Container className='main-view' id='profile-view' maxW='container' minH='90vh' p={0}>
                 <Container maxW='container' bg='brand.100'>
-                    <HStack justify='left' p={8} >
+                    <HStack justify='left' p={8}>
                         <Image
                             boxSize='150px'
                             objectFit='cover'
                             src={profile.avatarURL}
-                            fallbackSrc='https://bit.ly/dan-abramov'
-                            alt='Dan Abramov'
+                            fallbackSrc='https://firebasestorage.googleapis.com/v0/b/interiorum-6c515.appspot.com/o/assets%2Fanon-user.jpg?alt=media&token=0007d79f-52fb-4866-9747-326d52395bd9'
+                            alt={`${profile.handle} avatar image`}
                         />
                         <Box px={4}>
-                            {(profile.role === BASE_ROLE || profile.role === WANT_ADMIN_ROLE) && <Badge colorScheme='blue'>Newbie</Badge>}
-                            {profile.role === ADMIN_ROLE && <Badge colorScheme='purple'>Admin</Badge>}
-                            {profile.role === BLOCKED_ROLE && <Badge colorScheme='red'>Blocked</Badge>}
+                            <HStack>
+                                {(profile.role !== ADMIN_ROLE) && <Badge colorScheme='blue'>Newbie</Badge>}
+                                {profile.role === ADMIN_ROLE && <Badge colorScheme='purple'>Admin</Badge>}
+                                {profile.role === BLOCKED_ROLE && <Badge colorScheme='red'>Blocked</Badge>}
+                            </HStack>
                             <HStack>
                                 <Text fontSize='1.8em' fontWeight='700'>{`${profile.firstName} ${profile.lastName}`}</Text>
                                 {currUserCheck() && <EditDrawer handle={handle} currFirstName={profile.firstName} currLastName={profile.lastName} avatarURL={profile.avatarURL} />}

@@ -22,6 +22,7 @@ import {
     Image,
     Text,
     VStack,
+    ButtonGroup,
 } from '@chakra-ui/react';
 import { MdEdit } from 'react-icons/md';
 import { useRef, useState } from 'react';
@@ -39,6 +40,16 @@ const EditDrawer = ({ handle, currFirstName, currLastName }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const btnRef = useRef();
     const toast = useToast();
+
+    const handleChoose = (e) => {
+        const acceptedImageTypes = ['image/jpg', 'image/jpeg', 'image/png'];
+        setAvatarError(!acceptedImageTypes.includes(e.target.files[0].type));
+
+        if (acceptedImageTypes.includes(e.target.files[0].type)) {
+            setAvatar(e.target.files[0]);
+            setAvatarError(false);
+        }
+    };
 
     const handleUpload = () => {
         const acceptedImageTypes = ['image/jpg', 'image/jpeg', 'image/png'];
@@ -104,7 +115,7 @@ const EditDrawer = ({ handle, currFirstName, currLastName }) => {
                     <DrawerCloseButton />
                     <DrawerHeader>Edit your profile</DrawerHeader>
 
-                    <DrawerBody>
+                    <DrawerBody display='flex' flexDirection='column' gap={4}>
                         <FormControl isInvalid={firstNameError}>
                             <FormLabel>First Name</FormLabel>
                             <Input type='text' defaultValue={currFirstName} placeholder='John' onChange={(e) => setFirstName(e.target.value)} bg='brand.600' color='brand.500' />
@@ -117,13 +128,13 @@ const EditDrawer = ({ handle, currFirstName, currLastName }) => {
                         </FormControl>
                         <FormControl isInvalid={avatarError}>
                             <FormLabel htmlFor=''>Avatar</FormLabel>
-                            <VStack justify='center'>
-                                <Image mt={4} src={avatar && URL.createObjectURL(avatar)} />
+                            <VStack justify='center' gap={2}>
+                                {avatar && <Image mt={4} boxSize='150px' objectFit='center' src={URL.createObjectURL(avatar)} />}
                                 <Text fontSize='0.8em'>{avatar ? avatar.name : 'No avatar uploaded.'}</Text>
                             </VStack>
                             <Menu>
                                 <MenuButton
-                                    mt={2}
+                                    mt={4}
                                     px={4}
                                     py={2}
                                     transition='all 0.2s'
@@ -137,10 +148,13 @@ const EditDrawer = ({ handle, currFirstName, currLastName }) => {
                                 </MenuButton>
                                 <MenuList>
                                     <MenuItem><FormLabel>Choose File</FormLabel></MenuItem>
-                                    <Input type='file' display='none' onChange={(e) => setAvatar(e.target.files[0])} />
+                                    <Input type='file' display='none' onChange={(e) => handleChoose(e)} />
                                     <MenuDivider />
-                                    <MenuItem onClick={handleUpload}>Upload File</MenuItem>
-                                    <MenuItem onClick={() => setAvatar(null)}>Delete File</MenuItem>
+                                    <MenuItem isDisabled={!avatar} onClick={handleUpload}>Upload Avatar</MenuItem>
+                                    <MenuItem onClick={() => {
+                                        setAvatar(null);
+                                        setAvatarError(false);
+                                    }}>Delete File</MenuItem>
                                 </MenuList>
                             </Menu>
                             <FormErrorMessage>Avatar should be a still image format.</FormErrorMessage>
@@ -148,10 +162,13 @@ const EditDrawer = ({ handle, currFirstName, currLastName }) => {
                     </DrawerBody>
 
                     <DrawerFooter>
-                        <Button variant='outline' mr={3} onClick={onClose}>
-                            Cancel
-                        </Button>
-                        <Button isDisabled={avatar && !newAvatarURL} colorScheme='orange' onClick={handleEdit}>Save</Button>
+                        <VStack align='end'>
+                            {(avatar && !newAvatarURL) && <Text fontSize='0.8em'>You have to upload your new avatar before saving changes.</Text>}
+                            <ButtonGroup spacing={0}>
+                                <Button variant='outline' mr={3} onClick={onClose}>Cancel</Button>
+                                <Button isDisabled={avatar && !newAvatarURL} colorScheme='orange' onClick={handleEdit}>Save</Button>
+                            </ButtonGroup>
+                        </VStack>
                     </DrawerFooter>
                 </DrawerContent>
             </Drawer>
