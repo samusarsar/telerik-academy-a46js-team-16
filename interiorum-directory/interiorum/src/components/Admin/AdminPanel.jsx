@@ -1,4 +1,4 @@
-import { Flex, HStack, VStack } from "@chakra-ui/react";
+import { Box, Flex, HStack, VStack } from "@chakra-ui/react";
 import UsersList from "./UsersList";
 import { BLOCKED_ROLE, WANT_ADMIN_ROLE } from "../../common/constants";
 import SearchUsers from "./SearchUsers";

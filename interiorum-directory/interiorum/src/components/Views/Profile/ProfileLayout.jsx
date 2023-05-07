@@ -24,10 +24,6 @@ const ProfileLayout = () => {
     const { handle } = useParams();
 
     const [profile, setProfile] = useState(null);
-    // const [firstName, setFirstName] = useState(null);
-    // const [lastName, setLastName] = useState(null);
-    // const [avatarURL, setAvatarURL] = useState(null);
-    // const [role, setRole] = useState(null);
 
     const [posts, setPosts] = useState(users[0].posts);
     const [comments, setComments] = useState(users[0].comments);

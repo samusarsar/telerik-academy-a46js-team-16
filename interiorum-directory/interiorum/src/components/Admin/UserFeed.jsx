@@ -1,6 +1,7 @@
 import { Box, Divider, HStack, Text } from '@chakra-ui/react';
 import SingleUser from './SingleUser';
 import { WANT_ADMIN_ROLE } from '../../common/constants';
+import { useState } from 'react';
 
 const UserFeed = ({ users, roleType=null, searchTerm }) => {
     return (
