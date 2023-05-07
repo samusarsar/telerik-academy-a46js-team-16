@@ -19,14 +19,15 @@ import handleBlock from '../../../common/helpers/handleBlock';
 import handleUnblock from '../../../common/helpers/handleUnblock';
 
 const ProfileLayout = () => {
-    const { user, userData, setContext } = useContext(AppContext);
+    const { userData, setContext } = useContext(AppContext);
 
     const { handle } = useParams();
 
-    const [firstName, setFirstName] = useState(null);
-    const [lastName, setLastName] = useState(null);
-    const [avatarURL, setAvatarURL] = useState(null);
-    const [role, setRole] = useState(null);
+    const [profile, setProfile] = useState(null);
+    // const [firstName, setFirstName] = useState(null);
+    // const [lastName, setLastName] = useState(null);
+    // const [avatarURL, setAvatarURL] = useState(null);
+    // const [role, setRole] = useState(null);
 
     const [posts, setPosts] = useState(users[0].posts);
     const [comments, setComments] = useState(users[0].comments);
@@ -37,10 +38,7 @@ const ProfileLayout = () => {
     useEffect(() => {
         onValue(ref(db, `users/${handle}`), (snapshot) => {
             const data = snapshot.val();
-            setFirstName(data.firstName);
-            setLastName(data.lastName);
-            setAvatarURL(data.avatarURL || null);
-            setRole(data.role || null);
+            setProfile(data);
         });
     }, [handle]);
 
@@ -63,31 +61,31 @@ const ProfileLayout = () => {
 
     return (
         <>
-            {(firstName && lastName) &&
+            {profile &&
             <Container className='main-view' id='profile-view' maxW='container' minH='90vh' p={0}>
                 <Container maxW='container' bg='brand.100'>
                     <HStack justify='left' p={8} >
                         <Image
                             boxSize='150px'
                             objectFit='cover'
-                            src={avatarURL}
+                            src={profile.avatarURL}
                             fallbackSrc='https://bit.ly/dan-abramov'
                             alt='Dan Abramov'
                         />
                         <Box px={4}>
-                            {(role === BASE_ROLE || role === WANT_ADMIN_ROLE) && <Badge colorScheme='blue'>Newbie</Badge>}
-                            {role === ADMIN_ROLE && <Badge colorScheme='purple'>Admin</Badge>}
-                            {role === BLOCKED_ROLE && <Badge colorScheme='red'>Blocked</Badge>}
+                            {(profile.role === BASE_ROLE || profile.role === WANT_ADMIN_ROLE) && <Badge colorScheme='blue'>Newbie</Badge>}
+                            {profile.role === ADMIN_ROLE && <Badge colorScheme='purple'>Admin</Badge>}
+                            {profile.role === BLOCKED_ROLE && <Badge colorScheme='red'>Blocked</Badge>}
                             <HStack>
-                                <Text fontSize='1.8em' fontWeight='700'>{`${firstName} ${lastName}`}</Text>
-                                {currUserCheck() && <EditDrawer handle={handle} currFirstName={firstName} currLastName={lastName} avatarURL={avatarURL} />}
+                                <Text fontSize='1.8em' fontWeight='700'>{`${profile.firstName} ${profile.lastName}`}</Text>
+                                {currUserCheck() && <EditDrawer handle={handle} currFirstName={profile.firstName} currLastName={profile.lastName} avatarURL={profile.avatarURL} />}
                             </HStack>
                             <Text fontSize='0.9em' >{posts.length} posts | {comments.length} comments</Text>
-                            {(role !== ADMIN_ROLE && role !== BLOCKED_ROLE && !currUserCheck() && adminCheck()) ?
+                            {(profile.role !== ADMIN_ROLE && profile.role !== BLOCKED_ROLE && !currUserCheck() && adminCheck()) ?
                                 <Button colorScheme='red' variant='outline' fontSize='0.8em' h='20px' mt={2} onClick={() => handleBlock({ handle, toast })}>Block User</Button> :
-                                (role === BLOCKED_ROLE && !currUserCheck() && adminCheck()) &&
+                                (profile.role === BLOCKED_ROLE && !currUserCheck() && adminCheck()) &&
                                 <Button colorScheme='telegram' variant='outline' fontSize='0.8em' h='20px' mt={2} onClick={() => handleUnblock({ handle, toast })}>Unblock User</Button>}
-                            {(role === BASE_ROLE && currUserCheck()) &&
+                            {(profile.role === BASE_ROLE && currUserCheck()) &&
                                 <Button fontSize='0.8em' h='20px' mt={2} onClick={handleApply}>Apply for Admin</Button>}
                         </Box>
                         <Spacer />
@@ -103,7 +101,7 @@ const ProfileLayout = () => {
                         <Tab>Activity</Tab>
                         <Tab>Liked</Tab>
                         <Tab>Saved</Tab>
-                        {(role === ADMIN_ROLE && currUserCheck()) && <Tab color='purple'>Admin Panel</Tab>}
+                        {(profile.role === ADMIN_ROLE && currUserCheck()) && <Tab color='purple'>Admin Panel</Tab>}
                     </TabList>
                     <TabPanels bg='brand.600'>
                         <TabPanel>
@@ -124,7 +122,7 @@ const ProfileLayout = () => {
                                 <ProfileComments comments={comments} />
                             </Flex>
                         </TabPanel>
-                        {(role === ADMIN_ROLE && currUserCheck()) &&
+                        {(profile.role === ADMIN_ROLE && currUserCheck()) &&
                         (<TabPanel>
                             <AdminPanel />
                         </TabPanel>)}

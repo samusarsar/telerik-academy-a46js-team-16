@@ -2,20 +2,32 @@ import { NavLink, useNavigate } from 'react-router-dom';
 
 import { Heading, Spacer, HStack, Button, Image, Menu, MenuButton, MenuList, MenuItem, MenuDivider, useDisclosure, Box, useToast, Link, Text } from '@chakra-ui/react';
 
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../../../context/AppContext/AppContext';
 import LogInModal from '../../Account/LogInModal';
 import handleLogOut from '../../../common/helpers/handleLogOut';
+import { onValue, ref } from 'firebase/database';
+import { db } from '../../../config/firebase-config';
 
 const NavBar = () => {
     const { user, userData, setContext } = useContext(AppContext);
+    const [menuAvatar, setMenuAvatar] = useState(null);
+    const [inProfile, setInProfile] = useState(false);
+
     const navigate = useNavigate();
 
     const toast = useToast();
 
     const { isOpen, onOpen, onClose } = useDisclosure();
 
-    const [inProfile, setInProfile] = useState(false);
+    useEffect(() => {
+        if (userData) {
+            onValue(ref(db, `users/${userData.handle}/avatarURL`), (snapshot) => {
+                const data = snapshot.val();
+                setMenuAvatar(data);
+            });
+        }
+    });
 
     return (
         <>
@@ -55,7 +67,7 @@ const NavBar = () => {
                                 setInProfile(true);
                             }}>
                                 <HStack gap={2}>
-                                    <Image src={userData.avatarURL}
+                                    <Image src={menuAvatar}
                                         fallbackSrc='https://firebasestorage.googleapis.com/v0/b/interiorum-6c515.appspot.com/o/assets%2Fanon-user.jpg?alt=media&token=0007d79f-52fb-4866-9747-326d52395bd9'
                                         rounded='full'
                                         boxSize='40px' />
