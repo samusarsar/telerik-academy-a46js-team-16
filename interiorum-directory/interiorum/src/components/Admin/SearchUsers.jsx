@@ -2,6 +2,7 @@ import { VStack, Heading, Input, HStack, Button, useDisclosure, Collapse, Box, D
 import { useState } from 'react';
 import { getAllUsers } from '../../services/users.service';
 import SingleUser from './SingleUser';
+import UserFeed from './UserFeed';
 
 const SearchUsers = () => {
     const [searchTerm, setSearchTerm] = useState('');
@@ -16,7 +17,7 @@ const SearchUsers = () => {
             setFoundUsers([]);
             return;
         }
-
+ 
         getAllUsers()
             .then(snapshot => Object.values(snapshot.val()))
             .then(users => users.filter(user => {
@@ -40,19 +41,9 @@ const SearchUsers = () => {
                     onChange={(e) => setSearchTerm(e.target.value)}></Input>
                 <Button colorScheme='purple' onClick={handleSearch}>Search</Button>
             </HStack>
-            <Box bg='brand.600' w='80%' rounded='md'>
+            <Box w='80%'>
                 <Collapse in={searching} animateOpacity>
-                    {foundUsers.length ?
-                        foundUsers.map(u => {
-                            return (
-                                <>
-                                    <SingleUser key={u.uid} user={u} />
-                                    <HStack px={6}>
-                                        <Divider />
-                                    </HStack>
-                                </>);
-                        }) :
-                        <Text>There are no users found for "{searchTerm}".</Text>}
+                    <UserFeed users={foundUsers} />
                 </Collapse>
             </Box>
 

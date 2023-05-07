@@ -1,4 +1,4 @@
-import { Box, HStack, Heading, Text, AvatarGroup, Avatar, Spacer, Image, VStack, Button, useToast } from '@chakra-ui/react';
+import { Box, HStack, Heading, Text, AvatarGroup, Avatar, Spacer, Image, VStack, Button, useToast, Badge } from '@chakra-ui/react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ADMIN_ROLE, BASE_ROLE, BLOCKED_ROLE, WANT_ADMIN_ROLE } from '../../common/constants';
 import { changeUserRole } from '../../services/users.service';
@@ -12,6 +12,7 @@ const SingleUser = ({ user, roleType=null }) => {
     const toast = useToast();
     const [singleUser, setSingleUser] = useState(user);
 
+    const navigate = useNavigate();
     useEffect(() => {
         onValue(ref(db, `users/${user.handle}`), (snapshot) => {
             const data = snapshot.val();
@@ -34,9 +35,21 @@ const SingleUser = ({ user, roleType=null }) => {
 
     return (
         <HStack align='center' p={4} w='100%'>
-            <Image src='https://bit.ly/dan-abramov' w='30px' rounded='full'mx={2}/>
+            <Image
+                src={singleUser.avatarURL}
+                fallbackSrc='https://firebasestorage.googleapis.com/v0/b/interiorum-6c515.appspot.com/o/assets%2Fanon-user.jpg?alt=media&token=0007d79f-52fb-4866-9747-326d52395bd9'
+                w='30px'
+                rounded='full'mx={2}
+                _hover={{ cursor: 'pointer' }}
+                onClick={() => navigate(`../profile/${singleUser.handle}`)}/>
             <VStack align='start'>
-                <Text fontSize='1.2em' fontWeight='700'>{singleUser.handle}</Text>
+                <HStack>
+                    <Text fontSize='1.2em' fontWeight='700' _hover={{ cursor: 'pointer' }}
+                        onClick={() => navigate(`../profile/${singleUser.handle}`)}>{singleUser.handle}</Text>
+                    {(singleUser.role !== ADMIN_ROLE) && <Badge colorScheme='blue'>Newbie</Badge>}
+                    {singleUser.role === ADMIN_ROLE && <Badge colorScheme='purple'>Admin</Badge>}
+                    {singleUser.role === BLOCKED_ROLE && <Badge colorScheme='red'>Blocked</Badge>}
+                </HStack>
                 <Text>{singleUser.firstName} {singleUser.lastName}</Text>
             </VStack>
             <Spacer />
