@@ -20,12 +20,12 @@ const SingleUser = ({ user, roleType=null }) => {
         });
     }, [user]);
 
-    const handleApprove = () => {
-        changeUserRole({ handle: singleUser.handle, roleType: ADMIN_ROLE });
+    const handleApplication = (newRole) => {
+        changeUserRole({ handle: singleUser.handle, roleType: newRole });
         toast({
-            title: 'Applicant approved!',
-            description: `The user ${singleUser.handle} has been approved as admin.`,
-            status: 'success',
+            title: `Applicant ${newRole === ADMIN_ROLE ? 'approved' : 'rejected'}!`,
+            description: `The user ${singleUser.handle} has been ${newRole === ADMIN_ROLE ? 'approved' : 'rejected'} as admin.`,
+            status: `${newRole === ADMIN_ROLE ? 'success' : 'info'}`,
             duration: 3000,
             isClosable: true,
             position: 'top',
@@ -57,7 +57,10 @@ const SingleUser = ({ user, roleType=null }) => {
             </VStack>
             <Spacer />
             {roleType === WANT_ADMIN_ROLE ?
-                <Button h='30px' fontSize='0.8em' colorScheme='purple' variant='outline' onClick={handleApprove}>Approve</Button> :
+                <VStack>
+                    <Button h='30px' w='100%' fontSize='0.8em' colorScheme='purple' variant='outline' onClick={() => handleApplication(ADMIN_ROLE)}>Approve</Button>
+                    <Button h='30px' w='100%' fontSize='0.8em' colorScheme='pink' variant='outline' onClick={() => handleApplication(BASE_ROLE)}>Reject</Button>
+                </VStack> :
                 roleType === BLOCKED_ROLE ?
                     <Button h='30px' fontSize='0.8em' colorScheme='telegram' variant='outline' onClick={() => handleUnblock({ handle: singleUser.handle, toast })}>Unblock</Button> :
                     (

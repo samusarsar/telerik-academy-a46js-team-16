@@ -5,7 +5,7 @@ const HomeHeader = () => {
     return (
         <VStack
             id='img'
-            maxW='container'
+            w='100%'
             py={20}
             bg='brand.200'
             bgImg="url('https://firebasestorage.googleapis.com/v0/b/interiorum-6c515.appspot.com/o/assets%2Fhome-cover.png?alt=media&token=c7198ad1-0346-4f7c-b1d3-1f01fb70c979')"
