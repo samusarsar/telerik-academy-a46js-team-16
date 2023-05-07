@@ -5,20 +5,21 @@ import Home from './components/Views/Home/Home.jsx';
 import About from './components/Views/About/About.jsx';
 import Forum from './components/Views/Forum/Forum.jsx';
 import Profile from './components/Views/Profile/Profile.jsx';
-import { AppContext } from './context/AppContext/AppContext.js';
-import { useEffect, useState } from 'react';
-import ProtectedRoute from './components/Base/ProtectedRoute/ProtectedRoute.jsx';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { getUserData } from './services/users.service';
+import IndividualPost from './components/Views/IndividualPost/IndividualPost.jsx';
 import LogIn from './components/Views/AccountViews/LogIn.jsx';
 import SignUp from './components/Views/AccountViews/SignUp.jsx';
 import CategoryPosts from './components/Views/Forum/CategoryPosts.jsx';
+import NotFound from './components/Views/NotFound/NotFound.jsx';
+import ProtectedRoute from './components/Base/ProtectedRoute/ProtectedRoute.jsx';
+
+import { AppContext } from './context/AppContext/AppContext.js';
+import { useEffect, useState } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { getUserData } from './services/users.service';
+
 import { auth, db } from './config/firebase-config.js';
 
 import './App.css';
-import PostDetails from './components/Posts/PostDetails/PostDetails.jsx';
-import ProfileLayout from './components/Views/Profile/ProfileLayout.jsx';
-import IndividualPost from './components/Views/IndividualPost/IndividualPost.jsx';
 
 const App = () => {
     const [user, loading, error] = useAuthState(auth);
@@ -71,10 +72,11 @@ const App = () => {
                                 </Route>
                                 <Route path='post/:postTitle' element={<IndividualPost />} />
                                 {appState.userData && <Route path='my-profile' element={<Navigate replace to={`../profile/${appState.userData.handle}`} />} />}
-                                <Route path='profile/:handle' element={<ProfileLayout />} />
+                                <Route path='profile/:handle' element={<Profile />} />
+                                <Route path='log-in' element={<LogIn />} />
+                                <Route path='sign-up' element={<SignUp />} />
                             </ Route>
-                            <Route path='log-in' element={<LogIn />} />
-                            <Route path='sign-up' element={<SignUp />} />
+                            <Route path='*' element={<NotFound />} />
                         </Route>
                     </Routes>
                 </AppContext.Provider>

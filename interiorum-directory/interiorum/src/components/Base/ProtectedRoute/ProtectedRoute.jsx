@@ -2,13 +2,18 @@ import { Navigate, Outlet, useLocation } from 'react-router-dom';
 
 const ProtectedRoute = ({
     user,
-    redirectPath = '/log-in',
 }) => {
     const location = useLocation();
 
-    return user ?
-        <Outlet /> :
-        <Navigate to={redirectPath} state={{ from: location }} replace />;
+    if (location.pathname === '/log-in' || location.pathname === '/sign-up') {
+        return user ?
+            <Navigate to='my-profile' replace /> :
+            <Outlet />;
+    } else {
+        return user ?
+            <Outlet /> :
+            <Navigate to='log-in' state={{ from: location }} replace />;
+    };
 };
 
 export default ProtectedRoute;
