@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 const SinglePost = ({ post, large=false }) => {
 
-    const body = post.body.length > 100 ? post.body.slice(0,99) + '...' : post.body;
+    const body = post.content.length > 100 ? post.content.slice(0,99) + '...' : post.content;
 
     if (post) {
         return (
@@ -12,8 +12,8 @@ const SinglePost = ({ post, large=false }) => {
 
                 {large && <Text fontSize='sm' my={3}>{body}</Text>}
                 <HStack justify='left' py={2}>
-                    <Text fontSize='0.8em'>Posted by {post.author.name}</Text>
-                    <Text fontSize='0.8em' color='gray.500'>On {post.publishedOn}</Text>
+                    <Text fontSize='0.8em'>Posted by {post.author}</Text>
+                    <Text fontSize='0.8em' color='gray.500'>On {post.createdOn}</Text>
                     <Spacer/>
                     <AvatarGroup size='sm' max={3} fontSize='0.8em' spacing='-0.5rem' >
                         <Avatar name='Ryan Florence' src='https://bit.ly/ryan-florence' />

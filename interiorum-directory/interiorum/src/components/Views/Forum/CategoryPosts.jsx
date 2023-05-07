@@ -2,19 +2,35 @@ import { Outlet, useParams, useSearchParams } from 'react-router-dom';
 
 import { Heading, Text, Box, HStack, Input, Button } from '@chakra-ui/react';
 
-import { categories, posts } from '../../../../data';
+import { categories } from '../../../../data';
 import ForumTabs from './ForumTabs';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { getPosts } from '../../../services/post.service';
 
 
 const CategoryPosts = () => {
 
     const { category } = useParams();
 
+    const [categoryPosts, setCategoryPosts] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [searchParams, setSearchParams] = useSearchParams();
 
-    const categoryPosts = category === 'allCategories' ? posts : posts.filter(post => post.category === category);
+
+    // const categoryPosts = category === 'allCategories' ? posts : posts.filter(post => post.category === category);
+
+    useEffect(() => {
+        getPosts()
+            .then(posts => {
+                if (category === 'allCategories') {
+                    setCategoryPosts(posts);
+                } else {
+                    const filteredPosts = posts.filter(post => post.categories.includes(category));
+                    setCategoryPosts(filteredPosts);
+                }
+            });
+    }, [category]);
+
 
     const handleClick = () => {
         setSearchParams({ search: searchTerm.toLowerCase() });

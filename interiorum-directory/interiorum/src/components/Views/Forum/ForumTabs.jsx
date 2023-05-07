@@ -3,12 +3,14 @@ import { Tabs, TabList, Tab, TabPanels, TabPanel } from '@chakra-ui/react';
 import PostFeed from '../../Posts/PostFeed/PostFeed';
 
 const ForumTabs = ({ posts }) => {
-
     const resentPosts = [...posts].sort((a, b) => {
-        return new Date(b.publishedOn) - new Date(a.publishedOn);
+        return new Date(b.createdOn) - new Date(a.createdOn);
     });
-    const popularPosts = [...posts].sort((a, b) => b.comments.length - a.comments.length);
-    const unansweredPosts = posts.filter(post => post.comments.length === 0);
+    // const popularPosts = [...posts].sort((a, b) => b.comments.length - a.comments.length);
+    const popularPosts = [];
+
+    // const unansweredPosts = posts.filter(post => post.comments.length === 0);
+    const unansweredPosts = [];
 
     return (
         <Tabs colorScheme='brand.400'>
