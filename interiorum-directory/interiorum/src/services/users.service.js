@@ -1,4 +1,4 @@
-import { get, set, ref, query, equalTo, orderByChild, update } from 'firebase/database';
+import { get, set, ref, query, equalTo, orderByChild, update, push } from 'firebase/database';
 import { db, storage } from '../config/firebase-config';
 import { uploadBytes, ref as sRef, getDownloadURL } from 'firebase/storage';
 import { BASE_ROLE } from '../common/constants.js'
@@ -63,7 +63,54 @@ export const getAllUsers = () => {
     return get(ref(db, 'users'));
 };
 
-// export const addPost = ({ handle, postID }) => {
-//     return push(ref(db, `users/${handle}/posts`), {
-//         postID: true });
-// };
+export const addPostToUser = ({ handle, postID }) => {
+    return get(ref(db, `users/${handle}/posts`))
+        .then(snapshot => {
+            if (snapshot.exists()) {
+                return update(ref(db, `users/${handle}/posts`), {
+                    postID: true });
+            } else {
+                return set(ref(db, `users/${handle}/posts`), {
+                    postID: true });
+            }
+        });
+};
+
+export const addCommentToUser = ({ handle, commentID }) => {
+    return get(ref(db, `users/${handle}/comments`))
+        .then(snapshot => {
+            if (snapshot.exists()) {
+                return update(ref(db, `users/${handle}/comments`), {
+                    postID: true });
+            } else {
+                return set(ref(db, `users/${handle}/comments`), {
+                    postID: true });
+            }
+        });
+};
+
+export const addLikedPostToUser = ({ handle, postID }) => {
+    return get(ref(db, `users/${handle}/likedPosts`))
+        .then(snapshot => {
+            if (snapshot.exists()) {
+                return update(ref(db, `users/${handle}/likedPosts`), {
+                    postID: true });
+            } else {
+                return set(ref(db, `users/${handle}/likedPosts`), {
+                    postID: true });
+            }
+        });
+};
+
+export const addLikedCommentToUser = ({ handle, commentID }) => {
+    return get(ref(db, `users/${handle}/likedComments`))
+        .then(snapshot => {
+            if (snapshot.exists()) {
+                return update(ref(db, `users/${handle}/likedComments`), {
+                    postID: true });
+            } else {
+                return set(ref(db, `users/${handle}/likedComments`), {
+                    postID: true });
+            }
+        });
+};
