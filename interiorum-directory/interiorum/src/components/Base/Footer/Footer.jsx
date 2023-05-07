@@ -1,5 +1,10 @@
+import { HStack, Text } from "@chakra-ui/react";
+
 const Footer = () => {
-    return <footer>Footer is here</footer>;
+    return (
+        <HStack mt='auto'>
+            <Text>Footer is here</Text>
+        </HStack>);
 };
 
 export default Footer;
