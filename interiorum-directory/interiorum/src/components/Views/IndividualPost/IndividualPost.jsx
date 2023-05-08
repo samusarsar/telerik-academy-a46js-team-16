@@ -11,14 +11,10 @@ const IndividualPost = () => {
     const [post, setPost] = useState([]);
 
     const { postId } = useParams();
-    // console.log(postId);
 
     useEffect(() => {
         getPostById(postId)
-            .then(result => {
-                console.log(result);
-                setPost(result);
-            });
+            .then(result => setPost(result));
     }, []);
 
 
@@ -26,11 +22,7 @@ const IndividualPost = () => {
         <VStack align='center' bg='brand.600' py={3}>
             <PostDetails post={post} />
             <Spacer />
-            {post.comments ? (
-                <PostCommentsBox comments={post.comments} />
-            ) : (
-                <div>No Comments yet! Be the first one to comment</div> // TODO
-            )}
+            <PostCommentsBox comments={post.comments || []} />
         </VStack>
     );
 };

@@ -4,10 +4,9 @@ import { db } from '../config/firebase-config';
 export const addPost = (title, content, categories, handle) => {
 
     return push(
-        ref(db, 'posts'), { title, content, categories, author: handle, createdOn: new Date().toLocaleDateString(), comments: {}, likes: {}, postId: 'id' },
+        ref(db, 'posts'), { title, content, categories, author: handle, createdOn: new Date().toLocaleDateString(), postId: 'id' },
     ).then(result => {
         const postId = result.key;
-        console.log(postId);
         update(ref(db, `posts/${postId}`), { 'postId': postId });
 
     });
@@ -60,15 +59,11 @@ export const filterUnansweredPosts = (posts) => {
 };
 
 export const getPostById = (postId) => {
-    console.log(postId);
     return get(ref(db, `posts/${postId}`))
         .then(snapshot => {
             if (!snapshot.exists()) {
                 throw new Error('No posts match the search criteria'); // TODO
             }
-            console.log(snapshot.val());
             return snapshot.val();
         });
 };
-
-// query(ref(db, 'posts'), orderByChild('author'), equalTo('pesho'))

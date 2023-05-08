@@ -9,7 +9,7 @@ const MostCommented = () => {
     useEffect(() => {
         getPostsByCategory()
             .then(allPosts => {
-                setPosts(sortPostsByPopularity(allPosts).slice(0, 5));
+                setPosts(sortPostsByPopularity(allPosts).slice(0, 10));
             });
     }, []);
 
