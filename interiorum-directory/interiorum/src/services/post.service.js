@@ -1,4 +1,4 @@
-import { equalTo, get, orderByChild, push, query, ref, update } from 'firebase/database';
+import { equalTo, get, orderByChild, orderByKey, push, query, ref, update } from 'firebase/database';
 import { db } from '../config/firebase-config';
 
 export const addPost = (title, content, categories, handle) => {
@@ -28,6 +28,10 @@ export const getPosts = () => {
                 };
             });
         });
+};
+
+export const getPostsByAuthor = (handle) => {
+    return get(query(ref(db, 'posts'), orderByChild('author'), equalTo(handle)));
 };
 
 export const getPostsByCategory = (category = 'allCategories') => {

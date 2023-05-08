@@ -1,6 +1,5 @@
 import { Box, Container, Text, Image, Spacer, HStack, ButtonGroup, Button, Tabs, TabList, Tab, TabPanels, TabPanel, Flex, Icon, useToast, Badge } from '@chakra-ui/react';
 import { useContext, useEffect, useState } from 'react';
-import { users } from '../../../../data';
 import ProfilePosts from './ProfilePosts';
 import ProfileComments from './ProfileComments';
 import { FiShare } from 'react-icons/fi';
@@ -16,6 +15,8 @@ import AdminPanel from '../../Admin/AdminPanel';
 import { ADMIN_ROLE, BASE_ROLE, BLOCKED_ROLE, WANT_ADMIN_ROLE } from '../../../common/constants';
 import handleBlock from '../../../common/helpers/handleBlock';
 import handleUnblock from '../../../common/helpers/handleUnblock';
+import { getPostsByAuthor } from '../../../services/post.service';
+import { getCommentsByAuthor } from '../../../services/comment.services';
 
 const Profile = () => {
     const { userData, setContext } = useContext(AppContext);
@@ -24,11 +25,12 @@ const Profile = () => {
 
     const [profile, setProfile] = useState(null);
 
-    const [posts, setPosts] = useState(users[0].posts);
-    const [comments, setComments] = useState(users[0].comments);
+    const [posts, setPosts] = useState([]);
+    const [comments, setComments] = useState([]);
 
     const navigate = useNavigate();
     const toast = useToast();
+
 
     useEffect(() => {
         onValue(ref(db, `users/${handle}`), (snapshot) => {
@@ -36,6 +38,22 @@ const Profile = () => {
             setProfile(data);
         });
     }, [handle]);
+
+    useEffect(() => {
+        if (profile) {
+            getPostsByAuthor(profile.handle)
+                .then(snapshot => snapshot.val())
+                .then(data => {
+                    setPosts(data ? Object.values(data) : []);
+                });
+
+            getCommentsByAuthor(profile.handle)
+                .then(snapshot => snapshot.val())
+                .then(data => {
+                    setComments(data ? Object.values(data) : []);
+                });
+        };
+    }, [profile]);
 
     const handleApply = () => {
         changeUserRole({ handle, roleType: WANT_ADMIN_ROLE });
@@ -56,7 +74,7 @@ const Profile = () => {
 
     return (
         <>
-            {profile &&
+            {(profile && posts && comments) &&
             <Container className='main-view' id='profile-view' maxW='container' minH='90vh' p={0}>
                 <Container maxW='container' bg='brand.100'>
                     <HStack justify='left' p={8}>
@@ -64,8 +82,7 @@ const Profile = () => {
                             boxSize='150px'
                             objectFit='cover'
                             src={profile.avatarURL}
-                            fallbackSrc='https://firebasestorage.googleapis.com/v0/b/interiorum-6c515.appspot.com/
-                                o/assets%2Fanon-user.jpg?alt=media&token=0007d79f-52fb-4866-9747-326d52395bd9'
+                            fallbackSrc='https://firebasestorage.googleapis.com/v0/b/interiorum-6c515.appspot.com/o/assets%2Fanon-user.jpg?alt=media&token=0007d79f-52fb-4866-9747-326d52395bd9'
                             alt={`${profile.handle} avatar image`}
                         />
                         <Box px={4}>
