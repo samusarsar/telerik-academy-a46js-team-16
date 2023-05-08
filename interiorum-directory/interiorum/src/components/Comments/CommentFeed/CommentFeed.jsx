@@ -1,5 +1,6 @@
 import { Box, Divider, HStack, Heading, Text, VStack } from "@chakra-ui/react";
 import SingleComment from "../SingleComment/SingleComment";
+import CreateComment from "../CreateComment/CreateComment";
 
 const CommentFeed = ({ comments }) => {
     return (

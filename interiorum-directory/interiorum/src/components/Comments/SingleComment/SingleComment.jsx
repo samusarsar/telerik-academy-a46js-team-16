@@ -4,7 +4,7 @@ import { AiOutlineLike } from 'react-icons/ai';
 const SingleComment = ({ comment }) => {
     return (
         <HStack align='start' p={4} >
-            <Image src='https://bit.ly/dan-abramov' w='30px' rounded='full'mx={2}/>
+            <Image src='https://bit.ly/dan-abramov' w='45px' rounded='full'mx={2}/>
             <VStack align='start'>
                 <Text fontSize='0.8em' fontWeight='700'>{comment.author}</Text>
                 <Text fontSize='0.8em' color='gray.500'>{comment.publishedOn}</Text>
