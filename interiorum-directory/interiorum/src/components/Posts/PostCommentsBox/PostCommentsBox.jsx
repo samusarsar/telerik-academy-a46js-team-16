@@ -1,7 +1,8 @@
-import { Heading, Spacer, VStack } from "@chakra-ui/react";
+import { Heading, Spacer, Textarea, VStack } from "@chakra-ui/react";
 import { useState } from "react";
 import FeaturedComment from "../../Comments/FeaturedComment/FeaturedComment";
 import CommentFeed from "../../Comments/CommentFeed/CommentFeed";
+import CreateComment from "../../Comments/CreateComment/CreateComment";
 
 const PostCommentsBox = ({ comments }) => {
     const [featured, setFeatured] = useState(comments.sort((a, b) => a.likes > b.liked)[0]) // this will be with likes.length of Object.kyes() since likes will be an object
@@ -12,6 +13,8 @@ const PostCommentsBox = ({ comments }) => {
                 <FeaturedComment comment={featured} />
                 <Spacer />
                 <CommentFeed comments={comments} />
+                <Spacer />
+                <CreateComment />
             </VStack>
         </VStack>
     );
