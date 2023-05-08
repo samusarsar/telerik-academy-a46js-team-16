@@ -22,14 +22,14 @@ const PostDetails = ({ post }) => {
 
                             <Heading as='h1' size='lg' fontWeight='500' w='100%'>{post.title}</Heading>
                             <HStack>
-                                <Link>{post.author.name}</Link>
-                                <Text>| {post.publishedOn}</Text>
+                                <Link>{post.author}</Link>
+                                <Text>| {post.createdOn}</Text>
                             </HStack>
                             <Divider w='100%' />
                         </VStack>
                         <VStack align='start' p={5} gap={5} bg='brand.600' w='100%' rounded='md'>
                             <Text>
-                                {post.body}
+                                {post.content}
                             </Text>
                         </VStack>
                         <ButtonGroup>

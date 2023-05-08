@@ -70,7 +70,7 @@ const App = () => {
                                     <Route path=':category' element={<CategoryPosts />}>
                                     </Route>
                                 </Route>
-                                <Route path='post/:postTitle' element={<IndividualPost />} />
+                                <Route path='post/:postId' element={<IndividualPost />} />
                                 {appState.userData && <Route path='my-profile' element={<Navigate replace to={`../profile/${appState.userData.handle}`} />} />}
                                 <Route path='profile/:handle' element={<Profile />} />
                                 <Route path='log-in' element={<LogIn />} />

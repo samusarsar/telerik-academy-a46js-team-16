@@ -8,7 +8,7 @@ const SinglePost = ({ post, large=false }) => {
     if (post) {
         return (
             <Box textAlign='left' p={2} >
-                <Heading as='h5' size='sm'><Link to={`../../post/${post.title}`}>{post.title}</Link></Heading>
+                <Heading as='h5' size='sm'><Link to={`../../post/${post.postId}`}>{post.title}</Link></Heading>
 
                 {large && <Text fontSize='sm' my={3}>{body}</Text>}
                 <HStack justify='left' py={2}>

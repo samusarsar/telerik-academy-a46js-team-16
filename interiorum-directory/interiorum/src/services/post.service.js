@@ -1,4 +1,4 @@
-import { get, push, query, ref, update } from 'firebase/database';
+import { equalTo, get, orderByChild, push, query, ref, update } from 'firebase/database';
 import { db } from '../config/firebase-config';
 
 export const addPost = (title, content, categories, handle) => {
@@ -8,7 +8,7 @@ export const addPost = (title, content, categories, handle) => {
     ).then(result => {
         const postId = result.key;
         console.log(postId);
-        update(ref(db, `posts/${postId}`), { 'id': postId });
+        update(ref(db, `posts/${postId}`), { 'postId': postId });
 
     });
 };
@@ -54,3 +54,17 @@ export const filterUnansweredPosts = (posts) => {
     return [];
     // return posts.filter(post => post.comments.length === 0);
 };
+
+export const getPostById = (postId) => {
+    console.log(postId);
+    return get(ref(db, `posts/${postId}`))
+        .then(snapshot => {
+            if (!snapshot.exists()) {
+                throw new Error('No posts match the search criteria'); // TODO
+            }
+            console.log(snapshot.val());
+            return snapshot.val();
+        });
+};
+
+// query(ref(db, 'posts'), orderByChild('author'), equalTo('pesho'))
