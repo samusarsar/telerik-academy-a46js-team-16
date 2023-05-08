@@ -1,27 +1,39 @@
 import { Text, Box, HStack, Spacer, Card, Image, Stack, CardBody, CardFooter, Heading } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { getPostById } from '../../../services/post.service';
 
 const SingleProfileComment = ({ comment, large=false }) => {
-    const body = comment.text.length > 100 ? comment.text.slice(0,99) + '...' : comment.text;
+    const body = comment.content.length > 100 ? comment.content.slice(0,99) + '...' : comment.content;
+
+    const [postTitle, setPostTitle] = useState(null);
+
+    useEffect(() => {
+        getPostById(comment.postId)
+            .then(data => setPostTitle(data.title));
+    }, []);
 
     // useEffect(() => console.log(comment.author), [])
     if (comment) {
         return (
             <Box textAlign='left' px={2}>
                 <HStack justify='left' py={2}>
-                    <Text fontSize='0.8em' > <b>{comment.author}</b> commented on:</Text>
+                    <Text fontSize='0.8em' >
+                        <Link to={`../../profile/${comment.author}`}><b>{comment.author}</b></Link> commented on:
+                    </Text>
                     <Spacer />
                     <Text fontSize='xs' color='gray.500'>
-                        On {comment.publishedOn}
+                        On {comment.createdOn}
                     </Text>
                 </HStack >
-                <Link >
+                <Link to={`../../post/${comment.postId}`}>
                     <Heading as='h5' size='sm' py={3}>
-                        {comment.onPost}
+                        {postTitle && postTitle}
                     </Heading>
-                    {large && <Text py={3} color='brand.400'>
-                        {body}
-                    </Text>}
+                    {large &&
+                        <Text py={3} color='brand.400' fontSize='0.9em'>
+                            {body}
+                        </Text>}
                 </Link>
             </Box>
         );

@@ -1,6 +1,7 @@
 import { Box, Divider, Tabs, TabList, Tab, TabPanels, TabPanel, Icon, VStack, Text } from '@chakra-ui/react';
 import SinglePost from '../SinglePost/SinglePost';
 import { MdOutlineDensitySmall, MdOutlineDensityLarge } from 'react-icons/md';
+import SingleProfileComment from '../../Comments/SingleProfileComment/SingleProfileComment';
 
 const PostFeed = ({ posts, profileCommentMode=false }) => {
     return (
@@ -16,7 +17,9 @@ const PostFeed = ({ posts, profileCommentMode=false }) => {
                             <TabPanel>
                                 {posts.map(post =>
                                     <>
-                                        <SinglePost key={post.id} post={post} />
+                                        {!profileCommentMode ?
+                                            <SinglePost key={post.postId} post={post} /> :
+                                            <SingleProfileComment key={post.commentId} comment={post} />}
                                         <Divider borderColor='gray.400' w='95%'/>
                                     </>,
                                 )}
@@ -24,7 +27,9 @@ const PostFeed = ({ posts, profileCommentMode=false }) => {
                             <TabPanel>
                                 {posts.map(post =>
                                     <>
-                                        <SinglePost key={post.id} post={post} large={true} />
+                                        {!profileCommentMode ?
+                                            <SinglePost key={post.postId} post={post} large={true} /> :
+                                            <SingleProfileComment key={post.commentId} comment={post} large={true}/>}
                                         <Divider borderColor='gray.400' w='95%'/>
                                     </>,
                                 )}
