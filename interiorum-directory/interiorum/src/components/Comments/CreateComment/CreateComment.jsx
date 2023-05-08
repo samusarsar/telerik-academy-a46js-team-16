@@ -1,7 +1,7 @@
-import { Button, Collapse, FormControl, FormErrorMessage, HStack, Image, Textarea, VStack } from "@chakra-ui/react";
-import { useContext, useState } from "react";
+import { Button, FormControl, FormErrorMessage, HStack, Image, Textarea, VStack } from '@chakra-ui/react';
+import { useContext, useState } from 'react';
 import { AppContext } from '../../../context/AppContext/AppContext';
-import { addComment } from "../../../services/comment.services";
+import { addComment } from '../../../services/comment.services';
 
 const CreateComment = ({ postId }) => {
     const { userData } = useContext(AppContext);
@@ -16,7 +16,7 @@ const CreateComment = ({ postId }) => {
         }
 
         addComment(comment, postId, userData.handle);
-
+        setComment('');
         setCommentError(false);
         return;
     };

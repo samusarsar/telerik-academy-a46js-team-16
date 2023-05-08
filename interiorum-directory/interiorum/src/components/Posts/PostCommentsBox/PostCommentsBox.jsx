@@ -15,7 +15,7 @@ const PostCommentsBox = ({ postId }) => {
                 setComments(result);
                 // featured = [...result].sort((a, b) => a.likes > b.likes);
             });
-    }, []);
+    }, [comments]);
 
     return (
         <VStack w={{ sm: '100%', md: '80%' }} align='start' boxShadow='lg'>
