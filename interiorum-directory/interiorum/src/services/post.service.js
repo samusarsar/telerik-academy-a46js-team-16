@@ -1,14 +1,16 @@
-import { get, push, query, ref } from 'firebase/database';
+import { get, push, query, ref, update } from 'firebase/database';
 import { db } from '../config/firebase-config';
 
 export const addPost = (title, content, categories, handle) => {
 
     return push(
-        ref(db, 'posts'), { title, content, categories, author: handle, createdOn: new Date().toLocaleDateString(), comments: {}, likes: {} },
-    );
-    // .then(result => {
-    //     // console.log(result); // TODO
-    // });
+        ref(db, 'posts'), { title, content, categories, author: handle, createdOn: new Date().toLocaleDateString(), comments: {}, likes: {}, postId: 'id' },
+    ).then(result => {
+        const postId = result.key;
+        console.log(postId);
+        update(ref(db, `posts/${postId}`), { 'id': postId });
+
+    });
 };
 
 export const getPosts = () => {

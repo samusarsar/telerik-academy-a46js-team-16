@@ -3,8 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 
 const SinglePost = ({ post, large=false }) => {
 
-    console.log(post)
-
     const body = post.content.length > 100 ? post.content.slice(0,99) + '...' : post.content;
 
     if (post) {
