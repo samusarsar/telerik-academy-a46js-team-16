@@ -11,3 +11,7 @@ export const addComment = ({ content, postID, handle }) => {
 export const getCommentsByAuthor = (handle) => {
     return get(query(ref(db, 'comments'), orderByChild('author'), equalTo(handle)));
 };
+
+export const getCommentsByPost = (postID) => {
+    return get(query(ref(db, 'comments'), orderByChild('commentedOn'), equalTo(postID)));
+};
