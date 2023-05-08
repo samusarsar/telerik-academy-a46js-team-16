@@ -2,24 +2,24 @@ import { Box, Button, HStack, Heading, Spacer, Text, VStack } from '@chakra-ui/r
 import { BsFillPeopleFill, BsFillChatTextFill } from 'react-icons/bs';
 import StatBox from './StatBox';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { getAllUsers } from '../../../services/users.service';
+import { getPosts } from '../../../services/post.service';
 
 const CallToAction = () => {
-    const [users, setUsers] = useState();
-    const [posts, setPosts] = useState();
+    const [users, setUsers] = useState([]);
+    const [posts, setPosts] = useState([]);
 
     const navigate = useNavigate();
 
-    // useEffect(() => {
-    //     fetch()
-    //     .then(response => response.json())
-    //     .then(data => setUsers(data.length))
+    useEffect(() => {
+        getAllUsers()
+            .then(snapshot => snapshot.val())
+            .then(data => setUsers(Object.values(data)));
 
-
-    //     .fetch()
-    //     .then(response => response.json())
-    //     .then(data => setPosts(data.length));
-    // })
+        getPosts()
+            .then(data => setPosts(Object.values(data)));
+    }, []);
 
     return (
         <HStack
@@ -33,8 +33,8 @@ const CallToAction = () => {
             bgSize='100%'>
             <Spacer />
             <VStack align='left' gap={2}>
-                <StatBox heading='Total Users' text='321' icon={BsFillPeopleFill} />
-                <StatBox heading='Total Posts' text='123234' icon={BsFillChatTextFill} />
+                {users && <StatBox heading='Total Users' text={users.length} icon={BsFillPeopleFill} />}
+                {posts && <StatBox heading='Total Posts' text={posts.length} icon={BsFillChatTextFill} />}
             </VStack>
             <Spacer/>
             <Spacer />
