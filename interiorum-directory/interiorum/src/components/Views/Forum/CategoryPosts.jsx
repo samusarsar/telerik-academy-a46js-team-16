@@ -5,7 +5,7 @@ import { Heading, Text, Box, HStack, Input, Button } from '@chakra-ui/react';
 import { categories } from '../../../../data';
 import ForumTabs from './ForumTabs';
 import { useEffect, useState } from 'react';
-import { getPosts } from '../../../services/post.service';
+import { getPosts, getPostsByCategory } from '../../../services/post.service';
 
 
 const CategoryPosts = () => {
@@ -20,14 +20,9 @@ const CategoryPosts = () => {
     // const categoryPosts = category === 'allCategories' ? posts : posts.filter(post => post.category === category);
 
     useEffect(() => {
-        getPosts()
+        getPostsByCategory(category)
             .then(posts => {
-                if (category === 'allCategories') {
-                    setCategoryPosts(posts);
-                } else {
-                    const filteredPosts = posts.filter(post => post.categories.includes(category));
-                    setCategoryPosts(filteredPosts);
-                }
+                setCategoryPosts(posts);
             });
     }, [category]);
 

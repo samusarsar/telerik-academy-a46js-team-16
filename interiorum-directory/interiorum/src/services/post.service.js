@@ -4,7 +4,7 @@ import { db } from '../config/firebase-config';
 export const addPost = (title, content, categories, handle) => {
 
     return push(
-        ref(db, 'posts'), { title, content, categories, author: handle, createdOn: new Date().toLocaleDateString()}
+        ref(db, 'posts'), { title, content, categories, author: handle, createdOn: new Date().toLocaleDateString(), comments: {}, likes: {} },
     );
     // .then(result => {
     //     // console.log(result); // TODO
@@ -28,18 +28,27 @@ export const getPosts = () => {
         });
 };
 
-export const getPostsByCategory = (category) => {
-    
+export const getPostsByCategory = (category = 'allCategories') => {
+    return getPosts()
+        .then(posts => {
+            if (category === 'allCategories') return posts;
+            console.log(posts.filter(post => post.categories.includes(category)));
+            return posts.filter(post => post.categories.includes(category));
+        });
 };
 
 export const sortPostsByDate = (posts) => {
-
+    return [...posts].sort((a, b) => {
+        return new Date(b.createdOn)- new Date(a.createdOn);
+    });
 };
 
 export const sortPostsByPopularity = (posts) => {
-
+    return [];
+    return [...posts].sort((a, b) => b.comments.length - a.comments.length);
 };
 
 export const filterUnansweredPosts = (posts) => {
-
+    return [];
+    // return posts.filter(post => post.comments.length === 0);
 };

@@ -1,16 +1,15 @@
 import { Tabs, TabList, Tab, TabPanels, TabPanel } from '@chakra-ui/react';
 
 import PostFeed from '../../Posts/PostFeed/PostFeed';
+import { filterUnansweredPosts, sortPostsByDate, sortPostsByPopularity } from '../../../services/post.service';
 
 const ForumTabs = ({ posts }) => {
-    const resentPosts = [...posts].sort((a, b) => {
-        return new Date(b.createdOn) - new Date(a.createdOn);
-    });
-    // const popularPosts = [...posts].sort((a, b) => b.comments.length - a.comments.length);
-    const popularPosts = [];
 
-    // const unansweredPosts = posts.filter(post => post.comments.length === 0);
-    const unansweredPosts = [];
+    const resentPosts = sortPostsByDate(posts);
+
+    const popularPosts = sortPostsByPopularity(posts);
+
+    const unansweredPosts = filterUnansweredPosts(posts);
 
     return (
         <Tabs colorScheme='brand.400'>

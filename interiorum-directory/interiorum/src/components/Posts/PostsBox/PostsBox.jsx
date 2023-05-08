@@ -4,6 +4,7 @@ import { AiOutlineArrowRight } from 'react-icons/ai';
 import PostFeed from '../../Posts/PostFeed/PostFeed.jsx';
 
 const PostsBox = ({ heading, posts }) => {
+    console.log(posts);
     return (
         <Container display={'flex'} flexDirection={'column'} align={'center'} bg={'white'} borderRadius={'10px'} p={'20px'} m={'20px'} boxShadow={'2xl'}>
             <Heading size='md'>{heading}</Heading>

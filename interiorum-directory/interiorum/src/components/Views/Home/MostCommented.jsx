@@ -1,17 +1,17 @@
-import { useState } from 'react';
-import { posts as postsData } from '../../../../data.js';
+import { useEffect, useState } from 'react';
 
 import PostsBox from '../../Posts/PostsBox/PostsBox.jsx';
+import { getPostsByCategory, sortPostsByPopularity } from '../../../services/post.service.js';
 
 const MostCommented = () => {
-    const [posts, setPosts] = useState(postsData);
+    const [posts, setPosts] = useState([]);
 
-    // useEffect(() => {
-    //     fetch()
-    //         .then((response) => response.json())
-    //         .then((data) => data.sort((post1, post2) => post1.comments.length - post2.comments.length))
-    //         .then((data) => setPosts(data.slice(0, 9)));
-    // });
+    useEffect(() => {
+        getPostsByCategory()
+            .then(allPosts => {
+                setPosts(sortPostsByPopularity(allPosts).slice(0, 5));
+            });
+    }, []);
 
     return (
         <PostsBox heading='Most Commented Posts:' posts={posts} />
