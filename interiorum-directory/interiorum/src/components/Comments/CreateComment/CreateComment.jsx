@@ -1,8 +1,9 @@
 import { Button, Collapse, FormControl, FormErrorMessage, HStack, Image, Textarea, VStack } from "@chakra-ui/react";
 import { useContext, useState } from "react";
 import { AppContext } from '../../../context/AppContext/AppContext';
+import { addComment } from "../../../services/comment.services";
 
-const CreateComment = () => {
+const CreateComment = ({ postId }) => {
     const { userData } = useContext(AppContext);
 
     const [comment, setComment] = useState('');
@@ -13,6 +14,8 @@ const CreateComment = () => {
             setCommentError('Comments should be between 1 and 1000 characters.');
             return;
         }
+
+        addComment(comment, postId, userData.handle);
 
         setCommentError(false);
         return;

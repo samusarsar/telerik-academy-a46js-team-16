@@ -28,7 +28,7 @@ const IndividualPost = () => {
             <VStack align='center' bg='brand.600' py={3}>
                 <PostDetails post={post} />
                 <Spacer />
-                <PostCommentsBox comments={post.comments || []} />
+                <PostCommentsBox postId={post.postId} />
             </VStack>
         );
     }

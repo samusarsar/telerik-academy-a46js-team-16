@@ -1,11 +1,14 @@
-import { equalTo, get, orderByChild, push, query, ref } from 'firebase/database';
+import { equalTo, get, orderByChild, push, query, ref, update } from 'firebase/database';
 import { db } from '../config/firebase-config';
 
-export const addComment = ({ content, postID, handle }) => {
+export const addComment = (content, postId, handle) => {
 
     return push(
-        ref(db, 'posts'), { content, postID, author: handle, createdOn: new Date().toLocaleDateString() },
-    );
+        ref(db, 'comments'), { content, postId, author: handle, createdOn: new Date().toLocaleDateString() },
+    ).then(result => {
+        const commentId = result.key;
+        update(ref(db, `comments/${commentId}`), { 'commentId': commentId });
+    });
 };
 
 export const getCommentsByAuthor = (handle) => {
@@ -13,5 +16,18 @@ export const getCommentsByAuthor = (handle) => {
 };
 
 export const getCommentsByPost = (postID) => {
-    return get(query(ref(db, 'comments'), orderByChild('commentedOn'), equalTo(postID)));
+    return get(query(ref(db, 'comments'), orderByChild('postId'), equalTo(postID)))
+        .then(snapshot => {
+            if (!snapshot.exists()) {
+                throw new Error('No comments found for this post');
+            }
+            return snapshot.val();
+        })
+        .then(comments => {
+            return Object.keys(comments).map(commentId => {
+                return {
+                    ...comments[commentId],
+                };
+            });
+        });
 };

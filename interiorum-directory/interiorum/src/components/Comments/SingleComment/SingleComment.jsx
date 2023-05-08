@@ -23,8 +23,8 @@ const SingleComment = ({ comment }) => {
                 mx={2}/>
             <VStack align='start'>
                 <Text fontSize='0.8em' fontWeight='700'>{comment.author}</Text>
-                <Text fontSize='0.8em' color='gray.500'>{comment.publishedOn}</Text>
-                <Text>{comment.text}</Text>
+                <Text fontSize='0.8em' color='gray.500'>{comment.createdOn}</Text>
+                <Text>{comment.content}</Text>
                 <Button h='30px' fontSize='0.8em'><Icon as={AiOutlineLike} mr={1} />Like</Button>
             </VStack>
         </HStack>
