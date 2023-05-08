@@ -1,7 +1,7 @@
 import { get, set, ref, query, equalTo, orderByChild, update, push } from 'firebase/database';
 import { db, storage } from '../config/firebase-config';
 import { uploadBytes, ref as sRef, getDownloadURL } from 'firebase/storage';
-import { BASE_ROLE } from '../common/constants.js'
+import { BASE_ROLE } from '../common/constants.js';
 
 export const getUserByHandle = (handle) => {
     return get(ref(db, `users/${handle}`));
@@ -89,16 +89,27 @@ export const addCommentToUser = ({ handle, commentID }) => {
         });
 };
 
-export const addLikedPostToUser = ({ handle, postID }) => {
+export const addLikedPostToUser = ({ handle, postId }) => {
     return get(ref(db, `users/${handle}/likedPosts`))
         .then(snapshot => {
             if (snapshot.exists()) {
                 return update(ref(db, `users/${handle}/likedPosts`), {
-                    postID: true });
+                    [postId]: true,
+                });
             } else {
                 return set(ref(db, `users/${handle}/likedPosts`), {
-                    postID: true });
+                    [postId]: true,
+                });
             }
+        });
+};
+
+export const removeLikedPostToUser = ({ handle, postId }) => {
+    return get(ref(db, `users/${handle}/likedPosts`))
+        .then(() => {
+            return update(ref(db, `users/${handle}/likedPosts`), {
+                [postId]: null,
+            });
         });
 };
 

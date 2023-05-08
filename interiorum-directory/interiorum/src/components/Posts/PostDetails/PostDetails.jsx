@@ -3,17 +3,39 @@ import { Link, useParams } from 'react-router-dom';
 import { AiOutlineLike, AiFillLike } from 'react-icons/ai';
 import { FaRegComment } from 'react-icons/fa';
 import { FiShare } from 'react-icons/fi';
-import { useEffect, useState } from 'react';
-import { getUserByHandle } from '../../../services/users.service';
+import { useContext, useEffect, useState } from 'react';
+import { addLikedPostToUser, getUserByHandle } from '../../../services/users.service';
+import { addLikeToPost } from '../../../services/post.service';
+
+import { AppContext } from '../../../context/AppContext/AppContext';
+import handleLike from '../../../common/helpers/handleLike';
+import { onValue, ref } from 'firebase/database';
+import { db } from '../../../config/firebase-config';
+import handleUnlike from '../../../common/helpers/handleUnlike';
 
 const PostDetails = ({ post }) => {
     const [author, setAuthor] = useState(null);
+    const [postLikes, setPostLikes] = useState(null);
+
+    const { userData } = useContext(AppContext);
+
+    const [isLiked, setIsLiked] = useState(
+        userData.likedPosts ?
+            Object.keys(userData.likedPosts).includes(post.postId) :
+            false
+    );
 
     useEffect(() => {
         getUserByHandle(post.author)
             .then(snapshot => snapshot.val())
             .then(data => setAuthor(data))
             .catch(error => console.log('Fetching author data was unsuccessful: ' + error.message));
+
+        onValue(ref(db, `posts/${post.postId}/likes`), (snapshot) => {
+            const data = snapshot.val();
+            setPostLikes(data ? Object.keys(data) : []);
+            setIsLiked(data ? Object.keys(data).includes(userData.handle) : false);
+        });
     }, []);
 
     return (
@@ -43,11 +65,17 @@ const PostDetails = ({ post }) => {
                                 {post.content}
                             </Text>
                         </VStack>
-                        <ButtonGroup>
-                            <Button h='30px' fontSize='0.8em'><Icon as={AiOutlineLike} mr={1} />Like</Button>
+                        {(postLikes) &&<ButtonGroup>
+                            <Button h='30px' fontSize='0.8em' onClick={() => {
+                                !isLiked ?
+                                    handleLike({ postId: post.postId, handle: userData.handle }) :
+                                    handleUnlike({ postId: post.postId, handle: userData.handle });
+                            }}>
+                                <Icon as={isLiked ? AiFillLike : AiOutlineLike} mr={1} />Like{postLikes.length ? ` | ${postLikes.length}` : ''}
+                            </Button>
                             <Button h='30px' fontSize='0.8em'><Icon as={FaRegComment} mr={1} />Comment</Button>
                             <Button h='30px' fontSize='0.8em'><Icon as={FiShare} mr={2}/>Share</Button>
-                        </ButtonGroup>
+                        </ButtonGroup>}
                     </VStack>
                 </HStack>
             </VStack>

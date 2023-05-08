@@ -1,4 +1,4 @@
-import { equalTo, get, orderByChild, orderByKey, push, query, ref, update } from 'firebase/database';
+import { equalTo, get, orderByChild, orderByKey, push, query, ref, set, update } from 'firebase/database';
 import { db } from '../config/firebase-config';
 
 export const addPost = (title, content, categories, handle) => {
@@ -65,5 +65,29 @@ export const getPostById = (postId) => {
                 throw new Error('No posts match the search criteria'); // TODO
             }
             return snapshot.val();
+        });
+};
+
+export const addLikeToPost = ({ postId, handle }) => {
+    get(ref(db, `posts/${postId}/likes`))
+        .then(snapshot => {
+            if (snapshot.exists()) {
+                update(ref(db, `posts/${postId}/likes`), {
+                    [handle]: true,
+                });
+            } else {
+                set(ref(db, `posts/${postId}/likes`), {
+                    [handle]: true,
+                });
+            }
+        });
+};
+
+export const removeLikeToPost = ({ postId, handle }) => {
+    get(ref(db, `posts/${postId}/likes`))
+        .then(() => {
+            update(ref(db, `posts/${postId}/likes`), {
+                [handle]: null,
+            });
         });
 };
