@@ -12,7 +12,7 @@ const SinglePost = ({ post, large=false }) => {
 
                 {large && <Text fontSize='sm' my={3}>{body}</Text>}
                 <HStack justify='left' py={2}>
-                    <Text fontSize='0.8em'>Posted by {post.author}</Text>
+                    <Text fontSize='0.8em'>Posted by <Link to={`../../profile/${post.author}`}><b>{post.author}</b></Link></Text>
                     <Text fontSize='0.8em' color='gray.500'>On {post.createdOn}</Text>
                     <Spacer/>
                     <AvatarGroup size='sm' max={3} fontSize='0.8em' spacing='-0.5rem' >
