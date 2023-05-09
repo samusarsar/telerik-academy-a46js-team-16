@@ -4,7 +4,7 @@ import { db } from '../config/firebase-config';
 export const addPost = (title, content, categories, handle) => {
 
     return push(
-        ref(db, 'posts'), { title, content, categories, author: handle, createdOn: new Date().toLocaleDateString(), postId: 'id' },
+        ref(db, 'posts'), { title, content, categories, author: handle, createdOn: new Date().toLocaleString(), postId: 'id' },
     ).then(result => {
         const postId = result.key;
         update(ref(db, `posts/${postId}`), { 'postId': postId });
