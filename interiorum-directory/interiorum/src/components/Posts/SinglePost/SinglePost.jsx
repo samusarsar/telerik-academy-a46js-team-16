@@ -13,22 +13,19 @@ const SinglePost = ({ post, large=false }) => {
     const [likedUsers, setLikedUsers] = useState(null);
     const { userData } = useContext(AppContext);
 
-    const [isLiked, setIsLiked] = useState(
-        userData.likedPosts ?
-            Object.keys(userData.likedPosts).includes(post.postId) :
-            false,
-    );
+    const [isLiked, setIsLiked] = useState(false);
 
     const body = post.content.length > 100 ? post.content.slice(0, 99) + '...' : post.content;
 
     useEffect(() => {
         return onValue(ref(db, `posts/${post.postId}/likes`), (snapshot) => {
             const data = snapshot.val();
-            setIsLiked(data ? Object.keys(data).includes(userData.handle) : false);
             if (data) {
+                setIsLiked(userData ? Object.keys(data).includes(userData.handle) : false);
                 Promise.all(Object.keys(data).map((handle) => getUserByHandle(handle)))
                     .then(resultArr => setLikedUsers(resultArr));
             } else {
+                setIsLiked(false);
                 setLikedUsers([]);
             }
         });
