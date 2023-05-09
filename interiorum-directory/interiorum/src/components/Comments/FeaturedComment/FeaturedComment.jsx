@@ -6,7 +6,7 @@ const FeaturedComment = ({ comment }) => {
         <VStack align='start' w='80%' gap={3}>
             <Heading as='h3' size='md'>Featured Comment:</Heading>
             <Box bg='brand.600' w='100%' rounded='md'>
-                <SingleComment comment={comment} isFeatured={true} />
+                <SingleComment key={comment.commentId} comment={comment} />
             </Box>
         </VStack>);
 };

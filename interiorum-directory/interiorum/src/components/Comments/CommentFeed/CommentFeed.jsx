@@ -11,7 +11,7 @@ const CommentFeed = ({ comments }) => {
                     comments.map(c => {
                         return (
                             <>
-                                <SingleComment comment={c} />
+                                <SingleComment key={c.commentId} comment={c} />
                                 <HStack px={6}>
                                     <Divider />
                                 </HStack>
