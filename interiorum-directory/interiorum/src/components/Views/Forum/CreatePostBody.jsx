@@ -4,7 +4,7 @@ import { POST_CONTENT_MAX_LENGTH, POST_CONTENT_MIN_LENGTH } from '../../../commo
 import { addPost } from '../../../services/post.service';
 import { useNavigate } from 'react-router-dom';
 
-const CreatePostView = ({ postForm, setPostForm, updateForm, postTitleIsInvalid }) => {
+const CreatePostBody = ({ postForm, setPostForm, updateForm, postTitleIsInvalid }) => {
 
     const navigate = useNavigate();
 
@@ -80,4 +80,4 @@ const CreatePostView = ({ postForm, setPostForm, updateForm, postTitleIsInvalid 
     );
 };
 
-export default CreatePostView;
+export default CreatePostBody;

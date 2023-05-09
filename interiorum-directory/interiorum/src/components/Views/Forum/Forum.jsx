@@ -1,6 +1,6 @@
 import { Box, Grid, GridItem } from '@chakra-ui/react';
 
-import CreatePostHeader from './CreatePostHeader';
+import ForumHeader from './ForumHeader';
 import CategoriesList from './CategoriesList';
 import TopCommentersList from './TopCommentersList';
 import { Outlet } from 'react-router-dom';
@@ -13,7 +13,7 @@ const Forum = () => {
     if (userData) {
         return (
             <Box className="forum-view">
-                <CreatePostHeader />
+                <ForumHeader />
                 <Grid className='forum-content' templateColumns='1fr 4fr'>
                     <GridItem>
                         <CategoriesList />
