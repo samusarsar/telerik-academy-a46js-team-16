@@ -4,7 +4,13 @@ import { uploadBytes, ref as sRef, getDownloadURL } from 'firebase/storage';
 import { BASE_ROLE } from '../common/constants.js';
 
 export const getUserByHandle = (handle) => {
-    return get(ref(db, `users/${handle}`));
+    return get(ref(db, `users/${handle}`))
+        .then(snapshot => {
+            if (!snapshot.exists()) {
+                throw new Error('No users match this handle');
+            }
+            return snapshot.val();
+        });
 };
 
 export const getUsersByChild = ({ child, value }) => {

@@ -12,8 +12,7 @@ const ProfileLikedPosts = ({ handle }) => {
             const data = snapshot.val();
             if (data) {
                 Promise.all(Object.keys(data).map((id) => getPostById(id)))
-                    .then(resultArr => setLikedPosts(resultArr))
-                    .then(() => console.log(likedPosts));
+                    .then(resultArr => setLikedPosts(resultArr));
             } else {
                 setLikedPosts([]);
             }

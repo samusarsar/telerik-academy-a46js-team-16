@@ -7,9 +7,10 @@ import { db } from '../../../config/firebase-config';
 import handleLikePost from '../../../common/helpers/handleLikePost';
 import handleUnlikePost from '../../../common/helpers/handleUnlikePost';
 import { AiFillLike, AiOutlineLike } from 'react-icons/ai';
+import { getUserByHandle } from '../../../services/users.service';
 
 const SinglePost = ({ post, large=false }) => {
-    const [postLikes, setPostLikes] = useState(null);
+    const [likedUsers, setLikedUsers] = useState(null);
     const { userData } = useContext(AppContext);
 
     const [isLiked, setIsLiked] = useState(
@@ -18,17 +19,22 @@ const SinglePost = ({ post, large=false }) => {
             false,
     );
 
-    const body = post.content.length > 100 ? post.content.slice(0,99) + '...' : post.content;
+    const body = post.content.length > 100 ? post.content.slice(0, 99) + '...' : post.content;
 
     useEffect(() => {
-        onValue(ref(db, `posts/${post.postId}/likes`), (snapshot) => {
+        return onValue(ref(db, `posts/${post.postId}/likes`), (snapshot) => {
             const data = snapshot.val();
-            setPostLikes(data ? Object.keys(data) : []);
             setIsLiked(data ? Object.keys(data).includes(userData.handle) : false);
+            if (data) {
+                Promise.all(Object.keys(data).map((handle) => getUserByHandle(handle)))
+                    .then(resultArr => setLikedUsers(resultArr));
+            } else {
+                setLikedUsers([]);
+            }
         });
     }, []);
 
-    if (post) {
+    if (likedUsers) {
         return (
             <Box textAlign='left' p={2} >
                 <Heading as='h5' size='sm'><Link to={`../../post/${post.postId}`}>{post.title}</Link></Heading>
@@ -39,19 +45,22 @@ const SinglePost = ({ post, large=false }) => {
                     <Text fontSize='0.8em' color='gray.500'>On {post.createdOn}</Text>
                     <Spacer/>
                     <HStack>
-                        {(postLikes) &&
+                        {(likedUsers) &&
                                 <Button h='25px' p={1} fontSize='0.8em' colorScheme={!isLiked ? 'blackAlpha' : 'telegram'} onClick={() => {
                                     !isLiked ?
                                         handleLikePost({ postId: post.postId, handle: userData.handle }) :
                                         handleUnlikePost({ postId: post.postId, handle: userData.handle });
-                                }}><Icon as={isLiked ? AiFillLike : AiOutlineLike} mr={1} />Like{postLikes.length ? ` | ${postLikes.length}` : ''}
+                                }}><Icon as={isLiked ? AiFillLike : AiOutlineLike} mr={1} />Like{likedUsers.length ? ` | ${likedUsers.length}` : ''}
                                 </Button>}
                         <AvatarGroup size='sm' max={3} fontSize='0.8em' spacing='-0.5rem' >
-                            <Avatar name='Ryan Florence' src='https://bit.ly/ryan-florence' />
-                            <Avatar name='Segun Adebayo' src='https://bit.ly/code-beast' />
-                            <Avatar name='Kent Dodds' src='https://bit.ly/kent-c-dodds' />
-                            <Avatar name='Prosper Otemuyiwa' src='https://bit.ly/prosper-baba' />
-                            <Avatar name='Christian Nwamba' src='https://bit.ly/code-beast' />
+                            {likedUsers.length ?
+                                likedUsers.map(user =>
+                                    <Avatar
+                                        key={user.uid}
+                                        name={user.handle}
+                                        src={user.avatarURL}
+                                    />) :
+                                <Text>No likes yet.</Text>}
                         </AvatarGroup>
                     </HStack>
                 </HStack>
