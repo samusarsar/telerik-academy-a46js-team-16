@@ -8,16 +8,11 @@ import { db } from '../../../config/firebase-config';
 import handleLikeComment from '../../../common/helpers/handleLikeComment';
 import handleUnlikeComment from '../../../common/helpers/handleUnlikeComment';
 
-const SingleComment = ({ comment }) => {
+const SingleComment = ({ comment, isFeatured=false }) => {
     const [author, setAuthor] = useState(null);
     const [commentLikes, setCommentLikes] = useState(null);
     const { userData } = useContext(AppContext);
-
-    const [isLiked, setIsLiked] = useState(
-        userData.likedComments ?
-            Object.keys(userData.likedComments).includes(comment.commentId) :
-            false,
-    );
+    const [isLiked, setIsLiked] = useState(false);
 
     useEffect(() => {
         getUserByHandle(comment.author)
@@ -44,7 +39,7 @@ const SingleComment = ({ comment }) => {
                 <Text fontSize='0.8em' fontWeight='700'>{comment.author}</Text>
                 <Text fontSize='0.8em' color='gray.500'>{comment.createdOn}</Text>
                 <Text>{comment.content}</Text>
-                {(commentLikes) &&
+                {(commentLikes && !isFeatured) &&
                             <Button h='25px' p={1} fontSize='0.8em' colorScheme={!isLiked ? 'blackAlpha' : 'telegram'} onClick={() => {
                                 !isLiked ?
                                     handleLikeComment({ commentId: comment.commentId, handle: userData.handle }) :
