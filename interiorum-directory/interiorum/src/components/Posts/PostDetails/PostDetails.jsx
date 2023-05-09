@@ -22,7 +22,7 @@ const PostDetails = ({ post }) => {
     const [isLiked, setIsLiked] = useState(
         userData.likedPosts ?
             Object.keys(userData.likedPosts).includes(post.postId) :
-            false
+            false,
     );
 
     useEffect(() => {
@@ -66,15 +66,15 @@ const PostDetails = ({ post }) => {
                             </Text>
                         </VStack>
                         {(postLikes) &&<ButtonGroup>
-                            <Button h='30px' fontSize='0.8em' onClick={() => {
+                            <Button h='30px' fontSize='0.8em' colorScheme={!isLiked ? 'gray' : 'telegram'} onClick={() => {
                                 !isLiked ?
                                     handleLikePost({ postId: post.postId, handle: userData.handle }) :
                                     handleUnlikePost({ postId: post.postId, handle: userData.handle });
                             }}>
                                 <Icon as={isLiked ? AiFillLike : AiOutlineLike} mr={1} />Like{postLikes.length ? ` | ${postLikes.length}` : ''}
                             </Button>
-                            <Button h='30px' fontSize='0.8em'><Icon as={FaRegComment} mr={1} />Comment</Button>
-                            <Button h='30px' fontSize='0.8em'><Icon as={FiShare} mr={2}/>Share</Button>
+                            <Button h='30px' fontSize='0.8em' colorScheme='gray'><Icon as={FaRegComment} mr={1} />Comment</Button>
+                            <Button h='30px' fontSize='0.8em' colorScheme='teal'><Icon as={FiShare} mr={2}/>Share</Button>
                         </ButtonGroup>}
                     </VStack>
                 </HStack>
