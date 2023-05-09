@@ -1,13 +1,18 @@
 import { Spacer, Text, VStack } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import FeaturedComment from '../../Comments/FeaturedComment/FeaturedComment';
 import CommentFeed from '../../Comments/CommentFeed/CommentFeed';
 import CreateComment from '../../Comments/CreateComment/CreateComment';
 import { getCommentsByPost, getFeaturedComment } from '../../../services/comment.services';
 import { onValue, ref } from 'firebase/database';
 import { db } from '../../../config/firebase-config';
+import { BLOCKED_ROLE } from '../../../common/constants';
+import BlockedAlert from '../../Base/BlockedAlert/BlockedAlert';
+import { AppContext } from '../../../context/AppContext/AppContext';
 
 const PostCommentsBox = ({ postId }) => {
+    const { userData } = useContext(AppContext);
+
     const [featured, setFeatured] = useState(null);
     const [comments, setComments] = useState([]);
 
@@ -35,7 +40,13 @@ const PostCommentsBox = ({ postId }) => {
                     </>
                 )}
 
-                <CreateComment postId={postId} />
+                {(userData.role === BLOCKED_ROLE) ? (
+                    <BlockedAlert text={'You are currently restricted to add comments'} />
+                ) : (
+                    <CreateComment postId={postId} />
+                )}
+
+
             </VStack>
         </VStack>
     );

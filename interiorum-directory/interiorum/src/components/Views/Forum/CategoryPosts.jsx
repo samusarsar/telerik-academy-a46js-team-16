@@ -17,8 +17,6 @@ const CategoryPosts = () => {
     const [searchParams, setSearchParams] = useSearchParams();
 
 
-    // const categoryPosts = category === 'allCategories' ? posts : posts.filter(post => post.category === category);
-
     useEffect(() => {
         getPostsByCategory(category)
             .then(posts => {
