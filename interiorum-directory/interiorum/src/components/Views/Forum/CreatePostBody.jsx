@@ -30,8 +30,8 @@ const CreatePostBody = ({ postForm, setPostForm, updateForm, postTitleIsInvalid 
     };
 
     const createPost = (postForm) => {
-        addPost(postForm.title, postForm.content, postForm.categories, postForm.author);
-        navigate('/forum'); // TODO
+        addPost(postForm.title, postForm.content, postForm.categories, postForm.author)
+            .then(postId => navigate(`/post/${postId}`));
     };
 
     return (

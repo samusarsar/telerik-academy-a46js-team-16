@@ -8,7 +8,7 @@ export const addPost = (title, content, categories, handle) => {
     ).then(result => {
         const postId = result.key;
         update(ref(db, `posts/${postId}`), { 'postId': postId });
-
+        return postId;
     });
 };
 
