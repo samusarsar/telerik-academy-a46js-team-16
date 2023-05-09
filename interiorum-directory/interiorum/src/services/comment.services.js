@@ -8,7 +8,35 @@ export const addComment = (content, postId, handle) => {
     ).then(result => {
         const commentId = result.key;
         update(ref(db, `comments/${commentId}`), { 'commentId': commentId });
+        addCommentToUser(handle, commentId);
+        addCommentToPost(postId, commentId);
     });
+};
+
+const addCommentToUser = (handle, commentId) => {
+    return get(ref(db, `users/${handle}/comments`))
+        .then(snapshot => {
+            if (snapshot.exists()) {
+                return update(ref(db, `users/${handle}/comments`), {
+                    [commentId]: true });
+            } else {
+                return set(ref(db, `users/${handle}/comments`), {
+                    [commentId]: true });
+            }
+        });
+};
+
+const addCommentToPost = (postId, commentId) => {
+    return get(ref(db, `posts/${postId}/comments`))
+        .then(snapshot => {
+            if (snapshot.exists()) {
+                return update(ref(db, `posts/${postId}/comments`), {
+                    [commentId]: true });
+            } else {
+                return set(ref(db, `posts/${postId}/comments`), {
+                    [commentId]: true });
+            }
+        });
 };
 
 export const getCommentById = (commentId) => {

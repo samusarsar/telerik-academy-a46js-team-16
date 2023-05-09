@@ -1,4 +1,4 @@
-import { equalTo, get, orderByChild, orderByKey, push, query, ref, set, update } from 'firebase/database';
+import { equalTo, get, orderByChild, push, query, ref, set, update } from 'firebase/database';
 import { db } from '../config/firebase-config';
 
 export const addPost = (title, content, categories, handle) => {
@@ -8,8 +8,22 @@ export const addPost = (title, content, categories, handle) => {
     ).then(result => {
         const postId = result.key;
         update(ref(db, `posts/${postId}`), { 'postId': postId });
+        addPostToUser(handle, postId);
         return postId;
     });
+};
+
+const addPostToUser = ( handle, postId ) => {
+    return get(ref(db, `users/${handle}/posts`))
+        .then(snapshot => {
+            if (snapshot.exists()) {
+                return update(ref(db, `users/${handle}/posts`), {
+                    [postId]: true });
+            } else {
+                return set(ref(db, `users/${handle}/posts`), {
+                    [postId]: true });
+            }
+        });
 };
 
 export const getPosts = () => {

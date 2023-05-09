@@ -12,6 +12,10 @@ export const getUsersByChild = ({ child, value }) => {
     return get(query(ref(db, 'users'), orderByChild('role'), equalTo(value)));
 };
 
+export const getTopUsers = () => {
+
+}
+
 export const createUser = (handle, uid, email, firstName, lastName) => {
     const createdOn = new Date();
     return set(ref(db, `users/${handle}`), {
@@ -62,32 +66,6 @@ export const approveAdmin = ({ handle }) => {
 
 export const getAllUsers = () => {
     return get(ref(db, 'users'));
-};
-
-export const addPostToUser = ({ handle, postID }) => {
-    return get(ref(db, `users/${handle}/posts`))
-        .then(snapshot => {
-            if (snapshot.exists()) {
-                return update(ref(db, `users/${handle}/posts`), {
-                    postID: true });
-            } else {
-                return set(ref(db, `users/${handle}/posts`), {
-                    postID: true });
-            }
-        });
-};
-
-export const addCommentToUser = ({ handle, commentID }) => {
-    return get(ref(db, `users/${handle}/comments`))
-        .then(snapshot => {
-            if (snapshot.exists()) {
-                return update(ref(db, `users/${handle}/comments`), {
-                    postID: true });
-            } else {
-                return set(ref(db, `users/${handle}/comments`), {
-                    postID: true });
-            }
-        });
 };
 
 export const addLikedPostToUser = ({ handle, postId }) => {
