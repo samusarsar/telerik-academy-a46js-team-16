@@ -113,15 +113,24 @@ export const removeLikedPostToUser = ({ handle, postId }) => {
         });
 };
 
-export const addLikedCommentToUser = ({ handle, commentID }) => {
+export const addLikedCommentToUser = ({ handle, commentId }) => {
     return get(ref(db, `users/${handle}/likedComments`))
         .then(snapshot => {
             if (snapshot.exists()) {
                 return update(ref(db, `users/${handle}/likedComments`), {
-                    postID: true });
+                    [commentId]: true });
             } else {
                 return set(ref(db, `users/${handle}/likedComments`), {
-                    postID: true });
+                    [commentId]: true });
             }
+        });
+};
+
+export const removeLikedCommentToUser = ({ handle, commentId }) => {
+    return get(ref(db, `users/${handle}/likedComments`))
+        .then(() => {
+            return update(ref(db, `users/${handle}/likedComments`), {
+                [commentId]: null,
+            });
         });
 };

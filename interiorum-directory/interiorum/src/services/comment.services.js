@@ -1,4 +1,4 @@
-import { equalTo, get, orderByChild, push, query, ref, update } from 'firebase/database';
+import { equalTo, get, orderByChild, push, query, ref, set, update } from 'firebase/database';
 import { db } from '../config/firebase-config';
 
 export const addComment = (content, postId, handle) => {
@@ -28,6 +28,30 @@ export const getCommentsByPost = (postID) => {
                 return {
                     ...comments[commentId],
                 };
+            });
+        });
+};
+
+export const addLikeToComment = ({ commentId, handle }) => {
+    get(ref(db, `comments/${commentId}/likes`))
+        .then(snapshot => {
+            if (snapshot.exists()) {
+                update(ref(db, `comments/${commentId}/likes`), {
+                    [handle]: true,
+                });
+            } else {
+                set(ref(db, `comments/${commentId}/likes`), {
+                    [handle]: true,
+                });
+            }
+        });
+};
+
+export const removeLikeToComment = ({ commentId, handle }) => {
+    get(ref(db, `comments/${commentId}/likes`))
+        .then(() => {
+            update(ref(db, `comments/${commentId}/likes`), {
+                [handle]: null,
             });
         });
 };
