@@ -116,16 +116,9 @@ const Profile = () => {
                     <TabList>
                         <Tab>Activity</Tab>
                         <Tab>Liked</Tab>
-                        <Tab>Saved</Tab>
                         {(profile.role === ADMIN_ROLE && currUserCheck()) && <Tab color='purple'>Admin Panel</Tab>}
                     </TabList>
                     <TabPanels bg='brand.600'>
-                        <TabPanel>
-                            <Flex w='container' p={4} justify={'center'}>
-                                <ProfilePosts posts={posts} />
-                                <ProfileComments comments={comments} />
-                            </Flex>
-                        </TabPanel>
                         <TabPanel>
                             <Flex w='container' p={4} justify={'center'}>
                                 <ProfilePosts posts={posts} />
