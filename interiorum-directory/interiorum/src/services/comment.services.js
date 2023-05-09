@@ -11,6 +11,16 @@ export const addComment = (content, postId, handle) => {
     });
 };
 
+export const getCommentById = (commentId) => {
+    return get(ref(db, `comments/${commentId}`))
+        .then(snapshot => {
+            if (!snapshot.exists()) {
+                throw new Error('No comments match the search criteria');
+            }
+            return snapshot.val();
+        });
+};
+
 export const getCommentsByAuthor = (handle) => {
     return get(query(ref(db, 'comments'), orderByChild('author'), equalTo(handle)));
 };

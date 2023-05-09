@@ -17,6 +17,8 @@ import handleBlock from '../../../common/helpers/handleBlock';
 import handleUnblock from '../../../common/helpers/handleUnblock';
 import { getPostsByAuthor } from '../../../services/post.service';
 import { getCommentsByAuthor } from '../../../services/comment.services';
+import ProfileLikedPosts from './ProfileLikedPosts';
+import ProfileLikedComments from './ProfileLikedComments';
 
 const Profile = () => {
     const { userData, setContext } = useContext(AppContext);
@@ -33,7 +35,8 @@ const Profile = () => {
 
 
     useEffect(() => {
-        onValue(ref(db, `users/${handle}`), (snapshot) => {
+        setProfile(null);
+        return onValue(ref(db, `users/${handle}`), (snapshot) => {
             const data = snapshot.val();
             setProfile(data);
         });
@@ -112,31 +115,33 @@ const Profile = () => {
                         </ButtonGroup>
                     </HStack>
                 </Container>
-                <Tabs pl={12} pr={12} mt={2} isLazy={true}>
-                    <TabList>
-                        <Tab>Activity</Tab>
-                        <Tab>Liked</Tab>
-                        {(profile.role === ADMIN_ROLE && currUserCheck()) && <Tab color='purple'>Admin Panel</Tab>}
-                    </TabList>
-                    <TabPanels bg='brand.600'>
-                        <TabPanel>
-                            <Flex w='container' p={4} justify={'center'}>
-                                <ProfilePosts posts={posts} />
-                                <ProfileComments comments={comments} />
-                            </Flex>
-                        </TabPanel>
-                        <TabPanel>
-                            <Flex w='container' p={4} justify={'center'}>
-                                <ProfilePosts posts={posts} />
-                                <ProfileComments comments={comments} />
-                            </Flex>
-                        </TabPanel>
-                        {(profile.role === ADMIN_ROLE && currUserCheck()) &&
-                        (<TabPanel>
-                            <AdminPanel />
-                        </TabPanel>)}
-                    </TabPanels>
-                </Tabs>
+                {profile.handle &&
+                    <Tabs pl={12} pr={12} mt={2} isLazy={true}>
+                        <TabList>
+                            <Tab>Activity</Tab>
+                            <Tab>Liked</Tab>
+                            {(profile.role === ADMIN_ROLE && currUserCheck()) && <Tab color='purple'>Admin Panel</Tab>}
+                        </TabList>
+                        <TabPanels bg='brand.600'>
+                            <TabPanel>
+                                <Flex w='container' p={4} justify={'center'}>
+                                    <ProfilePosts posts={posts} />
+                                    <ProfileComments comments={comments} />
+                                </Flex>
+                            </TabPanel>
+                            <TabPanel>
+                                <Flex w='container' p={4} justify={'center'}>
+                                    {console.log(profile.handle)}
+                                    <ProfileLikedPosts handle={profile.handle} />
+                                    <ProfileLikedComments handle={profile.handle} />
+                                </Flex>
+                            </TabPanel>
+                            {(profile.role === ADMIN_ROLE && currUserCheck()) &&
+                                (<TabPanel>
+                                    <AdminPanel />
+                                </TabPanel>)}
+                        </TabPanels>
+                    </Tabs>}
             </Container>}
         </>
     );
