@@ -55,3 +55,14 @@ export const removeLikeToComment = ({ commentId, handle }) => {
             });
         });
 };
+
+
+export const getFeaturedComment = (comments) => {
+    const likedComments = comments.filter(comment => comment.likes).sort((a, b) => b.likes.length - a.likes.length);
+    if (likedComments.length > 0) {
+        return likedComments[0];
+    }
+    return [...comments].sort((a, b) => {
+        return new Date(b.createdOn) - new Date(a.createdOn);
+    })[0];
+};

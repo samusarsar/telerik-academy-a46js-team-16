@@ -3,20 +3,20 @@ import { useEffect, useState } from 'react';
 import FeaturedComment from '../../Comments/FeaturedComment/FeaturedComment';
 import CommentFeed from '../../Comments/CommentFeed/CommentFeed';
 import CreateComment from '../../Comments/CreateComment/CreateComment';
-import { getCommentsByPost } from '../../../services/comment.services';
+import { getCommentsByPost, getFeaturedComment } from '../../../services/comment.services';
 import { onValue, ref } from 'firebase/database';
 import { db } from '../../../config/firebase-config';
 
 const PostCommentsBox = ({ postId }) => {
-    // const [featured, setFeatured] = useState(comments.sort((a, b) => a.likes > b.liked)[0]) // this will be with likes.length of Object.kyes() since likes will be an object
+    const [featured, setFeatured] = useState(null);
     const [comments, setComments] = useState([]);
 
     useEffect(() => {
         onValue(ref(db, `comments`), () => {
             getCommentsByPost(postId)
-                .then(result => {
-                    setComments(result);
-                    // featured = [...result].sort((a, b) => a.likes > b.likes);
+                .then(snapshot => {
+                    setComments(snapshot);
+                    setFeatured(getFeaturedComment(snapshot));
                 });
         });
     }, []);
@@ -28,7 +28,7 @@ const PostCommentsBox = ({ postId }) => {
                     <Text>No comments, yet! Be the first one to comment.</Text>
                 ) : (
                     <>
-                        {/* <FeaturedComment comment={featured} /> */}
+                        <FeaturedComment comment={featured} />
                         <Spacer />
                         <CommentFeed comments={comments} />
                         <Spacer />
