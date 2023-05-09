@@ -5,12 +5,7 @@ import { BASE_ROLE } from '../common/constants.js';
 
 export const getUserByHandle = (handle) => {
     return get(ref(db, `users/${handle}`))
-        .then(snapshot => {
-            if (!snapshot.exists()) {
-                throw new Error('No users match this handle');
-            }
-            return snapshot.val();
-        });
+        .then(snapshot => snapshot.val());
 };
 
 export const getUsersByChild = ({ child, value }) => {

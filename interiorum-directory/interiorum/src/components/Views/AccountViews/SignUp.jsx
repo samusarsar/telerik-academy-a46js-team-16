@@ -42,8 +42,8 @@ const SignUp = () => {
             (lastName.length > 4 || lastName.length < 32) &&
             (email.includes('@'))) {
             getUserByHandle(username)
-                .then(snapshot => {
-                    if (snapshot.exists()) {
+                .then(result => {
+                    if (result) {
                         throw new Error(`Username ${username} has already been taken!`);
                     }
 

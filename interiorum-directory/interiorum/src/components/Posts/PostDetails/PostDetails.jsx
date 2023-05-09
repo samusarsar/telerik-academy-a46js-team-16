@@ -27,7 +27,6 @@ const PostDetails = ({ post }) => {
 
     useEffect(() => {
         getUserByHandle(post.author)
-            .then(snapshot => snapshot.val())
             .then(data => setAuthor(data))
             .catch(error => console.log('Fetching author data was unsuccessful: ' + error.message));
 

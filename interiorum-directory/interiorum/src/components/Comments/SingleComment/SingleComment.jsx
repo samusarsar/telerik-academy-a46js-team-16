@@ -16,7 +16,6 @@ const SingleComment = ({ comment }) => {
 
     useEffect(() => {
         getUserByHandle(comment.author)
-            .then(snapshot => snapshot.val())
             .then(data => setAuthor(data))
             .catch(error => console.log('Fetching author data was unsuccessful: ' + error.message));
 
