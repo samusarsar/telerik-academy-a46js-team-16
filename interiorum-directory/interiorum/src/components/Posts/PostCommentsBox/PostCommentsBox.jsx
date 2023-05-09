@@ -4,18 +4,22 @@ import FeaturedComment from '../../Comments/FeaturedComment/FeaturedComment';
 import CommentFeed from '../../Comments/CommentFeed/CommentFeed';
 import CreateComment from '../../Comments/CreateComment/CreateComment';
 import { getCommentsByPost } from '../../../services/comment.services';
+import { onValue, ref } from 'firebase/database';
+import { db } from '../../../config/firebase-config';
 
 const PostCommentsBox = ({ postId }) => {
     // const [featured, setFeatured] = useState(comments.sort((a, b) => a.likes > b.liked)[0]) // this will be with likes.length of Object.kyes() since likes will be an object
     const [comments, setComments] = useState([]);
 
     useEffect(() => {
-        getCommentsByPost(postId)
-            .then(result => {
-                setComments(result);
-                // featured = [...result].sort((a, b) => a.likes > b.likes);
-            });
-    }, [comments]);
+        onValue(ref(db, `comments`), () => {
+            getCommentsByPost(postId)
+                .then(result => {
+                    setComments(result);
+                    // featured = [...result].sort((a, b) => a.likes > b.likes);
+                });
+        });
+    }, []);
 
     return (
         <VStack w={{ sm: '100%', md: '80%' }} align='start' boxShadow='lg'>
