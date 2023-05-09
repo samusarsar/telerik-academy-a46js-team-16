@@ -8,10 +8,10 @@ import { addLikedPostToUser, getUserByHandle } from '../../../services/users.ser
 import { addLikeToPost } from '../../../services/post.service';
 
 import { AppContext } from '../../../context/AppContext/AppContext';
-import handleLike from '../../../common/helpers/handleLike';
+import handleLikePost from '../../../common/helpers/handleLikePost';
+import handleUnlikePost from '../../../common/helpers/handleUnlikePost';
 import { onValue, ref } from 'firebase/database';
 import { db } from '../../../config/firebase-config';
-import handleUnlike from '../../../common/helpers/handleUnlike';
 
 const PostDetails = ({ post }) => {
     const [author, setAuthor] = useState(null);
@@ -68,8 +68,8 @@ const PostDetails = ({ post }) => {
                         {(postLikes) &&<ButtonGroup>
                             <Button h='30px' fontSize='0.8em' onClick={() => {
                                 !isLiked ?
-                                    handleLike({ postId: post.postId, handle: userData.handle }) :
-                                    handleUnlike({ postId: post.postId, handle: userData.handle });
+                                    handleLikePost({ postId: post.postId, handle: userData.handle }) :
+                                    handleUnlikePost({ postId: post.postId, handle: userData.handle });
                             }}>
                                 <Icon as={isLiked ? AiFillLike : AiOutlineLike} mr={1} />Like{postLikes.length ? ` | ${postLikes.length}` : ''}
                             </Button>
