@@ -7,6 +7,7 @@ import { onValue, ref } from 'firebase/database';
 import { db } from '../../../config/firebase-config';
 import handleLikeComment from '../../../common/helpers/handleLikeComment';
 import handleUnlikeComment from '../../../common/helpers/handleUnlikeComment';
+import ContentEdit from '../../Views/IndividualPost/ContentEdit/ContentEdit';
 
 const SingleComment = ({ comment }) => {
     const [author, setAuthor] = useState(null);
@@ -37,7 +38,10 @@ const SingleComment = ({ comment }) => {
             <VStack align='start'>
                 <Text fontSize='0.8em' fontWeight='700'>{comment.author}</Text>
                 <Text fontSize='0.8em' color='gray.500'>{comment.createdOn}</Text>
-                <Text>{comment.content}</Text>
+                <HStack>
+                    <Text>{comment.content}</Text>
+                    <ContentEdit toEdit={comment} commentMode={true} />
+                </HStack>
                 {(commentLikes) &&
                             <Button h='25px' p={1} fontSize='0.8em' colorScheme={!isLiked ? 'blackAlpha' : 'telegram'} onClick={() => {
                                 !isLiked ?

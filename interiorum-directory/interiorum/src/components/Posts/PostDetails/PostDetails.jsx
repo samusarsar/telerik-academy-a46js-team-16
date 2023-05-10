@@ -1,4 +1,4 @@
-import { Badge, Button, ButtonGroup, Divider, HStack, Heading, Icon, Image, Stack, Text, VStack } from '@chakra-ui/react';
+import { Badge, Button, ButtonGroup, Divider, HStack, Heading, Icon, Image, Spacer, Stack, Text, VStack } from '@chakra-ui/react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { AiOutlineLike, AiFillLike } from 'react-icons/ai';
 import { FaRegComment } from 'react-icons/fa';
@@ -14,10 +14,12 @@ import { onValue, ref } from 'firebase/database';
 import { db } from '../../../config/firebase-config';
 import DeleteButton from '../../Base/DeleteButton/DeleteButton';
 import handleDeletePost from '../../../common/helpers/handleDeletePost';
+import ContentEdit from '../../Views/IndividualPost/ContentEdit/ContentEdit';
 
 const PostDetails = ({ post }) => {
     const [author, setAuthor] = useState(null);
     const [postLikes, setPostLikes] = useState(null);
+    const [currPost, setCurrPost] = useState(post);
 
     const { userData } = useContext(AppContext);
 
@@ -34,10 +36,11 @@ const PostDetails = ({ post }) => {
             .then(data => setAuthor(data))
             .catch(error => console.log('Fetching author data was unsuccessful: ' + error.message));
 
-        onValue(ref(db, `posts/${post.postId}/likes`), (snapshot) => {
+        return onValue(ref(db, `posts/${post.postId}`), (snapshot) => {
             const data = snapshot.val();
-            setPostLikes(data ? Object.keys(data) : []);
-            setIsLiked(data ? Object.keys(data).includes(userData.handle) : false);
+            setCurrPost(data);
+            setPostLikes(data ? Object.keys(data.likes) : []);
+            setIsLiked(data ? Object.keys(data.likes).includes(userData.handle) : false);
         });
     }, []);
 
@@ -59,32 +62,36 @@ const PostDetails = ({ post }) => {
                     <VStack align='start' w='80%'>
                         <VStack align='start' w='100%'>
                             <HStack>
-                                {post.categories && post.categories.map(category => <Link key={category} to={`/forum/${category}`}><Badge>{category}</Badge></Link>)}
+                                {currPost.categories && currPost.categories.map(category => <Link key={category} to={`/forum/${category}`}><Badge>{category}</Badge></Link>)}
                             </HStack>
-                            <Heading as='h1' size='lg' fontWeight='500' w='100%'>{post.title}</Heading>
                             <HStack>
-                                <Link to={`../../profile/${post.author}`}>{post.author}</Link>
-                                <Text>| {post.createdOn}</Text>
+                                <Heading as='h1' size='lg' fontWeight='500' w='100%'>{currPost.title}</Heading>
+                                {post.author === userData.handle && <ContentEdit toEdit={currPost} />}
+                            </HStack>
+                            <HStack>
+                                <Link to={`../../profile/${currPost.author}`}><b>{currPost.author}</b></Link>
+                                <Text>| Published: {currPost.createdOn}</Text>
+                                {currPost.lastEdited && <Text color='gray'>| Last modified: {currPost.lastEdited}</Text>}
                             </HStack>
                             <Divider w='100%' />
                         </VStack>
                         <VStack align='start' p={5} gap={5} bg='brand.600' w='100%' rounded='md'>
                             <Text>
-                                {post.content}
+                                {currPost.content}
                             </Text>
                         </VStack>
-                        {(postLikes) && <ButtonGroup>
+                        {(postLikes) && <ButtonGroup w='100%'>
                             <Button h='30px' fontSize='0.8em' colorScheme={!isLiked ? 'gray' : 'telegram'} onClick={() => {
                                 !isLiked ?
-                                    handleLikePost({ postId: post.postId, handle: userData.handle }) :
-                                    handleUnlikePost({ postId: post.postId, handle: userData.handle });
+                                    handleLikePost({ postId: currPost.postId, handle: userData.handle }) :
+                                    handleUnlikePost({ postId: currPost.postId, handle: userData.handle });
                             }}>
                                 <Icon as={isLiked ? AiFillLike : AiOutlineLike} mr={1} />Like{postLikes.length ? ` | ${postLikes.length}` : ''}
                             </Button>
                             <Button h='30px' fontSize='0.8em' colorScheme='gray'><Icon as={FaRegComment} mr={1} />Comment</Button>
                             <Button h='30px' fontSize='0.8em' colorScheme='teal'><Icon as={FiShare} mr={2} />Share</Button>
-
-                            {(userData.handle === post.author) &&
+                            <Spacer />
+                            {(userData.handle === currPost.author) &&
                                 <DeleteButton deleteType={'post'} deleteFunction={handleDeleteButton} />
                             }
                         </ButtonGroup>}

@@ -113,3 +113,18 @@ export const removeLikeToPost = ({ postId, handle }) => {
             });
         });
 };
+
+export const editPost = ({ postId, title, content, images }) => {
+    return images ?
+        update(ref(db, `posts/${postId}`), {
+            title,
+            content,
+            images,
+            lastEdited: new Date().toLocaleString(),
+        }) :
+        update(ref(db, `posts/${postId}`), {
+            title,
+            content,
+            lastEdited: new Date().toLocaleString(),
+        });
+};

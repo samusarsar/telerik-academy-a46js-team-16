@@ -106,3 +106,10 @@ export const getFeaturedComment = (comments) => {
     }
     return sortedByDate[0];
 };
+
+export const editComment = ({ commentId, content }) => {
+    return update(ref(db, `comments/${commentId}`), {
+        content,
+        lastEdited: new Date().toLocaleString(),
+    });
+};
