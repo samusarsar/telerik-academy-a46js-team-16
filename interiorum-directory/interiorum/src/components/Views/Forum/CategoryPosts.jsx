@@ -1,11 +1,13 @@
 import { Outlet, useParams, useSearchParams } from 'react-router-dom';
 
-import { Heading, Text, Box, HStack, Input, Button } from '@chakra-ui/react';
+import { Heading, Text, Box, HStack, Input, Button, Flex, Spacer, VStack, Icon } from '@chakra-ui/react';
 
 import { categories } from '../../../../data';
 import ForumTabs from './ForumTabs';
 import { useEffect, useState } from 'react';
 import { getPosts, getPostsByCategory } from '../../../services/post.service';
+import { MdKeyboardArrowLeft } from 'react-icons/md';
+import Pagination from '../../Base/Pagination/Pagination';
 
 
 const CategoryPosts = () => {
@@ -16,13 +18,19 @@ const CategoryPosts = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchParams, setSearchParams] = useSearchParams();
 
+    const [postsToShow, setPostsToShow] = useState(null);
+    const [pages, setPages] = useState(null);
+    const [currPage, setCurrPage] = useState(0);
+    const [offset, setOffset] = useState(0);
 
     useEffect(() => {
         getPostsByCategory(category)
             .then(posts => {
                 setCategoryPosts(posts);
+                setPostsToShow(posts.slice(offset, offset+15));
+                setPages([...Array(Math.ceil(posts.length/15)).keys()]);
             });
-    }, [category]);
+    }, [category, offset]);
 
 
     const handleClick = () => {
@@ -46,18 +54,19 @@ const CategoryPosts = () => {
                 <Button onClick={handleClick}>Search</Button>
             </HStack>
 
-            {searchParams.get('search') ? (
-                <>
-                    <Text p='15px' fontStyle='italic'>Search results for `{searchParams.get('search')}` in category {category}</Text>
-                    <ForumTabs posts={categoryPosts.filter(post => post.title.toLowerCase().includes(searchParams.get('search')))} />
-                </>
-            ) : (
-                <ForumTabs posts={categoryPosts} />
-            )}
+            {postsToShow &&
+                (searchParams.get('search') ? (
+                    <>
+                        <Text p='15px' fontStyle='italic'>Search results for `{searchParams.get('search')}` in category {category}</Text>
+                        <ForumTabs posts={postsToShow.filter(post => post.title.toLowerCase().includes(searchParams.get('search')))} />
+                    </>
+                ) : (
+                    <ForumTabs posts={postsToShow} />
+                ))}
 
+            {pages && <Pagination pages={pages} currPage={currPage} setCurrPage={setCurrPage} setOffset={setOffset} />}
         </Box>
     );
-
 };
 
 export default CategoryPosts;

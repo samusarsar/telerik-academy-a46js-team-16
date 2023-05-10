@@ -7,23 +7,17 @@ import { getPostById } from '../../../services/post.service';
 import { getCommentsByPost } from '../../../services/comment.services';
 
 const IndividualPost = () => {
-
     // const [loading, setLoading] = useState(false);
     const [post, setPost] = useState(null);
-    const [comments, setComments] = useState([]);
 
     const { postId } = useParams();
 
     useEffect(() => {
         getPostById(postId)
             .then(result => setPost(result));
-
-        // getCommentsByPost(postId)
-        //     .then(snapshot => snapshot.val())
-        //     .then(data => setComments(data ? Object.values(data) : []));
     }, []);
 
-    if (post && comments) {
+    if (post) {
         return (
             <VStack align='center' bg='brand.600' py={3}>
                 <PostDetails post={post} />

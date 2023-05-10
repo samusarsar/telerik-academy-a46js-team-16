@@ -131,7 +131,6 @@ const Profile = () => {
                             </TabPanel>
                             <TabPanel>
                                 <Flex w='container' p={4} justify={'center'}>
-                                    {console.log(profile.handle)}
                                     <ProfileLikedPosts handle={profile.handle} />
                                     <ProfileLikedComments handle={profile.handle} />
                                 </Flex>
