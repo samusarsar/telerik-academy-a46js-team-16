@@ -1,4 +1,4 @@
-import { Badge, Button, ButtonGroup, Divider, HStack, Heading, Icon, Image, Spacer, Stack, Text, VStack } from '@chakra-ui/react';
+import { Badge, Button, ButtonGroup, Collapse, Divider, HStack, Heading, Icon, Image, Spacer, Stack, Text, VStack, useDisclosure } from '@chakra-ui/react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { AiOutlineLike, AiFillLike } from 'react-icons/ai';
 import { FaRegComment } from 'react-icons/fa';
@@ -92,7 +92,8 @@ const PostDetails = ({ post }) => {
                             }}>
                                 <Icon as={isLiked ? AiFillLike : AiOutlineLike} mr={1} />Like{postLikes.length ? ` | ${postLikes.length}` : ''}
                             </Button>
-                            <Button h='30px' fontSize='0.8em' colorScheme='gray'><Icon as={FaRegComment} mr={1} />Comment</Button>
+                            {/* <Button h='30px' fontSize='0.8em' colorScheme='gray' onClick={onToggle}><Icon as={FaRegComment} mr={1}/>Comment</Button> */}
+
                             <Button h='30px' fontSize='0.8em' colorScheme='teal'><Icon as={FiShare} mr={2} />Share</Button>
                             <Spacer />
                             {userData && (userData.handle === currPost.author || userData.role === ADMIN_ROLE) &&
