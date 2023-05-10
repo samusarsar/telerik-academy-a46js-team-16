@@ -52,7 +52,7 @@ const SinglePost = ({ post, large = false }) => {
                             }}><Icon as={isLiked ? AiFillLike : AiOutlineLike} mr={1} />Like{likedUsers.length ? ` | ${likedUsers.length}` : ''}
                             </Button>}
 
-                        {(userData.handle === post.author) &&
+                        {userData && (userData.handle === post.author) &&
                             <DeleteButton deleteType={'post'} deleteFunction={() => handleDeletePost(post.postId, userData.handle)} />
                         }
 
