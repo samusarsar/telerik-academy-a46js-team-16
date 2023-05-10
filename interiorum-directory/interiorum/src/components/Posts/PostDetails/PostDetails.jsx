@@ -1,5 +1,5 @@
 import { Badge, Button, ButtonGroup, Divider, HStack, Heading, Icon, Image, Stack, Text, VStack } from '@chakra-ui/react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { AiOutlineLike, AiFillLike } from 'react-icons/ai';
 import { FaRegComment } from 'react-icons/fa';
 import { FiShare } from 'react-icons/fi';
@@ -12,12 +12,16 @@ import handleLikePost from '../../../common/helpers/handleLikePost';
 import handleUnlikePost from '../../../common/helpers/handleUnlikePost';
 import { onValue, ref } from 'firebase/database';
 import { db } from '../../../config/firebase-config';
+import DeleteButton from '../../Base/DeleteButton/DeleteButton';
+import handleDeletePost from '../../../common/helpers/handleDeletePost';
 
 const PostDetails = ({ post }) => {
     const [author, setAuthor] = useState(null);
     const [postLikes, setPostLikes] = useState(null);
 
     const { userData } = useContext(AppContext);
+
+    const navigate = useNavigate();
 
     const [isLiked, setIsLiked] = useState(
         userData.likedPosts ?
@@ -37,6 +41,11 @@ const PostDetails = ({ post }) => {
         });
     }, []);
 
+    const handleDeleteButton = () => {
+        handleDeletePost(post.postId, userData.handle);
+        navigate(-1);
+    };
+
     return (
         <>
             <VStack p={8} bg='brand.100' rounded='md' w={{ sm: '100%', md: '80%' }} boxShadow='lg'>
@@ -46,7 +55,7 @@ const PostDetails = ({ post }) => {
                         fallbackSrc='https://firebasestorage.googleapis.com/v0/b/interiorum-6c515.appspot.com/o/assets%2Fanon-user.jpg?alt=media&token=0007d79f-52fb-4866-9747-326d52395bd9'
                         w='70px'
                         rounded='full'
-                        mx={2}/>
+                        mx={2} />
                     <VStack align='start' w='80%'>
                         <VStack align='start' w='100%'>
                             <HStack>
@@ -64,7 +73,7 @@ const PostDetails = ({ post }) => {
                                 {post.content}
                             </Text>
                         </VStack>
-                        {(postLikes) &&<ButtonGroup>
+                        {(postLikes) && <ButtonGroup>
                             <Button h='30px' fontSize='0.8em' colorScheme={!isLiked ? 'gray' : 'telegram'} onClick={() => {
                                 !isLiked ?
                                     handleLikePost({ postId: post.postId, handle: userData.handle }) :
@@ -73,7 +82,11 @@ const PostDetails = ({ post }) => {
                                 <Icon as={isLiked ? AiFillLike : AiOutlineLike} mr={1} />Like{postLikes.length ? ` | ${postLikes.length}` : ''}
                             </Button>
                             <Button h='30px' fontSize='0.8em' colorScheme='gray'><Icon as={FaRegComment} mr={1} />Comment</Button>
-                            <Button h='30px' fontSize='0.8em' colorScheme='teal'><Icon as={FiShare} mr={2}/>Share</Button>
+                            <Button h='30px' fontSize='0.8em' colorScheme='teal'><Icon as={FiShare} mr={2} />Share</Button>
+
+                            {(userData.handle === post.author) &&
+                                <DeleteButton deleteType={'post'} deleteFunction={handleDeleteButton} />
+                            }
                         </ButtonGroup>}
                     </VStack>
                 </HStack>

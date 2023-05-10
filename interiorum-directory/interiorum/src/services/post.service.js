@@ -13,12 +13,7 @@ export const addPost = (title, content, categories, handle) => {
     });
 };
 
-export const deletePost = ({ postId, handle }) => {
-    return remove(ref(db, `posts/${postId}`))
-        .then(() => deletePostToUser({ postId, handle }));
-};
-
-const addPostToUser = ( handle, postId ) => {
+const addPostToUser = (handle, postId) => {
     return get(ref(db, `users/${handle}/posts`))
         .then(snapshot => {
             if (snapshot.exists()) {
@@ -31,7 +26,12 @@ const addPostToUser = ( handle, postId ) => {
         });
 };
 
-const deletePostToUser = ({ postId, handle }) => {
+export const deletePost = (postId, handle) => {
+    return remove(ref(db, `posts/${postId}`))
+        .then(() => deletePostToUser(postId, handle));
+};
+
+const deletePostToUser = (postId, handle ) => {
     return remove(ref(db, `users/${handle}/posts/${postId}`));
 };
 
