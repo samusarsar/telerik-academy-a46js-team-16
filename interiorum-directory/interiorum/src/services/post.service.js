@@ -1,4 +1,4 @@
-import { equalTo, get, orderByChild, push, query, ref, set, update } from 'firebase/database';
+import { equalTo, get, orderByChild, push, query, ref, remove, set, update } from 'firebase/database';
 import { db } from '../config/firebase-config';
 
 export const addPost = (title, content, categories, handle) => {
@@ -13,6 +13,11 @@ export const addPost = (title, content, categories, handle) => {
     });
 };
 
+export const deletePost = ({ postId, handle }) => {
+    return remove(ref(db, `posts/${postId}`))
+        .then(() => deletePostToUser({ postId, handle }));
+};
+
 const addPostToUser = ( handle, postId ) => {
     return get(ref(db, `users/${handle}/posts`))
         .then(snapshot => {
@@ -24,6 +29,10 @@ const addPostToUser = ( handle, postId ) => {
                     [postId]: true });
             }
         });
+};
+
+const deletePostToUser = ({ postId, handle }) => {
+    return remove(ref(db, `users/${handle}/posts/${postId}`));
 };
 
 export const getPosts = () => {
@@ -51,7 +60,6 @@ export const getPostsByCategory = (category = 'allCategories') => {
     return getPosts()
         .then(posts => {
             if (category === 'allCategories') return posts;
-            console.log(posts.filter(post => post.categories.includes(category)));
             return posts.filter(post => post.categories.includes(category));
         });
 };
