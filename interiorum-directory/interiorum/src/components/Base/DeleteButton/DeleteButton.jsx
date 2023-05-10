@@ -1,4 +1,5 @@
-import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Button, useDisclosure, useToast } from '@chakra-ui/react';
+import { DeleteIcon } from '@chakra-ui/icons';
+import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Button, IconButton, useDisclosure, useToast } from '@chakra-ui/react';
 import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -26,9 +27,8 @@ export const DeleteButton = ({ deleteType, deleteFunction, from }) => {
 
     return (
         <div className='delete-button'>
-            <Button h='30px' fontSize='0.8em' colorScheme='red' onClick={onOpen}>
-                Delete {deleteType}
-            </Button>
+            <IconButton h='30px' w='30px' colorScheme='red' icon={<DeleteIcon />} onClick={onOpen} />
+
 
             <AlertDialog isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={onClose}>
                 <AlertDialogOverlay>
