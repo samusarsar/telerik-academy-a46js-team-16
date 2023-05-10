@@ -8,6 +8,8 @@ import { useEffect, useState } from 'react';
 import { getPosts, getPostsByCategory } from '../../../services/post.service';
 import { MdKeyboardArrowLeft } from 'react-icons/md';
 import Pagination from '../../Base/Pagination/Pagination';
+import { onValue, ref } from 'firebase/database';
+import { db } from '../../../config/firebase-config';
 
 
 const CategoryPosts = () => {
@@ -19,10 +21,12 @@ const CategoryPosts = () => {
     const [searchParams, setSearchParams] = useSearchParams();
 
     useEffect(() => {
-        getPostsByCategory(category)
-            .then(posts => {
-                setCategoryPosts(posts);
-            });
+        onValue(ref(db, 'posts'), () => {
+            getPostsByCategory(category)
+                .then(posts => {
+                    setCategoryPosts(posts);
+                });
+        });
     }, [category]);
 
 
