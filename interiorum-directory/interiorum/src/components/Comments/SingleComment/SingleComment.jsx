@@ -40,7 +40,7 @@ const SingleComment = ({ comment }) => {
                 <Text fontSize='0.8em' color='gray.500'>{comment.createdOn}</Text>
                 <HStack>
                     <Text>{comment.content}</Text>
-                    <ContentEdit toEdit={comment} commentMode={true} />
+                    {comment.author === userData.handle && <ContentEdit toEdit={comment} commentMode={true} />}
                 </HStack>
                 {(commentLikes) &&
                             <Button h='25px' p={1} fontSize='0.8em' colorScheme={!isLiked ? 'blackAlpha' : 'telegram'} onClick={() => {
