@@ -1,7 +1,10 @@
 import { HStack, VStack, Icon, Text } from "@chakra-ui/react";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight, MdKeyboardDoubleArrowLeft, MdKeyboardDoubleArrowRight } from "react-icons/md";
+import { useParams } from "react-router-dom";
 
 const Pagination = ({ pages, currPage, setCurrPage, setOffset }) => {
+
+    const { category } = useParams();
 
     const handlePaginate = (event) => {
         if (event < 0) {
@@ -21,6 +24,8 @@ const Pagination = ({ pages, currPage, setCurrPage, setOffset }) => {
         setOffset((+event.target.innerText - 1)*15);
         return;
     };
+
+    if (!category && pages.length < 2) return null;
 
     return (
         <HStack w='100%' h='25px' justify='center' gap={0} mb={5}>
