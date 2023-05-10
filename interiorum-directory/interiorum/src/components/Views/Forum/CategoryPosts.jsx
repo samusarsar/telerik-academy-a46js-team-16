@@ -18,19 +18,12 @@ const CategoryPosts = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchParams, setSearchParams] = useSearchParams();
 
-    const [postsToShow, setPostsToShow] = useState(null);
-    const [pages, setPages] = useState(null);
-    const [currPage, setCurrPage] = useState(0);
-    const [offset, setOffset] = useState(0);
-
     useEffect(() => {
         getPostsByCategory(category)
             .then(posts => {
                 setCategoryPosts(posts);
-                setPostsToShow(posts.slice(offset, offset+15));
-                setPages([...Array(Math.ceil(posts.length/15)).keys()]);
             });
-    }, [category, offset]);
+    }, [category]);
 
 
     const handleClick = () => {
@@ -54,17 +47,16 @@ const CategoryPosts = () => {
                 <Button onClick={handleClick}>Search</Button>
             </HStack>
 
-            {postsToShow &&
-                (searchParams.get('search') ? (
-                    <>
-                        <Text p='15px' fontStyle='italic'>Search results for `{searchParams.get('search')}` in category {category}</Text>
-                        <ForumTabs posts={postsToShow.filter(post => post.title.toLowerCase().includes(searchParams.get('search')))} />
-                    </>
-                ) : (
-                    <ForumTabs posts={postsToShow} />
-                ))}
-
-            {pages && <Pagination pages={pages} currPage={currPage} setCurrPage={setCurrPage} setOffset={setOffset} />}
+            {searchParams.get('search') ? (
+                <>
+                    <Text p='15px' fontStyle='italic'>Search results for `{searchParams.get('search')}` in category {category}</Text>
+                    <ForumTabs posts={categoryPosts.filter(post => post.title.toLowerCase().includes(searchParams.get('search')))} />
+                </>
+            ) : (
+                <>
+                    <ForumTabs posts={categoryPosts} />
+                </>
+            )}
         </Box>
     );
 };
