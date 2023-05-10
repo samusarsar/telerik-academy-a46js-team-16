@@ -24,21 +24,25 @@ import {
     VStack,
     ButtonGroup,
     Textarea,
+    HStack,
 } from '@chakra-ui/react';
 import { MdEdit } from 'react-icons/md';
 import { useState } from 'react';
 import { POST_CONTENT_MAX_LENGTH, POST_CONTENT_MIN_LENGTH, POST_TITLE_MAX_LENGTH, POST_TITLE_MIN_LENGTH } from '../../../../common/constants';
-import { editPost } from '../../../../services/post.service';
+import { deleteImagesForPost, editPost } from '../../../../services/post.service';
 import { editComment } from '../../../../services/comment.services';
+import { uploadImagesForPost } from '../../../../services/post.service.js';
+
 
 const ContentEdit = ({ toEdit, commentMode=false }) => {
     const [title, setTitle] = useState(toEdit.title);
     const [titleError, setTitleError] = useState(false);
     const [content, setContent] = useState(toEdit.content);
     const [contentError, setContentError] = useState(false);
-    // const [images, setImages] = useState(toEdit.images);
-    const [images, setImages] = useState([]);
-    const [imagesError, setImagesError] = useState(false);
+
+    const [images, setImages] = useState(null);
+    const [imagesURL, setImagesURL] = useState(toEdit.imagesURL ? toEdit.imagesURL.split(' ') : null);
+    const [imageError, setImageError] = useState(false);
 
     const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -46,24 +50,41 @@ const ContentEdit = ({ toEdit, commentMode=false }) => {
 
     const handleChoose = (e) => {
         const acceptedImageTypes = ['image/jpg', 'image/jpeg', 'image/png'];
-        const invalidImages = e.target.files.some(img => !acceptedImageTypes.includes(img.type));
-        setImagesError(invalidImages);
+        const currImage = e.target.files[0];
+        const invalidImage = !acceptedImageTypes.includes(currImage.type) ||
+            currImage.name.includes(' ') ||
+            currImage.name.includes('?');
+        setImageError(invalidImage);
 
-        if (!invalidImages) {
-            setImages(e.target.files);
-            setImagesError(false);
+        if (!invalidImage) {
+            const currImages = images ? [...images] : [];
+            currImages.push(currImage);
+
+            setImages(currImages);
         }
     };
 
     const handleUpload = () => {
-        const acceptedImageTypes = ['image/jpg', 'image/jpeg', 'image/png'];
-        const invalidImages = e.target.files.some(img => !acceptedImageTypes.includes(img.type));
-        setImagesError(invalidImages);
+        setImageError(false);
+        uploadImagesForPost({ images })
+            .then((imgURLs) =>
+                setImagesURL(imgURLs.join(' ')))
+            .then(() =>
+                toast({
+                    title: 'Upload successful',
+                    status: 'success',
+                    duration: 3000,
+                    isClosable: true,
+                    position: 'top',
+                    variant: 'subtle',
+                }),
+            );
+    };
 
-        if (!invalidImages) {
-            setImagesError(false);
-            // uploadImages
-        }
+    const handleDeleteImages = () => {
+        const allURLs = toEdit.imagesURL.split(' ');
+        const imageNames = allURLs.map(url => url.split('%2F')[2].split('?')[0]);
+        deleteImagesForPost({ postId: toEdit.postId, imageNames });
     };
 
     const handleEdit = (commentMode) => {
@@ -87,22 +108,33 @@ const ContentEdit = ({ toEdit, commentMode=false }) => {
 
         setTitleError(false);
         setContentError(false);
+
+        let allImageURL;
+
+        if (imagesURL) {
+            if (toEdit.imagesURL) {
+                allImageURL = toEdit.imagesURL.split(' ').concat(imagesURL.split(' ')).join(' ');
+            } else {
+                allImageURL = imagesURL;
+            }
+        }
+
         !commentMode ?
-            editPost({ postId: toEdit.postId, title, content, images }) :
-            editComment({ commentId: toEdit.commentId, content })
-                .then(() => {
-                    onClose();
-                    toast({
-                        title: 'Edit successful',
-                        description: `You have successfully edited your ${!commentMode ? 'post' : 'comment'}`,
-                        status: 'success',
-                        duration: 3000,
-                        isClosable: true,
-                        position: 'top',
-                        variant: 'subtle',
-                    });
-                    setImages(null);
-                });
+            editPost({ postId: toEdit.postId, title, content, imagesURL: allImageURL }) :
+            editComment({ commentId: toEdit.commentId, content });
+
+        onClose();
+        toast({
+            title: 'Edit successful',
+            description: `You have successfully edited your ${!commentMode ? 'post' : 'comment'}`,
+            status: 'success',
+            duration: 3000,
+            isClosable: true,
+            position: 'top',
+            variant: 'subtle',
+        });
+        setImages(null);
+        setImagesURL(null);
     };
 
     return (
@@ -129,59 +161,55 @@ const ContentEdit = ({ toEdit, commentMode=false }) => {
                                 </FormControl>
                                 <FormControl isInvalid={contentError}>
                                     <FormLabel>Content</FormLabel>
-                                    <Input type='text' defaultValue={toEdit.content} onChange={(e) => setContent(e.target.value)} bg='brand.600' color='brand.500' />
+                                    <Textarea type='text' defaultValue={toEdit.content} onChange={(e) => setContent(e.target.value)} bg='brand.600' color='brand.500' />
                                     <FormErrorMessage>Content should be between 32 and 8192 characters.</FormErrorMessage>
                                 </FormControl>
+                                <VStack align='start'>
+                                    <VStack align='start'>
+                                        <Text >Current Attachments:</Text>
+                                        <HStack>
+                                            {toEdit.imagesURL && toEdit.imagesURL.split(' ').map(img => <Image key={img.name} mt={4} boxSize='150px' objectFit='cover' src={typeof img === 'string' ? img : URL.createObjectURL(img)} />)}
+                                        </HStack>
+                                        <Button isDisabled={!toEdit.imagesURL} colorScheme='blackAlpha' onClick={handleDeleteImages}>
+                                            Delete Images
+                                        </Button>
+                                    </VStack>
+                                    <VStack align='start'>
+                                        <Text >New Attachments:</Text>
+                                        <HStack flexWrap='wrap'>
+                                            {images && images.map(img => <Image key={img.name} mt={4} boxSize='60px' objectFit='cover' src={URL.createObjectURL(img)} />)}
+                                        </HStack>
+                                        <HStack>
+                                            <FormControl isInvalid={imageError}>
+                                                <Button as={FormLabel} colorScheme='blackAlpha'>
+                                                    Choose Images
+                                                </Button>
+                                                <Button isDisabled={!images} colorScheme='teal' onClick={handleUpload}>
+                                                    Upload Images
+                                                </Button>
+                                                <Input type='file' display='none' onChange={handleChoose} />
+                                                <FormErrorMessage>Images should have valid names and be in still image format.</FormErrorMessage>
+                                            </FormControl>
+                                        </HStack>
+                                    </VStack>
+                                </VStack>
                             </>) : (
                                 <>
                                     <FormControl isInvalid={contentError}>
                                         <FormLabel>Comment</FormLabel>
                                         <Textarea type='text' defaultValue={toEdit.content} onChange={(e) => setContent(e.target.value)} bg='brand.600' color='brand.500' />
-                                        <FormErrorMessage>First name should be between 4 and 32 characters.</FormErrorMessage>
+                                        <FormErrorMessage>Content should be between 1 and 1000 characters.</FormErrorMessage>
                                     </FormControl>
                                 </>
                             )}
-                        {/* <FormControl isInvalid={avatarError}>
-                            <FormLabel htmlFor=''>Avatar</FormLabel>
-                            <VStack justify='center' gap={2}>
-                                {avatar && <Image mt={4} boxSize='150px' objectFit='center' src={URL.createObjectURL(avatar)} />}
-                                <Text fontSize='0.8em'>{avatar ? avatar.name : 'No avatar uploaded.'}</Text>
-                            </VStack>
-                            <Menu>
-                                <MenuButton
-                                    mt={4}
-                                    px={4}
-                                    py={2}
-                                    transition='all 0.2s'
-                                    borderRadius='md'
-                                    borderWidth='1px'
-                                    _hover={{ bg: 'gray.400' }}
-                                    _expanded={{ bg: 'blue.400' }}
-                                    _focus={{ boxShadow: 'outline' }}
-                                >
-                                    File
-                                </MenuButton>
-                                <MenuList>
-                                    <MenuItem><FormLabel>Choose File</FormLabel></MenuItem>
-                                    <Input type='file' display='none' onChange={(e) => handleChoose(e)} />
-                                    <MenuDivider />
-                                    <MenuItem isDisabled={!avatar} onClick={handleUpload}>Upload Avatar</MenuItem>
-                                    <MenuItem onClick={() => {
-                                        setAvatar(null);
-                                        setAvatarError(false);
-                                    }}>Delete File</MenuItem>
-                                </MenuList>
-                            </Menu>
-                            <FormErrorMessage>Avatar should be a still image format.</FormErrorMessage>
-                        </FormControl> */}
                     </DrawerBody>
 
                     <DrawerFooter>
                         <VStack align='end'>
-                            {/* {(avatar && !newAvatarURL) && <Text fontSize='0.8em'>You have to upload your new avatar before saving changes.</Text>} */}
+                            {(images && !imagesURL) && <Text fontSize='0.8em'>You have to upload your new attachments before saving changes.</Text>}
                             <ButtonGroup spacing={0}>
                                 <Button variant='outline' mr={3} onClick={onClose}>Cancel</Button>
-                                <Button colorScheme='orange' onClick={() => handleEdit(commentMode)}>Save</Button>
+                                <Button colorScheme='orange' isDisabled={images && !imagesURL} onClick={() => handleEdit(commentMode)}>Save</Button>
                             </ButtonGroup>
                         </VStack>
                     </DrawerFooter>

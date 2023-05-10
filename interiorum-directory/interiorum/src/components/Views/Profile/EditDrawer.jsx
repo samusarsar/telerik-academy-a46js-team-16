@@ -118,12 +118,12 @@ const EditDrawer = ({ handle, currFirstName, currLastName }) => {
                     <DrawerBody display='flex' flexDirection='column' gap={4}>
                         <FormControl isInvalid={firstNameError}>
                             <FormLabel>First Name</FormLabel>
-                            <Input type='text' defaultValue={currFirstName} placeholder='John' onChange={(e) => setFirstName(e.target.value)} bg='brand.600' color='brand.500' />
+                            <Input type='text' defaultValue={currFirstName} onChange={(e) => setFirstName(e.target.value)} bg='brand.600' color='brand.500' />
                             <FormErrorMessage>First name should be between 4 and 32 characters.</FormErrorMessage>
                         </FormControl>
                         <FormControl isInvalid={lastNameError}>
                             <FormLabel>Last Name</FormLabel>
-                            <Input type='text' defaultValue={currLastName} placeholder='Doherty' onChange={(e) => setLastName(e.target.value)} bg='brand.600' color='brand.500' />
+                            <Input type='text' defaultValue={currLastName} onChange={(e) => setLastName(e.target.value)} bg='brand.600' color='brand.500' />
                             <FormErrorMessage>Last name should be between 4 and 32 characters.</FormErrorMessage>
                         </FormControl>
                         <FormControl isInvalid={avatarError}>
