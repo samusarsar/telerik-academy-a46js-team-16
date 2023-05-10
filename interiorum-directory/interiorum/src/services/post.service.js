@@ -1,10 +1,11 @@
 import { equalTo, get, orderByChild, push, query, ref, remove, set, update } from 'firebase/database';
-import { db } from '../config/firebase-config';
+import { deleteObject, getDownloadURL, ref as sRef, uploadBytes } from 'firebase/storage';
+import { db, storage } from '../config/firebase-config';
 
-export const addPost = (title, content, categories, handle) => {
+export const addPost = (title, content, categories, handle, imagesURL) => {
 
     return push(
-        ref(db, 'posts'), { title, content, categories, author: handle, createdOn: new Date().toLocaleString(), postId: 'id' },
+        ref(db, 'posts'), { title, content, categories, author: handle, createdOn: new Date().toLocaleString(), postId: 'id', imagesURL },
     ).then(result => {
         const postId = result.key;
         update(ref(db, `posts/${postId}`), { 'postId': postId });
@@ -114,12 +115,12 @@ export const removeLikeToPost = ({ postId, handle }) => {
         });
 };
 
-export const editPost = ({ postId, title, content, images }) => {
-    return images ?
+export const editPost = ({ postId, title, content, imagesURL }) => { 
+    return imagesURL ?
         update(ref(db, `posts/${postId}`), {
             title,
             content,
-            images,
+            imagesURL,
             lastEdited: new Date().toLocaleString(),
         }) :
         update(ref(db, `posts/${postId}`), {
@@ -127,4 +128,18 @@ export const editPost = ({ postId, title, content, images }) => {
             content,
             lastEdited: new Date().toLocaleString(),
         });
+};
+
+export const uploadImagesForPost = ({ images }) => {
+    return Promise.all(
+        images.map(img => uploadBytes(sRef(storage, `posts/images/${img.name}`), img)))
+        .then((resArr) => Promise.all(
+            resArr.map(img => getDownloadURL(sRef(storage, `posts/images/${img.metadata.name}`)))));
+};
+
+export const deleteImagesForPost = ({ postId, imageNames }) => {
+    return Promise.all(
+        imageNames.map(name => deleteObject(sRef(storage, `posts/images/${name}`))),
+    )
+        .then(() => set(ref(db, `posts/${postId}/imagesURL`), null));
 };

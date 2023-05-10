@@ -10,6 +10,7 @@ import { AiFillLike, AiOutlineLike } from 'react-icons/ai';
 import { getUserByHandle } from '../../../services/users.service';
 import DeleteButton from '../../Base/DeleteButton/DeleteButton';
 import handleDeletePost from '../../../common/helpers/handleDeletePost';
+import { ADMIN_ROLE } from '../../../common/constants';
 
 const SinglePost = ({ post, large = false }) => {
     const [likedUsers, setLikedUsers] = useState(null);
@@ -52,7 +53,7 @@ const SinglePost = ({ post, large = false }) => {
                             }}><Icon as={isLiked ? AiFillLike : AiOutlineLike} mr={1} />Like{likedUsers.length ? ` | ${likedUsers.length}` : ''}
                             </Button>}
 
-                        {userData && (userData.handle === post.author) &&
+                        {userData && (userData.handle === post.author || userData.role === ADMIN_ROLE) &&
                             <DeleteButton deleteType={'post'} deleteFunction={() => handleDeletePost(post.postId, userData.handle)} />
                         }
 

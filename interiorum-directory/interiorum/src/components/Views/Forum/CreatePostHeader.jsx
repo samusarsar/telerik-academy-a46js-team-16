@@ -1,10 +1,10 @@
-import { Alert, AlertIcon, AlertTitle, Box, Collapse, FormControl, FormErrorMessage, Input, InputGroup, useDisclosure } from '@chakra-ui/react';
+import { Alert, AlertIcon, AlertTitle, Box, Collapse, FormControl, FormErrorMessage, FormHelperText, Input, InputGroup, useDisclosure } from '@chakra-ui/react';
 import { POST_TITLE_MAX_LENGTH, POST_TITLE_MIN_LENGTH } from '../../../common/constants';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../../../context/AppContext/AppContext';
 import CreatePostBody from './CreatePostBody';
 
-const CreatePostHeader = () => {
+const CreatePostHeader = ({ creating, setCreating }) => {
 
     const { isOpen, onToggle } = useDisclosure();
 
@@ -17,6 +17,10 @@ const CreatePostHeader = () => {
         author: userData.handle,
     });
 
+    useEffect(() => {
+        setCreating(isOpen);
+    }, [isOpen]);
+
     const updateForm = prop => e => {
         setPostForm({
             ...postForm,
@@ -28,27 +32,23 @@ const CreatePostHeader = () => {
 
 
     return (
-        <InputGroup>
-            <FormControl isInvalid={postTitleIsInvalid} >
-                {postTitleIsInvalid ? (
-                    <FormErrorMessage color='red' opacity="90%" backgroundColor={'white'} m='0'>
-                        <Alert status='error'>
+        <InputGroup w={!creating ? '40%' : '80%'} transition='0.4s ease-in-out'>
+            <FormControl >
+                {postTitleIsInvalid &&
+                    <FormHelperText m='0'>
+                        <Alert status='info'>
                             <AlertIcon />
                             <AlertTitle>Post title should be between {POST_TITLE_MIN_LENGTH} and {POST_TITLE_MAX_LENGTH} symbols</AlertTitle>
                         </Alert>
 
-                    </FormErrorMessage>
-                ) : (
-                    <></>
-                )
-                }
+                    </FormHelperText>}
                 <Input
                     onChange={updateForm('title')}
-                    m='0px 0px 10px'
+                    m='10px 0px 10px'
                     bg='white'
                     onClick={onToggle}
                     focusBorderColor='brand.400'
-                    placeholder='Enter your question' />
+                    placeholder='Enter the title to you post' />
 
                 <Collapse in={isOpen} animateOpacity>
                     <Box>

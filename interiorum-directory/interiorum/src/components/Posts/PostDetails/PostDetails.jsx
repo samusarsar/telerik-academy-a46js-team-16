@@ -15,6 +15,7 @@ import { db } from '../../../config/firebase-config';
 import DeleteButton from '../../Base/DeleteButton/DeleteButton';
 import handleDeletePost from '../../../common/helpers/handleDeletePost';
 import ContentEdit from '../../Views/IndividualPost/ContentEdit/ContentEdit';
+import { ADMIN_ROLE } from '../../../common/constants';
 
 const PostDetails = ({ post }) => {
     const [author, setAuthor] = useState(null);
@@ -25,11 +26,7 @@ const PostDetails = ({ post }) => {
 
     const navigate = useNavigate();
 
-    const [isLiked, setIsLiked] = useState(
-        userData.likedPosts ?
-            Object.keys(userData.likedPosts).includes(post.postId) :
-            false,
-    );
+    const [isLiked, setIsLiked] = useState(false);
 
     useEffect(() => {
         getUserByHandle(post.author)
@@ -39,8 +36,8 @@ const PostDetails = ({ post }) => {
         return onValue(ref(db, `posts/${post.postId}`), (snapshot) => {
             const data = snapshot.val();
             setCurrPost(data);
-            setPostLikes(data ? Object.keys(data.likes) : []);
-            setIsLiked(data ? Object.keys(data.likes).includes(userData.handle) : false);
+            setPostLikes(data.likes ? Object.keys(data.likes) : []);
+            setIsLiked(data.likes ? Object.keys(data.likes).includes(userData.handle) : false);
         });
     }, []);
 
@@ -79,6 +76,13 @@ const PostDetails = ({ post }) => {
                             <Text>
                                 {currPost.content}
                             </Text>
+                            {currPost.imagesURL &&
+                            <>
+                                <Divider borderColor='brand.200' />
+                                <HStack w='100%' flexWrap='wrap' justify='center' gap={3}>
+                                    {currPost.imagesURL.split(' ').map(url => <Image key={url} src={url} boxSize='200px' />)}
+                                </HStack>
+                            </>}
                         </VStack>
                         {(postLikes) && <ButtonGroup w='100%'>
                             <Button h='30px' fontSize='0.8em' colorScheme={!isLiked ? 'gray' : 'telegram'} onClick={() => {
@@ -91,7 +95,7 @@ const PostDetails = ({ post }) => {
                             <Button h='30px' fontSize='0.8em' colorScheme='gray'><Icon as={FaRegComment} mr={1} />Comment</Button>
                             <Button h='30px' fontSize='0.8em' colorScheme='teal'><Icon as={FiShare} mr={2} />Share</Button>
                             <Spacer />
-                            {(userData.handle === currPost.author) &&
+                            {userData && (userData.handle === currPost.author || userData.role === ADMIN_ROLE) &&
                                 <DeleteButton deleteType={'post'} deleteFunction={handleDeleteButton} />
                             }
                         </ButtonGroup>}
