@@ -139,7 +139,7 @@ export const removeLikeToPost = ({ postId, handle }) => {
         });
 };
 
-export const editPost = ({ postId, title, content, imagesURL }) => { 
+export const editPost = ({ postId, title, content, imagesURL }) => {
     return imagesURL ?
         update(ref(db, `posts/${postId}`), {
             title,

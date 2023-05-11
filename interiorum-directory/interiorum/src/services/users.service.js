@@ -1,4 +1,4 @@
-import { get, set, ref, query, equalTo, orderByChild, update, push } from 'firebase/database';
+import { get, set, ref, query, equalTo, orderByChild, update } from 'firebase/database';
 import { db, storage } from '../config/firebase-config';
 import { uploadBytes, ref as sRef, getDownloadURL } from 'firebase/storage';
 import { BASE_ROLE } from '../common/constants.js';
@@ -8,7 +8,7 @@ export const getUserByHandle = (handle) => {
         .then(snapshot => snapshot.val());
 };
 
-export const getUsersByChild = ({ child, value }) => {
+export const getUsersByRole = ({ value }) => {
     return get(query(ref(db, 'users'), orderByChild('role'), equalTo(value)));
 };
 
