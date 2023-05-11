@@ -38,7 +38,9 @@ const PostDetails = ({ post }) => {
             .catch(error => console.log('Fetching author data was unsuccessful: ' + error.message));
 
         return onValue(ref(db, `posts/${post.postId}`), (snapshot) => {
+            if (!snapshot.exists()) return;
             const data = snapshot.val();
+
             setCurrPost(data);
             setPostLikes(data.likes ? Object.keys(data.likes) : []);
             setIsLiked(data.likes ? Object.keys(data.likes).includes(userData.handle) : false);
@@ -133,8 +135,6 @@ const PostDetails = ({ post }) => {
                             }}>
                                 <Icon as={isLiked ? AiFillLike : AiOutlineLike} mr={1} />Like{postLikes.length ? ` | ${postLikes.length}` : ''}
                             </Button>
-                            {/* <Button h='30px' fontSize='0.8em' colorScheme='gray' onClick={onToggle}><Icon as={FaRegComment} mr={1}/>Comment</Button> */}
-
                             <Button h='30px' fontSize='0.8em' colorScheme='teal'><Icon as={FiShare} mr={2} />Share</Button>
                             <Spacer />
                             {userData && (userData.handle === currPost.author || userData.role === ADMIN_ROLE) &&
