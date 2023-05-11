@@ -1,6 +1,7 @@
 import { equalTo, get, orderByChild, push, query, ref, remove, set, update } from 'firebase/database';
 import { deleteObject, getDownloadURL, ref as sRef, uploadBytes } from 'firebase/storage';
 import { db, storage } from '../config/firebase-config';
+import { deleteComment } from './comment.services';
 
 export const addPost = (title, content, categories, handle, imagesURL) => {
     const updates = imagesURL ?
@@ -31,6 +32,16 @@ const addPostToUser = (handle, postId) => {
 };
 
 export const deletePost = (postId, handle) => {
+    get(ref(db, `posts/${postId}/comments`))
+        .then(snapshot => {
+            if (snapshot.exists()) {
+                return snapshot.val();
+            }
+            return {};
+        })
+        .then(comments => Object.keys(comments))
+        .then(commentIds => commentIds.forEach(commentId => deleteComment(handle, commentId)));
+
     return remove(ref(db, `posts/${postId}`))
         .then(() => deletePostToUser(postId, handle));
 };
@@ -43,7 +54,7 @@ export const getPosts = () => {
     return get(query(ref(db, 'posts')))
         .then(snapshot => {
             if (!snapshot.exists()) {
-                throw new Error('No posts match the search criteria'); // TODO
+                return {};
             }
             return snapshot.val();
         })
