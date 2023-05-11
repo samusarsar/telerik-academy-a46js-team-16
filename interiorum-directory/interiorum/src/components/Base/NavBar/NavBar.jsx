@@ -44,7 +44,7 @@ const NavBar = () => {
                     <Image
                         src='https://firebasestorage.googleapis.com/v0/b/interiorum-6c515.appspot.com/o/assets%2Flogo.png?alt=media&token=dfd1dd62-93fc-4de0-a77f-4e941c4e09a5'
                         boxSize='80px'/>
-                    <Heading as='h2'>INTERIORUM</Heading>
+                    <Heading as='h2'>interiorum</Heading>
                 </HStack>
                 <Spacer />
                 <Link as={NavLink} rounded='lg' px={2} py={2} to='home' _activeLink={{ fontWeight: 'bold', color: 'brand.300' }}
