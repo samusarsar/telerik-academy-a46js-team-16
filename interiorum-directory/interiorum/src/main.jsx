@@ -5,8 +5,6 @@ import { BrowserRouter } from 'react-router-dom';
 
 import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 
-import './index.css';
-
 const theme = extendTheme({
     colors: {
         brand: {

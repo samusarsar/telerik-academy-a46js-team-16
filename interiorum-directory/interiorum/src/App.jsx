@@ -19,8 +19,6 @@ import { getUserData } from './services/users.service';
 
 import { auth } from './config/firebase-config.js';
 
-import './App.css';
-
 const App = () => {
     const [user, loading, error] = useAuthState(auth);
     const [dataLoading, setDataLoading] = useState(false);
