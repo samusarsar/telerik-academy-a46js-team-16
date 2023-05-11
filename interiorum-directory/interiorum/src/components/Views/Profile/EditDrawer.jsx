@@ -27,6 +27,7 @@ import {
 import { MdEdit } from 'react-icons/md';
 import { useRef, useState } from 'react';
 import { editUser, uploadAvatar } from '../../../services/users.service';
+import { USER_NAME_MIN_LENGTH, USER_NAME_MAX_LENGTH } from '../../../common/constants';
 
 const EditDrawer = ({ handle, currFirstName, currLastName }) => {
     const [firstName, setFirstName] = useState(currFirstName);
@@ -74,11 +75,11 @@ const EditDrawer = ({ handle, currFirstName, currLastName }) => {
     };
 
     const handleEdit = () => {
-        setFirstNameError(firstName.length < 4 || firstName.length > 32);
-        setLastNameError(lastName.length < 4 || lastName.length > 32);
+        setFirstNameError(firstName.length < USER_NAME_MIN_LENGTH || firstName.length > USER_NAME_MAX_LENGTH);
+        setLastNameError(lastName.length < USER_NAME_MIN_LENGTH || lastName.length > USER_NAME_MAX_LENGTH);
 
-        if (firstName.length >= 4 && firstName.length <= 32 &&
-            lastName.length >= 4 && lastName.length <= 32) {
+        if (firstName.length >= USER_NAME_MIN_LENGTH && firstName.length <= USER_NAME_MAX_LENGTH &&
+            lastName.length >= USER_NAME_MIN_LENGTH && lastName.length <= USER_NAME_MAX_LENGTH) {
             setFirstNameError(false);
             setLastNameError(false);
 
