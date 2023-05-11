@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { Box, Button, HStack, Heading, Spacer, Text, VStack } from '@chakra-ui/react';
 import { BsFillPeopleFill, BsFillChatTextFill } from 'react-icons/bs';
 import StatBox from './StatBox';

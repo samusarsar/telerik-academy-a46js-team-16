@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 // eslint-disable-next-line max-len
 import { Card, CardBody, Image, Stack, Heading, Text, Button, VStack, Icon, CardHeader, InputGroup, InputLeftElement, Input, useDisclosure, Alert, AlertIcon, Box, AlertTitle, AlertDescription, CloseButton, FormControl, FormErrorMessage } from '@chakra-ui/react';
 import { useState } from 'react';

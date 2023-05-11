@@ -1,5 +1,6 @@
 import { Heading, Text, Icon, HStack, VStack } from '@chakra-ui/react';
 import { BRAND_COLOR_5, BRAND_COLOR_6 } from '../../../common/constants';
+import PropTypes from 'prop-types';
 
 const StatBox = ({ heading, text, icon }) => {
     return (
@@ -16,7 +17,7 @@ const StatBox = ({ heading, text, icon }) => {
         >
             <HStack justify='center'>
                 <Heading size='md'> {heading} </Heading>
-                <Icon as={icon} alignSelf='center' fontSize='x-large'/>
+                <Icon as={icon} alignSelf='center' fontSize='x-large' />
             </HStack>
 
             <Text fontSize='lg' align='center'>
@@ -24,6 +25,12 @@ const StatBox = ({ heading, text, icon }) => {
             </Text>
         </VStack>
     );
+};
+
+StatBox.propTypes = {
+    heading: PropTypes.string.isRequired,
+    text: PropTypes.string.isRequired,
+    icon: PropTypes.elementType.isRequired,
 };
 
 export default StatBox;
