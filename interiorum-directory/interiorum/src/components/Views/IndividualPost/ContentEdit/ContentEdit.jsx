@@ -21,6 +21,7 @@ import {
     ButtonGroup,
     Textarea,
     HStack,
+    IconButton,
 } from '@chakra-ui/react';
 import { MdEdit } from 'react-icons/md';
 import { useState } from 'react';
@@ -29,6 +30,7 @@ import { deleteImagesForPost, editPost } from '../../../../services/post.service
 import { editComment } from '../../../../services/comment.services';
 import { uploadImagesForPost } from '../../../../services/post.service.js';
 import PropTypes from 'prop-types';
+import { AiOutlineClose } from 'react-icons/ai';
 
 
 const ContentEdit = ({ toEdit, commentMode = false }) => {
@@ -84,7 +86,12 @@ const ContentEdit = ({ toEdit, commentMode = false }) => {
         deleteImagesForPost({ postId: toEdit.postId, imageNames });
     };
 
-    const handleEdit = (commentMode) => {
+    const handleClearImages = () => {
+        setImages(null);
+        setImageError(false);
+    };
+
+    const handleEdit = () => {
         if (!commentMode) {
             const postTitleIsInvalid = ((title.length < POST_TITLE_MIN_LENGTH || title.length > POST_TITLE_MAX_LENGTH) && title.length > 0);
             const postContentIsInvalid = ((content.length < POST_CONTENT_MIN_LENGTH || content.length > POST_CONTENT_MAX_LENGTH) && content.length > 0);
@@ -181,9 +188,12 @@ const ContentEdit = ({ toEdit, commentMode = false }) => {
                                                 <Button as={FormLabel} colorScheme='blackAlpha'>
                                                     Choose Images
                                                 </Button>
-                                                <Button isDisabled={!images} colorScheme='teal' onClick={handleUpload}>
-                                                    Upload Images
-                                                </Button>
+                                                <HStack>
+                                                    <Button isDisabled={!images} colorScheme='teal' onClick={handleUpload}>
+                                                        Upload Images
+                                                    </Button>
+                                                    <IconButton icon={<AiOutlineClose />} size='sm' colorScheme='blackAlpha' onClick={handleClearImages}></IconButton>
+                                                </HStack>
                                                 <Input type='file' display='none' onChange={handleChoose} />
                                                 <FormErrorMessage>Images should have valid names and be in still image format.</FormErrorMessage>
                                             </FormControl>
