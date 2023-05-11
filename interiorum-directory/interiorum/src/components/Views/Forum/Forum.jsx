@@ -2,7 +2,7 @@ import { Box, Grid, GridItem } from '@chakra-ui/react';
 
 import ForumHeader from './ForumHeader';
 import CategoriesList from './CategoriesList';
-import TopCommentersList from './TopCommentersList';
+import TopUsersList from './TopUsersList';
 import { Outlet } from 'react-router-dom';
 import { useContext } from 'react';
 import { AppContext } from '../../../context/AppContext/AppContext';
@@ -17,7 +17,8 @@ const Forum = () => {
                 <Grid className='forum-content' templateColumns='1fr 4fr'>
                     <GridItem>
                         <CategoriesList />
-                        <TopCommentersList />
+                        <TopUsersList type={'posts'}/>
+                        <TopUsersList type={'comments'}/>
                     </GridItem>
                     <GridItem>
                         <Outlet />

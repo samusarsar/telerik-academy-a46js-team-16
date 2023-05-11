@@ -12,10 +12,6 @@ export const getUsersByChild = ({ child, value }) => {
     return get(query(ref(db, 'users'), orderByChild('role'), equalTo(value)));
 };
 
-export const getTopUsers = () => {
-
-}
-
 export const createUser = (handle, uid, email, firstName, lastName) => {
     const createdOn = new Date();
     return set(ref(db, `users/${handle}`), {
@@ -65,7 +61,15 @@ export const approveAdmin = ({ handle }) => {
 };
 
 export const getAllUsers = () => {
-    return get(ref(db, 'users'));
+    return get(ref(db, 'users'))
+        .then(snapshot => snapshot.val());
+};
+
+export const getTopUsers = () => {
+    return getAllUsers()
+        .then(data => Object.values(data))
+        .then(users => users.filter(user => user.comments))
+        .then(users => users.sort((a, b) => Object.keys(b.comments).length - Object.keys(a.comments).length).slice(0, 5));
 };
 
 export const addLikedPostToUser = ({ handle, postId }) => {

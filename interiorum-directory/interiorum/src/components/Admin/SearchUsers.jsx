@@ -21,7 +21,7 @@ const SearchUsers = () => {
         }
 
         getAllUsers()
-            .then(snapshot => Object.values(snapshot.val()))
+            .then(data => Object.values(data))
             .then(users => users.filter(user => {
                 const fullName = `${user.firstName.toLowerCase()} ${user.lastName.toLowerCase()}`;
                 const formattedSearchTerm = input.trim().toLowerCase();

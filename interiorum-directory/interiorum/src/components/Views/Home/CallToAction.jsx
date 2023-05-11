@@ -14,7 +14,6 @@ const CallToAction = () => {
 
     useEffect(() => {
         getAllUsers()
-            .then(snapshot => snapshot.val())
             .then(data => setUsers(Object.values(data)));
 
         getPosts()
