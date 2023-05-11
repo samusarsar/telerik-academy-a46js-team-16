@@ -3,9 +3,12 @@ import { deleteObject, getDownloadURL, ref as sRef, uploadBytes } from 'firebase
 import { db, storage } from '../config/firebase-config';
 
 export const addPost = (title, content, categories, handle, imagesURL) => {
+    const updates = imagesURL ?
+        { title, content, categories, author: handle, createdOn: new Date().toLocaleString(), postId: 'id', imagesURL } :
+        { title, content, categories, author: handle, createdOn: new Date().toLocaleString(), postId: 'id' };
 
     return push(
-        ref(db, 'posts'), { title, content, categories, author: handle, createdOn: new Date().toLocaleString(), postId: 'id', imagesURL },
+        ref(db, 'posts'), updates,
     ).then(result => {
         const postId = result.key;
         update(ref(db, `posts/${postId}`), { 'postId': postId });

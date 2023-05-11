@@ -1,4 +1,4 @@
-import { Badge, Button, ButtonGroup, Collapse, Divider, HStack, Heading, Icon, Image, Spacer, Stack, Text, VStack, useDisclosure } from '@chakra-ui/react';
+import { Badge, Button, ButtonGroup, Collapse, Divider, FormControl, FormErrorMessage, HStack, Heading, Icon, Image, Input, Spacer, Stack, Tag, TagCloseButton, TagLabel, Text, VStack, useDisclosure } from '@chakra-ui/react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { AiOutlineLike, AiFillLike } from 'react-icons/ai';
 import { FaRegComment } from 'react-icons/fa';
@@ -16,11 +16,16 @@ import DeleteButton from '../../Base/DeleteButton/DeleteButton';
 import handleDeletePost from '../../../common/helpers/handleDeletePost';
 import ContentEdit from '../../Views/IndividualPost/ContentEdit/ContentEdit';
 import { ADMIN_ROLE } from '../../../common/constants';
+import { addPostToTag, addTagToPost, removePostFromTag, removeTagFromPost } from '../../../services/tag.services';
 
 const PostDetails = ({ post }) => {
     const [author, setAuthor] = useState(null);
     const [postLikes, setPostLikes] = useState(null);
+    const [postTags, setPostTags] = useState(post.tags ? Object.keys(post.tags) : []);
     const [currPost, setCurrPost] = useState(post);
+
+    const [newTag, setNewTag] = useState('');
+    const [newTagError, setNewTagError] = useState('');
 
     const { userData } = useContext(AppContext);
 
@@ -41,6 +46,21 @@ const PostDetails = ({ post }) => {
         });
     }, []);
 
+    const handleAddTag = () => {
+        setNewTagError(newTag !== newTag.toLowerCase());
+
+        if (newTag === newTag.toLowerCase()) {
+            addPostToTag({ tag: newTag, postId: post.postId });
+            addTagToPost({ tag: newTag, postId: post.postId });
+            setNewTag('');
+        }
+    };
+
+    const handleRemoveTag = (tag) => {
+        removePostFromTag({ tag, postId: post.postId });
+        removeTagFromPost({ tag, postId: post.postId });
+    };
+
     const handleDeleteButton = () => {
         handleDeletePost(post.postId, userData.handle);
         navigate(-1);
@@ -57,13 +77,35 @@ const PostDetails = ({ post }) => {
                         rounded='full'
                         mx={2} />
                     <VStack align='start' w='80%'>
-                        <VStack align='start' w='100%'>
+                        <VStack align='start' w='100%' gap={2}>
                             <HStack>
                                 {currPost.categories && currPost.categories.map(category => <Link key={category} to={`/forum/${category}`}><Badge>{category}</Badge></Link>)}
                             </HStack>
                             <HStack>
                                 <Heading as='h1' size='lg' fontWeight='500' w='100%'>{currPost.title}</Heading>
                                 {post.author === userData.handle && <ContentEdit toEdit={currPost} />}
+                            </HStack>
+                            <HStack>
+                                <HStack>
+                                    {currPost.tags &&
+                                    (Object.keys(currPost.tags).map(tag =>
+                                        <Tag
+                                            key={tag}
+                                            size='md'
+                                            borderRadius='full'
+                                            variant='subtle'
+                                            colorScheme='teal'
+                                        >
+                                            <TagLabel>{tag}</TagLabel>
+                                            <TagCloseButton onClick={() => handleRemoveTag(tag)}/>
+                                        </Tag>))}
+                                </HStack>
+                                <FormControl isInvalid={newTagError}>
+                                    <Input type='text' placeholder='Add tag' h='25px' w='120px' border='brand.200' focusBorderColor='brand.100' color='gray'
+                                        value={newTag} onChange={(e) => setNewTag(e.target.value)}
+                                        onKeyDown={(e) => (e.key === 'Enter') ? handleAddTag() : null}/>
+                                    <FormErrorMessage>Tags must be lowercase.</FormErrorMessage>
+                                </FormControl>
                             </HStack>
                             <HStack>
                                 <Link to={`../../profile/${currPost.author}`}><b>{currPost.author}</b></Link>
