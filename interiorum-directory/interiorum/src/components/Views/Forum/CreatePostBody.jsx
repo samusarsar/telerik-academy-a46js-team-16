@@ -75,7 +75,7 @@ const CreatePostBody = ({ postForm, setPostForm, updateForm, postTitleIsInvalid 
 
     };
 
-    const createPost = (postForm) => {
+    const createPost = () => {
         addPost(postForm.title, postForm.content, postForm.categories, postForm.author, postForm.imagesURL)
             .then(postId => navigate(`/post/${postId}`));
     };
@@ -104,9 +104,9 @@ const CreatePostBody = ({ postForm, setPostForm, updateForm, postTitleIsInvalid 
                         Upload Images
                     </Button>
                 </VStack>
-                <HStack flexWrap='wrap' justify='center'>
+                <HStack flexWrap='wrap' justify='center' h='fit-content' p={5}>
                     {images ?
-                        images.map(img => <Image key={img.name} mt={4} boxSize='100px' objectFit='cover' src={URL.createObjectURL(img)} />) :
+                        images.map(img => <Image key={img.name} mt={4} boxSize='150px' objectFit='cover' src={URL.createObjectURL(img)} />) :
                         <Text color='brand.600'><i>No images selected for upload.</i></Text>}
                 </HStack>
             </HStack>
@@ -132,6 +132,7 @@ const CreatePostBody = ({ postForm, setPostForm, updateForm, postTitleIsInvalid 
                         if (category !== 'allCategories') {
                             return <Checkbox onChange={handleCheckbox} value={category} iconColor='brand.400' colorScheme='black' key={category}>{categories[category]}</Checkbox>;
                         };
+                        return null;
                     })}
                 </Stack>
 
@@ -141,7 +142,7 @@ const CreatePostBody = ({ postForm, setPostForm, updateForm, postTitleIsInvalid 
                         postForm.categories.length === 0 ||
                         postTitleIsInvalid ||
                         contentTitleIsInvalid ||
-                        (images && !postForm.imagesURL)} onClick={() => createPost(postForm)}>Create</Button>
+                        (images && !postForm.imagesURL)} onClick={createPost}>Create</Button>
 
             </Collapse>
         </Box>

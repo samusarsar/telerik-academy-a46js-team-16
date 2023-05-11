@@ -88,7 +88,7 @@ const PostDetails = ({ post }) => {
                                 <Heading as='h1' size='lg' fontWeight='500' w='100%'>{currPost.title}</Heading>
                                 {post.author === userData.handle && <ContentEdit toEdit={currPost} />}
                             </HStack>
-                            <HStack>
+                            <HStack w='100%'>
                                 <HStack>
                                     {currPost.tags &&
                                     (Object.keys(currPost.tags).map(tag =>
