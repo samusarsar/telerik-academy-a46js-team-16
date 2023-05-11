@@ -17,7 +17,7 @@ import { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { getUserData } from './services/users.service';
 
-import { auth, db } from './config/firebase-config.js';
+import { auth } from './config/firebase-config.js';
 
 import './App.css';
 
@@ -82,6 +82,8 @@ const App = () => {
                 </AppContext.Provider>
             </>);
     };
+
+    return null;
 };
 
 export default App;
