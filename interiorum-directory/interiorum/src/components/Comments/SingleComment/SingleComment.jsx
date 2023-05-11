@@ -12,6 +12,7 @@ import DeleteButton from '../../Base/DeleteButton/DeleteButton';
 import { deleteComment } from '../../../services/comment.services';
 
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 const SingleComment = ({ comment }) => {
     const [author, setAuthor] = useState(null);
@@ -33,15 +34,18 @@ const SingleComment = ({ comment }) => {
 
     return (
         <HStack align='start' p={4} >
-            <Avatar
-                src={author && author.avatarURL}
-                fallbackSrc='https://firebasestorage.googleapis.com/v0/b/interiorum-6c515.appspot.com/o/assets%2Fanon-user.jpg?alt=media&token=0007d79f-52fb-4866-9747-326d52395bd9'
-                rounded='full'
-                boxSize='45px'
-                objectFit='cover'
-                mx={2}/>
+            <Link to={`../../profile/${comment.author}`}>
+                <Avatar
+                    src={author && author.avatarURL}
+                    // eslint-disable-next-line max-len
+                    fallbackSrc='https://firebasestorage.googleapis.com/v0/b/interiorum-6c515.appspot.com/o/assets%2Fanon-user.jpg?alt=media&token=0007d79f-52fb-4866-9747-326d52395bd9'
+                    rounded='full'
+                    boxSize='45px'
+                    objectFit='cover'
+                    mx={2}/>
+            </Link>
             <VStack align='start'>
-                <Text fontSize='0.8em' fontWeight='700'>{comment.author}</Text>
+                <Text fontSize='0.8em' fontWeight='700'><Link to={`../../profile/${comment.author}`}>{comment.author}</Link></Text>
                 <Text fontSize='0.8em' color='gray.500'>{comment.createdOn}</Text>
                 <HStack>
                     <Text>{comment.content}</Text>

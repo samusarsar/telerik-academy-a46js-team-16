@@ -71,12 +71,14 @@ const PostDetails = ({ post }) => {
         <>
             <VStack p={8} bg='brand.100' rounded='md' w={{ sm: '100%', md: '80%' }} boxShadow='lg'>
                 <HStack w='100%' align='start' justify='left'>
-                    <Avatar
-                        src={author && author.avatarURL}
-                        fallbackSrc='https://firebasestorage.googleapis.com/v0/b/interiorum-6c515.appspot.com/o/assets%2Fanon-user.jpg?alt=media&token=0007d79f-52fb-4866-9747-326d52395bd9'
-                        boxSize='90px'
-                        objectFit='cover'
-                        mx={2} />
+                    <Link to={`../../profile/${post.author}`} >
+                        <Avatar
+                            src={author && author.avatarURL}
+                            fallbackSrc='https://firebasestorage.googleapis.com/v0/b/interiorum-6c515.appspot.com/o/assets%2Fanon-user.jpg?alt=media&token=0007d79f-52fb-4866-9747-326d52395bd9'
+                            boxSize='90px'
+                            objectFit='cover'
+                            mx={2} />
+                    </Link>
                     <VStack align='start' w='80%'>
                         <VStack align='start' w='100%' gap={2}>
                             <HStack>

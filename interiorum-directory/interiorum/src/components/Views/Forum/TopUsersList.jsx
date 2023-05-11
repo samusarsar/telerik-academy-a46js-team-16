@@ -2,6 +2,7 @@ import { Heading, VStack, HStack, Text, Avatar } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { getAllUsers } from '../../../services/users.service';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 const TopUsersList = ({ type }) => {
     const [topUsers, setTopUsers] = useState(null);
@@ -21,10 +22,12 @@ const TopUsersList = ({ type }) => {
                 {topUsers &&
                     (topUsers.map(user => {
                         return (
-                            <HStack key={user.uid} justify='left' py={0.5}>
-                                <Avatar size='md' name={user.firstName + ' ' + user.lastName} src={user.avatarURL} />
-                                <Text key={user.uid} fontSize='0.9em'>{user.firstName} {user.lastName}</Text>
-                            </HStack>
+                            <Link key={user.uid} to={`../../profile/${user.handle}`} >
+                                <HStack justify='left' py={0.5}>
+                                    <Avatar size='md' name={user.firstName + ' ' + user.lastName} src={user.avatarURL} />
+                                    <Text key={user.uid} fontSize='0.9em'>{user.firstName} {user.lastName}</Text>
+                                </HStack>
+                            </Link>
                         );
                     }))}
             </VStack>
