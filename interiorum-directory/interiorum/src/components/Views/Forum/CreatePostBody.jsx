@@ -1,10 +1,12 @@
-import { Textarea, Stack, Button, Checkbox, Collapse, useDisclosure, FormErrorMessage, Alert, AlertIcon, AlertTitle, FormControl, Box, FormHelperText, HStack, FormLabel, VStack, Image, Text, Menu, MenuButton, MenuList, MenuItem, Input, MenuDivider, Grid, GridItem, useToast, Spacer, IconButton } from '@chakra-ui/react';
+// eslint-disable-next-line max-len
+import { Textarea, Stack, Button, Checkbox, Collapse, useDisclosure, FormErrorMessage, Alert, AlertIcon, AlertTitle, FormControl, Box, FormHelperText, HStack, FormLabel, VStack, Image, Text, Input, useToast, IconButton } from '@chakra-ui/react';
 import { categories } from '../../../../data';
-import { POST_CONTENT_MAX_LENGTH, POST_CONTENT_MIN_LENGTH, POST_TITLE_MAX_LENGTH, POST_TITLE_MIN_LENGTH } from '../../../common/constants';
+import { POST_CONTENT_MAX_LENGTH, POST_CONTENT_MIN_LENGTH } from '../../../common/constants';
 import { addPost, uploadImagesForPost } from '../../../services/post.service';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
+import PropTypes from 'prop-types';
 
 const CreatePostBody = ({ postForm, setPostForm, updateForm, postTitleIsInvalid }) => {
 
@@ -127,7 +129,9 @@ const CreatePostBody = ({ postForm, setPostForm, updateForm, postTitleIsInvalid 
 
                     </FormControl>
                     {Object.keys(categories).map(category => {
-                        if (category !== 'allCategories') return <Checkbox onChange={handleCheckbox} value={category} iconColor='brand.400' colorScheme='black' key={category}>{categories[category]}</Checkbox>;
+                        if (category !== 'allCategories') {
+                            return <Checkbox onChange={handleCheckbox} value={category} iconColor='brand.400' colorScheme='black' key={category}>{categories[category]}</Checkbox>;
+                        };
                     })}
                 </Stack>
 
@@ -144,4 +148,16 @@ const CreatePostBody = ({ postForm, setPostForm, updateForm, postTitleIsInvalid 
     );
 };
 
+CreatePostBody.propTypes = {
+    postForm: PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        content: PropTypes.string.isRequired,
+        categories: PropTypes.arrayOf(PropTypes.string).isRequired,
+        author: PropTypes.string.isRequired,
+        imagesURL: PropTypes.string.isRequired,
+    }),
+    setPostForm: PropTypes.function.isRequired,
+    updateForm: PropTypes.function.isRequired,
+    postTitleIsInvalid: PropTypes.bool.isRequired,
+};
 export default CreatePostBody;

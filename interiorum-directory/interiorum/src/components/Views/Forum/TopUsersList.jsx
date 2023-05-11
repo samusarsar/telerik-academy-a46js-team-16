@@ -1,8 +1,7 @@
-import { Box, Heading, VStack, HStack, Text, Avatar, Spacer } from '@chakra-ui/react';
-import { users } from '../../../../data';
-import { NavLink } from 'react-router-dom';
+import { Heading, VStack, HStack, Text, Avatar } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { getAllUsers, getTopUsers } from '../../../services/users.service';
+import { getAllUsers } from '../../../services/users.service';
+import PropTypes from 'prop-types';
 
 const TopUsersList = ({ type }) => {
     const [topUsers, setTopUsers] = useState(null);
@@ -31,6 +30,10 @@ const TopUsersList = ({ type }) => {
             </VStack>
         </VStack>
     );
+};
+
+TopUsersList.propTypes = {
+    type: PropTypes.string.isRequired,
 };
 
 export default TopUsersList;

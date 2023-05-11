@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { Box, HStack, Heading, Text } from '@chakra-ui/react';
 
 
@@ -20,6 +21,7 @@ const ForumHeader = () => {
             className='create-post-header'
             bgColor='brand.500'
             bg={!creating ?
+                // eslint-disable-next-line quotes
                 "url('https://firebasestorage.googleapis.com/v0/b/interiorum-6c515.appspot.com/o/assets%2Fmoderninteriordesign.jpg?alt=media&token=4d3f5144-ca70-47b1-ab21-e52c6204a03e')" :
                 ''}
             bgPosition="center"

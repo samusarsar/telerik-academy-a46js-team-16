@@ -2,6 +2,7 @@ import { Tabs, TabList, Tab, TabPanels, TabPanel } from '@chakra-ui/react';
 
 import PostFeed from '../../Posts/PostFeed/PostFeed';
 import { filterUnansweredPosts, sortPostsByDate, sortPostsByPopularity } from '../../../services/post.service';
+import PropTypes from 'prop-types';
 
 const ForumTabs = ({ posts }) => {
 
@@ -31,6 +32,10 @@ const ForumTabs = ({ posts }) => {
             </TabPanels>
         </Tabs>
     );
+};
+
+ForumTabs.propTypes = {
+    posts: PropTypes.array.isRequired,
 };
 
 export default ForumTabs;

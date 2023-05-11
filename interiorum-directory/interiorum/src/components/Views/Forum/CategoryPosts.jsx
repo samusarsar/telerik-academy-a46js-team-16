@@ -1,13 +1,11 @@
 import { Outlet, useParams, useSearchParams } from 'react-router-dom';
 
-import { Heading, Text, Box, HStack, Input, Button, Flex, Spacer, VStack, Icon } from '@chakra-ui/react';
+import { Heading, Text, Box, HStack, Input, Button } from '@chakra-ui/react';
 
 import { categories } from '../../../../data';
 import ForumTabs from './ForumTabs';
 import { useEffect, useState } from 'react';
-import { getPosts, getPostsByCategory } from '../../../services/post.service';
-import { MdKeyboardArrowLeft } from 'react-icons/md';
-import Pagination from '../../Base/Pagination/Pagination';
+import { getPostsByCategory } from '../../../services/post.service';
 import { onValue, ref } from 'firebase/database';
 import { db } from '../../../config/firebase-config';
 

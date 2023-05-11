@@ -1,8 +1,9 @@
-import { Alert, AlertIcon, AlertTitle, Box, Collapse, FormControl, FormErrorMessage, FormHelperText, Input, InputGroup, useDisclosure } from '@chakra-ui/react';
+import { Alert, AlertIcon, AlertTitle, Box, Collapse, FormControl, FormHelperText, Input, InputGroup, useDisclosure } from '@chakra-ui/react';
 import { POST_TITLE_MAX_LENGTH, POST_TITLE_MIN_LENGTH } from '../../../common/constants';
 import { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../../../context/AppContext/AppContext';
 import CreatePostBody from './CreatePostBody';
+import PropTypes from 'prop-types';
 
 const CreatePostHeader = ({ creating, setCreating }) => {
 
@@ -58,6 +59,11 @@ const CreatePostHeader = ({ creating, setCreating }) => {
             </FormControl>
         </InputGroup>
     );
+};
+
+CreatePostHeader.propTypes = {
+    creating: PropTypes.bool.isRequired,
+    setCreating: PropTypes.func.isRequired,
 };
 
 export default CreatePostHeader;
