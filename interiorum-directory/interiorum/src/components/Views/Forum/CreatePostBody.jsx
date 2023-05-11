@@ -156,8 +156,8 @@ CreatePostBody.propTypes = {
         author: PropTypes.string.isRequired,
         imagesURL: PropTypes.string.isRequired,
     }),
-    setPostForm: PropTypes.function.isRequired,
-    updateForm: PropTypes.function.isRequired,
+    setPostForm: PropTypes.func.isRequired,
+    updateForm: PropTypes.func.isRequired,
     postTitleIsInvalid: PropTypes.bool.isRequired,
 };
 export default CreatePostBody;
