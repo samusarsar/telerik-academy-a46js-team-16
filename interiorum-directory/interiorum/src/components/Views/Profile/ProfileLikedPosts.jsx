@@ -1,7 +1,7 @@
 import { onValue, ref } from 'firebase/database';
 import { useEffect, useState } from 'react';
 import { db } from '../../../config/firebase-config';
-import { getPostById } from '../../../services/post.service';
+import { deleteLikedPostToUser, getPostById } from '../../../services/post.service';
 import ProfilePosts from './ProfilePosts';
 
 const ProfileLikedPosts = ({ handle }) => {
@@ -10,14 +10,22 @@ const ProfileLikedPosts = ({ handle }) => {
     useEffect(() => {
         onValue(ref(db, `users/${handle}/likedPosts`), (snapshot) => {
             const data = snapshot.val();
+
             if (data) {
-                Promise.all(Object.keys(data).map((id) => getPostById(id)))
+                const promises = Object.keys(data).map((id) =>
+                    (getPostById(id)
+                        .catch(() => {
+                            deleteLikedPostToUser(handle, id);
+                            return null;
+                        })));
+
+                Promise.all(promises)
+                    .then(resultArr => resultArr.filter(el => el))
                     .then(resultArr => setLikedPosts(resultArr));
             } else {
                 setLikedPosts([]);
             }
         });
-
     }, []);
 
     if (likedPosts) {

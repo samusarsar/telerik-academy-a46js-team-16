@@ -50,6 +50,10 @@ const deletePostToUser = (postId, handle ) => {
     return remove(ref(db, `users/${handle}/posts/${postId}`));
 };
 
+export const deleteLikedPostToUser = (handle, postId) => {
+    return remove(ref(db, `users/${handle}/likedPosts/${postId}`));
+};
+
 export const getPosts = () => {
     return get(query(ref(db, 'posts')))
         .then(snapshot => {

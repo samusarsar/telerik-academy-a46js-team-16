@@ -52,6 +52,10 @@ const deleteCommentToUser = (handle, commentId) => {
     return remove(ref(db, `users/${handle}/comments/${commentId}`));
 };
 
+export const deleteLikedCommentToUser = (handle, commentId) => {
+    return remove(ref(db, `users/${handle}/likedComments/${commentId}`));
+};
+
 const deleteCommentToPost = (postId, commentId) => {
     return remove(ref(db, `posts/${postId}/comments/${commentId}`));
 };
