@@ -1,4 +1,6 @@
-import { Box, Flex, Heading, Text } from "@chakra-ui/react";
+/* eslint-disable max-len */
+import { Box, Flex, Heading, Text } from '@chakra-ui/react';
+import PropTypes from 'prop-types';
 
 const AccountBase = ({ children }) => {
     return (
@@ -7,7 +9,7 @@ const AccountBase = ({ children }) => {
             id='log-in-view'
             maxW='container'
             minH='90vh'
-            bg="linear-gradient(90deg, rgba(68,74,83,0.8) 0%, rgba(68,74,83,0.3) 50%, rgba(68,74,83,0.8) 100%), 
+            bg="linear-gradient(90deg, rgba(68,74,83,0.8) 0%, rgba(68,74,83,0.3) 50%, rgba(68,74,83,0.8) 100%),
                 url('https://images.unsplash.com/photo-1606744888344-493238951221?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80')"
             bgSize='cover'
             bgPosition='center'
@@ -30,6 +32,10 @@ const AccountBase = ({ children }) => {
             </Box>
         </Flex>
     );
+};
+
+AccountBase.propTypes = {
+    children: PropTypes.node.isRequired,
 };
 
 export default AccountBase;

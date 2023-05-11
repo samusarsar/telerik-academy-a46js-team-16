@@ -1,6 +1,9 @@
 import { DeleteIcon } from '@chakra-ui/icons';
+// eslint-disable-next-line max-len
 import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Button, IconButton, useDisclosure, useToast } from '@chakra-ui/react';
 import { useRef } from 'react';
+
+import PropTypes from 'prop-types';
 
 export const DeleteButton = ({ deleteType, single=false, deleteFunction }) => {
 
@@ -36,7 +39,7 @@ export const DeleteButton = ({ deleteType, single=false, deleteFunction }) => {
                         </AlertDialogHeader>
 
                         <AlertDialogBody>
-                            Are you sure? You can't undo this action afterwards.
+                            Are you sure? You can&apos;t undo this action afterwards.
                         </AlertDialogBody>
 
                         <AlertDialogFooter>
@@ -52,6 +55,12 @@ export const DeleteButton = ({ deleteType, single=false, deleteFunction }) => {
             </AlertDialog>
         </div>
     );
+};
+
+DeleteButton.propTypes = {
+    deleteType: PropTypes.string.isRequired,
+    single: PropTypes.bool,
+    deleteFunction: PropTypes.func.isRequired,
 };
 
 export default DeleteButton;

@@ -1,7 +1,6 @@
-import { VStack, Heading, Input, HStack, Button, useDisclosure, Collapse, Box, Divider, Text } from '@chakra-ui/react';
+import { VStack, Heading, Input, HStack, Button, Collapse, Box } from '@chakra-ui/react';
 import { useState } from 'react';
 import { getAllUsers } from '../../services/users.service';
-import SingleUser from './SingleUser';
 import UserFeed from './UserFeed';
 
 const SearchUsers = () => {
@@ -9,8 +8,6 @@ const SearchUsers = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [foundUsers, setFoundUsers] = useState([]);
     const [searching, setSearching] = useState(false);
-
-    const { isOpen, onToggle } = useDisclosure();
 
     const handleSearch = () => {
         if (!input) {

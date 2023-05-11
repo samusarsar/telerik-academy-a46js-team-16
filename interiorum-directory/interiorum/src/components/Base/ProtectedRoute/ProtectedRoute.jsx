@@ -1,8 +1,8 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 
-const ProtectedRoute = ({
-    user,
-}) => {
+import PropTypes from 'prop-types';
+
+const ProtectedRoute = ({ user }) => {
     const location = useLocation();
 
     if (location.pathname === '/log-in' || location.pathname === '/sign-up') {
@@ -14,6 +14,10 @@ const ProtectedRoute = ({
             <Outlet /> :
             <Navigate to='log-in' state={{ from: location }} replace />;
     };
+};
+
+ProtectedRoute.propTypes = {
+    user: PropTypes.object,
 };
 
 export default ProtectedRoute;

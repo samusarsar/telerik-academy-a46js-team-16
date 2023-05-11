@@ -1,8 +1,10 @@
-import { Box, Divider, HStack, Heading, Text, VStack } from '@chakra-ui/react';
+import { Heading, VStack } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { getUsersByChild } from '../../services/users.service';
 import { ROLE_CHILD, WANT_ADMIN_ROLE } from '../../common/constants.js';
 import UserFeed from './UserFeed';
+
+import PropTypes from 'prop-types';
 
 const UsersList = ({ roleType }) => {
     const [users, setUsers] = useState(null);
@@ -22,6 +24,11 @@ const UsersList = ({ roleType }) => {
                 <UserFeed users={users} roleType={roleType} />
             </VStack>);
     };
+
+    return null;
 };
 
+UsersList.propTypes = {
+    roleType: PropTypes.oneOf([null, 'admin', 'blocked']),
+};
 export default UsersList;

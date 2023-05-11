@@ -1,6 +1,6 @@
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
 
-import { Heading, Spacer, HStack, Button, Image, Menu, MenuButton, MenuList, MenuItem, MenuDivider, useDisclosure, Box, useToast, Link, Text } from '@chakra-ui/react';
+import { Heading, Spacer, HStack, Button, Image, Menu, MenuButton, MenuList, MenuItem, MenuDivider, useDisclosure, Box, useToast, Link } from '@chakra-ui/react';
 
 import { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../../../context/AppContext/AppContext';
@@ -27,6 +27,8 @@ const NavBar = () => {
                 setMenuAvatar(data);
             });
         }
+
+        return undefined;
     });
 
     useEffect(() => {
@@ -65,10 +67,13 @@ const NavBar = () => {
                             <MenuButton minW='fit-content' px={3} onMouseEnter={onOpen} onClick={() => navigate('my-profile')}>
                                 <HStack gap={2}>
                                     <Image src={menuAvatar}
+                                        // eslint-disable-next-line max-len
                                         fallbackSrc='https://firebasestorage.googleapis.com/v0/b/interiorum-6c515.appspot.com/o/assets%2Fanon-user.jpg?alt=media&token=0007d79f-52fb-4866-9747-326d52395bd9'
                                         rounded='full'
                                         boxSize='40px' />
-                                    <Link as={NavLink} to={'my-profile'} fontWeight={ `${inProfile ? 'bold' : ''}`} color={ `${inProfile ? 'brand.100' : ''}`}>{userData && userData.handle}</Link>
+                                    <Link as={NavLink} to={'my-profile'} fontWeight={ `${inProfile ? 'bold' : ''}`} color={ `${inProfile ? 'brand.100' : ''}`}>
+                                        {userData && userData.handle}
+                                    </Link>
                                 </HStack>
                             </MenuButton>
                             <MenuList>

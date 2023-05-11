@@ -1,6 +1,8 @@
-import { HStack, VStack, Icon, Text } from "@chakra-ui/react";
-import { MdKeyboardArrowLeft, MdKeyboardArrowRight, MdKeyboardDoubleArrowLeft, MdKeyboardDoubleArrowRight } from "react-icons/md";
-import { useParams } from "react-router-dom";
+import { HStack, VStack, Icon, Text } from '@chakra-ui/react';
+import { MdKeyboardArrowLeft, MdKeyboardArrowRight, MdKeyboardDoubleArrowLeft, MdKeyboardDoubleArrowRight } from 'react-icons/md';
+import { useParams } from 'react-router-dom';
+
+import PropTypes from 'prop-types';
 
 const Pagination = ({ pages, currPage, setCurrPage, setOffset }) => {
 
@@ -82,6 +84,13 @@ const Pagination = ({ pages, currPage, setCurrPage, setOffset }) => {
                 </VStack>
             </>}
         </HStack>);
+};
+
+Pagination.propTypes = {
+    pages: PropTypes.array.isRequired,
+    currPage: PropTypes.number.isRequired,
+    setCurrPage: PropTypes.func.isRequired,
+    setOffset: PropTypes.func.isRequired,
 };
 
 export default Pagination;
