@@ -5,7 +5,7 @@ import { FaRegComment } from 'react-icons/fa';
 import { FiShare } from 'react-icons/fi';
 import { useContext, useEffect, useState } from 'react';
 import { addLikedPostToUser, getUserByHandle } from '../../../services/users.service';
-import { addLikeToPost } from '../../../services/post.service';
+import { addLikeToPost, deletePost } from '../../../services/post.service';
 
 import { AppContext } from '../../../context/AppContext/AppContext';
 import handleLikePost from '../../../common/helpers/handleLikePost';
@@ -13,7 +13,6 @@ import handleUnlikePost from '../../../common/helpers/handleUnlikePost';
 import { onValue, ref } from 'firebase/database';
 import { db } from '../../../config/firebase-config';
 import DeleteButton from '../../Base/DeleteButton/DeleteButton';
-import handleDeletePost from '../../../common/helpers/handleDeletePost';
 import ContentEdit from '../../Views/IndividualPost/ContentEdit/ContentEdit';
 import { ADMIN_ROLE } from '../../../common/constants';
 import { addPostToTag, addTagToPost, removePostFromTag, removeTagFromPost } from '../../../services/tag.services';
@@ -62,7 +61,7 @@ const PostDetails = ({ post }) => {
     };
 
     const handleDeleteButton = () => {
-        handleDeletePost(post.postId, userData.handle);
+        deletePost(post.postId, userData.handle);
         navigate(-1);
     };
 

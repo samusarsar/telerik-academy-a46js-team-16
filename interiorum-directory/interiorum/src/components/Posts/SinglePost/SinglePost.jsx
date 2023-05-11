@@ -9,8 +9,9 @@ import handleUnlikePost from '../../../common/helpers/handleUnlikePost';
 import { AiFillLike, AiOutlineLike } from 'react-icons/ai';
 import { getUserByHandle } from '../../../services/users.service';
 import DeleteButton from '../../Base/DeleteButton/DeleteButton';
-import handleDeletePost from '../../../common/helpers/handleDeletePost';
+import { deletePost } from '../../../services/post.service';
 import { ADMIN_ROLE } from '../../../common/constants';
+
 
 const SinglePost = ({ post, large = false }) => {
     const [likedUsers, setLikedUsers] = useState(null);
