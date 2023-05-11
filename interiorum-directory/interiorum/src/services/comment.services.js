@@ -1,4 +1,4 @@
-import { equalTo, get, orderByChild, push, query, ref, set, update } from 'firebase/database';
+import { equalTo, get, orderByChild, push, query, ref, remove, set, update } from 'firebase/database';
 import { db } from '../config/firebase-config';
 
 export const addComment = (content, postId, handle) => {
@@ -39,6 +39,23 @@ const addCommentToPost = (postId, commentId) => {
         });
 };
 
+export const deleteComment = (handle, commentId) => {
+
+    get(ref(db, `comments/${commentId}/postId`))
+        .then(snapshot => snapshot.val())
+        .then(postId => deleteCommentToPost(postId, commentId))
+        .then(() => deleteCommentToUser(handle, commentId))
+        .then(() => remove(ref(db, `comments/${commentId}`)));
+};
+
+const deleteCommentToUser = (handle, commentId) => {
+    return remove(ref(db, `users/${handle}/comments/${commentId}`));
+};
+
+const deleteCommentToPost = (postId, commentId) => {
+    return remove(ref(db, `posts/${postId}/comments/${commentId}`));
+};
+
 export const getCommentById = (commentId) => {
     return get(ref(db, `comments/${commentId}`))
         .then(snapshot => {
@@ -57,7 +74,7 @@ export const getCommentsByPost = (postID) => {
     return get(query(ref(db, 'comments'), orderByChild('postId'), equalTo(postID)))
         .then(snapshot => {
             if (!snapshot.exists()) {
-                throw new Error('No comments found for this post');
+                return {};
             }
             return snapshot.val();
         })
