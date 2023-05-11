@@ -2,7 +2,7 @@ import { DeleteIcon } from '@chakra-ui/icons';
 import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Button, IconButton, useDisclosure, useToast } from '@chakra-ui/react';
 import { useRef } from 'react';
 
-export const DeleteButton = ({ deleteType, deleteFunction }) => {
+export const DeleteButton = ({ deleteType, single=false, deleteFunction }) => {
 
     const toast = useToast();
 
@@ -24,8 +24,9 @@ export const DeleteButton = ({ deleteType, deleteFunction }) => {
 
     return (
         <div className='delete-button'>
-            <IconButton h='30px' w='30px' colorScheme='red' icon={<DeleteIcon />} onClick={onOpen} />
-
+            {!single ?
+                <IconButton h='30px' w='30px' colorScheme='red' icon={<DeleteIcon />} onClick={onOpen} /> :
+                <IconButton size='xs' colorScheme='red' icon={<DeleteIcon />} onClick={onOpen} />}
 
             <AlertDialog isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={onClose}>
                 <AlertDialogOverlay>

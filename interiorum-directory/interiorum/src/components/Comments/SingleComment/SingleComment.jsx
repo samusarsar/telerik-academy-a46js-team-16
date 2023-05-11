@@ -44,18 +44,19 @@ const SingleComment = ({ comment }) => {
                     <Text>{comment.content}</Text>
                     {comment.author === userData.handle && <ContentEdit toEdit={comment} commentMode={true} />}
                 </HStack>
-                {(commentLikes) &&
-                            <Button h='25px' p={1} fontSize='0.8em' colorScheme={!isLiked ? 'blackAlpha' : 'telegram'} onClick={() => {
-                                !isLiked ?
-                                    handleLikeComment({ commentId: comment.commentId, handle: userData.handle }) :
-                                    handleUnlikeComment({ commentId: comment.commentId, handle: userData.handle });
-                            }}><Icon as={isLiked ? AiFillLike : AiOutlineLike} mr={1} />Like{commentLikes.length ? ` | ${commentLikes.length}` : ''}
-                            </Button>}
+                <HStack>
+                    {(commentLikes) &&
+                                <Button h='25px' p={1} fontSize='0.8em' colorScheme={!isLiked ? 'blackAlpha' : 'telegram'} onClick={() => {
+                                    !isLiked ?
+                                        handleLikeComment({ commentId: comment.commentId, handle: userData.handle }) :
+                                        handleUnlikeComment({ commentId: comment.commentId, handle: userData.handle });
+                                }}><Icon as={isLiked ? AiFillLike : AiOutlineLike} mr={1} />Like{commentLikes.length ? ` | ${commentLikes.length}` : ''}
+                                </Button>}
 
-                {(userData.handle === comment.author) &&
-                    <DeleteButton deleteType={'comment'} deleteFunction={() => deleteComment(userData.handle, comment.commentId)} />
-
-                }
+                    {(userData.handle === comment.author) &&
+                        <DeleteButton deleteType={'comment'} single={true} deleteFunction={() => deleteComment(userData.handle, comment.commentId)} />
+                    }
+                </HStack>
             </VStack>
         </HStack>
     );

@@ -54,9 +54,6 @@ const SinglePost = ({ post, large = false }) => {
                             }}><Icon as={isLiked ? AiFillLike : AiOutlineLike} mr={1} />Like{likedUsers.length ? ` | ${likedUsers.length}` : ''}
                             </Button>}
 
-                        {userData && (userData.handle === post.author || userData.role === ADMIN_ROLE) &&
-                            <DeleteButton deleteType={'post'} deleteFunction={() => deletePost(post.postId, userData.handle)} />
-                        }
 
                         <AvatarGroup size='sm' max={3} fontSize='0.8em' spacing='-0.5rem' >
                             {likedUsers.length ?
@@ -68,6 +65,10 @@ const SinglePost = ({ post, large = false }) => {
                                     />) :
                                 <Text>No likes yet.</Text>}
                         </AvatarGroup>
+
+                        {userData && (userData.handle === post.author || userData.role === ADMIN_ROLE) &&
+                                            <DeleteButton deleteType={'post'} single={true} deleteFunction={() => deletePost(post.postId, userData.handle)} />
+                        }
                     </HStack>
                 </HStack>
             </Box>
