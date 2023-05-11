@@ -19,11 +19,11 @@ const PostCommentsBox = ({ postId }) => {
     const [comments, setComments] = useState([]);
 
     useEffect(() => {
-        onValue(ref(db, `comments`), () => {
+        return onValue(ref(db, `comments`), () => {
             getCommentsByPost(postId)
-                .then(snapshot => {
-                    setComments(snapshot);
-                    setFeatured(getFeaturedComment(snapshot));
+                .then(result => {
+                    setComments(result);
+                    setFeatured(getFeaturedComment(result));
                 });
         });
     }, []);
