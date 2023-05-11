@@ -4,10 +4,9 @@ import { useParams } from 'react-router-dom';
 import { Spacer, VStack } from '@chakra-ui/react';
 import PostCommentsBox from '../../Posts/PostCommentsBox/PostCommentsBox';
 import { getPostById } from '../../../services/post.service';
-import { getCommentsByPost } from '../../../services/comment.services';
 
 const IndividualPost = () => {
-    // const [loading, setLoading] = useState(false);
+
     const [post, setPost] = useState(null);
 
     const { postId } = useParams();

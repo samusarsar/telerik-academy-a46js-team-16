@@ -1,7 +1,7 @@
-import { Button, Divider, HStack, Heading, Spacer, Text, VStack } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
-import HomeHeader from "../Home/HomeHeader";
-import { BRAND_COLOR_2 } from "../../../common/constants";
+import { Button, Divider, HStack, Heading, Spacer, Text, VStack } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
+import HomeHeader from '../Home/HomeHeader';
+import { BRAND_COLOR_2 } from '../../../common/constants';
 
 const NotFound = () => {
     const navigate = useNavigate();
@@ -25,7 +25,7 @@ const NotFound = () => {
                 </HStack>
             </VStack>
         </VStack>
-    )
+    );
 };
 
 export default NotFound;

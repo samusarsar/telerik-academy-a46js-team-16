@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import {
     Drawer,
     DrawerBody,
@@ -14,11 +15,6 @@ import {
     FormLabel,
     FormErrorMessage,
     useToast,
-    Menu,
-    MenuButton,
-    MenuList,
-    MenuItem,
-    MenuDivider,
     Image,
     Text,
     VStack,
@@ -32,9 +28,10 @@ import { POST_CONTENT_MAX_LENGTH, POST_CONTENT_MIN_LENGTH, POST_TITLE_MAX_LENGTH
 import { deleteImagesForPost, editPost } from '../../../../services/post.service';
 import { editComment } from '../../../../services/comment.services';
 import { uploadImagesForPost } from '../../../../services/post.service.js';
+import PropTypes from 'prop-types';
 
 
-const ContentEdit = ({ toEdit, commentMode=false }) => {
+const ContentEdit = ({ toEdit, commentMode = false }) => {
     const [title, setTitle] = useState(toEdit.title);
     const [titleError, setTitleError] = useState(false);
     const [content, setContent] = useState(toEdit.content);
@@ -219,4 +216,14 @@ const ContentEdit = ({ toEdit, commentMode=false }) => {
     );
 };
 
+ContentEdit.propTypes = {
+    toEdit: PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        content: PropTypes.string.isRequired,
+        imagesURL: PropTypes.string,
+        postId: PropTypes.string.isRequired,
+        commentId: PropTypes.string.isRequired,
+    }).isRequired,
+    commentMode: PropTypes.bool,
+};
 export default ContentEdit;

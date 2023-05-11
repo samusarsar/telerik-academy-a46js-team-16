@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { Box, Container, Text, Image, Spacer, HStack, ButtonGroup, Button, Tabs, TabList, Tab, TabPanels, TabPanel, Flex, Icon, useToast, Badge } from '@chakra-ui/react';
 import { useContext, useEffect, useState } from 'react';
 import ProfilePosts from './ProfilePosts';
@@ -58,6 +59,7 @@ const Profile = () => {
                     });
             });
         };
+        return undefined;
     }, [profile]);
 
     const handleApply = () => {

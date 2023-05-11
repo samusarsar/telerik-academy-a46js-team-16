@@ -1,5 +1,6 @@
 import { Container, Heading } from '@chakra-ui/react';
 import PostFeed from '../../Posts/PostFeed/PostFeed';
+import PropTypes from 'prop-types';
 
 const ProfileComments = ({ comments }) => {
     return (
@@ -8,6 +9,10 @@ const ProfileComments = ({ comments }) => {
             <PostFeed posts={comments} profileCommentMode={true} />
         </Container>
     );
+};
+
+ProfileComments.propTypes = {
+    comments: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default ProfileComments;

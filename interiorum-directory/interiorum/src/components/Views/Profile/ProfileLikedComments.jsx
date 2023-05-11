@@ -1,10 +1,9 @@
 import { onValue, ref } from 'firebase/database';
 import { useEffect, useState } from 'react';
 import { db } from '../../../config/firebase-config';
-import { getPostById } from '../../../services/post.service';
-import ProfilePosts from './ProfilePosts';
 import ProfileComments from './ProfileComments';
 import { deleteLikedCommentToUser, getCommentById } from '../../../services/comment.services';
+import PropTypes from 'prop-types';
 
 const ProfileLikedComments = ({ handle }) => {
     const [likedComments, setLikedComments] = useState(null);
@@ -34,4 +33,7 @@ const ProfileLikedComments = ({ handle }) => {
     }
 };
 
+ProfileLikedComments.propTypes = {
+    handle: PropTypes.string.isRequired,
+};
 export default ProfileLikedComments;

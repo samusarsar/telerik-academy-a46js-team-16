@@ -25,9 +25,11 @@ import {
     ButtonGroup,
 } from '@chakra-ui/react';
 import { MdEdit } from 'react-icons/md';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { editUser, uploadAvatar } from '../../../services/users.service';
 import { USER_NAME_MIN_LENGTH, USER_NAME_MAX_LENGTH } from '../../../common/constants';
+import PropTypes from 'prop-types';
+
 
 const EditDrawer = ({ handle, currFirstName, currLastName }) => {
     const [firstName, setFirstName] = useState(currFirstName);
@@ -39,7 +41,6 @@ const EditDrawer = ({ handle, currFirstName, currLastName }) => {
     const [newAvatarURL, setNewAvatarURL] = useState(null);
 
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const btnRef = useRef();
     const toast = useToast();
 
     const handleChoose = (e) => {
@@ -177,4 +178,9 @@ const EditDrawer = ({ handle, currFirstName, currLastName }) => {
     );
 };
 
+EditDrawer.propTypes = {
+    handle: PropTypes.string.isRequired,
+    currFirstName: PropTypes.string.isRequired,
+    currLastName: PropTypes.string.isRequired,
+};
 export default EditDrawer;

@@ -1,5 +1,6 @@
 import { Container, Heading } from '@chakra-ui/react';
 import PostFeed from '../../Posts/PostFeed/PostFeed';
+import PropTypes from 'prop-types';
 
 const ProfilePosts = ({ posts }) => {
     return (
@@ -10,4 +11,7 @@ const ProfilePosts = ({ posts }) => {
     );
 };
 
+ProfilePosts.propTypes = {
+    posts: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 export default ProfilePosts;

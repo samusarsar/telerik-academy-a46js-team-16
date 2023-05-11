@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { db } from '../../../config/firebase-config';
 import { deleteLikedPostToUser, getPostById } from '../../../services/post.service';
 import ProfilePosts from './ProfilePosts';
+import PropTypes from 'prop-types';
 
 const ProfileLikedPosts = ({ handle }) => {
     const [likedPosts, setLikedPosts] = useState(null);
@@ -33,4 +34,7 @@ const ProfileLikedPosts = ({ handle }) => {
     }
 };
 
+ProfileLikedPosts.propTypes = {
+    handle: PropTypes.string.isRequired,
+};
 export default ProfileLikedPosts;
