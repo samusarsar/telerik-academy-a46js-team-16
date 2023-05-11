@@ -1,6 +1,6 @@
 import { Box, HStack, Heading, Text, AvatarGroup, Avatar, Spacer, Button, Icon } from '@chakra-ui/react';
 import { useContext, useEffect, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { AppContext } from '../../../context/AppContext/AppContext';
 import { onValue, ref } from 'firebase/database';
 import { db } from '../../../config/firebase-config';
@@ -12,6 +12,7 @@ import DeleteButton from '../../Base/DeleteButton/DeleteButton';
 import { deletePost } from '../../../services/post.service';
 import { ADMIN_ROLE } from '../../../common/constants';
 
+import PropTypes from 'prop-types';
 
 const SinglePost = ({ post, large = false }) => {
     const [likedUsers, setLikedUsers] = useState(null);
@@ -67,7 +68,7 @@ const SinglePost = ({ post, large = false }) => {
                         </AvatarGroup>
 
                         {userData && (userData.handle === post.author || userData.role === ADMIN_ROLE) &&
-                                            <DeleteButton deleteType={'post'} single={true} deleteFunction={() => deletePost(post.postId, userData.handle)} />
+                            <DeleteButton deleteType={'post'} single={true} deleteFunction={() => deletePost(post.postId, userData.handle)} />
                         }
                     </HStack>
                 </HStack>
@@ -78,4 +79,14 @@ const SinglePost = ({ post, large = false }) => {
     return null;
 };
 
+SinglePost.propTypes = {
+    post: PropTypes.shape({
+        author: PropTypes.string.isRequired,
+        content: PropTypes.string.isRequired,
+        createdOn: PropTypes.string.isRequired,
+        postId: PropTypes.string.isRequired,
+        title: PropTypes.string.isRequired,
+    }).isRequired,
+    large: PropTypes.bool,
+};
 export default SinglePost;

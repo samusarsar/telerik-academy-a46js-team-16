@@ -5,6 +5,8 @@ import SingleProfileComment from '../../Comments/SingleProfileComment/SingleProf
 import { useEffect, useState } from 'react';
 import Pagination from '../../Base/Pagination/Pagination';
 
+import PropTypes from 'prop-types';
+
 const PostFeed = ({ posts, profileCommentMode=false }) => {
     const [postsToShow, setPostsToShow] = useState(null);
 
@@ -67,6 +69,13 @@ const PostFeed = ({ posts, profileCommentMode=false }) => {
             </>
         );
     }
+
+    return null;
+};
+
+PostFeed.propTypes = {
+    posts: PropTypes.array.isRequired,
+    profileCommentMode: PropTypes.bool,
 };
 
 export default PostFeed;

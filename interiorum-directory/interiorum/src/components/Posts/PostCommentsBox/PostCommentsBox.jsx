@@ -10,6 +10,8 @@ import { BLOCKED_ROLE } from '../../../common/constants';
 import BlockedAlert from '../../Base/BlockedAlert/BlockedAlert';
 import { AppContext } from '../../../context/AppContext/AppContext';
 
+import PropTypes from 'prop-types';
+
 const PostCommentsBox = ({ postId }) => {
     const { userData } = useContext(AppContext);
 
@@ -50,6 +52,10 @@ const PostCommentsBox = ({ postId }) => {
             </VStack>
         </VStack>
     );
+};
+
+PostCommentsBox.propTypes = {
+    postId: PropTypes.string.isRequired,
 };
 
 export default PostCommentsBox;

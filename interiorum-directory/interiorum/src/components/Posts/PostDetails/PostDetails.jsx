@@ -1,12 +1,11 @@
-import { Avatar, Badge, Box, Button, ButtonGroup, Collapse, Divider, FormControl, FormErrorMessage, HStack, Heading, Icon, Image, Input, Spacer, Stack, Tag, TagCloseButton, TagLabel, Text, VStack, useDisclosure } from '@chakra-ui/react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+/* eslint-disable max-len */
+import { Avatar, Badge, Button, ButtonGroup, Divider, FormControl, FormErrorMessage, HStack, Heading, Icon, Image, Input, Spacer, Tag, TagCloseButton, TagLabel, Text, VStack } from '@chakra-ui/react';
+import { Link, useNavigate } from 'react-router-dom';
 import { AiOutlineLike, AiFillLike } from 'react-icons/ai';
-import { FaRegComment } from 'react-icons/fa';
 import { FiShare } from 'react-icons/fi';
 import { useContext, useEffect, useState } from 'react';
-import { addLikedPostToUser, getUserByHandle } from '../../../services/users.service';
-import { addLikeToPost, deletePost } from '../../../services/post.service';
-
+import { getUserByHandle } from '../../../services/users.service';
+import { deletePost } from '../../../services/post.service';
 import { AppContext } from '../../../context/AppContext/AppContext';
 import handleLikePost from '../../../common/helpers/handleLikePost';
 import handleUnlikePost from '../../../common/helpers/handleUnlikePost';
@@ -17,10 +16,11 @@ import ContentEdit from '../../Views/IndividualPost/ContentEdit/ContentEdit';
 import { ADMIN_ROLE } from '../../../common/constants';
 import { addPostToTag, addTagToPost, removePostFromTag, removeTagFromPost } from '../../../services/tag.services';
 
+import PropTypes from 'prop-types';
+
 const PostDetails = ({ post }) => {
     const [author, setAuthor] = useState(null);
     const [postLikes, setPostLikes] = useState(null);
-    const [postTags, setPostTags] = useState(post.tags ? Object.keys(post.tags) : []);
     const [currPost, setCurrPost] = useState(post);
 
     const [newTag, setNewTag] = useState('');
@@ -148,6 +148,17 @@ const PostDetails = ({ post }) => {
             </VStack>
         </>
     );
+};
+
+PostDetails.propTypes = {
+    post: PropTypes.shape({
+        author: PropTypes.string.isRequired,
+        categories: PropTypes.arrayOf(PropTypes.string),
+        createdOn: PropTypes.string.isRequired,
+        postId: PropTypes.string.isRequired,
+        tags: PropTypes.objectOf(PropTypes.bool),
+        title: PropTypes.string.isRequired,
+    }).isRequired,
 };
 
 export default PostDetails;

@@ -3,6 +3,8 @@ import { useContext, useState } from 'react';
 import { AppContext } from '../../../context/AppContext/AppContext';
 import { addComment } from '../../../services/comment.services';
 
+import PropTypes from 'prop-types';
+
 const CreateComment = ({ postId }) => {
     const { userData } = useContext(AppContext);
 
@@ -27,6 +29,7 @@ const CreateComment = ({ postId }) => {
                 <HStack justify='center' align='start' w='100%'>
                     <Image
                         src={userData.avatarURL}
+                        // eslint-disable-next-line max-len
                         fallbackSrc='https://firebasestorage.googleapis.com/v0/b/interiorum-6c515.appspot.com/o/assets%2Fanon-user.jpg?alt=media&token=0007d79f-52fb-4866-9747-326d52395bd9'
                         w='45px'
                         rounded='full'
@@ -40,6 +43,11 @@ const CreateComment = ({ postId }) => {
             </VStack>
         );
     };
+
+    return null;
 };
 
+CreateComment.propTypes = {
+    postId: PropTypes.string.isRequired,
+};
 export default CreateComment;

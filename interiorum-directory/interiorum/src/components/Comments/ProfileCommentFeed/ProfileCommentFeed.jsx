@@ -2,6 +2,8 @@ import { Box, Divider, Tabs, TabList, Tab, TabPanels, TabPanel, Icon, VStack, Te
 import SingleProfileComment from '../SingleProfileComment/SingleProfileComment';
 import { MdOutlineDensitySmall, MdOutlineDensityLarge } from 'react-icons/md';
 
+import PropTypes from 'prop-types';
+
 const ProfileCommentFeed = ({ comments }) => {
     return (
         <>
@@ -39,6 +41,12 @@ const ProfileCommentFeed = ({ comments }) => {
             }
         </>
     );
+};
+
+ProfileCommentFeed.propTypes = {
+    comments: PropTypes.arrayOf(PropTypes.shape({
+        commentId: PropTypes.string.isRequired,
+    })).isRequired,
 };
 
 export default ProfileCommentFeed;

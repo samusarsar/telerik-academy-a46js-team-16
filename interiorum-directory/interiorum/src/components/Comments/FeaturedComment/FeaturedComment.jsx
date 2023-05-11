@@ -1,6 +1,8 @@
 import { Box, Heading, VStack } from '@chakra-ui/react';
 import SingleComment from '../SingleComment/SingleComment';
 
+import PropTypes from 'prop-types';
+
 const FeaturedComment = ({ comment }) => {
     return (
         <VStack align='start' w='80%' gap={3}>
@@ -9,6 +11,12 @@ const FeaturedComment = ({ comment }) => {
                 <SingleComment key={comment.commentId} comment={comment} />
             </Box>
         </VStack>);
+};
+
+FeaturedComment.propTypes = {
+    comment: PropTypes.shape({
+        commentId: PropTypes.string.isRequired,
+    }).isRequired,
 };
 
 export default FeaturedComment;

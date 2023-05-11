@@ -1,8 +1,9 @@
 import { Container, Heading, Button, Icon } from '@chakra-ui/react';
 import { AiOutlineArrowRight } from 'react-icons/ai';
 import PostFeed from '../../Posts/PostFeed/PostFeed.jsx';
-
 import { useNavigate } from 'react-router-dom';
+
+import PropTypes from 'prop-types';
 
 const PostsBox = ({ heading, posts }) => {
     const navigate = useNavigate();
@@ -16,6 +17,11 @@ const PostsBox = ({ heading, posts }) => {
             </Button>
         </Container>
     );
+};
+
+PostsBox.propTypes = {
+    heading: PropTypes.string.isRequired,
+    posts: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default PostsBox;

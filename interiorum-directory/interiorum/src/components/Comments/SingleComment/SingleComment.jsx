@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, HStack, Heading, Icon, Image, Text, VStack } from '@chakra-ui/react';
+import { Avatar, Button, HStack, Icon, Text, VStack } from '@chakra-ui/react';
 import { useContext, useEffect, useState } from 'react';
 import { AiFillLike, AiOutlineLike } from 'react-icons/ai';
 import { getUserByHandle } from '../../../services/users.service';
@@ -10,6 +10,8 @@ import handleUnlikeComment from '../../../common/helpers/handleUnlikeComment';
 import ContentEdit from '../../Views/IndividualPost/ContentEdit/ContentEdit';
 import DeleteButton from '../../Base/DeleteButton/DeleteButton';
 import { deleteComment } from '../../../services/comment.services';
+
+import PropTypes from 'prop-types';
 
 const SingleComment = ({ comment }) => {
     const [author, setAuthor] = useState(null);
@@ -61,6 +63,15 @@ const SingleComment = ({ comment }) => {
             </VStack>
         </HStack>
     );
+};
+
+SingleComment.propTypes = {
+    comment: PropTypes.shape({
+        author: PropTypes.string.isRequired,
+        commentId: PropTypes.string.isRequired,
+        content: PropTypes.string.isRequired,
+        createdOn: PropTypes.string.isRequired,
+    }).isRequired,
 };
 
 export default SingleComment;

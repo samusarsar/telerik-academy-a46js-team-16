@@ -1,6 +1,7 @@
-import { Box, Divider, HStack, Heading, Text, VStack } from "@chakra-ui/react";
-import SingleComment from "../SingleComment/SingleComment";
-import CreateComment from "../CreateComment/CreateComment";
+import { Box, Divider, HStack, Heading, Text, VStack } from '@chakra-ui/react';
+import SingleComment from '../SingleComment/SingleComment';
+
+import PropTypes from 'prop-types';
 
 const CommentFeed = ({ comments }) => {
     return (
@@ -21,6 +22,12 @@ const CommentFeed = ({ comments }) => {
             </Box>
         </VStack>
     );
+};
+
+CommentFeed.propTypes = {
+    comments: PropTypes.arrayOf(PropTypes.shape({
+        commentId: PropTypes.string.isRequired,
+    })).isRequired,
 };
 
 export default CommentFeed;

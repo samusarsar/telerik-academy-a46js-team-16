@@ -1,4 +1,4 @@
-import { Text, Box, HStack, Spacer, Card, Image, Stack, CardBody, CardFooter, Heading, Flex, VStack } from '@chakra-ui/react';
+import { Text, Box, HStack, Spacer, Heading, Flex, VStack } from '@chakra-ui/react';
 import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getPostById } from '../../../services/post.service';
@@ -38,10 +38,10 @@ const SingleProfileComment = ({ comment, large = false }) => {
                                 {postTitle && postTitle}
                             </Heading>
                         </Link>
-                    {large &&
-                        <Text py={3} color='brand.400' fontSize='0.9em'>
-                            {body}
-                        </Text>}
+                        {large &&
+                            <Text py={3} color='brand.400' fontSize='0.9em'>
+                                {body}
+                            </Text>}
                     </VStack>
                     <Spacer />
                     {(userData.handle === comment.author) &&
@@ -54,6 +54,19 @@ const SingleProfileComment = ({ comment, large = false }) => {
     }
 
     return null;
+};
+
+import PropTypes from 'prop-types';
+
+SingleProfileComment.propTypes = {
+    comment: PropTypes.shape({
+        author: PropTypes.string.isRequired,
+        postId: PropTypes.string.isRequired,
+        commentId: PropTypes.string.isRequired,
+        content: PropTypes.string.isRequired,
+        createdOn: PropTypes.string.isRequired,
+    }).isRequired,
+    large: PropTypes.bool,
 };
 
 export default SingleProfileComment;
