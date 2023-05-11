@@ -86,13 +86,19 @@ export const sortPostsByDate = (posts) => {
 };
 
 export const sortPostsByPopularity = (posts) => {
-    return [];
-    return [...posts].sort((a, b) => b.comments.length - a.comments.length);
+
+    const likedPosts = posts
+        .filter(post => post.comments)
+        .sort((a, b) => Object.keys(b.comments).length - Object.keys(a.comments).length );
+
+    const notLikedPosts = posts
+        .filter(post => !post.comments);
+    return likedPosts.concat(sortPostsByDate(notLikedPosts));
 };
 
 export const filterUnansweredPosts = (posts) => {
-    return [];
-    // return posts.filter(post => post.comments.length === 0);
+    const unansweredPosts = posts.filter(post => !post.comments);
+    return sortPostsByDate(unansweredPosts);
 };
 
 export const getPostById = (postId) => {
