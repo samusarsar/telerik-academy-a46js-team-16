@@ -1,4 +1,5 @@
-import { Card, CardBody, Image, Stack, Heading, Text, Divider, CardFooter, ButtonGroup, Button, HStack, VStack, Icon, Link, CardHeader, InputGroup, InputLeftElement, Input, useDisclosure, Alert, AlertIcon, Box, AlertTitle, AlertDescription, CloseButton, FormControl, FormErrorMessage } from '@chakra-ui/react';
+// eslint-disable-next-line max-len
+import { Card, CardBody, Image, Stack, Heading, Text, Button, VStack, Icon, CardHeader, InputGroup, InputLeftElement, Input, useDisclosure, Alert, AlertIcon, Box, AlertTitle, AlertDescription, CloseButton, FormControl, FormErrorMessage } from '@chakra-ui/react';
 import { useState } from 'react';
 import { AiOutlineMail } from 'react-icons/ai';
 
