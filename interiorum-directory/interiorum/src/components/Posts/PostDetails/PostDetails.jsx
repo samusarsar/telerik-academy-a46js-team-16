@@ -76,6 +76,7 @@ const PostDetails = ({ post }) => {
                         fallbackSrc='https://firebasestorage.googleapis.com/v0/b/interiorum-6c515.appspot.com/o/assets%2Fanon-user.jpg?alt=media&token=0007d79f-52fb-4866-9747-326d52395bd9'
                         w='70px'
                         rounded='full'
+                        objectFit='cover'
                         mx={2} />
                     <VStack align='start' w='80%'>
                         <VStack align='start' w='100%' gap={2}>
@@ -123,7 +124,7 @@ const PostDetails = ({ post }) => {
                             <>
                                 <Divider borderColor='brand.200' />
                                 <HStack w='100%' flexWrap='wrap' justify='center' gap={3}>
-                                    {currPost.imagesURL.split(' ').map(url => <Image key={url} src={url} boxSize='200px' />)}
+                                    {currPost.imagesURL.split(' ').map(url => <Image key={url} src={url} boxSize='200px' objectFit='cover' />)}
                                 </HStack>
                             </>}
                         </VStack>

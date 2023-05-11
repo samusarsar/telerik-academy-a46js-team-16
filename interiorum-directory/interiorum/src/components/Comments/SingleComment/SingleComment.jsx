@@ -36,6 +36,7 @@ const SingleComment = ({ comment }) => {
                 fallbackSrc='https://firebasestorage.googleapis.com/v0/b/interiorum-6c515.appspot.com/o/assets%2Fanon-user.jpg?alt=media&token=0007d79f-52fb-4866-9747-326d52395bd9'
                 w='45px'
                 rounded='full'
+                objectFit='cover'
                 mx={2}/>
             <VStack align='start'>
                 <Text fontSize='0.8em' fontWeight='700'>{comment.author}</Text>
