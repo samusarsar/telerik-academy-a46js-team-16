@@ -8,6 +8,8 @@ import { db } from '../../../config/firebase-config';
 import handleLikeComment from '../../../common/helpers/handleLikeComment';
 import handleUnlikeComment from '../../../common/helpers/handleUnlikeComment';
 import ContentEdit from '../../Views/IndividualPost/ContentEdit/ContentEdit';
+import DeleteButton from '../../Base/DeleteButton/DeleteButton';
+import { deleteComment } from '../../../services/comment.services';
 
 const SingleComment = ({ comment }) => {
     const [author, setAuthor] = useState(null);
@@ -49,6 +51,11 @@ const SingleComment = ({ comment }) => {
                                     handleUnlikeComment({ commentId: comment.commentId, handle: userData.handle });
                             }}><Icon as={isLiked ? AiFillLike : AiOutlineLike} mr={1} />Like{commentLikes.length ? ` | ${commentLikes.length}` : ''}
                             </Button>}
+
+                {(userData.handle === comment.author) &&
+                    <DeleteButton deleteType={'comment'} deleteFunction={() => deleteComment(userData.handle, comment.commentId)} />
+
+                }
             </VStack>
         </HStack>
     );

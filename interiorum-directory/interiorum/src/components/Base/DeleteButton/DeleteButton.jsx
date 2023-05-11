@@ -1,11 +1,8 @@
 import { DeleteIcon } from '@chakra-ui/icons';
 import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Button, IconButton, useDisclosure, useToast } from '@chakra-ui/react';
 import { useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
 
-export const DeleteButton = ({ deleteType, deleteFunction, from }) => {
-
-    const navigate = useNavigate();
+export const DeleteButton = ({ deleteType, deleteFunction }) => {
 
     const toast = useToast();
 

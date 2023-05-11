@@ -20,7 +20,7 @@ const CommentFeed = ({ comments }) => {
                     <Text>There are no comments on here yet. Be the first to respond!</Text>}
             </Box>
         </VStack>
-    )
+    );
 };
 
 export default CommentFeed;

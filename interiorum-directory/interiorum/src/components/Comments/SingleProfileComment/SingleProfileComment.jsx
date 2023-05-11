@@ -1,10 +1,15 @@
-import { Text, Box, HStack, Spacer, Card, Image, Stack, CardBody, CardFooter, Heading } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { Text, Box, HStack, Spacer, Card, Image, Stack, CardBody, CardFooter, Heading, Flex } from '@chakra-ui/react';
+import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getPostById } from '../../../services/post.service';
+import { AppContext } from '../../../context/AppContext/AppContext';
+import DeleteButton from '../../Base/DeleteButton/DeleteButton';
+import { deleteComment } from '../../../services/comment.services';
 
-const SingleProfileComment = ({ comment, large=false }) => {
-    const body = comment.content.length > 100 ? comment.content.slice(0,99) + '...' : comment.content;
+const SingleProfileComment = ({ comment, large = false }) => {
+    const body = comment.content.length > 100 ? comment.content.slice(0, 99) + '...' : comment.content;
+
+    const { userData } = useContext(AppContext);
 
     const [postTitle, setPostTitle] = useState(null);
 
@@ -26,15 +31,23 @@ const SingleProfileComment = ({ comment, large=false }) => {
                         On {comment.createdOn}
                     </Text>
                 </HStack >
-                <Link to={`../../post/${comment.postId}`}>
-                    <Heading as='h5' size='sm' py={3}>
-                        {postTitle && postTitle}
-                    </Heading>
+
+                <Flex>
+                    <Link to={`../../post/${comment.postId}`}>
+                        <Heading as='h5' size='sm' py={3}>
+                            {postTitle && postTitle}
+                        </Heading>
+                    </Link>
+                    <Spacer />
+                    {(userData.handle === comment.author) &&
+                        <DeleteButton deleteType={'comment'} deleteFunction={() => deleteComment(userData.handle, comment.commentId)} />
+                    }
                     {large &&
                         <Text py={3} color='brand.400' fontSize='0.9em'>
                             {body}
                         </Text>}
-                </Link>
+                </Flex>
+
             </Box>
         );
     }
