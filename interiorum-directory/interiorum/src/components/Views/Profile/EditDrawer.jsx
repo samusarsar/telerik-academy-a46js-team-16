@@ -129,7 +129,7 @@ const EditDrawer = ({ handle, currFirstName, currLastName }) => {
                         <FormControl isInvalid={avatarError}>
                             <FormLabel htmlFor=''>Avatar</FormLabel>
                             <VStack justify='center' gap={2}>
-                                {avatar && <Image mt={4} boxSize='150px' objectFit='center' src={URL.createObjectURL(avatar)} />}
+                                {avatar && <Image mt={4} boxSize='150px' objectFit='cover' src={URL.createObjectURL(avatar)} />}
                                 <Text fontSize='0.8em'>{avatar ? avatar.name : 'No avatar uploaded.'}</Text>
                             </VStack>
                             <Menu>
