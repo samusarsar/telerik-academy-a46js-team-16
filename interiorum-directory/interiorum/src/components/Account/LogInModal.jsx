@@ -25,7 +25,7 @@ const LogInModal = () => {
                 <ModalOverlay />
                 <ModalContent px={8} py={2} sx={{ bg: 'rgba(2, 24, 37, 0.9)' }} color='brand.600'>
                     <ModalHeader>Log into your <i>INTERIORUM</i> account</ModalHeader>
-                    <ModalCloseButton />
+                    <ModalCloseButton onClick={onClose} />
                     <ModalBody pb={6}>
                         <FormControl isInvalid={states.emailError}>
                             <FormLabel>Email</FormLabel>
@@ -37,7 +37,6 @@ const LogInModal = () => {
 
                         <FormControl isInvalid={states.passwordError} mt={4}>
                             <FormLabel>Password</FormLabel>
-                            {/* <Input value={password.split('').map(() => '•').join('')} placeholder='Password' onChange={handlePasswordChange}/> */}
                             <InputGroup size='md'>
                                 <Input
                                     type={states.show ? 'text' : 'password'}

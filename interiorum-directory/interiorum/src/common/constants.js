@@ -20,3 +20,7 @@ export const BASE_ROLE = 'base';
 export const ADMIN_ROLE = 'admin';
 export const WANT_ADMIN_ROLE = 'wantAdmin';
 export const BLOCKED_ROLE = 'blocked';
+
+export const RESTRICTED_CHARS = ['.', '#', '$', '[', ']'];
+
+export const PASSWORD_MIN_LENGTH = 6;

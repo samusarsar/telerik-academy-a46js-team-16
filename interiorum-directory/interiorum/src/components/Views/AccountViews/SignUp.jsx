@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import AccountBase from '../../Account/AccountBase';
 import { createUser, getUserByHandle } from '../../../services/users.service';
 import { registerUser } from '../../../services/auth.service';
+import { PASSWORD_MIN_LENGTH, RESTRICTED_CHARS, USER_NAME_MAX_LENGTH, USER_NAME_MIN_LENGTH } from '../../../common/constants';
 
 const SignUp = () => {
     const { setContext } = useContext(AppContext);
@@ -27,19 +28,18 @@ const SignUp = () => {
     const toast = useToast();
 
     const onSignUp = () => {
-        const restrictedChars = ['.', '#', '$', '[', ']'];
-        setUsernameError(restrictedChars.some(c => username.includes(c)) &&
+        setUsernameError(RESTRICTED_CHARS.some(c => username.includes(c)) &&
             'Username can\'t contain special chararacters.');
-        setPasswordError(password.length < 6);
+        setPasswordError(password.length < PASSWORD_MIN_LENGTH);
         setRePasswordError(rePassword !== password);
-        setFirstNameError(firstName.length < 4 || firstName.length > 32);
-        setLastNameError(lastName.length < 4 || lastName.length > 32);
+        setFirstNameError(firstName.length < USER_NAME_MIN_LENGTH || firstName.length > USER_NAME_MAX_LENGTH);
+        setLastNameError(lastName.length < USER_NAME_MIN_LENGTH || lastName.length > USER_NAME_MAX_LENGTH);
         setEmailError(!email.includes('@') && 'Email is not valid.');
-        if (!restrictedChars.some(c => username.includes(c)) &&
-            (password.length >= 6) &&
+        if (!RESTRICTED_CHARS.some(c => username.includes(c)) &&
+            (password.length >= PASSWORD_MIN_LENGTH) &&
             (rePassword === password) &&
-            (firstName.length > 4 || firstName.length < 32) &&
-            (lastName.length > 4 || lastName.length < 32) &&
+            (firstName.length > USER_NAME_MIN_LENGTH || firstName.length < USER_NAME_MAX_LENGTH) &&
+            (lastName.length > USER_NAME_MIN_LENGTH || lastName.length < USER_NAME_MAX_LENGTH) &&
             (email.includes('@'))) {
             getUserByHandle(username)
                 .then(result => {
@@ -88,7 +88,7 @@ const SignUp = () => {
                     <FormControl isInvalid={usernameError} isRequired='true' pr={4}>
                         <FormLabel>Username</FormLabel>
                         <Input type='text' placeholder='johnjordan123' onChange={(e) => setUsername(e.target.value)} bg='brand.600' color='brand.500' />
-                        <FormHelperText maxW='200px'>Username can't contain special characters.</FormHelperText>
+                        <FormHelperText maxW='200px'>Username can&apos;t contain special characters.</FormHelperText>
                         <FormErrorMessage>{usernameError}</FormErrorMessage>
                     </FormControl>
                     <FormControl isInvalid={passwordError} isRequired='true' pr={4}>
