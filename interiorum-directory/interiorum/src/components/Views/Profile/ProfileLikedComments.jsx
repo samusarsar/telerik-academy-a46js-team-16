@@ -15,7 +15,6 @@ const ProfileLikedComments = ({ handle }) => {
             if (data) {
                 Promise.all(Object.keys(data).map((id) => getCommentById(id)))
                     .then(resultArr => setLikedComments(resultArr))
-                    .then(() => console.log(likedComments));
             } else {
                 setLikedComments([]);
             }

@@ -1,4 +1,4 @@
-import { Text, Box, HStack, Spacer, Card, Image, Stack, CardBody, CardFooter, Heading, Flex } from '@chakra-ui/react';
+import { Text, Box, HStack, Spacer, Card, Image, Stack, CardBody, CardFooter, Heading, Flex, VStack } from '@chakra-ui/react';
 import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getPostById } from '../../../services/post.service';
@@ -18,7 +18,6 @@ const SingleProfileComment = ({ comment, large = false }) => {
             .then(data => setPostTitle(data.title));
     }, []);
 
-    // useEffect(() => console.log(comment.author), [])
     if (comment) {
         return (
             <Box textAlign='left' px={2}>
@@ -33,19 +32,21 @@ const SingleProfileComment = ({ comment, large = false }) => {
                 </HStack >
 
                 <Flex>
-                    <Link to={`../../post/${comment.postId}`}>
-                        <Heading as='h5' size='sm' py={3}>
-                            {postTitle && postTitle}
-                        </Heading>
-                    </Link>
-                    <Spacer />
-                    {(userData.handle === comment.author) &&
-                        <DeleteButton deleteType={'comment'} single={true} deleteFunction={() => deleteComment(userData.handle, comment.commentId)} />
-                    }
+                    <VStack align='start'>
+                        <Link to={`../../post/${comment.postId}`}>
+                            <Heading as='h5' size='sm' py={3}>
+                                {postTitle && postTitle}
+                            </Heading>
+                        </Link>
                     {large &&
                         <Text py={3} color='brand.400' fontSize='0.9em'>
                             {body}
                         </Text>}
+                    </VStack>
+                    <Spacer />
+                    {(userData.handle === comment.author) &&
+                        <DeleteButton deleteType={'comment'} single={true} deleteFunction={() => deleteComment(userData.handle, comment.commentId)} />
+                    }
                 </Flex>
 
             </Box>

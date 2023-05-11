@@ -36,7 +36,6 @@ const handleLogIn = ({ states, from, onClose }) => {
                 states.setEmailError(false);
                 break;
             };
-            console.log(e.message);
         });
 };
 

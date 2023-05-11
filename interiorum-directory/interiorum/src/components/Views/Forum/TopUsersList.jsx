@@ -19,7 +19,6 @@ const TopUsersList = ({ type }) => {
         <VStack bg={'white'} borderRadius={'10px'} p={'20px'} m={'20px'} boxShadow={'md'}>
             <Heading as='h5' size='sm'>Top {type === 'posts' ? 'Posters' : 'Commenters'}</Heading>
             <VStack align='start' py={3}>
-                {console.log(topUsers)}
                 {topUsers &&
                     (topUsers.map(user => {
                         return (
