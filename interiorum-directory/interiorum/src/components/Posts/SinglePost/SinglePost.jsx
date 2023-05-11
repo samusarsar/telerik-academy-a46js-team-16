@@ -55,7 +55,7 @@ const SinglePost = ({ post, large = false }) => {
                             </Button>}
 
                         {userData && (userData.handle === post.author || userData.role === ADMIN_ROLE) &&
-                            <DeleteButton deleteType={'post'} deleteFunction={() => handleDeletePost(post.postId, userData.handle)} />
+                            <DeleteButton deleteType={'post'} deleteFunction={() => deletePost(post.postId, userData.handle)} />
                         }
 
                         <AvatarGroup size='sm' max={3} fontSize='0.8em' spacing='-0.5rem' >
