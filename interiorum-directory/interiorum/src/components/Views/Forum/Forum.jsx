@@ -12,7 +12,7 @@ const Forum = () => {
 
     if (userData) {
         return (
-            <Box className="forum-view">
+            <Box className="forum-view" bg='brand.600'>
                 <ForumHeader />
                 <Grid className='forum-content' templateColumns='1fr 4fr'>
                     <GridItem>
