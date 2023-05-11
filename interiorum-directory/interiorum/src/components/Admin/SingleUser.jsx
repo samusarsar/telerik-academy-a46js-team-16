@@ -1,5 +1,5 @@
-import { Box, HStack, Heading, Text, AvatarGroup, Avatar, Spacer, Image, VStack, Button, useToast, Badge, Flex } from '@chakra-ui/react';
-import { Link, useNavigate } from 'react-router-dom';
+import { HStack, Text, Spacer, Image, VStack, Button, useToast, Badge, Flex } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
 import { ADMIN_ROLE, BASE_ROLE, BLOCKED_ROLE, WANT_ADMIN_ROLE } from '../../common/constants';
 import { changeUserRole } from '../../services/users.service';
 import handleUnblock from '../../common/helpers/handleUnblock';
@@ -7,6 +7,8 @@ import handleBlock from '../../common/helpers/handleBlock';
 import { useEffect, useState } from 'react';
 import { onValue, ref } from 'firebase/database';
 import { db } from '../../config/firebase-config';
+
+import PropTypes from 'prop-types';
 
 const SingleUser = ({ user, roleType=null }) => {
     const toast = useToast();
@@ -62,18 +64,38 @@ const SingleUser = ({ user, roleType=null }) => {
                     <Button h='30px' w='100%' fontSize='0.8em' colorScheme='pink' variant='outline' onClick={() => handleApplication(BASE_ROLE)}>Reject</Button>
                 </VStack> :
                 roleType === BLOCKED_ROLE ?
-                    <Button h='30px' fontSize='0.8em' colorScheme='telegram' variant='outline' onClick={() => handleUnblock({ handle: singleUser.handle, toast })}>Unblock</Button> :
+                    <Button
+                        h='30px'
+                        fontSize='0.8em'
+                        colorScheme='telegram'
+                        variant='outline'
+                        onClick={() => handleUnblock({ handle: singleUser.handle, toast })}>Unblock</Button> :
                     (
                         <>
-                            {singleUser.role === WANT_ADMIN_ROLE && <Button h='30px' fontSize='0.8em' colorScheme='purple' variant='outline' onClick={handleApprove}>Approve</Button>}
+                            {singleUser.role === WANT_ADMIN_ROLE &&
+                                <VStack>
+                                    <Button h='30px' w='100%' fontSize='0.8em' colorScheme='purple' variant='outline' onClick={() => handleApplication(ADMIN_ROLE)}>Approve</Button>
+                                    <Button h='30px' w='100%' fontSize='0.8em' colorScheme='pink' variant='outline' onClick={() => handleApplication(BASE_ROLE)}>Reject</Button>
+                                </VStack>}
                             {singleUser.role === BLOCKED_ROLE &&
-                            <Button h='30px' fontSize='0.8em' colorScheme='telegram' variant='outline' onClick={() => handleUnblock({ handle: singleUser.handle, toast })}>Unblock</Button>}
-                            {(singleUser.role !== BLOCKED_ROLE && singleUser.role !== ADMIN_ROLE) &&
-                            <Button h='30px' fontSize='0.8em' colorScheme='red' variant='outline' onClick={() => handleBlock({ handle: singleUser.handle, toast })}>Block</Button>}
+                                <Button h='30px' fontSize='0.8em' colorScheme='telegram' variant='outline'
+                                    onClick={() => handleUnblock({ handle: singleUser.handle, toast })}>Unblock</Button>}
+                            {(singleUser.role === BASE_ROLE) &&
+                                <VStack>
+                                    <Button h='30px' w='100%' fontSize='0.8em' colorScheme='purple' variant='outline'
+                                        onClick={() => handleApplication(ADMIN_ROLE)}>Make Admin</Button>
+                                    <Button h='30px' w='100%' fontSize='0.8em' colorScheme='red' variant='outline'
+                                        onClick={() => handleBlock({ handle: singleUser.handle, toast })}>Block</Button>
+                                </VStack>}
                         </>
                     )}
         </HStack>
     );
+};
+
+SingleUser.propTypes = {
+    user: PropTypes.object.isRequired,
+    roleType: PropTypes.string,
 };
 
 export default SingleUser;
