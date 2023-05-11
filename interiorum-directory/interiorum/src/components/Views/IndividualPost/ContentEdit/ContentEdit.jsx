@@ -41,7 +41,7 @@ const ContentEdit = ({ toEdit, commentMode=false }) => {
     const [contentError, setContentError] = useState(false);
 
     const [images, setImages] = useState(null);
-    const [imagesURL, setImagesURL] = useState(toEdit.imagesURL ? toEdit.imagesURL.split(' ') : null);
+    const [imagesURL, setImagesURL] = useState(null);
     const [imageError, setImageError] = useState(false);
 
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -177,7 +177,7 @@ const ContentEdit = ({ toEdit, commentMode=false }) => {
                                     <VStack align='start'>
                                         <Text >New Attachments:</Text>
                                         <HStack flexWrap='wrap'>
-                                            {images && images.map(img => <Image key={img.name} mt={4} boxSize='60px' objectFit='cover' src={URL.createObjectURL(img)} />)}
+                                            {images && images.map(img => <Image key={img.name} mt={4} boxSize='150px' objectFit='cover' src={URL.createObjectURL(img)} />)}
                                         </HStack>
                                         <HStack>
                                             <FormControl isInvalid={imageError}>

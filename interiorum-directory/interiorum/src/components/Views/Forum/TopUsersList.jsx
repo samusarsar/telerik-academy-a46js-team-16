@@ -23,7 +23,7 @@ const TopUsersList = ({ type }) => {
                     (topUsers.map(user => {
                         return (
                             <HStack key={user.uid} justify='left' py={0.5}>
-                                <Avatar size='sm' name={user.firstName + ' ' + user.lastName} src={user.avatarURL} />
+                                <Avatar size='md' name={user.firstName + ' ' + user.lastName} src={user.avatarURL} />
                                 <Text key={user.uid} fontSize='0.9em'>{user.firstName} {user.lastName}</Text>
                             </HStack>
                         );

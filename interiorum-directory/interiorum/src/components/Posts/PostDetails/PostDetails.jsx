@@ -1,4 +1,4 @@
-import { Badge, Button, ButtonGroup, Collapse, Divider, FormControl, FormErrorMessage, HStack, Heading, Icon, Image, Input, Spacer, Stack, Tag, TagCloseButton, TagLabel, Text, VStack, useDisclosure } from '@chakra-ui/react';
+import { Avatar, Badge, Box, Button, ButtonGroup, Collapse, Divider, FormControl, FormErrorMessage, HStack, Heading, Icon, Image, Input, Spacer, Stack, Tag, TagCloseButton, TagLabel, Text, VStack, useDisclosure } from '@chakra-ui/react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { AiOutlineLike, AiFillLike } from 'react-icons/ai';
 import { FaRegComment } from 'react-icons/fa';
@@ -71,11 +71,10 @@ const PostDetails = ({ post }) => {
         <>
             <VStack p={8} bg='brand.100' rounded='md' w={{ sm: '100%', md: '80%' }} boxShadow='lg'>
                 <HStack w='100%' align='start' justify='left'>
-                    <Image
+                    <Avatar
                         src={author && author.avatarURL}
                         fallbackSrc='https://firebasestorage.googleapis.com/v0/b/interiorum-6c515.appspot.com/o/assets%2Fanon-user.jpg?alt=media&token=0007d79f-52fb-4866-9747-326d52395bd9'
-                        w='70px'
-                        rounded='full'
+                        boxSize='90px'
                         objectFit='cover'
                         mx={2} />
                     <VStack align='start' w='80%'>
@@ -123,9 +122,11 @@ const PostDetails = ({ post }) => {
                             {currPost.imagesURL &&
                             <>
                                 <Divider borderColor='brand.200' />
-                                <HStack w='100%' flexWrap='wrap' justify='center' gap={3}>
-                                    {currPost.imagesURL.split(' ').map(url => <Image key={url} src={url} boxSize='200px' objectFit='cover' />)}
-                                </HStack>
+                                <VStack w='100%' align='center'>
+                                    <HStack w='80%' flexWrap='wrap' justify='center' gap={3}>
+                                        {currPost.imagesURL.split(' ').map(url => <Image key={url} src={url} objectFit='cover' />)}
+                                    </HStack>
+                                </VStack>
                             </>}
                         </VStack>
                         {(postLikes) && <ButtonGroup w='100%'>
