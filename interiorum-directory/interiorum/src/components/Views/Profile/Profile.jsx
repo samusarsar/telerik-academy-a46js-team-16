@@ -53,10 +53,10 @@ const Profile = () => {
 
             return onValue(ref(db, `comments`), () => {
                 getCommentsByAuthor(profile.handle)
-                    .then(snapshot => snapshot.val())
                     .then(data => {
-                        setComments(data ? Object.values(data) : []);
-                    });
+                        setComments(Object.values(data));
+                    })
+                    .catch(() => setComments([]));
             });
         };
         return undefined;

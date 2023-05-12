@@ -18,10 +18,12 @@ const addCommentToUser = (handle, commentId) => {
         .then(snapshot => {
             if (snapshot.exists()) {
                 return update(ref(db, `users/${handle}/comments`), {
-                    [commentId]: true });
+                    [commentId]: true
+                });
             } else {
                 return set(ref(db, `users/${handle}/comments`), {
-                    [commentId]: true });
+                    [commentId]: true
+                });
             }
         });
 };
@@ -31,10 +33,12 @@ const addCommentToPost = (postId, commentId) => {
         .then(snapshot => {
             if (snapshot.exists()) {
                 return update(ref(db, `posts/${postId}/comments`), {
-                    [commentId]: true });
+                    [commentId]: true
+                });
             } else {
                 return set(ref(db, `posts/${postId}/comments`), {
-                    [commentId]: true });
+                    [commentId]: true
+                });
             }
         });
 };
@@ -42,7 +46,12 @@ const addCommentToPost = (postId, commentId) => {
 export const deleteComment = (handle, commentId) => {
 
     get(ref(db, `comments/${commentId}/postId`))
-        .then(snapshot => snapshot.val())
+        .then(snapshot => {
+            if (!snapshot.exists()) {
+                throw new Error('No posts match the search criteria');
+            }
+            return snapshot.val();
+        })
         .then(postId => deleteCommentToPost(postId, commentId))
         .then(() => deleteCommentToUser(handle, commentId))
         .then(() => remove(ref(db, `comments/${commentId}`)));
@@ -71,23 +80,25 @@ export const getCommentById = (commentId) => {
 };
 
 export const getCommentsByAuthor = (handle) => {
-    return get(query(ref(db, 'comments'), orderByChild('author'), equalTo(handle)));
+    return get(query(ref(db, 'comments'), orderByChild('author'), equalTo(handle)))
+        .then(snapshot => {
+            if (!snapshot.exists()) {
+                throw new Error('No comments found for this author');
+            }
+            return snapshot.val();
+        });
 };
 
 export const getCommentsByPost = (postID) => {
     return get(query(ref(db, 'comments'), orderByChild('postId'), equalTo(postID)))
         .then(snapshot => {
             if (!snapshot.exists()) {
-                return {};
+                throw new Error('No comments found for this post');
             }
             return snapshot.val();
         })
         .then(comments => {
-            return Object.keys(comments).map(commentId => {
-                return {
-                    ...comments[commentId],
-                };
-            });
+            return Object.values(comments);
         });
 };
 

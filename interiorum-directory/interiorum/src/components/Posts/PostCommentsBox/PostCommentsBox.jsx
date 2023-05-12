@@ -24,6 +24,10 @@ const PostCommentsBox = ({ postId }) => {
                 .then(result => {
                     setComments(result);
                     setFeatured(getFeaturedComment(result));
+                })
+                .catch(() => {
+                    setComments([]);
+                    setFeatured(null);
                 });
         });
     }, []);
