@@ -36,7 +36,7 @@ const SingleUser = ({ user, roleType=null }) => {
     };
 
     return (
-        <HStack align='center' p={{ sm: 0, md: 4 }} flexWrap='wrap' gap={2}>
+        <HStack align='center' p={{ sm: 0, md: 4 }} flexWrap='no-wrap' gap={2}>
             <Avatar
                 src={singleUser.avatarURL}
                 name={`${singleUser.firstName} ${singleUser.lastName}`}
