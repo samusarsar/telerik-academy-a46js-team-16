@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { Card, CardBody, Image, Stack, Heading, Text, Divider, CardFooter, ButtonGroup, Button, HStack, VStack, Icon, Link, Skeleton } from '@chakra-ui/react';
 import { useState } from 'react';
 import { AiOutlinePhone, AiOutlineMail } from 'react-icons/ai';

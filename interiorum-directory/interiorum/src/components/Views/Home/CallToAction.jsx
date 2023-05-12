@@ -35,8 +35,8 @@ const CallToAction = () => {
             bgSize='100%'>
             <Spacer />
             <VStack align='left' gap={2}>
-                {users && <StatBox heading='Total Users' text={users.length} icon={BsFillPeopleFill} />}
-                {posts && <StatBox heading='Total Posts' text={posts.length} icon={BsFillChatTextFill} />}
+                {users && <StatBox heading='Total Users' count={users.length} icon={BsFillPeopleFill} />}
+                {posts && <StatBox heading='Total Posts' count={posts.length} icon={BsFillChatTextFill} />}
             </VStack>
             <Spacer/>
             <Spacer />

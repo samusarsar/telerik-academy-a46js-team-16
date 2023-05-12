@@ -173,7 +173,7 @@ CreatePostBody.propTypes = {
         content: PropTypes.string.isRequired,
         categories: PropTypes.arrayOf(PropTypes.string).isRequired,
         author: PropTypes.string.isRequired,
-        imagesURL: PropTypes.string.isRequired,
+        imagesURL: PropTypes.string,
     }),
     setPostForm: PropTypes.func.isRequired,
     updateForm: PropTypes.func.isRequired,

@@ -39,22 +39,22 @@ const PostFeed = ({ posts, profileCommentMode=false }) => {
                             <TabPanels>
                                 <TabPanel>
                                     {postsToShow.map(post =>
-                                        <>
+                                        <Box key={post.postId}>
                                             {!profileCommentMode ?
-                                                <SinglePost key={post.postId} post={post} /> :
+                                                <SinglePost post={post} /> :
                                                 <SingleProfileComment key={post.commentId} comment={post} />}
                                             <Divider borderColor='gray.400' w='95%'/>
-                                        </>,
+                                        </Box>,
                                     )}
                                 </TabPanel>
                                 <TabPanel>
                                     {postsToShow.map(post =>
-                                        <>
+                                        <Box key={post.postId}>
                                             {!profileCommentMode ?
-                                                <SinglePost key={post.postId} post={post} large={true} /> :
+                                                <SinglePost post={post} large={true} /> :
                                                 <SingleProfileComment key={post.commentId} comment={post} large={true}/>}
                                             <Divider borderColor='gray.400' w='95%'/>
-                                        </>,
+                                        </Box>,
                                     )}
                                 </TabPanel>
                             </TabPanels>
