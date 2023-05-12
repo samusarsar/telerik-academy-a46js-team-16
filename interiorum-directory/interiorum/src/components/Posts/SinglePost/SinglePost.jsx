@@ -56,17 +56,19 @@ const SinglePost = ({ post, large = false }) => {
                             }}><Icon as={isLiked ? AiFillLike : AiOutlineLike} mr={1} />Like{likedUsers.length ? ` | ${likedUsers.length}` : ''}
                             </Button>}
 
-
-                        <AvatarGroup size='sm' max={3} fontSize='0.8em' spacing='-0.5rem' >
-                            {likedUsers.length ?
-                                likedUsers.map(user =>
-                                    <Avatar
-                                        key={user.uid}
-                                        name={user.handle}
-                                        src={user.avatarURL}
-                                    />) :
-                                <Text>No likes yet.</Text>}
-                        </AvatarGroup>
+                        {likedUsers.length ?
+                            (
+                                <AvatarGroup size='sm' max={3} fontSize='0.8em' spacing='-0.5rem' >
+                                    {likedUsers.map(user =>
+                                        <Avatar
+                                            key={user.uid}
+                                            name={user.handle}
+                                            src={user.avatarURL}
+                                        />)}
+                                </AvatarGroup>
+                            ) : (
+                                <Text>No likes yet.</Text>
+                            )}
 
                         {userData && (userData.handle === post.author || userData.role === ADMIN_ROLE) &&
                             <DeleteButton deleteType={'post'} single={true} deleteFunction={() => deletePost(post.postId, userData.handle)} />

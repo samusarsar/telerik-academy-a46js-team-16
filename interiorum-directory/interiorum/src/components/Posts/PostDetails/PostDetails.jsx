@@ -62,8 +62,8 @@ const PostDetails = ({ post }) => {
     };
 
     const handleDeleteButton = () => {
-        deletePost(post.postId, userData.handle);
-        navigate(-1);
+        deletePost(post.postId, userData.handle)
+            .then(() => navigate(-1));
     };
 
     return (

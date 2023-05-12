@@ -34,18 +34,16 @@ const addPostToUser = (handle, postId) => {
 };
 
 export const deletePost = (postId, handle) => {
-    get(ref(db, `posts/${postId}/comments`))
+    return get(ref(db, `posts/${postId}/comments`))
         .then(snapshot => {
-            if (!snapshot.exists()) {
-                throw new Error('No posts match the search criteria');
+            if (snapshot.exists()) {
+                return Object.keys(snapshot.val()).forEach(commentId => deleteComment(handle, commentId));
             }
-            return snapshot.val();
+            return null;
         })
-        .then(comments => Object.keys(comments))
-        .then(commentIds => commentIds.forEach(commentId => deleteComment(handle, commentId)));
-
-    return remove(ref(db, `posts/${postId}`))
-        .then(() => deletePostToUser(postId, handle));
+        .then(() => remove(ref(db, `posts/${postId}`))
+            .then(() => deletePostToUser(postId, handle)),
+        );
 };
 
 const deletePostToUser = (postId, handle) => {
