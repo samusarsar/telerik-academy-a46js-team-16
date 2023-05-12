@@ -23,11 +23,11 @@ const addPostToUser = (handle, postId) => {
         .then(snapshot => {
             if (snapshot.exists()) {
                 return update(ref(db, `users/${handle}/posts`), {
-                    [postId]: true
+                    [postId]: true,
                 });
             } else {
                 return set(ref(db, `users/${handle}/posts`), {
-                    [postId]: true
+                    [postId]: true,
                 });
             }
         });
