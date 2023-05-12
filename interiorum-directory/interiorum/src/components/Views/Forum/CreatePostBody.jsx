@@ -153,7 +153,11 @@ const CreatePostBody = ({ postForm, setPostForm, updateForm, postTitleIsInvalid 
                         return null;
                     })}
                 </Stack>
-
+                {(images && !postForm.imagesURL) &&
+                <Alert status='info'>
+                    <AlertIcon />
+                    <AlertTitle>You must upload selected images before creating your post.</AlertTitle>
+                </Alert>}
                 <Button width='100%' isDisabled={
                     !postForm.title ||
                         !postForm.content ||
