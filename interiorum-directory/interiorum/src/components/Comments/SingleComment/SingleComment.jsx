@@ -24,7 +24,7 @@ const SingleComment = ({ comment }) => {
         getUserByHandle(comment.author)
             .then(data => setAuthor(data));
 
-        onValue(ref(db, `comments/${comment.commentId}/likes`), (snapshot) => {
+        return onValue(ref(db, `comments/${comment.commentId}/likes`), (snapshot) => {
             const data = snapshot.val();
             setCommentLikes(data ? Object.keys(data) : []);
             setIsLiked(data ? Object.keys(data).includes(userData.handle) : false);

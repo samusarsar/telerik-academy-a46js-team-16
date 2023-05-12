@@ -9,7 +9,7 @@ const ProfileLikedPosts = ({ handle }) => {
     const [likedPosts, setLikedPosts] = useState(null);
 
     useEffect(() => {
-        onValue(ref(db, `users/${handle}/likedPosts`), (snapshot) => {
+        return onValue(ref(db, `users/${handle}/likedPosts`), (snapshot) => {
             const data = snapshot.val();
 
             if (data) {

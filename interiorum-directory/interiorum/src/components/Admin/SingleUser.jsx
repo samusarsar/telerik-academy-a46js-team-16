@@ -16,7 +16,7 @@ const SingleUser = ({ user, roleType=null }) => {
 
     const navigate = useNavigate();
     useEffect(() => {
-        onValue(ref(db, `users/${user.handle}`), (snapshot) => {
+        return onValue(ref(db, `users/${user.handle}`), (snapshot) => {
             const data = snapshot.val();
             setSingleUser(data);
         });

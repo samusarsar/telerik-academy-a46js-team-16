@@ -10,7 +10,7 @@ const MostRecent = () => {
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
-        onValue(ref(db, 'posts'), () => {
+        return onValue(ref(db, 'posts'), () => {
             getPostsByCategory()
                 .then(allPosts => {
                     setPosts(sortPostsByDate(allPosts).slice(0, 10));
