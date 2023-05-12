@@ -100,7 +100,8 @@ const PostDetails = ({ post }) => {
                                             colorScheme='teal'
                                         >
                                             <TagLabel>{tag}</TagLabel>
-                                            <TagCloseButton onClick={() => handleRemoveTag(tag)}/>
+                                            {(userData.role === ADMIN_ROLE || userData.handle === post.author) &&
+                                            <TagCloseButton onClick={() => handleRemoveTag(tag)}/>}
                                         </Tag>))}
                                 </HStack>
                                 {(userData.role === ADMIN_ROLE || userData.handle === post.author) &&
