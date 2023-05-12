@@ -45,11 +45,10 @@ const CategoryPosts = () => {
             {category !== 'allCategories' && <Text fontStyle='italic'>posts from category</Text>}
             <Heading size='xl' mb='15px'>{categories[category]}</Heading>
             <Outlet />
-            <HStack>
+            <HStack m='0px 0px 15px'>
                 <Input
                     onChange={(e) => setSearchTerm(e.target.value)}
                     value={searchTerm}
-                    m='0px 0px 10px'
                     bg='white'
                     focusBorderColor='brand.400'
                     placeholder={`Search posts in ${categories[category]}`} />
