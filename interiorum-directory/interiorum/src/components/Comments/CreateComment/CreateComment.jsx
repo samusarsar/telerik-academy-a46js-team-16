@@ -1,4 +1,4 @@
-import { Button, FormControl, FormErrorMessage, HStack, Image, Textarea, VStack, useToast } from '@chakra-ui/react';
+import { Avatar, Button, FormControl, FormErrorMessage, HStack, Textarea, VStack, useToast } from '@chakra-ui/react';
 import { useContext, useState } from 'react';
 import { AppContext } from '../../../context/AppContext/AppContext';
 import { addComment } from '../../../services/comment.services';
@@ -40,12 +40,10 @@ const CreateComment = ({ postId }) => {
         return (
             <VStack align='end' w='80%' gap={2} pt={3}>
                 <HStack justify='center' align='start' w='100%'>
-                    <Image
+                    <Avatar
                         src={userData.avatarURL}
-                        // eslint-disable-next-line max-len
-                        fallbackSrc='https://firebasestorage.googleapis.com/v0/b/interiorum-6c515.appspot.com/o/assets%2Fanon-user.jpg?alt=media&token=0007d79f-52fb-4866-9747-326d52395bd9'
-                        w='45px'
-                        rounded='full'
+                        name={`${userData.firstName} ${userData.lastName}`}
+                        size='md'
                         mx={2}/>
                     <FormControl isInvalid={commentError}>
                         <Textarea bg='brand.600' placeholder='Enter your comment here' value={comment} onChange={(e) => setComment(e.target.value)}/>

@@ -36,8 +36,7 @@ const SingleComment = ({ comment }) => {
             <Link to={`../../profile/${comment.author}`}>
                 <Avatar
                     src={author && author.avatarURL}
-                    // eslint-disable-next-line max-len
-                    fallbackSrc='https://firebasestorage.googleapis.com/v0/b/interiorum-6c515.appspot.com/o/assets%2Fanon-user.jpg?alt=media&token=0007d79f-52fb-4866-9747-326d52395bd9'
+                    name={author && `${author.firstName} ${author.lastName}`}
                     rounded='full'
                     boxSize='45px'
                     objectFit='cover'

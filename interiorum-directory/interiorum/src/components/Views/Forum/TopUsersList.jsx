@@ -24,7 +24,7 @@ const TopUsersList = ({ type }) => {
                         return (
                             <Link key={user.uid} to={`../../profile/${user.handle}`} >
                                 <HStack justify='left' py={0.5}>
-                                    <Avatar size='md' name={user.firstName + ' ' + user.lastName} src={user.avatarURL} />
+                                    <Avatar size='md' name={`${user.firstName} ${user.lastName}`} src={user.avatarURL} />
                                     <Text key={user.uid} fontSize='0.9em'>{user.firstName} {user.lastName}</Text>
                                 </HStack>
                             </Link>

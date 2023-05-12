@@ -39,7 +39,7 @@ const SingleUser = ({ user, roleType=null }) => {
         <HStack align='center' p={{ sm: 0, md: 4 }} flexWrap='wrap' gap={2}>
             <Avatar
                 src={singleUser.avatarURL}
-                fallbackSrc='https://firebasestorage.googleapis.com/v0/b/interiorum-6c515.appspot.com/o/assets%2Fanon-user.jpg?alt=media&token=0007d79f-52fb-4866-9747-326d52395bd9'
+                name={`${singleUser.firstName} ${singleUser.lastName}`}
                 size='md'
                 mx={2}
                 _hover={{ cursor: 'pointer' }}

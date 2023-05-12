@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import { Box, Container, Text, Image, Spacer, HStack, ButtonGroup, Button, Tabs, TabList, Tab, TabPanels, TabPanel, Flex, Icon, useToast, Badge } from '@chakra-ui/react';
+import { Box, Container, Text, Spacer, HStack, ButtonGroup, Button, Tabs, TabList, Tab, TabPanels, TabPanel, Flex, Icon, useToast, Badge, Avatar } from '@chakra-ui/react';
 import { useContext, useEffect, useState } from 'react';
 import ProfilePosts from './ProfilePosts';
 import ProfileComments from './ProfileComments';
@@ -85,12 +85,10 @@ const Profile = () => {
                 <Container className='main-view' id='profile-view' maxW='container' minH='90vh' p={0}>
                     <Container maxW='container' bg='brand.100'>
                         <HStack justify='left' p={8}>
-                            <Image
-                                boxSize='150px'
-                                objectFit='cover'
+                            <Avatar
+                                size='2xl'
                                 src={profile.avatarURL}
-                                fallbackSrc='https://firebasestorage.googleapis.com/v0/b/interiorum-6c515.appspot.com/o/assets%2Fanon-user.jpg?alt=media&token=0007d79f-52fb-4866-9747-326d52395bd9'
-                                alt={`${profile.handle} avatar image`}
+                                name={`${profile.firstName} ${profile.lastName}`}
                             />
                             <Box px={4}>
                                 <HStack>

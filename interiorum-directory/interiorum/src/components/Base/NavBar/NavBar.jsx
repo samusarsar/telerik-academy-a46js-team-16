@@ -66,8 +66,9 @@ const NavBar = () => {
                         <Menu autoSelect={false} isLazy={true} isOpen={isOpen} unmount>
                             <MenuButton minW='fit-content' px={3} onMouseEnter={onOpen} onClick={() => navigate('my-profile')}>
                                 <HStack gap={2}>
-                                    <Avatar src={menuAvatar}
-                                        name={userData.handle}
+                                    <Avatar
+                                        src={menuAvatar}
+                                        name={`${userData.firstName} ${userData.lastName}`}
                                         boxSize='40px' />
                                     <Link as={NavLink} to={'my-profile'} fontWeight={ `${inProfile ? 'bold' : ''}`} color={ `${inProfile ? 'brand.100' : ''}`}>
                                         {userData && userData.handle}

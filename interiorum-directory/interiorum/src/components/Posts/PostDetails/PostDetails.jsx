@@ -73,9 +73,8 @@ const PostDetails = ({ post }) => {
                     <Link to={`../../profile/${post.author}`} >
                         <Avatar
                             src={author && author.avatarURL}
-                            fallbacksrc='https://firebasestorage.googleapis.com/v0/b/interiorum-6c515.appspot.com/o/assets%2Fanon-user.jpg?alt=media&token=0007d79f-52fb-4866-9747-326d52395bd9'
-                            boxSize='90px'
-                            objectFit='cover'
+                            name={author && `${author.firstName} ${author.lastName}`}
+                            size='xl'
                             mx={2} />
                     </Link>
                     <VStack align='start' w='80%'>
@@ -102,12 +101,13 @@ const PostDetails = ({ post }) => {
                                             <TagCloseButton onClick={() => handleRemoveTag(tag)}/>
                                         </Tag>))}
                                 </HStack>
+                                {(userData.role === ADMIN_ROLE || userData.handle === post.author) &&
                                 <FormControl isInvalid={newTagError}>
                                     <Input type='text' placeholder='Add tag' h='25px' w='120px' border='brand.200' focusBorderColor='brand.100' color='gray'
                                         value={newTag} onChange={(e) => setNewTag(e.target.value)}
                                         onKeyDown={(e) => (e.key === 'Enter') ? handleAddTag() : null}/>
                                     <FormErrorMessage>Tags must be lowercase.</FormErrorMessage>
-                                </FormControl>
+                                </FormControl>}
                             </HStack>
                             <HStack>
                                 <Link to={`../../profile/${currPost.author}`}><b>{currPost.author}</b></Link>
