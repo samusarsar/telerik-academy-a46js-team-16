@@ -1,8 +1,7 @@
 /* eslint-disable max-len */
 import { Avatar, Badge, Button, ButtonGroup, Divider, FormControl, FormErrorMessage, HStack, Heading, Icon, Image, Input, Spacer, Tag, TagCloseButton, TagLabel, Text, VStack } from '@chakra-ui/react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AiOutlineLike, AiFillLike } from 'react-icons/ai';
-import { FiShare } from 'react-icons/fi';
 import { useContext, useEffect, useState } from 'react';
 import { getUserByHandle } from '../../../services/users.service';
 import { deletePost } from '../../../services/post.service';
@@ -17,6 +16,7 @@ import { ADMIN_ROLE } from '../../../common/constants';
 import { addPostToTag, addTagToPost, removePostFromTag, removeTagFromPost } from '../../../services/tag.services';
 
 import PropTypes from 'prop-types';
+import ShareButtons from '../../Base/ShareButtons/ShareButtons';
 
 const PostDetails = ({ post }) => {
     const [author, setAuthor] = useState(null);
@@ -31,6 +31,8 @@ const PostDetails = ({ post }) => {
     const navigate = useNavigate();
 
     const [isLiked, setIsLiked] = useState(false);
+
+    const location = useLocation();
 
     useEffect(() => {
         getUserByHandle(post.author)
@@ -138,7 +140,7 @@ const PostDetails = ({ post }) => {
                             }}>
                                 <Icon as={isLiked ? AiFillLike : AiOutlineLike} mr={1} />Like{postLikes.length ? ` | ${postLikes.length}` : ''}
                             </Button>
-                            <Button h='30px' fontSize='0.8em' colorScheme='teal'><Icon as={FiShare} mr={2} />Share</Button>
+                            <ShareButtons location={location} text={post.author} />
                             <Spacer />
                             {userData && (userData.handle === currPost.author || userData.role === ADMIN_ROLE) &&
                                 <DeleteButton deleteType={'post'} deleteFunction={handleDeleteButton} />

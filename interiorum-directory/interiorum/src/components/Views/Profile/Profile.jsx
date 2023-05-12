@@ -3,11 +3,10 @@ import { Box, Container, Text, Spacer, HStack, ButtonGroup, Button, Tabs, TabLis
 import { useContext, useEffect, useState } from 'react';
 import ProfilePosts from './ProfilePosts';
 import ProfileComments from './ProfileComments';
-import { FiShare } from 'react-icons/fi';
 import { TbMessageCircle } from 'react-icons/tb';
 import { AppContext } from '../../../context/AppContext/AppContext';
 import handleLogOut from '../../../common/helpers/handleLogOut';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import EditDrawer from './EditDrawer';
 import { onValue, ref } from 'firebase/database';
 import { db } from '../../../config/firebase-config';
@@ -20,6 +19,7 @@ import { getPostsByAuthor } from '../../../services/post.service';
 import { getCommentsByAuthor } from '../../../services/comment.services';
 import ProfileLikedPosts from './ProfileLikedPosts';
 import ProfileLikedComments from './ProfileLikedComments';
+import ShareButtons from '../../Base/ShareButtons/ShareButtons';
 
 const Profile = () => {
     const { userData, setContext } = useContext(AppContext);
@@ -33,7 +33,7 @@ const Profile = () => {
 
     const navigate = useNavigate();
     const toast = useToast();
-
+    const location = useLocation();
 
     useEffect(() => {
         setProfile(null);
@@ -67,6 +67,18 @@ const Profile = () => {
         toast({
             title: 'Application received',
             description: 'We will review your application and get back to you ASAP!',
+            status: 'info',
+            duration: 3000,
+            isClosable: true,
+            position: 'top',
+            variant: 'subtle',
+        });
+    };
+
+    const handleMessage = () => {
+        toast({
+            title: 'Interiorum messages coming soon...',
+            description: 'Stay tuned for future updates!',
             status: 'info',
             duration: 3000,
             isClosable: true,
@@ -111,8 +123,10 @@ const Profile = () => {
                             </Box>
                             <Spacer />
                             <ButtonGroup variant='solid' spacing='4' size='md'>
-                                <Button colorScheme='teal'><Icon as={FiShare} mr={2} />Share</Button>
-                                {!currUserCheck() && <Button colorScheme='facebook' ><Icon as={TbMessageCircle} mr={2} />Message</Button>}
+                                <ShareButtons location={location} text={profile.handle} size={40} />
+                                {!currUserCheck() && <Button colorScheme='whatsapp' onClick={handleMessage}>
+                                    <Icon as={TbMessageCircle} mr={2} />Message
+                                </Button>}
                                 {currUserCheck() && <Button colorScheme='red' variant='outline' onClick={() => handleLogOut({ setContext, navigate, toast })}>Log Out</Button>}
                             </ButtonGroup>
                         </HStack>
