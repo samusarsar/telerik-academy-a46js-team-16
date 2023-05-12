@@ -15,7 +15,8 @@ const CallToAction = () => {
 
     useEffect(() => {
         getAllUsers()
-            .then(data => setUsers(Object.values(data)));
+            .then(data => setUsers(Object.values(data)))
+            .catch(() => navigate('../server-down'));
 
         getPosts()
             .then(data => setPosts(Object.values(data)))

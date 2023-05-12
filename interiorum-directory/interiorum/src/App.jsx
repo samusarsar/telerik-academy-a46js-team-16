@@ -40,14 +40,10 @@ const App = () => {
         setDataLoading(true);
 
         getUserData(user.uid)
-            .then(snapshot => {
-                if (!snapshot.exists()) {
-                    throw new Error('Something went wrong!');
-                }
-
+            .then(data => {
                 setAppState({
                     ...appState,
-                    userData: snapshot.val()[Object.keys(snapshot.val())[0]],
+                    userData: data[Object.keys(data)[0]],
                 });
             })
             .catch(e => alert(e.message))

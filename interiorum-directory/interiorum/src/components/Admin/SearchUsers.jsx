@@ -2,12 +2,15 @@ import { VStack, Heading, Input, HStack, Button, Collapse, Box } from '@chakra-u
 import { useState } from 'react';
 import { getAllUsers } from '../../services/users.service';
 import UserFeed from './UserFeed';
+import { useNavigate } from 'react-router-dom';
 
 const SearchUsers = () => {
     const [input, setInput] = useState('');
     const [searchTerm, setSearchTerm] = useState('');
     const [foundUsers, setFoundUsers] = useState([]);
     const [searching, setSearching] = useState(false);
+
+    const navigate = useNavigate();
 
     const handleSearch = () => {
         if (!input) {
@@ -25,7 +28,7 @@ const SearchUsers = () => {
                 return (user.handle.toLowerCase()).includes(formattedSearchTerm) || (fullName.includes(formattedSearchTerm));
             }))
             .then(users => setFoundUsers(users))
-            .catch(error => console.log(error.message));
+            .catch(() => navigate('../../server-down'));
 
         setSearchTerm(input);
         setInput('');

@@ -10,10 +10,10 @@ const UsersList = ({ roleType }) => {
 
     useEffect(() => {
         getUsersByRole({ value: roleType })
-            .then((snapshot) => snapshot.val())
             .then((data) => {
-                setUsers(data ? Object.values(data) : []);
-            });
+                setUsers(Object.values(data));
+            })
+            .catch(() => setUsers([]));
     });
 
     if (users) {

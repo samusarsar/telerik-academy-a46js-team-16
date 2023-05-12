@@ -1,18 +1,18 @@
 import { Heading, VStack, HStack, Text, Avatar } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { getAllUsers } from '../../../services/users.service';
+import { getTopUsers } from '../../../services/users.service';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const TopUsersList = ({ type }) => {
     const [topUsers, setTopUsers] = useState(null);
 
+    const navigate = useNavigate();
+
     useEffect(() => {
-        getAllUsers()
-            .then(data => Object.values(data))
-            .then(users => users.filter(user => user[type]))
-            .then(users => users.sort((a, b) => Object.keys(b[type]).length - Object.keys(a[type]).length).slice(0, 5))
-            .then(users => setTopUsers(users));
+        getTopUsers(type)
+            .then(users => setTopUsers(users))
+            .catch(() => navigate('../../server-down'));
     }, []);
 
     return (
