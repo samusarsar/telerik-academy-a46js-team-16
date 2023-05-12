@@ -10,12 +10,12 @@ const UserFeed = ({ users, roleType=null, searchTerm }) => {
             {users.length ?
                 users.map(u => {
                     return (
-                        <>
-                            <SingleUser key={u.uid} user={u} roleType={roleType} />
+                        <Box key={u.uid}>
+                            <SingleUser user={u} roleType={roleType} />
                             <HStack px={6}>
                                 <Divider />
                             </HStack>
-                        </>);
+                        </Box>);
                 }) :
                 roleType ?
                     <Text align='center' py={2}>There are currently no {roleType === WANT_ADMIN_ROLE ? 'admin applicant' : 'blocked'} users.</Text> :
@@ -30,7 +30,7 @@ UserFeed.propTypes = {
             uid: PropTypes.string.isRequired,
         }).isRequired,
     ).isRequired,
-    roleType: PropTypes.oneOf([null, 'admin', 'blocked']),
+    roleType: PropTypes.oneOf([null, 'base', 'wantAdmin', 'admin', 'blocked']),
     searchTerm: PropTypes.string,
 };
 

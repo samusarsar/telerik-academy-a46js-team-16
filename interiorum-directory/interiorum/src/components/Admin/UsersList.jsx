@@ -28,7 +28,7 @@ const UsersList = ({ roleType }) => {
 };
 
 UsersList.propTypes = {
-    roleType: PropTypes.oneOf([null, 'admin', 'blocked']),
+    roleType: PropTypes.oneOf([null, 'base', 'wantAdmin', 'admin', 'blocked']),
 };
 
 export default UsersList;
