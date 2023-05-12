@@ -15,7 +15,13 @@ export const getUserByHandle = (handle) => {
 };
 
 export const getUsersByRole = ({ value }) => {
-    return get(query(ref(db, 'users'), orderByChild('role'), equalTo(value)));
+    return get(query(ref(db, 'users'), orderByChild('role'), equalTo(value)))
+        .then(snapshot => {
+            if (!snapshot.exists()) {
+                throw new Error('No such users.');
+            }
+            return snapshot.val();
+        });
 };
 
 export const createUser = (handle, uid, email, firstName, lastName) => {
@@ -32,7 +38,14 @@ export const createUser = (handle, uid, email, firstName, lastName) => {
 };
 
 export const getUserData = (uid) => {
-    return get(query(ref(db, 'users'), orderByChild('uid'), equalTo(uid)));
+    return get(query(ref(db, 'users'), orderByChild('uid'), equalTo(uid)))
+        .then(snapshot => {
+            if (!snapshot.exists()) {
+                throw new Error('No such user.');
+            }
+
+            return snapshot.val();
+        });
 };
 
 export const editUser = ({ handle, avatarURL, firstName, lastName }) => {
@@ -60,22 +73,21 @@ export const changeUserRole = ({ handle, roleType }) => {
     });
 };
 
-export const approveAdmin = ({ handle }) => {
-    return update(ref(db, `users/${handle}`), {
-        role: 'admin',
-    });
-};
-
 export const getAllUsers = () => {
     return get(ref(db, 'users'))
-        .then(snapshot => snapshot.val());
+        .then(snapshot => {
+            if (!snapshot.exists()) {
+                throw new Error('Can not get users');
+            }
+            return snapshot.val();
+        });
 };
 
-export const getTopUsers = () => {
+export const getTopUsers = (type) => {
     return getAllUsers()
         .then(data => Object.values(data))
-        .then(users => users.filter(user => user.comments))
-        .then(users => users.sort((a, b) => Object.keys(b.comments).length - Object.keys(a.comments).length).slice(0, 5));
+        .then(users => users.filter(user => user[type]))
+        .then(users => users.sort((a, b) => Object.keys(b[type]).length - Object.keys(a[type]).length).slice(0, 5));
 };
 
 export const addLikedPostToUser = ({ handle, postId }) => {
@@ -107,10 +119,12 @@ export const addLikedCommentToUser = ({ handle, commentId }) => {
         .then(snapshot => {
             if (snapshot.exists()) {
                 return update(ref(db, `users/${handle}/likedComments`), {
-                    [commentId]: true });
+                    [commentId]: true
+                });
             } else {
                 return set(ref(db, `users/${handle}/likedComments`), {
-                    [commentId]: true });
+                    [commentId]: true
+                });
             }
         });
 };
