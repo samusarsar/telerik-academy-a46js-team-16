@@ -42,7 +42,7 @@ const CategoryPosts = () => {
 
     return (
         <Box bg={'white'} borderRadius={'10px'} p={'20px'} m={'20px'} boxShadow={'md'}>
-            <Text fontStyle='italic'>posts from category</Text>
+            {category !== 'allCategories' && <Text fontStyle='italic'>posts from category</Text>}
             <Heading size='xl' mb='15px'>{categories[category]}</Heading>
             <Outlet />
             <HStack>
@@ -52,13 +52,13 @@ const CategoryPosts = () => {
                     m='0px 0px 10px'
                     bg='white'
                     focusBorderColor='brand.400'
-                    placeholder={`Search posts in category ${category}`} />
+                    placeholder={`Search posts in ${categories[category]}`} />
                 <Button onClick={handleClick}>Search</Button>
             </HStack>
 
             {searchParams.get('search') ? (
                 <>
-                    <Text p='15px' fontStyle='italic'>Search results for `{searchParams.get('search')}` in category {category}</Text>
+                    <Text p='15px' fontStyle='italic'>Search results for `{searchParams.get('search')}` in {categories[category]}</Text>
                     <ForumTabs posts={categoryPosts.filter(post =>
                         (post.title.toLowerCase().includes(searchParams.get('search')) ||
                         (post.tags ? Object.keys(post.tags).includes(searchParams.get('search')) : false)))} />

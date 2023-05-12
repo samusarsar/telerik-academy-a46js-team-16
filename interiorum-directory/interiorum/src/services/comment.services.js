@@ -128,7 +128,6 @@ export const removeLikeToComment = ({ commentId, handle }) => {
 
 
 export const getFeaturedComment = (comments) => {
-    console.log(comments);
     const sortedByDate = [...comments].sort((a, b) => {
         return new Date(b.createdOn) - new Date(a.createdOn);
     });
@@ -137,7 +136,6 @@ export const getFeaturedComment = (comments) => {
         .sort((a, b) => Object.keys(b.likes).length - Object.keys(a.likes).length);
 
     if (likedComments.length > 0) {
-        console.log(likedComments);
         return likedComments[0];
     }
     return sortedByDate[0];
