@@ -66,6 +66,7 @@ const CategoryPosts = () => {
                             <Text p='15px' fontStyle='italic'>Search results for `{searchParams.get('search')}` in {categories[category]}</Text>
                             <ForumTabs posts={categoryPosts.filter(post =>
                                 (post.title.toLowerCase().includes(searchParams.get('search')) ||
+                                post.content.toLowerCase().includes(searchParams.get('search')) ||
                             (post.tags ? Object.keys(post.tags).includes(searchParams.get('search')) : false)))} />
                         </>
                     ) : (
