@@ -42,31 +42,32 @@ const SignUp = () => {
             (lastName.length > USER_NAME_MIN_LENGTH || lastName.length < USER_NAME_MAX_LENGTH) &&
             (email.includes('@'))) {
             getUserByHandle(username)
+                .catch(() => {
+                    return registerUser(email, password)
+                        .then(credential => {
+                            return createUser(username, credential.user.uid, credential.user.email, firstName, lastName)
+                                .then(() =>
+                                    setContext({
+                                        user: credential.user,
+                                    }));
+                        })
+                        .then(() => {
+                            navigate('/home');
+                            toast({
+                                title: 'Welcome to your Interiorum!',
+                                description: 'You have successfully signed up. Have fun!',
+                                status: 'success',
+                                duration: 3000,
+                                isClosable: true,
+                                position: 'top',
+                                variant: 'subtle',
+                            });
+                        });
+                })
                 .then(result => {
                     if (result) {
                         throw new Error(`Username ${username} has already been taken!`);
                     }
-
-                    return registerUser(email, password);
-                })
-                .then(credential => {
-                    return createUser(username, credential.user.uid, credential.user.email, firstName, lastName)
-                        .then(() =>
-                            setContext({
-                                user: credential.user,
-                            }));
-                })
-                .then(() => {
-                    navigate('/home');
-                    toast({
-                        title: 'Welcome to your Interiorum!',
-                        description: 'You have successfully signed up. Have fun!',
-                        status: 'success',
-                        duration: 3000,
-                        isClosable: true,
-                        position: 'top',
-                        variant: 'subtle',
-                    });
                 })
                 .catch(e => {
                     switch (e.message) {

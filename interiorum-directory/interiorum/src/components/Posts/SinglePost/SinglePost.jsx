@@ -28,7 +28,8 @@ const SinglePost = ({ post, large = false }) => {
             if (data) {
                 setIsLiked(userData ? Object.keys(data).includes(userData.handle) : false);
                 Promise.all(Object.keys(data).map((handle) => getUserByHandle(handle)))
-                    .then(resultArr => setLikedUsers(resultArr));
+                    .then(resultArr => setLikedUsers(resultArr))
+                    .catch(() => setLikedUsers([]));
             } else {
                 setIsLiked(false);
                 setLikedUsers([]);

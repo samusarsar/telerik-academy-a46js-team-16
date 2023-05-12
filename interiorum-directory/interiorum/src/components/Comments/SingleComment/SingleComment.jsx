@@ -22,8 +22,7 @@ const SingleComment = ({ comment }) => {
 
     useEffect(() => {
         getUserByHandle(comment.author)
-            .then(data => setAuthor(data))
-            .catch(error => console.log('Fetching author data was unsuccessful: ' + error.message));
+            .then(data => setAuthor(data));
 
         onValue(ref(db, `comments/${comment.commentId}/likes`), (snapshot) => {
             const data = snapshot.val();

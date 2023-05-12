@@ -34,8 +34,7 @@ const PostDetails = ({ post }) => {
 
     useEffect(() => {
         getUserByHandle(post.author)
-            .then(data => setAuthor(data))
-            .catch(error => console.log('Fetching author data was unsuccessful: ' + error.message));
+            .then(data => setAuthor(data));
 
         return onValue(ref(db, `posts/${post.postId}`), (snapshot) => {
             if (!snapshot.exists()) return;
