@@ -23,10 +23,12 @@ const addPostToUser = (handle, postId) => {
         .then(snapshot => {
             if (snapshot.exists()) {
                 return update(ref(db, `users/${handle}/posts`), {
-                    [postId]: true });
+                    [postId]: true
+                });
             } else {
                 return set(ref(db, `users/${handle}/posts`), {
-                    [postId]: true });
+                    [postId]: true
+                });
             }
         });
 };
@@ -34,10 +36,10 @@ const addPostToUser = (handle, postId) => {
 export const deletePost = (postId, handle) => {
     get(ref(db, `posts/${postId}/comments`))
         .then(snapshot => {
-            if (snapshot.exists()) {
-                return snapshot.val();
+            if (!snapshot.exists()) {
+                throw new Error('No posts match the search criteria');
             }
-            return {};
+            return snapshot.val();
         })
         .then(comments => Object.keys(comments))
         .then(commentIds => commentIds.forEach(commentId => deleteComment(handle, commentId)));
@@ -46,7 +48,7 @@ export const deletePost = (postId, handle) => {
         .then(() => deletePostToUser(postId, handle));
 };
 
-const deletePostToUser = (postId, handle ) => {
+const deletePostToUser = (postId, handle) => {
     return remove(ref(db, `users/${handle}/posts/${postId}`));
 };
 
@@ -58,16 +60,12 @@ export const getPosts = () => {
     return get(query(ref(db, 'posts')))
         .then(snapshot => {
             if (!snapshot.exists()) {
-                return {};
+                throw new Error('No posts match the search criteria');
             }
             return snapshot.val();
         })
         .then(posts => {
-            return Object.keys(posts).map(postId => {
-                return {
-                    ...posts[postId],
-                };
-            });
+            return Object.values(posts);
         });
 };
 
@@ -85,7 +83,7 @@ export const getPostsByCategory = (category = 'allCategories') => {
 
 export const sortPostsByDate = (posts) => {
     return [...posts].sort((a, b) => {
-        return new Date(b.createdOn)- new Date(a.createdOn);
+        return new Date(b.createdOn) - new Date(a.createdOn);
     });
 };
 
@@ -93,7 +91,7 @@ export const sortPostsByPopularity = (posts) => {
 
     const likedPosts = posts
         .filter(post => post.comments)
-        .sort((a, b) => Object.keys(b.comments).length - Object.keys(a.comments).length );
+        .sort((a, b) => Object.keys(b.comments).length - Object.keys(a.comments).length);
 
     const notLikedPosts = posts
         .filter(post => !post.comments);
@@ -109,7 +107,7 @@ export const getPostById = (postId) => {
     return get(ref(db, `posts/${postId}`))
         .then(snapshot => {
             if (!snapshot.exists()) {
-                throw new Error('No posts match the search criteria'); // TODO
+                throw new Error('No posts match the search criteria');
             }
             return snapshot.val();
         });
