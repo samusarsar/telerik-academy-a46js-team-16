@@ -75,6 +75,7 @@ const App = () => {
                                 <Route path='sign-up' element={<SignUp />} />
                             </ Route>
                             <Route path='/server-down' element={<ServerDown />} />
+                            <Route path='/not-found' element={<NotFound />} />
                             <Route path='*' element={<NotFound />} />
                         </Route>
                     </Routes>

@@ -22,7 +22,7 @@ const CategoryPosts = () => {
 
     useEffect(() => {
         if (!categories.hasOwnProperty(category)) {
-            navigate('*');
+            navigate('../../not-found');
         }
 
         return onValue(ref(db, 'posts'), () => {

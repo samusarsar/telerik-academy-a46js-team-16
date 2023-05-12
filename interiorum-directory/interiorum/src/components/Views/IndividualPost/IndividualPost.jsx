@@ -16,7 +16,7 @@ const IndividualPost = () => {
     useEffect(() => {
         getPostById(postId)
             .then(result => setPost(result))
-            .catch(() => navigate('*'));
+            .catch(() => navigate('../../not-found'));
     }, []);
 
     if (post) {
