@@ -18,11 +18,11 @@ const addCommentToUser = (handle, commentId) => {
         .then(snapshot => {
             if (snapshot.exists()) {
                 return update(ref(db, `users/${handle}/comments`), {
-                    [commentId]: true
+                    [commentId]: true,
                 });
             } else {
                 return set(ref(db, `users/${handle}/comments`), {
-                    [commentId]: true
+                    [commentId]: true,
                 });
             }
         });
@@ -33,11 +33,11 @@ const addCommentToPost = (postId, commentId) => {
         .then(snapshot => {
             if (snapshot.exists()) {
                 return update(ref(db, `posts/${postId}/comments`), {
-                    [commentId]: true
+                    [commentId]: true,
                 });
             } else {
                 return set(ref(db, `posts/${postId}/comments`), {
-                    [commentId]: true
+                    [commentId]: true,
                 });
             }
         });
