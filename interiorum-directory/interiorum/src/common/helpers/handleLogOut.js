@@ -1,6 +1,7 @@
 import { logoutUser } from '../../services/auth.service';
 
 const handleLogOut = ({ setContext, onClose, navigate, toast }) => {
+
     logoutUser()
         .then(() => {
             setContext({

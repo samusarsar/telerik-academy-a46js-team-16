@@ -123,22 +123,34 @@ const ContentEdit = ({ toEdit, commentMode = false }) => {
             }
         }
 
-        !commentMode ?
-            editPost({ postId: toEdit.postId, title, content, imagesURL: allImageURL }) :
-            editComment({ commentId: toEdit.commentId, content });
+        try {
+            !commentMode ?
+                editPost({ postId: toEdit.postId, title, content, imagesURL: allImageURL }) :
+                editComment({ commentId: toEdit.commentId, content });
 
-        onClose();
-        toast({
-            title: 'Edit successful',
-            description: `You have successfully edited your ${!commentMode ? 'post' : 'comment'}`,
-            status: 'success',
-            duration: 3000,
-            isClosable: true,
-            position: 'top',
-            variant: 'subtle',
-        });
-        setImages(null);
-        setImagesURL(null);
+            onClose();
+            toast({
+                title: 'Edit successful',
+                description: `You have successfully edited your ${!commentMode ? 'post' : 'comment'}`,
+                status: 'success',
+                duration: 3000,
+                isClosable: true,
+                position: 'top',
+                variant: 'subtle',
+            });
+            setImages(null);
+            setImagesURL(null);
+        } catch (error) {
+            toast({
+                title: `Error editing ${!commentMode ? 'post' : 'comment'}`,
+                description: 'Please try again later!',
+                status: 'success',
+                duration: 3000,
+                isClosable: true,
+                position: 'top',
+                variant: 'subtle',
+            });
+        }
     };
 
     return (
@@ -228,11 +240,11 @@ const ContentEdit = ({ toEdit, commentMode = false }) => {
 
 ContentEdit.propTypes = {
     toEdit: PropTypes.shape({
-        title: PropTypes.string.isRequired,
-        content: PropTypes.string.isRequired,
+        title: PropTypes.string,
+        content: PropTypes.string,
         imagesURL: PropTypes.string,
-        postId: PropTypes.string.isRequired,
-        commentId: PropTypes.string.isRequired,
+        postId: PropTypes.string,
+        commentId: PropTypes.string,
     }).isRequired,
     commentMode: PropTypes.bool,
 };

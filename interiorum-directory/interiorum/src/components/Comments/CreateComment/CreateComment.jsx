@@ -1,4 +1,4 @@
-import { Button, FormControl, FormErrorMessage, HStack, Image, Textarea, VStack } from '@chakra-ui/react';
+import { Button, FormControl, FormErrorMessage, HStack, Image, Textarea, VStack, useToast } from '@chakra-ui/react';
 import { useContext, useState } from 'react';
 import { AppContext } from '../../../context/AppContext/AppContext';
 import { addComment } from '../../../services/comment.services';
@@ -7,6 +7,8 @@ import PropTypes from 'prop-types';
 
 const CreateComment = ({ postId }) => {
     const { userData } = useContext(AppContext);
+
+    const toast = useToast();
 
     const [comment, setComment] = useState('');
     const [commentError, setCommentError] = useState(false);
@@ -17,9 +19,20 @@ const CreateComment = ({ postId }) => {
             return;
         }
 
-        addComment(comment, postId, userData.handle);
-        setComment('');
-        setCommentError(false);
+        addComment(comment, postId, userData.handle)
+            .then(() => {
+                setComment('');
+                setCommentError(false);
+            })
+            .catch(error => toast({
+                title: 'Error uploading comment',
+                description: `${error.message}`,
+                status: 'error',
+                duration: 3000,
+                isClosable: true,
+                position: 'top',
+                variant: 'subtle',
+            }));
         return;
     };
 
