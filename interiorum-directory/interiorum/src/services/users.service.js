@@ -119,11 +119,11 @@ export const addLikedCommentToUser = ({ handle, commentId }) => {
         .then(snapshot => {
             if (snapshot.exists()) {
                 return update(ref(db, `users/${handle}/likedComments`), {
-                    [commentId]: true
+                    [commentId]: true,
                 });
             } else {
                 return set(ref(db, `users/${handle}/likedComments`), {
-                    [commentId]: true
+                    [commentId]: true,
                 });
             }
         });
