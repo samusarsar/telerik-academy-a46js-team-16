@@ -39,7 +39,7 @@ const PostFeed = ({ posts, profileCommentMode=false }) => {
                             <TabPanels>
                                 <TabPanel>
                                     {postsToShow.map(post =>
-                                        <Box key={post.postId}>
+                                        <Box key={profileCommentMode ? post.commentId : post.postId}>
                                             {!profileCommentMode ?
                                                 <SinglePost post={post} /> :
                                                 <SingleProfileComment key={post.commentId} comment={post} />}
@@ -49,7 +49,7 @@ const PostFeed = ({ posts, profileCommentMode=false }) => {
                                 </TabPanel>
                                 <TabPanel>
                                     {postsToShow.map(post =>
-                                        <Box key={post.postId}>
+                                        <Box key={profileCommentMode ? post.commentId : post.postId}>
                                             {!profileCommentMode ?
                                                 <SinglePost post={post} large={true} /> :
                                                 <SingleProfileComment key={post.commentId} comment={post} large={true}/>}

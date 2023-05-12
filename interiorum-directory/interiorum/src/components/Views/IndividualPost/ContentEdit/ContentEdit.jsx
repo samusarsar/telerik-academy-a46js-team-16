@@ -193,7 +193,7 @@ const ContentEdit = ({ toEdit, commentMode = false }) => {
                                     <VStack align='start'>
                                         <Text >Current Attachments:</Text>
                                         <HStack>
-                                            {toEdit.imagesURL && toEdit.imagesURL.split(' ').map(img => <Image key={img.name} mt={4} boxSize='150px' objectFit='cover' src={typeof img === 'string' ? img : URL.createObjectURL(img)} />)}
+                                            {toEdit.imagesURL && toEdit.imagesURL.split(' ').map(img => <Image key={img} mt={4} boxSize='150px' objectFit='cover' src={img} />)}
                                         </HStack>
                                         <Button isDisabled={!toEdit.imagesURL} colorScheme='blackAlpha' onClick={handleDeleteImages}>
                                             Delete Images

@@ -9,7 +9,7 @@ const ProfileCommentFeed = ({ comments }) => {
         <>
             {comments.length ?
                 (<Box py={4}>
-                    <Tabs align='end' variant='enclosed'>
+                    <Tabs align='end' variant='enclosed' isLazy={true}>
                         <TabList>
                             <Tab><Icon as={MdOutlineDensitySmall}></Icon></Tab>
                             <Tab><Icon as={MdOutlineDensityLarge}></Icon></Tab>
@@ -18,7 +18,7 @@ const ProfileCommentFeed = ({ comments }) => {
                             <TabPanel>
                                 {comments.map(comment =>
                                     <>
-                                        <SingleProfileComment key={comment.id} comment={comment} />
+                                        <SingleProfileComment key={comment.commentId} comment={comment} />
                                         <Divider borderColor='gray.400' w='95%'/>
                                     </>,
                                 )}
@@ -26,7 +26,7 @@ const ProfileCommentFeed = ({ comments }) => {
                             <TabPanel>
                                 {comments.map(comment =>
                                     <>
-                                        <SingleProfileComment key={comment.id} comment={comment} large={true}/>
+                                        <SingleProfileComment key={comment.commentId} comment={comment} large={true}/>
                                         <Divider borderColor='gray.400' w='95%'/>
                                     </>,
                                 )}
