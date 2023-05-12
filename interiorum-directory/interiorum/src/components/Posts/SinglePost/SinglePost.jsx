@@ -1,4 +1,4 @@
-import { Box, HStack, Heading, Text, AvatarGroup, Avatar, Spacer, Button, Icon } from '@chakra-ui/react';
+import { Box, HStack, Heading, Text, AvatarGroup, Avatar, Spacer, Button, Icon, Skeleton, Stack } from '@chakra-ui/react';
 import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AppContext } from '../../../context/AppContext/AppContext';
@@ -15,6 +15,7 @@ import { ADMIN_ROLE } from '../../../common/constants';
 import PropTypes from 'prop-types';
 
 const SinglePost = ({ post, large = false }) => {
+    const [loading, setLoading] = useState(false);
     const [likedUsers, setLikedUsers] = useState(null);
     const { userData } = useContext(AppContext);
 
@@ -23,19 +24,31 @@ const SinglePost = ({ post, large = false }) => {
     const body = post.content.length > 100 ? post.content.slice(0, 99) + '...' : post.content;
 
     useEffect(() => {
+        setLoading(true);
         return onValue(ref(db, `posts/${post.postId}/likes`), (snapshot) => {
             const data = snapshot.val();
             if (data) {
                 setIsLiked(userData ? Object.keys(data).includes(userData.handle) : false);
                 Promise.all(Object.keys(data).map((handle) => getUserByHandle(handle)))
                     .then(resultArr => setLikedUsers(resultArr))
-                    .catch(() => setLikedUsers([]));
+                    .catch(() => setLikedUsers([]))
+                    .finally(() => setLoading(false));
             } else {
                 setIsLiked(false);
                 setLikedUsers([]);
+                setLoading(false);
             }
         });
     }, []);
+
+    if (loading) {
+        return (
+            <Stack mb={2}>
+                <Skeleton height='15px' />
+                <Skeleton height='15px' />
+            </Stack>
+        );
+    };
 
     if (likedUsers) {
         return (
@@ -62,8 +75,8 @@ const SinglePost = ({ post, large = false }) => {
                                     {likedUsers.map(user =>
                                         <Avatar
                                             key={user.uid}
-                                            name={user.handle}
                                             src={user.avatarURL}
+                                            name={`${user.firstName} ${user.lastName}`}
                                         />)}
                                 </AvatarGroup>
                             ) : (
