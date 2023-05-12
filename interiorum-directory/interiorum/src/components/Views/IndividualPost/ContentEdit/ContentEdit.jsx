@@ -77,7 +77,16 @@ const ContentEdit = ({ toEdit, commentMode = false }) => {
                     position: 'top',
                     variant: 'subtle',
                 }),
-            );
+            )
+            .catch(() => toast({
+                title: `Error uploading images`,
+                description: 'Please try again later!',
+                status: 'error',
+                duration: 3000,
+                isClosable: true,
+                position: 'top',
+                variant: 'subtle',
+            }));
     };
 
     const handleDeleteImages = () => {

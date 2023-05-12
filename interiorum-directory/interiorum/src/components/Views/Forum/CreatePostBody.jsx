@@ -51,7 +51,16 @@ const CreatePostBody = ({ postForm, setPostForm, updateForm, postTitleIsInvalid 
                     position: 'top',
                     variant: 'subtle',
                 }),
-            );
+            )
+            .catch(() => toast({
+                title: `Error uploading images`,
+                description: 'Please try again later!',
+                status: 'error',
+                duration: 3000,
+                isClosable: true,
+                position: 'top',
+                variant: 'subtle',
+            }));
     };
 
     const handleClearImages = () => {
@@ -77,7 +86,16 @@ const CreatePostBody = ({ postForm, setPostForm, updateForm, postTitleIsInvalid 
 
     const createPost = () => {
         addPost(postForm.title, postForm.content, postForm.categories, postForm.author, postForm.imagesURL)
-            .then(postId => navigate(`/post/${postId}`));
+            .then(postId => navigate(`/post/${postId}`))
+            .catch(() => toast({
+                title: 'Error creating post.',
+                description: 'Please try again later!',
+                status: 'error',
+                duration: 3000,
+                isClosable: true,
+                position: 'top',
+                variant: 'subtle',
+            }));
     };
 
     return (

@@ -18,7 +18,8 @@ const CallToAction = () => {
             .then(data => setUsers(Object.values(data)));
 
         getPosts()
-            .then(data => setPosts(Object.values(data)));
+            .then(data => setPosts(Object.values(data)))
+            .catch(() => navigate('../server-down'));
     }, []);
 
     return (

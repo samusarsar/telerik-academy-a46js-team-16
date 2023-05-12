@@ -22,9 +22,9 @@ export const DeleteButton = ({ deleteType, single=false, deleteFunction }) => {
                     variant: 'subtle',
                 });
             })
-            .catch(error => toast({
+            .catch(() => toast({
                 title: `Error deleting ${deleteType}`,
-                description: `${error.message}`,
+                description: 'Please try again later!',
                 status: 'error',
                 duration: 3000,
                 isClosable: true,

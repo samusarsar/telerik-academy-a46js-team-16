@@ -9,7 +9,7 @@ import IndividualPost from './components/Views/IndividualPost/IndividualPost.jsx
 import LogIn from './components/Views/AccountViews/LogIn.jsx';
 import SignUp from './components/Views/AccountViews/SignUp.jsx';
 import CategoryPosts from './components/Views/Forum/CategoryPosts.jsx';
-import NotFound from './components/Views/NotFound/NotFound.jsx';
+import NotFound from './components/Views/ErrorViews/NotFound/NotFound.jsx';
 import ProtectedRoute from './components/Base/ProtectedRoute/ProtectedRoute.jsx';
 
 import { AppContext } from './context/AppContext/AppContext.js';
@@ -18,6 +18,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { getUserData } from './services/users.service';
 
 import { auth } from './config/firebase-config.js';
+import ServerDown from './components/Views/ErrorViews/ServerDown/ServerDown.jsx';
 
 const App = () => {
     const [user, loading, error] = useAuthState(auth);
@@ -65,8 +66,7 @@ const App = () => {
                             <Route element={<ProtectedRoute user={appState.user} />} >
                                 <Route path='forum' element={<Forum />}>
                                     <Route index element={<Navigate replace to='allCategories' />} />
-                                    <Route path=':category' element={<CategoryPosts />}>
-                                    </Route>
+                                    <Route path=':category' element={<CategoryPosts />} />
                                 </Route>
                                 <Route path='post/:postId' element={<IndividualPost />} />
                                 {appState.userData && <Route path='my-profile' element={<Navigate replace to={`../profile/${appState.userData.handle}`} />} />}
@@ -74,6 +74,7 @@ const App = () => {
                                 <Route path='log-in' element={<LogIn />} />
                                 <Route path='sign-up' element={<SignUp />} />
                             </ Route>
+                            <Route path='/server-down' element={<ServerDown />} />
                             <Route path='*' element={<NotFound />} />
                         </Route>
                     </Routes>

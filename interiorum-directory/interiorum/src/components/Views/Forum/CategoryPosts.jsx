@@ -1,4 +1,4 @@
-import { Outlet, useParams, useSearchParams } from 'react-router-dom';
+import { Outlet, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
 import { Heading, Text, Box, HStack, Input, Button } from '@chakra-ui/react';
 
@@ -18,12 +18,19 @@ const CategoryPosts = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchParams, setSearchParams] = useSearchParams();
 
+    const navigate = useNavigate();
+
     useEffect(() => {
-        onValue(ref(db, 'posts'), () => {
+        if (!categories.hasOwnProperty(category)) {
+            navigate('*');
+        }
+
+        return onValue(ref(db, 'posts'), () => {
             getPostsByCategory(category)
                 .then(posts => {
                     setCategoryPosts(posts);
-                });
+                })
+                .catch(() => navigate('../../server-down'));
         });
     }, [category]);
 

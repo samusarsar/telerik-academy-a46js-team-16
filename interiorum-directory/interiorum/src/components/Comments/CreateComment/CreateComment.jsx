@@ -24,9 +24,9 @@ const CreateComment = ({ postId }) => {
                 setComment('');
                 setCommentError(false);
             })
-            .catch(error => toast({
-                title: 'Error uploading comment',
-                description: `${error.message}`,
+            .catch(() => toast({
+                title: 'Error uploading comment.',
+                description: 'Please try again later!',
                 status: 'error',
                 duration: 3000,
                 isClosable: true,

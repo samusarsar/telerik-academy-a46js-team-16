@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import PostDetails from '../../Posts/PostDetails/PostDetails';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Spacer, VStack } from '@chakra-ui/react';
 import PostCommentsBox from '../../Posts/PostCommentsBox/PostCommentsBox';
 import { getPostById } from '../../../services/post.service';
@@ -11,9 +11,12 @@ const IndividualPost = () => {
 
     const { postId } = useParams();
 
+    const navigate = useNavigate();
+
     useEffect(() => {
         getPostById(postId)
-            .then(result => setPost(result));
+            .then(result => setPost(result))
+            .catch(() => navigate('*'));
     }, []);
 
     if (post) {
@@ -25,6 +28,8 @@ const IndividualPost = () => {
             </VStack>
         );
     }
+
+    return null;
 };
 
 export default IndividualPost;

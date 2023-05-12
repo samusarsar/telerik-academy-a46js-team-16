@@ -32,6 +32,8 @@ const ProfileLikedPosts = ({ handle }) => {
     if (likedPosts) {
         return <ProfilePosts posts={likedPosts} />;
     }
+
+    return null;
 };
 
 ProfileLikedPosts.propTypes = {
