@@ -1,6 +1,6 @@
 import { Outlet, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
-import { Heading, Text, Box, HStack, Input, Button } from '@chakra-ui/react';
+import { Heading, Text, Box, HStack, Input, Button, Spinner, VStack } from '@chakra-ui/react';
 
 import { categories } from '../../../../data';
 import ForumTabs from './ForumTabs';
@@ -14,7 +14,7 @@ const CategoryPosts = () => {
 
     const { category } = useParams();
 
-    const [categoryPosts, setCategoryPosts] = useState([]);
+    const [categoryPosts, setCategoryPosts] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [searchParams, setSearchParams] = useSearchParams();
 
@@ -56,16 +56,24 @@ const CategoryPosts = () => {
                 <Button onClick={handleClick}>Search</Button>
             </HStack>
 
-            {searchParams.get('search') ? (
-                <>
-                    <Text p='15px' fontStyle='italic'>Search results for `{searchParams.get('search')}` in {categories[category]}</Text>
-                    <ForumTabs posts={categoryPosts.filter(post =>
-                        (post.title.toLowerCase().includes(searchParams.get('search')) ||
-                        (post.tags ? Object.keys(post.tags).includes(searchParams.get('search')) : false)))} />
-                </>
+            {!categoryPosts ? (
+                <VStack justify='center' h='200px'>
+                    <Spinner size='xl' />
+                </VStack>
             ) : (
                 <>
-                    <ForumTabs posts={categoryPosts} />
+                    {searchParams.get('search') ? (
+                        <>
+                            <Text p='15px' fontStyle='italic'>Search results for `{searchParams.get('search')}` in {categories[category]}</Text>
+                            <ForumTabs posts={categoryPosts.filter(post =>
+                                (post.title.toLowerCase().includes(searchParams.get('search')) ||
+                            (post.tags ? Object.keys(post.tags).includes(searchParams.get('search')) : false)))} />
+                        </>
+                    ) : (
+                        <>
+                            <ForumTabs posts={categoryPosts} />
+                        </>
+                    )}
                 </>
             )}
         </Box>

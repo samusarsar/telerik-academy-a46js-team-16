@@ -1,4 +1,4 @@
-import { Box, Divider, Tabs, TabList, Tab, TabPanels, TabPanel, Icon, VStack, Text } from '@chakra-ui/react';
+import { Box, Divider, Tabs, TabList, Tab, TabPanels, TabPanel, Icon, VStack, Text, Spinner } from '@chakra-ui/react';
 import SinglePost from '../SinglePost/SinglePost';
 import { MdOutlineDensitySmall, MdOutlineDensityLarge } from 'react-icons/md';
 import SingleProfileComment from '../../Comments/SingleProfileComment/SingleProfileComment';
@@ -70,7 +70,11 @@ const PostFeed = ({ posts, profileCommentMode=false }) => {
         );
     }
 
-    return null;
+    return (
+        <VStack justify='center' h='200px'>
+            <Spinner size='xl' />
+        </VStack>
+    );
 };
 
 PostFeed.propTypes = {
