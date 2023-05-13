@@ -13,6 +13,7 @@ import { deleteComment } from '../../../services/comment.services';
 
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { ADMIN_ROLE } from '../../../common/constants';
 
 const SingleComment = ({ comment }) => {
     const [author, setAuthor] = useState(null);
@@ -58,7 +59,7 @@ const SingleComment = ({ comment }) => {
                                 }}><Icon as={isLiked ? AiFillLike : AiOutlineLike} mr={1} />Like{commentLikes.length ? ` | ${commentLikes.length}` : ''}
                                 </Button>}
 
-                    {(userData.handle === comment.author) &&
+                    {(userData.handle === comment.author || userData.role === ADMIN_ROLE) &&
                         <DeleteButton deleteType={'comment'} single={true} deleteFunction={() => deleteComment(userData.handle, comment.commentId)} />
                     }
                 </HStack>
