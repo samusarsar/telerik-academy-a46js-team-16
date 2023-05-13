@@ -7,7 +7,7 @@ import {
     Text,
     useToast,
 } from '@chakra-ui/react';
-import { BsInstagram, BsTwitter, BsYoutube } from 'react-icons/bs';
+import { BsFacebook, BsTwitter, BsLinkedin } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 
 const Footer = () => {
@@ -60,9 +60,9 @@ const Footer = () => {
                     align={{ base: 'center', md: 'center' }}>
                     <Text>© 2023 Team 16 - interiorum. All rights reserved</Text>
                     <Stack direction='row' spacing={6}>
+                        <Icon as={BsFacebook} bg='transparent' onClick={() => handleSocials('Facebook')}/>
                         <Icon as={BsTwitter} bg='transparent' onClick={() => handleSocials('Twitter')}/>
-                        <Icon as={BsYoutube} bg='transparent' onClick={() => handleSocials('YouTube')}/>
-                        <Icon as={BsInstagram} bg='transparent' onClick={() => handleSocials('Instagram')}/>
+                        <Icon as={BsLinkedin} bg='transparent' onClick={() => handleSocials('LinkedIn')}/>
                     </Stack>
                 </Container>
             </Box>
