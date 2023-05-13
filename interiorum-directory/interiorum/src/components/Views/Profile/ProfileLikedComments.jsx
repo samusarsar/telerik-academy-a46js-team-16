@@ -31,6 +31,8 @@ const ProfileLikedComments = ({ handle }) => {
     if (likedComments) {
         return <ProfileComments comments={likedComments} />;
     }
+
+    return null;
 };
 
 ProfileLikedComments.propTypes = {

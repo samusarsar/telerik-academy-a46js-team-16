@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import { Box, Container, Text, Spacer, HStack, ButtonGroup, Button, Tabs, TabList, Tab, TabPanels, TabPanel, Flex, Icon, useToast, Badge, Avatar } from '@chakra-ui/react';
+import { Box, Container, Text, Spacer, HStack, ButtonGroup, Button, Tabs, TabList, Tab, TabPanels, TabPanel, Flex, Icon, useToast, Badge, Avatar, VStack, Spinner } from '@chakra-ui/react';
 import { useContext, useEffect, useState } from 'react';
 import ProfilePosts from './ProfilePosts';
 import ProfileComments from './ProfileComments';
@@ -28,8 +28,8 @@ const Profile = () => {
 
     const [profile, setProfile] = useState(null);
 
-    const [posts, setPosts] = useState([]);
-    const [comments, setComments] = useState([]);
+    const [posts, setPosts] = useState(null);
+    const [comments, setComments] = useState(null);
 
     const navigate = useNavigate();
     const toast = useToast();
@@ -44,6 +44,8 @@ const Profile = () => {
     }, [handle]);
 
     useEffect(() => {
+        setPosts(null);
+        setComments(null);
         if (profile) {
             getPostsByAuthor(profile.handle)
                 .then(snapshot => snapshot.val())
@@ -91,9 +93,9 @@ const Profile = () => {
 
     const currUserCheck = () => userData.handle === handle;
 
-    return (
-        <>
-            {(profile && posts && comments) &&
+    if (profile && posts && comments) {
+        return (
+            <>
                 <Container className='main-view' id='profile-view' maxW='container' minH='90vh' p={0}>
                     <Container maxW='container' bg='brand.100'>
                         <HStack justify='left' p={8}>
@@ -131,34 +133,43 @@ const Profile = () => {
                             </ButtonGroup>
                         </HStack>
                     </Container>
-                    {profile.handle &&
-                        <Tabs pl={12} pr={12} mt={2} isLazy={true}>
-                            <TabList>
-                                <Tab>Activity</Tab>
-                                <Tab>Liked</Tab>
-                                {(profile.role === ADMIN_ROLE && currUserCheck()) && <Tab color='purple'>Admin Panel</Tab>}
-                            </TabList>
-                            <TabPanels bg='brand.600'>
-                                <TabPanel>
-                                    <Flex w='container' p={4} justify={'center'}>
-                                        <ProfilePosts posts={posts} />
-                                        <ProfileComments comments={comments} />
-                                    </Flex>
-                                </TabPanel>
-                                <TabPanel>
-                                    <Flex w='container' p={4} justify={'center'}>
-                                        <ProfileLikedPosts handle={profile.handle} />
-                                        <ProfileLikedComments handle={profile.handle} />
-                                    </Flex>
-                                </TabPanel>
-                                {(profile.role === ADMIN_ROLE && currUserCheck()) &&
+                    <Tabs pl={12} pr={12} mt={2} isLazy={true}>
+                        <TabList>
+                            <Tab>Activity</Tab>
+                            <Tab>Liked</Tab>
+                            {(profile.role === ADMIN_ROLE && currUserCheck()) && <Tab color='purple'>Admin Panel</Tab>}
+                        </TabList>
+                        <TabPanels bg='brand.600'>
+                            <TabPanel>
+                                <Flex w='container' p={4} justify={'center'}>
+                                    <ProfilePosts posts={posts} />
+                                    <ProfileComments comments={comments} />
+                                </Flex>
+                            </TabPanel>
+                            <TabPanel>
+                                <Flex w='container' p={4} justify={'center'}>
+                                    <ProfileLikedPosts handle={profile.handle} />
+                                    <ProfileLikedComments handle={profile.handle} />
+                                </Flex>
+                            </TabPanel>
+                            {(profile.role === ADMIN_ROLE && currUserCheck()) &&
                                     (<TabPanel>
                                         <AdminPanel />
                                     </TabPanel>)}
-                            </TabPanels>
-                        </Tabs>}
-                </Container>}
-        </>
+                        </TabPanels>
+                    </Tabs>
+                </Container>
+            </>
+        );
+    }
+
+    return (
+        <Container maxW='container' minH='80vh'>
+            <Container maxW='container' bg='brand.100' h='200px' />
+            <VStack justify='center' pt={6}>
+                <Spinner size='xl' />
+            </VStack>
+        </Container>
     );
 };
 

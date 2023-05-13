@@ -23,6 +23,7 @@ import {
     Text,
     VStack,
     ButtonGroup,
+    Spinner,
 } from '@chakra-ui/react';
 import { MdEdit } from 'react-icons/md';
 import { useState } from 'react';
@@ -39,6 +40,8 @@ const EditDrawer = ({ handle, currFirstName, currLastName }) => {
     const [avatar, setAvatar] = useState(null);
     const [avatarError, setAvatarError] = useState(false);
     const [newAvatarURL, setNewAvatarURL] = useState(null);
+
+    const [uploading, setUploading] = useState(false);
 
     const { isOpen, onOpen, onClose } = useDisclosure();
     const toast = useToast();
@@ -58,6 +61,7 @@ const EditDrawer = ({ handle, currFirstName, currLastName }) => {
         setAvatarError(!acceptedImageTypes.includes(avatar.type));
 
         if (acceptedImageTypes.includes(avatar.type)) {
+            setUploading(true);
             setAvatarError(false);
             uploadAvatar({ handle, avatar })
                 .then((imgURL) =>
@@ -71,7 +75,18 @@ const EditDrawer = ({ handle, currFirstName, currLastName }) => {
                         position: 'top',
                         variant: 'subtle',
                     }),
-                );
+                )
+                .catch(() => toast({
+                    title: `Error uploading avatar`,
+                    description: 'Please try again later!',
+                    status: 'error',
+                    duration: 3000,
+                    isClosable: true,
+                    position: 'top',
+                    variant: 'subtle',
+                }),
+                )
+                .finally(() => setUploading(false));
         }
     };
 
@@ -146,13 +161,15 @@ const EditDrawer = ({ handle, currFirstName, currLastName }) => {
                                     _expanded={{ bg: 'blue.400' }}
                                     _focus={{ boxShadow: 'outline' }}
                                 >
-                                    File
+                                    {!uploading ? 'File' : <Spinner />}
                                 </MenuButton>
                                 <MenuList>
                                     <MenuItem><FormLabel>Choose File</FormLabel></MenuItem>
                                     <Input type='file' display='none' onChange={(e) => handleChoose(e)} />
                                     <MenuDivider />
-                                    <MenuItem isDisabled={!avatar} onClick={handleUpload}>Upload Avatar</MenuItem>
+                                    <MenuItem isDisabled={!avatar} onClick={handleUpload}>
+                                        {!uploading ? 'Upload Avatar' : <Spinner />}
+                                    </MenuItem>
                                     <MenuItem onClick={() => {
                                         setAvatar(null);
                                         setAvatarError(false);
