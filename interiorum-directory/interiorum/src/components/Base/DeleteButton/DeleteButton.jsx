@@ -10,27 +10,16 @@ export const DeleteButton = ({ deleteType, single=false, deleteFunction }) => {
     const toast = useToast();
 
     const handleDelete = () => {
-        deleteFunction()
-            .then(() => {
-                onClose();
-                toast({
-                    title: `${deleteType.toUpperCase()} deleted successfully`,
-                    status: 'info',
-                    duration: 3000,
-                    isClosable: true,
-                    position: 'top',
-                    variant: 'subtle',
-                });
-            })
-            .catch(() => toast({
-                title: `Error deleting ${deleteType}`,
-                description: 'Please try again later!',
-                status: 'error',
-                duration: 3000,
-                isClosable: true,
-                position: 'top',
-                variant: 'subtle',
-            }));
+        deleteFunction();
+        onClose();
+        toast({
+            title: `${deleteType.toUpperCase()} deleted successfully`,
+            status: 'info',
+            duration: 3000,
+            isClosable: true,
+            position: 'top',
+            variant: 'subtle',
+        });
     };
 
     const { isOpen, onOpen, onClose } = useDisclosure();
