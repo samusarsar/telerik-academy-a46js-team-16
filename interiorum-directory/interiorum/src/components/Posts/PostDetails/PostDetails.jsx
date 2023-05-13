@@ -14,9 +14,10 @@ import DeleteButton from '../../Base/DeleteButton/DeleteButton';
 import ContentEdit from '../../Views/IndividualPost/ContentEdit/ContentEdit';
 import { ADMIN_ROLE } from '../../../common/constants';
 import { addPostToTag, addTagToPost, removePostFromTag, removeTagFromPost } from '../../../services/tag.services';
+import { categories } from '../../../../data';
+import ShareButtons from '../../Base/ShareButtons/ShareButtons';
 
 import PropTypes from 'prop-types';
-import ShareButtons from '../../Base/ShareButtons/ShareButtons';
 
 const PostDetails = ({ post }) => {
     const [author, setAuthor] = useState(null);
@@ -82,7 +83,7 @@ const PostDetails = ({ post }) => {
                     <VStack align='start' w='80%'>
                         <VStack align='start' w='100%' gap={2}>
                             <HStack>
-                                {currPost.categories && currPost.categories.map(category => <Link key={category} to={`/forum/${category}`}><Badge>{category}</Badge></Link>)}
+                                {currPost.categories && currPost.categories.map(category => <Link key={category} to={`/forum/${category}`}><Badge>{categories[category]}</Badge></Link>)}
                             </HStack>
                             <HStack>
                                 <Heading as='h1' size='lg' fontWeight='500' w='100%'>{currPost.title}</Heading>
