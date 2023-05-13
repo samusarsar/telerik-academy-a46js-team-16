@@ -35,7 +35,7 @@ const PostCommentsBox = ({ postId }) => {
     return (
         <VStack w={{ sm: '100%', md: '80%' }} align='start' boxShadow='lg'>
             <VStack align='center' p={8} bg='brand.100' w='100%' rounded='md'>
-                {comments.length === 0 ? (
+                {(!comments.length || comments.some(comment => !comment.commentId)) ? (
                     <Text>No comments, yet! Be the first one to comment.</Text>
                 ) : (
                     <>
