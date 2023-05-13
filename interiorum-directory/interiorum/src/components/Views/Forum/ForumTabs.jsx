@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 const ForumTabs = ({ posts }) => {
 
-    const resentPosts = sortPostsByDate(posts);
+    const recentPosts = sortPostsByDate(posts);
 
     const popularPosts = sortPostsByPopularity(posts);
 
@@ -21,7 +21,7 @@ const ForumTabs = ({ posts }) => {
             </TabList>
             <TabPanels>
                 <TabPanel>
-                    <PostFeed posts={resentPosts} />
+                    <PostFeed posts={recentPosts} />
                 </TabPanel>
                 <TabPanel>
                     <PostFeed posts={popularPosts} />

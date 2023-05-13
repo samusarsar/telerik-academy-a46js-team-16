@@ -29,6 +29,8 @@ const Forum = () => {
             </Box>
         );
     }
+
+    return null;
 };
 
 export default Forum;

@@ -1,5 +1,5 @@
 // eslint-disable-next-line max-len
-import { Textarea, Stack, Button, Checkbox, Collapse, useDisclosure, FormErrorMessage, Alert, AlertIcon, AlertTitle, FormControl, Box, FormHelperText, HStack, FormLabel, VStack, Image, Text, Input, useToast, IconButton } from '@chakra-ui/react';
+import { Textarea, Stack, Button, Checkbox, Collapse, useDisclosure, FormErrorMessage, Alert, AlertIcon, AlertTitle, FormControl, Box, FormHelperText, HStack, FormLabel, VStack, Image, Text, Input, useToast, IconButton, Spinner } from '@chakra-ui/react';
 import { categories } from '../../../../data';
 import { POST_CONTENT_MAX_LENGTH, POST_CONTENT_MIN_LENGTH } from '../../../common/constants';
 import { addPost, uploadImagesForPost } from '../../../services/post.service';
@@ -12,6 +12,9 @@ const CreatePostBody = ({ postForm, setPostForm, updateForm, postTitleIsInvalid 
 
     const [images, setImages] = useState(null);
     const [imagesError, setImagesError] = useState(null);
+
+    const [uploading, setUploading] = useState(false);
+    const [creating, setCreating] = useState(false);
 
     const navigate = useNavigate();
 
@@ -35,6 +38,7 @@ const CreatePostBody = ({ postForm, setPostForm, updateForm, postTitleIsInvalid 
     };
 
     const handleUpload = () => {
+        setUploading(true);
         setImagesError(false);
         uploadImagesForPost({ images })
             .then((imgURLs) =>
@@ -60,7 +64,8 @@ const CreatePostBody = ({ postForm, setPostForm, updateForm, postTitleIsInvalid 
                 isClosable: true,
                 position: 'top',
                 variant: 'subtle',
-            }));
+            }))
+            .finally(() => setUploading(false));
     };
 
     const handleClearImages = () => {
@@ -85,6 +90,7 @@ const CreatePostBody = ({ postForm, setPostForm, updateForm, postTitleIsInvalid 
     };
 
     const createPost = () => {
+        setCreating(true);
         addPost(postForm.title, postForm.content, postForm.categories, postForm.author, postForm.imagesURL)
             .then(postId => navigate(`/post/${postId}`))
             .catch(() => toast({
@@ -95,7 +101,8 @@ const CreatePostBody = ({ postForm, setPostForm, updateForm, postTitleIsInvalid 
                 isClosable: true,
                 position: 'top',
                 variant: 'subtle',
-            }));
+            }))
+            .finally(() => setCreating(false));
     };
 
     return (
@@ -119,7 +126,7 @@ const CreatePostBody = ({ postForm, setPostForm, updateForm, postTitleIsInvalid 
                         <IconButton icon={<AiOutlineClose />} size='sm' colorScheme='whiteAlpha' onClick={handleClearImages}></IconButton>
                     </FormControl>
                     <Button isDisabled={!images} onClick={handleUpload} colorScheme='green'>
-                        Upload Images
+                        {!uploading ? 'Upload Images' : <Spinner />}
                     </Button>
                 </VStack>
                 <HStack flexWrap='wrap' justify='center' h='fit-content' p={5}>
@@ -164,7 +171,7 @@ const CreatePostBody = ({ postForm, setPostForm, updateForm, postTitleIsInvalid 
                         postForm.categories.length === 0 ||
                         postTitleIsInvalid ||
                         contentTitleIsInvalid ||
-                        (images && !postForm.imagesURL)} onClick={createPost}>Create</Button>
+                        (images && !postForm.imagesURL)} onClick={createPost}>{!creating ? 'Create' : <Spinner />}</Button>
 
             </Collapse>
         </Box>

@@ -22,6 +22,7 @@ import {
     Textarea,
     HStack,
     IconButton,
+    Spinner,
 } from '@chakra-ui/react';
 import { MdEdit } from 'react-icons/md';
 import { useState } from 'react';
@@ -42,6 +43,7 @@ const ContentEdit = ({ toEdit, commentMode = false }) => {
     const [images, setImages] = useState(null);
     const [imagesURL, setImagesURL] = useState(null);
     const [imageError, setImageError] = useState(false);
+    const [uploading, setUploading] = useState(false);
 
     const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -64,6 +66,7 @@ const ContentEdit = ({ toEdit, commentMode = false }) => {
     };
 
     const handleUpload = () => {
+        setUploading(true);
         setImageError(false);
         uploadImagesForPost({ images })
             .then((imgURLs) =>
@@ -86,7 +89,8 @@ const ContentEdit = ({ toEdit, commentMode = false }) => {
                 isClosable: true,
                 position: 'top',
                 variant: 'subtle',
-            }));
+            }))
+            .finally(() => setUploading(false));
     };
 
     const handleDeleteImages = () => {
@@ -211,7 +215,7 @@ const ContentEdit = ({ toEdit, commentMode = false }) => {
                                                 </Button>
                                                 <HStack>
                                                     <Button isDisabled={!images} colorScheme='teal' onClick={handleUpload}>
-                                                        Upload Images
+                                                        {!uploading ? 'Upload Images' : <Spinner />}
                                                     </Button>
                                                     <IconButton icon={<AiOutlineClose />} size='sm' colorScheme='blackAlpha' onClick={handleClearImages}></IconButton>
                                                 </HStack>

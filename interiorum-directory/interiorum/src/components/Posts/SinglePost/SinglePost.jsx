@@ -1,4 +1,4 @@
-import { Box, HStack, Heading, Text, AvatarGroup, Avatar, Spacer, Button, Icon, Skeleton, Stack } from '@chakra-ui/react';
+import { Box, HStack, Heading, Text, AvatarGroup, Avatar, Spacer, Button, Icon, SkeletonCircle } from '@chakra-ui/react';
 import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AppContext } from '../../../context/AppContext/AppContext';
@@ -37,18 +37,21 @@ const SinglePost = ({ post, large = false }) => {
         });
     }, []);
 
-    if (likedUsers) {
-        return (
-            <Box textAlign='left' p={2} >
-                <Heading as='h5' size='sm'><Link to={`../../post/${post.postId}`}>{post.title}</Link></Heading>
+    return (
+        <Box textAlign='left' p={2} >
+            <Heading as='h5' size='sm'><Link to={`../../post/${post.postId}`}>{post.title}</Link></Heading>
 
-                {large && <Text fontSize='sm' my={3}>{body}</Text>}
-                <HStack justify='right' py={2} flexWrap='wrap'>
+            {large && <Text fontSize='sm' my={3}>{body}</Text>}
+            <HStack justify='right' py={2} flexWrap='wrap'>
+                <HStack pb={2}>
                     <Text fontSize='0.8em'>Posted by <Link to={`../../profile/${post.author}`}><b>{post.author}</b></Link></Text>
                     <Text fontSize='0.8em' color='gray.500'>On {post.createdOn}</Text>
-                    <Spacer />
-                    <HStack>
-                        {(likedUsers) &&
+                </HStack>
+                <Spacer />
+                <HStack>
+                    {likedUsers ?
+                        (<>
+                            {(likedUsers) &&
                             <Button h='25px' p={1} fontSize='0.8em' colorScheme={!isLiked ? 'blackAlpha' : 'telegram'} onClick={() => {
                                 !isLiked ?
                                     handleLikePost({ postId: post.postId, handle: userData.handle }) :
@@ -56,34 +59,33 @@ const SinglePost = ({ post, large = false }) => {
                             }}><Icon as={isLiked ? AiFillLike : AiOutlineLike} mr={1} />Like{likedUsers.length ? ` | ${likedUsers.length}` : ''}
                             </Button>}
 
-                        {likedUsers.length ?
-                            (
-                                <AvatarGroup size='sm' max={3} fontSize='0.8em' spacing='-0.5rem' >
-                                    {likedUsers.map(user =>
-                                        <Avatar
-                                            key={user.uid}
-                                            src={user.avatarURL}
-                                            name={`${user.firstName} ${user.lastName}`}
-                                        />)}
-                                </AvatarGroup>
-                            ) : (
-                                <Text>No likes yet.</Text>
-                            )}
+                            {likedUsers.length ?
+                                (
+                                    <AvatarGroup size='sm' max={3} fontSize='0.8em' spacing='-0.5rem' >
+                                        {likedUsers.map(user =>
+                                            <Avatar
+                                                key={user.uid}
+                                                src={user.avatarURL}
+                                                name={`${user.firstName} ${user.lastName}`}
+                                            />)}
+                                    </AvatarGroup>
+                                ) : (
+                                    <Text>No likes yet.</Text>
+                                )}
 
-                        {userData && (userData.handle === post.author || userData.role === ADMIN_ROLE) &&
+                            {userData && (userData.handle === post.author || userData.role === ADMIN_ROLE) &&
                             <DeleteButton deleteType={'post'} single={true} deleteFunction={() => deletePost(post.postId, userData.handle)} />
-                        }
-                    </HStack>
+                            }
+                        </>) :
+                        (<HStack h='32px'>
+                            <SkeletonCircle size='4' />
+                            <SkeletonCircle size='4' />
+                            <SkeletonCircle size='4' />
+                        </HStack>)
+                    }
                 </HStack>
-            </Box>
-        );
-    };
-
-    return (
-        <Stack mb={2}>
-            <Skeleton height='15px' />
-            <Skeleton height='15px' />
-        </Stack>
+            </HStack>
+        </Box>
     );
 };
 

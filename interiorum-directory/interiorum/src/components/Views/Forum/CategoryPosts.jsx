@@ -21,6 +21,7 @@ const CategoryPosts = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        setCategoryPosts(null);
         if (!categories.hasOwnProperty(category)) {
             navigate('../../not-found');
         }
