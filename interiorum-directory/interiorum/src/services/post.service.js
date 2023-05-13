@@ -2,6 +2,7 @@ import { equalTo, get, orderByChild, push, query, ref, remove, set, update } fro
 import { deleteObject, getDownloadURL, ref as sRef, uploadBytes } from 'firebase/storage';
 import { db, storage } from '../config/firebase-config';
 import { deleteComment } from './comment.services';
+import Moment from 'moment';
 
 export const addPost = (title, content, categories, handle, imagesURL) => {
     const updates = imagesURL ?
@@ -81,19 +82,19 @@ export const getPostsByCategory = (category = 'allCategories') => {
 
 export const sortPostsByDate = (posts) => {
     return [...posts].sort((a, b) => {
-        return new Date(b.createdOn) - new Date(a.createdOn);
+        return new Moment(b.createdOn, 'DD/MM/YYYY, HH:mm:ss') - new Moment(a.createdOn, 'DD/MM/YYYY, HH:mm:ss');
     });
 };
 
 export const sortPostsByPopularity = (posts) => {
 
-    const likedPosts = posts
+    const commentedPosts = posts
         .filter(post => post.comments)
         .sort((a, b) => Object.keys(b.comments).length - Object.keys(a.comments).length);
 
-    const notLikedPosts = posts
+    const notCommentedPosts = posts
         .filter(post => !post.comments);
-    return likedPosts.concat(sortPostsByDate(notLikedPosts));
+    return commentedPosts.concat(sortPostsByDate(notCommentedPosts));
 };
 
 export const filterUnansweredPosts = (posts) => {

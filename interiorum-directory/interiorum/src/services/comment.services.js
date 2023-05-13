@@ -1,5 +1,6 @@
 import { equalTo, get, orderByChild, push, query, ref, remove, set, update } from 'firebase/database';
 import { db } from '../config/firebase-config';
+import Moment from 'moment';
 
 export const addComment = (content, postId, handle) => {
 
@@ -129,7 +130,7 @@ export const removeLikeToComment = ({ commentId, handle }) => {
 
 export const getFeaturedComment = (comments) => {
     const sortedByDate = [...comments].sort((a, b) => {
-        return new Date(b.createdOn) - new Date(a.createdOn);
+        return new Moment(b.createdOn, 'DD/MM/YYYY, HH:mm:ss') - new Moment(a.createdOn, 'DD/MM/YYYY, HH:mm:ss');
     });
     const likedComments = sortedByDate
         .filter(comment => comment.likes)
