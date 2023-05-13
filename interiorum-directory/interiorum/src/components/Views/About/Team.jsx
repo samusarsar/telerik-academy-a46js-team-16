@@ -29,9 +29,11 @@ const Team = () => {
                         </Skeleton>
                         <Stack mt='6' spacing='3'>
                             <Heading size='md'>Simona Ilcheva</Heading>
-                            <Text>
-                                Lorem ipsum d officbis. Est nam facilis quaerat soluta officiis ducimus porro asperiores! Delectus neque velit inventore illo ratione similique, blanditiis optio ut deleniti rerum. Libero hic odio assumenda nemo.
-                            </Text>
+                            <Text>- Interiorum CEO</Text>
+                            <Text>- Interiorum CTO</Text>
+                            <Text>- Interiorum COO</Text>
+                            <Text>- Programmer</Text>
+                            <Text>- Ideator</Text>
                         </Stack>
                     </CardBody>
                     <Divider />
@@ -67,9 +69,11 @@ const Team = () => {
                         </Skeleton>
                         <Stack mt='6' spacing='3'>
                             <Heading size='md'>Samuil Sarandev</Heading>
-                            <Text>
-                                Lorem ipsum d officbis. Est nam facilis quaerat soluta officiis ducimus porro asperiores! Delectus neque velit inventore illo ratione similique, blanditiis optio ut deleniti rerum. Libero hic odio assumenda nemo.
-                            </Text>
+                            <Text>- Interiorum CEO</Text>
+                            <Text>- Interiorum CTO</Text>
+                            <Text>- Interiorum COO</Text>
+                            <Text>- Programmer</Text>
+                            <Text>- Ideator</Text>
                         </Stack>
                     </CardBody>
                     <Divider />

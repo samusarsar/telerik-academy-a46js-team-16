@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { Box, Flex, Heading, VStack, Image } from '@chakra-ui/react';
 
 

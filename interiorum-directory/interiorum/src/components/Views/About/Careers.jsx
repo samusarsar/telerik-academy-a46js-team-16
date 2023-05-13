@@ -20,7 +20,7 @@ const Careers = () => {
     return (
         <VStack gap={4}>
             <Heading as='h2'>Career Opportunities at Interiorum</Heading>
-            <Text>Don't wait another moment to begin building towards your professional goals and start at a bubbling work environment - right here at <b>Interiorum HQ</b>!</Text>
+            <Text>Don&apos;t wait another moment to begin building towards your professional goals and start at a bubbling work environment - right here at <b>Interiorum HQ</b>!</Text>
             <VStack justify='center' gap={10} py={4}>
                 <Card
                     direction={{ base: 'column', sm: 'row' }}
@@ -68,7 +68,7 @@ const Careers = () => {
                         </CardHeader>
                         <CardBody>
                             <Text py='2'>
-                                Interiorum's HQ is in Sofia, Bulgaria and in features a state-of-the-art
+                                Interiorum&apos;s HQ is in Sofia, Bulgaria and in features a state-of-the-art
                                 open-office ennviornment. Come by for a coffee to check it out!
                             </Text>
                         </CardBody>
@@ -104,7 +104,7 @@ const Careers = () => {
                         <CardBody>
 
                             <Text py='2'>
-                                At Interiorum we don't shy away from challenges! Working here you will have to
+                                At Interiorum we don&apos;t shy away from challenges! Working here you will have to
                                 think creatively and out-of-the-box, sharpeninng your skillset at all times!
                             </Text>
                         </CardBody>
@@ -114,13 +114,12 @@ const Careers = () => {
 
             <VStack>
                 <Heading as='h3' size='lg'>Ready to jump in?</Heading>
-                <Text>We're always hiring! Leave your email below and we'll get back to you ASAP!</Text>
+                <Text>We&apos;re always hiring! Leave your email below and we&apos;ll get back to you ASAP!</Text>
                 <InputGroup w='400px' py={4}>
                     <InputLeftElement
                         pointerEvents='none'
-                        children={<Icon as={AiOutlineMail} color='brand.200' boxSize='20px'/>}
                         mt={4}
-                    />
+                    > <Icon as={AiOutlineMail} color='brand.200' boxSize='20px'/></InputLeftElement>
                     <FormControl isInvalid={emailError}>
                         <Input pl={12} bg='brand.600' color='brand.500' type='email' placeholder='Email' focusBorderColor='brand.400'
                             value={email} onChange={(e) => setEmail(e.target.value)}/>
