@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import { Avatar, Badge, Button, ButtonGroup, Divider, FormControl, FormErrorMessage, HStack, Heading, Icon, Image, Input, Spacer, Tag, TagCloseButton, TagLabel, Text, VStack } from '@chakra-ui/react';
+import { Avatar, Badge, Button, ButtonGroup, Divider, FormControl, FormErrorMessage, HStack, Heading, Icon, Image, Input, Skeleton, SkeletonCircle, Spacer, Tag, TagCloseButton, TagLabel, Text, VStack } from '@chakra-ui/react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AiOutlineLike, AiFillLike } from 'react-icons/ai';
 import { useContext, useEffect, useState } from 'react';
@@ -73,13 +73,19 @@ const PostDetails = ({ post }) => {
         <>
             <VStack p={8} bg='brand.100' rounded='md' w={{ sm: '100%', md: '80%' }} boxShadow='lg'>
                 <HStack w='100%' align='start' justify='left'>
-                    <Link to={`../../profile/${post.author}`} >
-                        <Avatar
-                            src={author && author.avatarURL}
-                            name={author && `${author.firstName} ${author.lastName}`}
-                            size='xl'
-                            mx={2} />
-                    </Link>
+                    {author ? (
+                        <Link to={`../../profile/${post.author}`} >
+                            <Avatar
+                                src={author.avatarURL}
+                                name={`${author.firstName} ${author.lastName}`}
+                                size='xl'
+                                mx={2} />
+                        </Link>
+                    ) : (
+                        <SkeletonCircle size='20' />
+                    )}
+
+
                     <VStack align='start' w='80%'>
                         <VStack align='start' w='100%' gap={2}>
                             <HStack>
@@ -92,26 +98,26 @@ const PostDetails = ({ post }) => {
                             <HStack w='100%'>
                                 <HStack>
                                     {currPost.tags &&
-                                    (Object.keys(currPost.tags).map(tag =>
-                                        <Tag
-                                            key={tag}
-                                            size='md'
-                                            borderRadius='full'
-                                            variant='subtle'
-                                            colorScheme='teal'
-                                        >
-                                            <TagLabel>{tag}</TagLabel>
-                                            {(userData.role === ADMIN_ROLE || userData.handle === post.author) &&
-                                            <TagCloseButton onClick={() => handleRemoveTag(tag)}/>}
-                                        </Tag>))}
+                                        (Object.keys(currPost.tags).map(tag =>
+                                            <Tag
+                                                key={tag}
+                                                size='md'
+                                                borderRadius='full'
+                                                variant='subtle'
+                                                colorScheme='teal'
+                                            >
+                                                <TagLabel>{tag}</TagLabel>
+                                                {(userData.role === ADMIN_ROLE || userData.handle === post.author) &&
+                                                    <TagCloseButton onClick={() => handleRemoveTag(tag)} />}
+                                            </Tag>))}
                                 </HStack>
                                 {(userData.role === ADMIN_ROLE || userData.handle === post.author) &&
-                                <FormControl isInvalid={newTagError}>
-                                    <Input type='text' placeholder='Add tag' h='25px' w='120px' border='brand.200' focusBorderColor='brand.100' color='gray'
-                                        value={newTag} onChange={(e) => setNewTag(e.target.value)}
-                                        onKeyDown={(e) => (e.key === 'Enter') ? handleAddTag() : null}/>
-                                    <FormErrorMessage>Tags must be lowercase.</FormErrorMessage>
-                                </FormControl>}
+                                    <FormControl isInvalid={newTagError}>
+                                        <Input type='text' placeholder='Add tag' h='25px' w='120px' border='brand.200' focusBorderColor='brand.100' color='gray'
+                                            value={newTag} onChange={(e) => setNewTag(e.target.value)}
+                                            onKeyDown={(e) => (e.key === 'Enter') ? handleAddTag() : null} />
+                                        <FormErrorMessage>Tags must be lowercase.</FormErrorMessage>
+                                    </FormControl>}
                             </HStack>
                             <HStack>
                                 <Link to={`../../profile/${currPost.author}`}><b>{currPost.author}</b></Link>
@@ -125,29 +131,33 @@ const PostDetails = ({ post }) => {
                                 {currPost.content}
                             </Text>
                             {currPost.imagesURL &&
-                            <>
-                                <Divider borderColor='brand.200' />
-                                <VStack w='100%' align='center'>
-                                    <HStack w='80%' flexWrap='wrap' justify='center' gap={3}>
-                                        {currPost.imagesURL.split(' ').map(url => <Image key={url} src={url} objectFit='cover' />)}
-                                    </HStack>
-                                </VStack>
-                            </>}
+                                <>
+                                    <Divider borderColor='brand.200' />
+                                    <VStack w='100%' align='center'>
+                                        <HStack w='80%' flexWrap='wrap' justify='center' gap={3}>
+                                            {currPost.imagesURL.split(' ').map(url => <Image key={url} src={url} objectFit='cover' />)}
+                                        </HStack>
+                                    </VStack>
+                                </>}
                         </VStack>
-                        {(postLikes) && <ButtonGroup w='100%'>
-                            <Button h='30px' fontSize='0.8em' colorScheme={!isLiked ? 'gray' : 'telegram'} onClick={() => {
-                                !isLiked ?
-                                    handleLikePost({ postId: currPost.postId, handle: userData.handle }) :
-                                    handleUnlikePost({ postId: currPost.postId, handle: userData.handle });
-                            }}>
-                                <Icon as={isLiked ? AiFillLike : AiOutlineLike} mr={1} />Like{postLikes.length ? ` | ${postLikes.length}` : ''}
-                            </Button>
-                            <ShareButtons location={location} text={post.author} />
-                            <Spacer />
-                            {userData && (userData.handle === currPost.author || userData.role === ADMIN_ROLE) &&
-                                <DeleteButton deleteType={'post'} deleteFunction={handleDeleteButton} />
-                            }
-                        </ButtonGroup>}
+                        {postLikes ? (
+                            <ButtonGroup w='100%'>
+                                <Button h='30px' fontSize='0.8em' colorScheme={!isLiked ? 'gray' : 'telegram'} onClick={() => {
+                                    !isLiked ?
+                                        handleLikePost({ postId: currPost.postId, handle: userData.handle }) :
+                                        handleUnlikePost({ postId: currPost.postId, handle: userData.handle });
+                                }}>
+                                    <Icon as={isLiked ? AiFillLike : AiOutlineLike} mr={1} />Like{postLikes.length ? ` | ${postLikes.length}` : ''}
+                                </Button>
+                                <ShareButtons location={location} text={post.author} />
+                                <Spacer />
+                                {userData && (userData.handle === currPost.author || userData.role === ADMIN_ROLE) &&
+                                    <DeleteButton deleteType={'post'} deleteFunction={handleDeleteButton} />
+                                }
+                            </ButtonGroup>
+                        ) : (
+                            <Skeleton w='100%' h='30pt' />
+                        )}
                     </VStack>
                 </HStack>
             </VStack>

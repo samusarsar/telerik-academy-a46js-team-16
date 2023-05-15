@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import PostDetails from '../../Posts/PostDetails/PostDetails';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Spacer, VStack } from '@chakra-ui/react';
+import { Box, Spacer, Spinner, VStack } from '@chakra-ui/react';
 import PostCommentsBox from '../../Posts/PostCommentsBox/PostCommentsBox';
 import { getPostById } from '../../../services/post.service';
 
@@ -29,7 +29,14 @@ const IndividualPost = () => {
         );
     }
 
-    return null;
+    return (
+        <Box p={8} bg='brand.100' rounded='md' w={{ sm: '100%', md: '80%' }} boxShadow='lg'>
+            <VStack justify='center' h='200px'>
+                <Spinner size='xl' />
+            </VStack>
+        </Box>
+
+    );
 };
 
 export default IndividualPost;

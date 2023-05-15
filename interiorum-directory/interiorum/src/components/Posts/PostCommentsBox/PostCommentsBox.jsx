@@ -1,4 +1,4 @@
-import { Spacer, Text, VStack } from '@chakra-ui/react';
+import { Spacer, Spinner, Text, VStack } from '@chakra-ui/react';
 import { useContext, useEffect, useState } from 'react';
 import FeaturedComment from '../../Comments/FeaturedComment/FeaturedComment';
 import CommentFeed from '../../Comments/CommentFeed/CommentFeed';
@@ -16,7 +16,7 @@ const PostCommentsBox = ({ postId }) => {
     const { userData } = useContext(AppContext);
 
     const [featured, setFeatured] = useState(null);
-    const [comments, setComments] = useState([]);
+    const [comments, setComments] = useState(null);
 
     useEffect(() => {
         return onValue(ref(db, `comments`), () => {
@@ -35,16 +35,20 @@ const PostCommentsBox = ({ postId }) => {
     return (
         <VStack w={{ sm: '100%', md: '80%' }} align='start' boxShadow='lg'>
             <VStack align='center' p={8} bg='brand.100' w='100%' rounded='md'>
-                {(!comments.length || comments.some(comment => !comment.commentId)) ? (
-                    <Text>No comments, yet! Be the first one to comment.</Text>
+                {comments ? (
+                    (!comments.length || comments.some(comment => !comment.commentId)) ? (
+                        <Text>No comments, yet! Be the first one to comment.</Text>
+                    ) : (
+                        <>
+                            <FeaturedComment comment={featured} />
+                            <Spacer />
+                            <CommentFeed comments={comments} />
+                            <Spacer />
+                        </>
+                    )
                 ) : (
-                    <>
-                        <FeaturedComment comment={featured} />
-                        <Spacer />
-                        <CommentFeed comments={comments} />
-                        <Spacer />
-                    </>
-                )}
+                    <Spinner size='xl'/>
+                ) }
 
                 {(userData.role === BLOCKED_ROLE) ? (
                     <BlockedAlert text={'You are currently restricted to add comments'} />
