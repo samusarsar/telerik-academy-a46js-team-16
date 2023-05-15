@@ -30,12 +30,13 @@ const IndividualPost = () => {
     }
 
     return (
-        <Box p={8} bg='brand.100' rounded='md' w={{ sm: '100%', md: '80%' }} boxShadow='lg'>
-            <VStack justify='center' h='200px'>
-                <Spinner size='xl' />
-            </VStack>
-        </Box>
-
+        <VStack align='center' bg='brand.600' py={3}>
+            <Box p={8} bg='brand.100' rounded='md' w={{ sm: '100%', md: '80%' }} boxShadow='lg'>
+                <VStack justify='center' h='200px'>
+                    <Spinner size='xl' />
+                </VStack>
+            </Box>
+        </VStack>
     );
 };
 
