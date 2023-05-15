@@ -5,16 +5,18 @@ import { getPostsByCategory, sortPostsByPopularity } from '../../../services/pos
 
 const MostCommented = () => {
     const [posts, setPosts] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         getPostsByCategory()
             .then(allPosts => {
                 setPosts(sortPostsByPopularity(allPosts).slice(0, 10));
-            });
+            })
+            .then(() => setIsLoading(false));
     }, []);
 
     return (
-        <PostsBox heading='Most Commented Posts:' posts={posts} />
+        <PostsBox heading='Most Commented Posts:' posts={posts} isLoading={isLoading} />
     );
 };
 

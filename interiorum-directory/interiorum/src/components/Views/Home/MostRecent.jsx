@@ -8,18 +8,20 @@ import { db } from '../../../config/firebase-config.js';
 const MostRecent = () => {
 
     const [posts, setPosts] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         return onValue(ref(db, 'posts'), () => {
             getPostsByCategory()
                 .then(allPosts => {
                     setPosts(sortPostsByDate(allPosts).slice(0, 10));
-                });
+                })
+                .then(() => setIsLoading(false));
         });
     }, []);
 
     return (
-        <PostsBox heading='Most Recent Posts:' posts={posts} />
+        <PostsBox heading='Most Recent Posts:' posts={posts} isLoading={isLoading} />
     );
 };
 

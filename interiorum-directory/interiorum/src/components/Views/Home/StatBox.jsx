@@ -1,8 +1,8 @@
-import { Heading, Text, Icon, HStack, VStack } from '@chakra-ui/react';
+import { Heading, Text, Icon, HStack, VStack, Spinner } from '@chakra-ui/react';
 import { BRAND_COLOR_5, BRAND_COLOR_6 } from '../../../common/constants';
 import PropTypes from 'prop-types';
 
-const StatBox = ({ heading, count, icon }) => {
+const StatBox = ({ heading, count, icon, isLoading }) => {
     return (
         <VStack
             size='sm'
@@ -19,11 +19,16 @@ const StatBox = ({ heading, count, icon }) => {
                 <Heading size='md'> {heading} </Heading>
                 <Icon as={icon} alignSelf='center' fontSize='x-large' />
             </HStack>
+            {isLoading ? (
+                <Spinner size='xl' />
+            ) : (
+                <Text fontSize='lg' align='center'>
+                    {count}
+                </Text>
+            )
+            }
 
-            <Text fontSize='lg' align='center'>
-                {count}
-            </Text>
-        </VStack>
+        </VStack >
     );
 };
 
@@ -31,6 +36,7 @@ StatBox.propTypes = {
     heading: PropTypes.string.isRequired,
     count: PropTypes.number.isRequired,
     icon: PropTypes.elementType.isRequired,
+    isLoading: PropTypes.bool,
 };
 
 export default StatBox;

@@ -8,8 +8,8 @@ import { getAllUsers } from '../../../services/users.service';
 import { getPosts } from '../../../services/post.service';
 
 const CallToAction = () => {
-    const [users, setUsers] = useState([]);
-    const [posts, setPosts] = useState([]);
+    const [users, setUsers] = useState(null);
+    const [posts, setPosts] = useState(null);
 
     const navigate = useNavigate();
 
@@ -35,8 +35,17 @@ const CallToAction = () => {
             bgSize='100%'>
             <Spacer />
             <VStack align='left' gap={2}>
-                {users && <StatBox heading='Total Users' count={users.length} icon={BsFillPeopleFill} />}
-                {posts && <StatBox heading='Total Posts' count={posts.length} icon={BsFillChatTextFill} />}
+                {users ? (
+                    <StatBox heading='Total Users' count={users.length} icon={BsFillPeopleFill} isLoading={false} />
+                ) : (
+                    <StatBox heading='Total Users' count={0} icon={BsFillPeopleFill} isLoading={true} />
+                ) }
+
+                {posts ? (
+                    <StatBox heading='Total Posts' count={posts.length} icon={BsFillChatTextFill} isLoading={false} />
+                ) : (
+                    <StatBox heading='Total Posts' count={0} icon={BsFillChatTextFill} isLoading={true} />
+                ) }
             </VStack>
             <Spacer/>
             <Spacer />
