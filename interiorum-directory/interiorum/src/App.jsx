@@ -17,8 +17,9 @@ import { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { getUserData } from './services/users.service';
 
-import { auth } from './config/firebase-config.js';
+import { auth, db } from './config/firebase-config.js';
 import ServerDown from './components/Views/ErrorViews/ServerDown/ServerDown.jsx';
+import { onValue, ref } from 'firebase/database';
 
 const App = () => {
     const [user, loading] = useAuthState(auth);
@@ -41,9 +42,12 @@ const App = () => {
 
         getUserData(user.uid)
             .then(data => {
-                setAppState({
-                    ...appState,
-                    userData: data[Object.keys(data)[0]],
+                return onValue(ref(db, `users/${Object.keys(data)[0]}`), (snapshot) => {
+                    const userData = snapshot.val();
+                    setAppState({
+                        ...appState,
+                        userData: userData,
+                    });
                 });
             })
             .catch(e => alert(e.message))
