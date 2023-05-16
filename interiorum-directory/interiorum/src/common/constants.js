@@ -24,3 +24,4 @@ export const BLOCKED_ROLE = 'blocked';
 export const RESTRICTED_CHARS = ['.', '#', '$', '[', ']'];
 
 export const PASSWORD_MIN_LENGTH = 6;
+export const HOSTED_URL = 'https://interiorum-6c515.web.app';

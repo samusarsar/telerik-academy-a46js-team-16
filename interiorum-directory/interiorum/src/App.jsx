@@ -21,7 +21,7 @@ import { auth } from './config/firebase-config.js';
 import ServerDown from './components/Views/ErrorViews/ServerDown/ServerDown.jsx';
 
 const App = () => {
-    const [user, loading, error] = useAuthState(auth);
+    const [user, loading] = useAuthState(auth);
     const [dataLoading, setDataLoading] = useState(false);
     const [appState, setAppState] = useState({
         user,

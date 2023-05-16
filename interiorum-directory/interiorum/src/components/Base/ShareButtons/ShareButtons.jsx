@@ -1,26 +1,27 @@
 import { TwitterShareButton, TwitterIcon, FacebookShareButton, FacebookIcon, LinkedinShareButton, LinkedinIcon } from 'react-share';
 
 import PropTypes from 'prop-types';
+import { HOSTED_URL } from '../../../common/constants';
 
 const ShareButtons = ({ location, text, size=32 }) => {
     return (
         <>
             <FacebookShareButton
-                url={`https://interiorum-6c515.web.app${location.pathname}`}
+                url={`${HOSTED_URL}${location.pathname}`}
                 quote={`Check out ${text}'s posts and profile on Interiorum!`}
                 hashtag="#interiorum"
             >
                 <FacebookIcon size={size} round />
             </FacebookShareButton>
             <TwitterShareButton
-                url={`https://interiorum-6c515.web.app${location.pathname}`}
+                url={`${HOSTED_URL}${location.pathname}`}
                 quote={`Check out ${text}'s posts and profile on Interiorum!`}
                 hashtag="#interiorum"
             >
                 <TwitterIcon size={size} round />
             </TwitterShareButton>
             <LinkedinShareButton
-                url={`https://interiorum-6c515.web.app${location.pathname}`}
+                url={`${HOSTED_URL}${location.pathname}`}
                 quote={`Check out ${text}'s posts and profile on Interiorum!`}
                 hashtag="#interiorum"
             >
