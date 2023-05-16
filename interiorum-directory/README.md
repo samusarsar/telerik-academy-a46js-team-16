@@ -45,7 +45,7 @@
 
 ### Visit site on Firebase-Hosted address:
 
-1. Visit `https://interiorum-6c515.web.app`;
+1. Visit the [Interiorum firebase-hosted website](https://interiorum-6c515.web.app);
 2. Enjoy the world of `interiorum`!
 
 ### Setup and run locally:
