@@ -15,7 +15,7 @@ const AboutHeader = () => {
             bgRepeat='no-repeat'
             justify='center'>
             <Flex bg='brand.600' p={5} borderRadius={8} sx={{ background: 'rgba(238, 237, 237, 0.4)' }} align='center' gap={5}>
-                <Image src='src/assets/images/logo.png' boxSize='150px'/>
+                <Image src='https://firebasestorage.googleapis.com/v0/b/interiorum-6c515.appspot.com/o/assets%2Flogo.png?alt=media&token=dfd1dd62-93fc-4de0-a77f-4e941c4e09a5' boxSize='150px'/>
                 <Box>
                     <Heading as='h1' size='2xl'>About Interiorum</Heading>
                 </Box>
