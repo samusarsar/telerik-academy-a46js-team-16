@@ -6,21 +6,21 @@ const ShareButtons = ({ location, text, size=32 }) => {
     return (
         <>
             <FacebookShareButton
-                url={`http://localhost:5173${location.pathname}`}
+                url={`https://interiorum-6c515.web.app${location.pathname}`}
                 quote={`Check out ${text}'s posts and profile on Interiorum!`}
                 hashtag="#interiorum"
             >
                 <FacebookIcon size={size} round />
             </FacebookShareButton>
             <TwitterShareButton
-                url={`http://localhost:5173${location.pathname}`}
+                url={`https://interiorum-6c515.web.app${location.pathname}`}
                 quote={`Check out ${text}'s posts and profile on Interiorum!`}
                 hashtag="#interiorum"
             >
                 <TwitterIcon size={size} round />
             </TwitterShareButton>
             <LinkedinShareButton
-                url={`http://localhost:5173${location.pathname}`}
+                url={`https://interiorum-6c515.web.app${location.pathname}`}
                 quote={`Check out ${text}'s posts and profile on Interiorum!`}
                 hashtag="#interiorum"
             >
