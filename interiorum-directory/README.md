@@ -45,7 +45,7 @@
 
 ### Visit site on Firebase-Hosted address:
 
-1. Visit `(enter URL of hosted website here)`;
+1. Visit `https://interiorum-6c515.web.app`;
 2. Enjoy the world of `interiorum`!
 
 ### Setup and run locally:
@@ -58,13 +58,23 @@
 
 ## <img src="https://img.icons8.com/?size=512&id=8305&format=png"  width="30" height="30"> Database Scheme (Structure)
 
-image1
+### Posts document:
 
-image2
+<img src="https://firebasestorage.googleapis.com/v0/b/interiorum-6c515.appspot.com/o/assets%2Fposts.png?alt=media&token=b7d25ac6-d522-4945-932a-11590b1cdf18">
 
-image3
+### Comments document:
 
-image4
+<img src="https://firebasestorage.googleapis.com/v0/b/interiorum-6c515.appspot.com/o/assets%2Fcomments.png?alt=media&token=98443e25-0832-4b3d-819b-2ce80e41318b">
+
+### Users document:
+
+<img src="https://firebasestorage.googleapis.com/v0/b/interiorum-6c515.appspot.com/o/assets%2Fusers.png?alt=media&token=ad3a5058-f4fc-46b9-8afb-6bf134f238f2">
+
+### Tags document:
+
+<img src="https://firebasestorage.googleapis.com/v0/b/interiorum-6c515.appspot.com/o/assets%2Ftags.png?alt=media&token=98a1afaa-30a6-42d3-bb09-5dd773b3f154">
+
+
 
 ## <img src="https://img.icons8.com/?size=512&id=2908&format=png"  width="30" height="30"> Frequently Asked Questions
 
