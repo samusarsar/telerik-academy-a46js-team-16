@@ -16,10 +16,10 @@ import { AppContext } from './context/AppContext/AppContext.js';
 import { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { getUserData } from './services/users.service';
+import { onValue, ref } from 'firebase/database';
 
 import { auth, db } from './config/firebase-config.js';
 import ServerDown from './components/Views/ErrorViews/ServerDown/ServerDown.jsx';
-import { onValue, ref } from 'firebase/database';
 
 const App = () => {
     const [user, loading] = useAuthState(auth);
