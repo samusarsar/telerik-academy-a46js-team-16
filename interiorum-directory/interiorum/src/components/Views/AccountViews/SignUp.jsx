@@ -94,12 +94,12 @@ const SignUp = () => {
                     </FormControl>
                     <FormControl isInvalid={passwordError} isRequired='true' pr={4}>
                         <FormLabel>Password</FormLabel>
-                        <Input type='text' onChange={(e) => setPassword(e.target.value)} bg='brand.600' color='brand.500' />
+                        <Input type='password' onChange={(e) => setPassword(e.target.value)} bg='brand.600' color='brand.500' />
                         <FormErrorMessage>Password should be more than 6 characters.</FormErrorMessage>
                     </FormControl>
                     <FormControl isInvalid={rePasswordError} isRequired='true' pr={4}>
                         <FormLabel>Confirm</FormLabel>
-                        <Input type='text' onChange={(e) => setRePassword(e.target.value)} bg='brand.600' color='brand.500' />
+                        <Input type='password' onChange={(e) => setRePassword(e.target.value)} bg='brand.600' color='brand.500' />
                         <FormErrorMessage>Password confirmation did not match.</FormErrorMessage>
                     </FormControl>
                 </VStack>
